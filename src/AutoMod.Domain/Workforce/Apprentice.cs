@@ -31,9 +31,16 @@ public class Apprentice
     public Dictionary<string, double> Proficiency { get; set; } = AutoMod.Domain.Workforce.Proficiency.Blank();
 
 
-    /// <summary>每天的 AP：发薪后的晚班和第二天的早班共用这一份（整数）。</summary>
+    /// <summary>每天的基础 AP（×1 时的值，升级时加）。实际每天的 AP 看 DailyAp。</summary>
     public int MaxAp { get; set; } = 25;
-    public int Wage { get; set; } = 20;
+
+    /// <summary>策略模拟器的虚拟学徒：玩家直接填的每天 AP，不再乘体力倍率。</summary>
+    [Newtonsoft.Json.JsonIgnore] public int? FixedAp { get; set; }
+
+    /// <summary>每天的 AP：发薪后的晚班和第二天的早班共用这一份（整数，已乘模组配置的体力倍率）。</summary>
+    [Newtonsoft.Json.JsonIgnore] public int DailyAp => FixedAp ?? Scales.DailyAp(MaxAp);
+    /// <summary>日薪：由等级和费用倍率算出，不存档。</summary>
+    [Newtonsoft.Json.JsonIgnore] public int Wage => ApprenticeFactory.WageOf(this);
 
     /// <summary>执行的流程和时间，按顺序串行执行；为空 = 未指派。</summary>
     public List<Duty> Duties { get; set; } = new();
@@ -42,7 +49,7 @@ public class Apprentice
     public double ApUsed { get; set; }
 
     /// <summary>当天还剩的 AP（整数）。</summary>
-    [Newtonsoft.Json.JsonIgnore] public int ApLeft => Math.Max(0, MaxAp - ApMath.Ceil(ApUsed));
+    [Newtonsoft.Json.JsonIgnore] public int ApLeft => Math.Max(0, DailyAp - ApMath.Ceil(ApUsed));
 
     /// <summary>对讲机里是否勾选上班（= 下一个班次上班并在入睡时付当天工资）。玩家的选择会一直保留。</summary>
     public bool Paid { get; set; } = true;
@@ -115,8 +122,7 @@ public static class SkillMath
         if (a.Level >= MaxLevel) a.Xp = 0;
         if (gained > 0)
         {
-            a.MaxAp += ApPerLevel * gained;        // 升级：每天的 AP 多 5
-            a.Wage = ApprenticeFactory.WageOf(a); // 日薪和能力挂钩：升级就涨薪
+            a.MaxAp += ApPerLevel * gained;        // 升级：每天的基础 AP 多 5（日薪随等级自动涨）
         }
         return gained;
     }
@@ -147,13 +153,12 @@ public static class ApprenticeFactory
             MaxAp = SkillMath.StartAp,
             HiredDay = day,
         };
-        a.Wage = WageOf(a);
         return a;
     }
 
     /// <summary>
-    /// 日薪：只看等级，30 + 10 × 等级，升级时重算；熟练度不影响工资。
-    /// Lv1 40，Lv5 80，Lv10 130。
+    /// 日薪：只看等级，30 + 10 × 等级（再乘费用倍率），用到时才算；熟练度不影响工资。
+    /// ×1 时 Lv1 40，Lv5 80，Lv10 130。
     /// </summary>
-    public static int WageOf(Apprentice a) => 30 + a.Level * 10;
+    public static int WageOf(Apprentice a) => Scales.Fee(30 + a.Level * 10);
 }

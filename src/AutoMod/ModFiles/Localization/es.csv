@@ -591,6 +591,7 @@ agency.cash_insufficient,Efectivo insuficiente ({0})
 agency.fee_expand,Tarifa de ampliación de la agencia
 agency.fee_hire,Tarifa de contratación de la agencia
 agency.fee_train_item,Materiales de formación ({0})
+agency.free,Gratis
 agency.header_stats,Efectivo {0} · Puestos {1}/{2}
 agency.hired_msg,{0} se ha unido. Selecciona una rutina en la página de Aprendices.
 agency.level_up_info,Cada nivel aumenta los PA diarios en {0} y el salario diario en {1}.
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,"Los salarios se liquidan cada noche al dormir. Si los f
 handbook.p1.title_ap,AP:
 handbook.p1.title_multi_sched,Varias rutinas:
 handbook.p2.banner,Pericia y nivel
-handbook.p2.text_level,"Cada nivel añade 5 AP diarios, 10 de salario diario y sube el mínimo de pericia en 4 (el nivel 1 es 54), evitando que las nuevas rutinas vayan demasiado lentas. Estudiar materiales de formación otorga EXP."
-handbook.p2.text_prof,"Los aprendices tienen una pericia distinta (0-100) por rutina, visible en Detalles. Una mayor pericia reduce el coste de AP: a 100 es de 0.75x el coste base, mientras que los recién llegados empiezan en torno a 1.4x. Ejecutar la misma rutina de forma continua alcanza 85+ en unas dos semanas."
+handbook.p2.text_level,"Cada nivel añade {0} AP diarios, {1} de salario diario y sube el mínimo de pericia en 4 (el nivel 1 es 54), evitando que las nuevas rutinas vayan demasiado lentas. Estudiar materiales de formación otorga EXP."
+handbook.p2.text_prof,"Los aprendices tienen una pericia distinta (0-100) por rutina, visible en Detalles. Una mayor pericia reduce el coste de AP: a 100 es de 0.75x el coste base, mientras que los recién llegados empiezan en torno a 1.4x. Con la configuración predeterminada, ejecutar la misma rutina de forma continua alcanza 85+ en unas dos semanas."
 handbook.p2.text_switch,La pericia depende de la similitud entre el trabajo anterior y la rutina actual. Cambiar a rutinas con acciones y objetos similares conserva la mayor parte de la pericia; cambiar a otras muy distintas empieza más bajo. Manejar rutinas dispares da menor pericia que especializarse.
 handbook.p2.tip,"¡La pericia solo influye en el consumo de AP, no en el salario diario; el salario depende estrictamente del nivel!"
 handbook.p2.title_level,Nivel:
@@ -1112,7 +1113,13 @@ session.no_selector_items,No se encuentra en la tienda: {0}
 session.prof_floor,(Garantía de nivel {0})
 session.prof_text,{0} Competencia {1}/100{2} · PA ×{3}
 session.unassigned_schedule,Rutinas sin asignar
+settings.ap_scale,Multiplicador de AP de aprendices
+settings.ap_scale_desc,Multiplica los AP diarios de cada aprendiz. Se aplica a todas las partidas.
 settings.automation_enabled,Activar automatización de aprendices (ejecutar turnos)
+settings.cost_scale,Multiplicador de costes de aprendices
+settings.cost_scale_desc,"Multiplica el salario diario y las tarifas de contratación, ampliación y formación; ×0 los hace gratuitos. El precio de desbloqueo depende de la dificultad del juego y no cambia. Se aplica a todas las partidas."
+settings.growth_scale,Multiplicador de progreso de aprendices
+settings.growth_scale_desc,"Multiplica la experiencia, la mejora de pericia y la experiencia de formación. Se aplica a todas las partidas."
 settings.show_all_tags,"Mostrar todas las etiquetas del juego en condiciones (incluidas categorías, identificadores, etc.)"
 settings.ui_scale,Multiplicador de escala de la interfaz
 settings.ui_scale_desc,"Escala adicional sobre el ajuste automático por altura de pantalla, p. ej. 0.8 o 1.2"

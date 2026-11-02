@@ -229,7 +229,7 @@ public class Interpreter
             bool Pay(double cost)
             {
                 double need = cost + (walked ? 0 : Walk);
-                if (a.ApUsed + need > a.MaxAp + 1e-9) return false;
+                if (a.ApUsed + need > a.DailyAp + 1e-9) return false;
                 if (!walked)
                 {
                     walked = true;
@@ -382,7 +382,7 @@ public class Interpreter
         gr.Memo = memo;
         if (applyXp)
         {
-            if (SkillMath.AddXp(a, (int)Math.Round(xp)) > 0) gr.LevelUps.Add(L.T("report.growth.levelup", a.Name, a.Level, a.MaxAp));
+            if (SkillMath.AddXp(a, Scales.Xp(xp)) > 0) gr.LevelUps.Add(L.T("report.growth.levelup", a.Name, a.Level, a.DailyAp));
             // 熟练度：学徒往这一班的实际工作靠近
             if (work.Count > 0)
             {

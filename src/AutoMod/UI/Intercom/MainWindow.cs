@@ -28,7 +28,7 @@ public static class MainWindow
         bool sameTab = tab == null || tab == _tab;
         if (tab != null) _tab = tab;
         var st = Automation.State;
-        int dayAp = st.Apprentices.Where(a => a.Paid).Sum(a => a.MaxAp);
+        int dayAp = st.Apprentices.Where(a => a.Paid).Sum(a => a.DailyAp);
 
         var b = Ui.Window(Id, Domain.L.T("intercom.title"), 720, 620, keepScroll: sameTab);
         b.BeginRow(4);
@@ -92,7 +92,7 @@ public static class MainWindow
 
         Table.BeginSecondLine(b);
         Table.Cell(b, $"Lv{app.Level}", 45, tip: app.Level < SkillMath.MaxLevel ? Domain.L.T("intercom.xp_tip", app.Xp, SkillMath.XpToNext(app.Level)) : null);
-        Table.Cell(b, $"{app.MaxAp}", 40, tip: Domain.L.T("intercom.ap_tip"));
+        Table.Cell(b, $"{app.DailyAp}", 40, tip: Domain.L.T("intercom.ap_tip"));
         Table.Cell(b, $"{app.Wage}", 65);
         if (duties.Count == 0)
         {

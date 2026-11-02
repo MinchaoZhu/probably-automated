@@ -160,7 +160,7 @@ public static class SimulatorWindow
             var app = a;
             int x = Proficiency.Score(app.Proficiency, Proficiency.ProfileOf(D, Sch, Session.World));
             string shifts = Domain.L.Join("list", app.Duties.Select(d => Shift.DisplayName(d.Shift)).Distinct());
-            b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Small(Domain.L.T("sim.app_line", app.Name, shifts, app.Level, app.MaxAp, x))).AddFlexibleSpace()
+            b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Small(Domain.L.T("sim.app_line", app.Name, shifts, app.Level, app.DailyAp, x))).AddFlexibleSpace()
                 .AddButton("×", Ui.A(() => { _apps.Remove(app); Show(); })).End();
         }
         b.End();
@@ -311,11 +311,11 @@ public static class SimulatorWindow
 
     private static void AddApprentice()
     {
-        string name = Domain.L.T("sim.vapp_default_name"), ap = "25", lvl = "1", prof = "100";
+        string name = Domain.L.T("sim.vapp_default_name"), ap = Scales.DailyAp(SkillMath.StartAp).ToString(), lvl = "1", prof = "100";
         int shift = _start == Shift.Night ? 1 : 0;
         var b = Ui.Window("am_vapp", Domain.L.T("sim.vapp_title"), 420, 300)
             .BeginRow().AddLabel(Domain.L.T("ui.name")).AddInput(Domain.L.T("ui.name"), name, Ui.AS(v => name = v)).End()
-            .BeginRow().AddLabel(Domain.L.T("sim.daily_ap")).AddInput("25", ap, Ui.AS(v => ap = v)).End()
+            .BeginRow().AddLabel(Domain.L.T("sim.daily_ap")).AddInput(Scales.DailyAp(SkillMath.StartAp).ToString(), ap, Ui.AS(v => ap = v)).End()
             .BeginRow().AddLabel(Domain.L.T("sim.level")).AddInput("1", lvl, Ui.AS(v => lvl = v)).End()
             .BeginRow().AddLabel(Domain.L.T("sim.prof_label")).AddInput("100", prof, Ui.AS(v => prof = v)).End()
             .BeginRow().AddLabel(Domain.L.T("sim.shift_label")).AddDropdown(Ui.L(new[] { Domain.L.T("shift.morning"), Domain.L.T("shift.night") }), shift, Ui.AI(k => shift = k)).End()
@@ -323,7 +323,7 @@ public static class SimulatorWindow
             .AddButton(Domain.L.T("ui.cancel"), Ui.A(() => Ui.Close("am_vapp")))
             .AddButton(Domain.L.T("ui.add"), Ui.A(() =>
             {
-                var a = new Apprentice { Name = name, MaxAp = int.TryParse(ap, out var x) ? x : 25, Duties = { new Duty { ScheduleId = _schId, Shift = shift == 1 ? Shift.Night : Shift.Morning } } };
+                var a = new Apprentice { Name = name, FixedAp = int.TryParse(ap, out var x) ? Math.Max(1, x) : Scales.DailyAp(SkillMath.StartAp), Duties = { new Duty { ScheduleId = _schId, Shift = shift == 1 ? Shift.Night : Shift.Morning } } };
                 a.Level = int.TryParse(lvl, out var l) ? Math.Clamp(l, 1, SkillMath.MaxLevel) : 1;
                 a.Proficiency = Proficiency.ForScore(Proficiency.ProfileOf(D, Sch, Session.World), int.TryParse(prof, out var p) ? Math.Clamp(p, 0, 100) : 100);
                 _apps.Add(a);

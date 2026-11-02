@@ -35,7 +35,6 @@ internal static class Program
             for (int l = 1; l < 5; l++) total += SkillMath.XpToNext(l);
             Check(total == 1520, $"Lv1→5 需要 1520 经验，实际 {total}");
             var a = new Apprentice { MaxAp = 25, Level = 1 };
-            a.Wage = ApprenticeFactory.WageOf(a);
             Check(a.Wage == 40, $"Lv1 日薪 40，实际 {a.Wage}");
             int ups = SkillMath.AddXp(a, SkillMath.XpToNext(1));
             Check(ups == 1 && a.Level == 2 && a.MaxAp == 30 && a.Wage == 50, $"升到 Lv2：每天 AP 25 → {a.MaxAp}，日薪涨到 {a.Wage}");
@@ -53,6 +52,50 @@ internal static class Program
             var fees = Enumerable.Range(1, 9).Select(Agency.ExpandFee).ToList();
             Check(fees[0] == 500 && fees[1] == 600 && fees[8] == 1300 && fees.Zip(fees.Skip(1)).All(x => x.Second > x.First) && Agency.ExpandFee(10) == 0 && AutoMod.Domain.Workforce.Roster.MaxSlots == 10,
                 $"名额最多 10，扩编一次比一次贵：{string.Join(" / ", fees)}");
+        });
+
+        Test("模组配置的倍率：费用、AP、成长", () =>
+        {
+            Check(Scales.Parse("×0", Scales.CostChoices) == 0 && Scales.Parse("×0.25", Scales.Choices) == 0.25 && Scales.Parse("×4", Scales.Choices) == 4,
+                "档位文字读成倍率");
+            Check(Scales.Parse("×0", Scales.Choices) == 1 && Scales.Parse("×7", Scales.Choices) == 1 && Scales.Parse("abc", Scales.Choices) == 1,
+                "不在档位里的值按 ×1（AP、成长没有 ×0）");
+            var a = new Apprentice { MaxAp = 25, Level = 1 };
+            try
+            {
+                Scales.Cost = 0;
+                Check(ApprenticeFactory.WageOf(a) == 0 && Agency.HireFee == 0 && Agency.ExpandFee(1) == 0 && Agency.TrainingFee(1) == 0, "×0：日薪和各项费用全部免费");
+                Scales.Cost = 0.25;
+                Check(ApprenticeFactory.WageOf(a) == 10 && Agency.HireFee == 15 && Agency.ExpandFee(1) == 125 && Agency.TrainingFee(1) == 13, $"×0.25：日薪 10、雇用 15、扩编 125、培训 13（实际 {Agency.TrainingFee(1)}）");
+                Scales.Cost = 4;
+                Check(ApprenticeFactory.WageOf(a) == 160 && Agency.ExpandFee(9) == 5200, "×4：日薪 160、最后一次扩编 5200");
+                Scales.Cost = 1;
+
+                Scales.Ap = 0.25;
+                Check(a.DailyAp == 6 && a.ApLeft == 6, $"AP ×0.25：25 → 6（向下取整），实际 {a.DailyAp}");
+                Scales.Ap = 3;
+                a.ApUsed = 10;
+                Check(a.MaxAp == 25 && a.DailyAp == 75 && a.ApLeft == 65, "AP ×3：存的基础值不变，每天 75、剩 65");
+                a.FixedAp = 30;
+                Check(a.DailyAp == 30, "模拟器虚拟学徒直接用填的 AP，不乘倍率");
+                a.FixedAp = null;
+                a.ApUsed = 0;
+                Scales.Ap = 1;
+
+                Scales.Growth = 2;
+                Check(Scales.Xp(10.4) == 21 && Agency.TrainingXp(1) == 120, $"成长 ×2：经验翻倍，培训经验 60 → 120（实际 {Agency.TrainingXp(1)}）");
+                Scales.Growth = 0.25;
+                Check(Agency.TrainingXp(1) == 15 && Agency.TrainingXp(9) >= 1, "成长 ×0.25：培训经验 60 → 15");
+                var p = new Apprentice { MaxAp = 25 };
+                var work = new System.Collections.Generic.Dictionary<string, double> { [ActVerb.Move] = 1, [Category.Water] = 1 };
+                Proficiency.Learn(p, work, 10);
+                double slow = p.Proficiency[ActVerb.Move];
+                Scales.Growth = 1;
+                var q = new Apprentice { MaxAp = 25 };
+                Proficiency.Learn(q, work, 10);
+                Check(q.Proficiency[ActVerb.Move] > slow, "成长倍率也作用于熟练度学习");
+            }
+            finally { Scales.Cost = Scales.Ap = Scales.Growth = 1; }
         });
 
         RulesTests.Run(Test, Check);

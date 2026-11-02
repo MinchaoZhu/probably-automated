@@ -13,11 +13,11 @@ namespace AutoMod.Domain.Workforce;
 /// </summary>
 public static class Agency
 {
-    /// <summary>雇用一名学徒的中介费。</summary>
-    public const int HireFee = 60;
+    /// <summary>雇用一名学徒的中介费（×1 时 60）。</summary>
+    public static int HireFee => Scales.Fee(60);
 
-    /// <summary>扩编费用：一次比一次贵 100：1→2 500、2→3 600……9→10 1300，扩满共 8100。到上限返回 0。</summary>
-    public static int ExpandFee(int slots) => slots < 1 || slots >= Roster.MaxSlots ? 0 : 500 + 100 * (slots - 1);
+    /// <summary>扩编费用（×1 时）：一次比一次贵 100：1→2 500、2→3 600……9→10 1300，扩满共 8100。到上限返回 0。</summary>
+    public static int ExpandFee(int slots) => slots < 1 || slots >= Roster.MaxSlots ? 0 : Scales.Fee(500 + 100 * (slots - 1));
 
     public static bool CanHire(Roster st) => st.Apprentices.Count < st.Slots;
 
@@ -44,9 +44,9 @@ public static class Agency
     /// <summary>培训只能把等级练到这个等级，再往上要靠实际干活。培训不影响熟练度（熟练度只能靠干活）。</summary>
     public const int TrainingMaxLevel = 5;
 
-    public static int TrainingFee(int level) => 30 + level * 20;
+    public static int TrainingFee(int level) => Scales.Fee(30 + level * 20);
 
-    public static int TrainingXp(int level) => Math.Max(16, SkillMath.XpToNext(level) / 2);
+    public static int TrainingXp(int level) => Math.Max(1, Scales.Xp(Math.Max(16, SkillMath.XpToNext(level) / 2)));
 
     public static bool CanTrain(Apprentice a) => a.Training == null && a.Level < TrainingMaxLevel;
 

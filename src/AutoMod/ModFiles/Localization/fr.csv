@@ -591,6 +591,7 @@ agency.cash_insufficient,Fonds insuffisants ({0})
 agency.fee_expand,Frais d'extension de l'agence
 agency.fee_hire,Frais de recrutement de l'agence
 agency.fee_train_item,Matériel de formation ({0})
+agency.free,Gratuit
 agency.header_stats,Espèces {0} · Places {1}/{2}
 agency.hired_msg,{0} a rejoint l'équipe. Veuillez lui assigner une routine sur la page Apprentis.
 agency.level_up_info,Chaque niveau augmente les PA quotidiens de {0} et le salaire journalier de {1}.
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,"Les salaires sont réglés chaque nuit au coucher. En c
 handbook.p1.title_ap,AP :
 handbook.p1.title_multi_sched,Routines multiples :
 handbook.p2.banner,Maîtrise & Niveau
-handbook.p2.text_level,"Chaque niveau ajoute 5 AP par jour, 10 au salaire journalier et élève le plancher de maîtrise de 4 (niveau 1 à 54) pour éviter toute lenteur excessive sur une nouvelle routine. Étudier des manuels de formation octroie de l'EXP."
-handbook.p2.text_prof,"Les apprentis ont une maîtrise distincte (0-100) par routine, visible dans Détails. Une maîtrise plus élevée réduit le coût en AP : à 100 elle est de 0.75x le coût de base, tandis que les novices débutent vers 1.4x. Maintenir la même routine permet d'atteindre 85+ en deux semaines environ."
+handbook.p2.text_level,"Chaque niveau ajoute {0} AP par jour, {1} au salaire journalier et élève le plancher de maîtrise de 4 (niveau 1 à 54) pour éviter toute lenteur excessive sur une nouvelle routine. Étudier des manuels de formation octroie de l'EXP."
+handbook.p2.text_prof,"Les apprentis ont une maîtrise distincte (0-100) par routine, visible dans Détails. Une maîtrise plus élevée réduit le coût en AP : à 100 elle est de 0.75x le coût de base, tandis que les novices débutent vers 1.4x. Avec les réglages par défaut, maintenir la même routine permet d'atteindre 85+ en deux semaines environ."
 handbook.p2.text_switch,La maîtrise dépend de la ressemblance entre travail passé et routine actuelle. Passer à des routines aux actions et objets proches conserve l'essentiel de la maîtrise ; passer à des routines très différentes repart de plus bas. Gérer plusieurs routines disparates donne une maîtrise moindre que la spécialisation.
 handbook.p2.tip,"La maîtrise n'affecte que la consommation d'AP, pas le salaire journalier ; le salaire dépend strictement du niveau !"
 handbook.p2.title_level,Niveau :
@@ -1112,7 +1113,13 @@ session.no_selector_items,Introuvable dans la boutique : {0}
 session.prof_floor,(Minimum niveau {0})
 session.prof_text,{0} Compétence {1}/100{2} · PA ×{3}
 session.unassigned_schedule,Routines non assignées
+settings.ap_scale,Multiplicateur d'AP des apprentis
+settings.ap_scale_desc,Multiplie les AP quotidiens de chaque apprenti. S'applique à toutes les sauvegardes.
 settings.automation_enabled,Activer l'automatisation des apprentis (exécuter les services)
+settings.cost_scale,Multiplicateur de coûts des apprentis
+settings.cost_scale_desc,"Multiplie le salaire journalier et les frais d'embauche, d'agrandissement et de formation ; ×0 les rend gratuits. Le prix de déblocage suit la difficulté du jeu et n'est pas modifié. S'applique à toutes les sauvegardes."
+settings.growth_scale,Multiplicateur de progression des apprentis
+settings.growth_scale_desc,"Multiplie l'expérience, le gain de maîtrise et l'expérience de formation. S'applique à toutes les sauvegardes."
 settings.show_all_tags,"Lister toutes les étiquettes du jeu dans les conditions (y compris catégories, identifiants, etc.)"
 settings.ui_scale,Multiplicateur d'échelle de l'IU
 settings.ui_scale_desc,"Échelle supplémentaire en plus de l'ajustement auto à la hauteur d'écran, ex. 0.8 ou 1.2"

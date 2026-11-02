@@ -591,6 +591,7 @@ agency.cash_insufficient,现金不足（{0}）
 agency.fee_expand,中介扩编费
 agency.fee_hire,中介招聘费
 agency.fee_train_item,培训材料（{0}）
+agency.free,免费
 agency.header_stats,现金 {0} · 名额 {1}/{2}
 agency.hired_msg,{0} 已加入，请在学徒页选择流程
 agency.level_up_info,每升一级，每天的 AP 增加 {0}，日薪增加 {1}。
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,每晚入睡时结算工资。资金不足时，“学�
 handbook.p1.title_ap,AP：
 handbook.p1.title_multi_sched,多个流程：
 handbook.p2.banner,熟练度与等级
-handbook.p2.text_level,每升一级，每天的 AP 增加 5，日薪增加 10，熟练度保底提高 4（1 级为 54），接手新流程时不至于太慢。阅读培训材料可获得经验。
-handbook.p2.text_prof,学徒对每个流程有各自的熟练度（0～100），在“详情”中查看。熟练度越高，动作消耗的 AP 越少：熟练度 100 时为基础消耗的 0.75 倍，新学徒刚接手时约 1.4 倍。持续执行同一流程，约两周可达 85 以上。
+handbook.p2.text_level,每升一级，每天的 AP 增加 {0}，日薪增加 {1}，熟练度保底提高 4（1 级为 54），接手新流程时不至于太慢。阅读培训材料可获得经验。
+handbook.p2.text_prof,学徒对每个流程有各自的熟练度（0～100），在“详情”中查看。熟练度越高，动作消耗的 AP 越少：熟练度 100 时为基础消耗的 0.75 倍，新学徒刚接手时约 1.4 倍。默认设置下，持续执行同一流程约两周可达 85 以上。
 handbook.p2.text_switch,熟练度取决于学徒做过的工作与流程的相似程度。换成动作和物品相近的流程，熟练度基本保留；换成差别大的流程，则从较低处重新提升。同时执行几个差别大的流程，各自的熟练度会低于只做一个。
 handbook.p2.tip,熟练度只影响 AP 消耗，不影响日薪；日薪只看等级！
 handbook.p2.title_level,等级：
@@ -1112,7 +1113,13 @@ session.no_selector_items,店内没有：{0}
 session.prof_floor,（等级保底 {0}）
 session.prof_text,{0} 熟练度 {1}/100{2} · AP ×{3}
 session.unassigned_schedule,未指派流程
+settings.ap_scale,学徒 AP 倍率
+settings.ap_scale_desc,学徒每天的 AP 乘以此倍率。对所有存档生效。
 settings.automation_enabled,启用学徒自动化（执行班次）
+settings.cost_scale,学徒费用倍率
+settings.cost_scale_desc,日薪、雇用费、扩编费和培训费乘以此倍率，×0 为免费。解锁价按游戏难度计算，不受影响。对所有存档生效。
+settings.growth_scale,学徒成长倍率
+settings.growth_scale_desc,经验、熟练度提升和培训经验乘以此倍率。对所有存档生效。
 settings.show_all_tags,条件里列出全部游戏标签（含类别标记、编号等内部标签）
 settings.ui_scale,界面大小倍数
 settings.ui_scale_desc,在按屏幕高度自动缩放的基础上额外缩放，例如 0.8 或 1.2

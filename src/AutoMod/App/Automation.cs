@@ -37,8 +37,6 @@ public static class Automation
         State = ModState.FromJson(ModHelper.GetModData(ModInfo.Id, DataKey));
         Unlock.SyncPrice();
 
-        // 日薪按当前公式和等级重算（公式调整过；以后升级也会自动涨）
-        foreach (var a in State.Apprentices) a.Wage = ApprenticeFactory.WageOf(a);
         // 学徒做不了的（要玩家在界面里操作的）记录：存在 mod 数据里，读档恢复
         GameWorld.LoadNeedsPlayer(State.NeedsPlayer);
         GameWorld.NeedsPlayerAdded = k => { if (!State.NeedsPlayer.Contains(k)) State.NeedsPlayer.Add(k); };

@@ -57,7 +57,6 @@ internal static class Balance
         Proficiency.T = st.Tuning ?? new Proficiency.Tuning { FloorBase = 100, FloorPerLevel = 0, Scale = st.OldMult(wk.Level), Rate = 0 };
         var (w, d, s, metric) = sc.Build();
         var apps = Enumerable.Range(1, wk.Count).Select(i => new Apprentice { Name = "甲乙丙"[i - 1].ToString(), Level = wk.Level, MaxAp = wk.Ap, Duties = { new Duty { ScheduleId = s.Id, Shift = sc.Shift } } }).ToList();
-        foreach (var a in apps) a.Wage = ApprenticeFactory.WageOf(a);
         int wage0 = apps.Sum(a => a.Wage);
         var interp = new Interpreter(w, d) { UpdateProfiles = true };
         int score0 = Proficiency.Score(apps[0].Proficiency, Proficiency.ProfileOf(d, s, w));
@@ -80,8 +79,7 @@ internal static class Balance
             score.Add(Proficiency.Score(apps[0].Proficiency, Proficiency.ProfileOf(d, s, w)));
             double m = metric(w);
             total = sc.Cumulative ? total + m : m;
-            foreach (var a in apps) a.Wage = ApprenticeFactory.WageOf(a);
-        }
+            }
         string Week(int k) => $"{done.Skip(k * 7).Take(7).Average():0.#} / {deferred.Skip(k * 7).Take(7).Average():0.#}";
         string x = st.Tuning == null ? "—" : $"{score0} → {score[6]} / {score[13]} / {score[27]}";
         return $"| {st.Name} | {wk.Name} | {Week(0)} | {Week(1)} | {Week(3)} | {x} | {mult.First():0.00} → {mult.Last():0.00} | {string.Join("、", apps.Select(a => a.Level))} | {wage0} → {apps.Sum(a => a.Wage)} | {total:0} |";

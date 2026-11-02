@@ -591,6 +591,7 @@ agency.cash_insufficient,Nicht genug Bargeld ({0})
 agency.fee_expand,Erweiterungsgebühr der Agentur
 agency.fee_hire,Vermittlungsgebühr der Agentur
 agency.fee_train_item,Schulungsmaterialien ({0})
+agency.free,Kostenlos
 agency.header_stats,Bargeld {0} · Plätze {1}/{2}
 agency.hired_msg,{0} ist beigetreten. Bitte Routine auf der Lehrlingsseite zuweisen.
 agency.level_up_info,Jede Stufe erhöht die täglichen AP um {0} und den Tageslohn um {1}.
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,"Löhne werden jede Nacht beim Schlafen abgerechnet. Rei
 handbook.p1.title_ap,AP:
 handbook.p1.title_multi_sched,Mehrere Routinen:
 handbook.p2.banner,Meisterschaft & Stufe
-handbook.p2.text_level,"Jede Stufe bringt täglich 5 AP mehr, 10 mehr Tageslohn und erhöht die Meisterschafts-Untergrenze um 4 (Stufe 1 ist 54), damit neue Routinen nicht zu langsam laufen. Das Lesen von Schulungsmaterial bringt EP."
-handbook.p2.text_prof,"Lehrlinge haben für jede Routine eine eigene Meisterschaft (0-100), einsehbar in den Details. Höhere Meisterschaft senkt die AP-Kosten: Bei 100 betragen sie das 0.75x der Basiskosten, Neulinge beginnen bei etwa 1.4x. Wird dieselbe Routine kontinuierlich ausgeführt, erreicht man in etwa zwei Wochen 85+."
+handbook.p2.text_level,"Jede Stufe bringt täglich {0} AP mehr, {1} mehr Tageslohn und erhöht die Meisterschafts-Untergrenze um 4 (Stufe 1 ist 54), damit neue Routinen nicht zu langsam laufen. Das Lesen von Schulungsmaterial bringt EP."
+handbook.p2.text_prof,"Lehrlinge haben für jede Routine eine eigene Meisterschaft (0-100), einsehbar in den Details. Höhere Meisterschaft senkt die AP-Kosten: Bei 100 betragen sie das 0.75x der Basiskosten, Neulinge beginnen bei etwa 1.4x. Mit den Standardeinstellungen erreicht man bei kontinuierlicher Ausführung derselben Routine in etwa zwei Wochen 85+."
 handbook.p2.text_switch,Die Meisterschaft hängt von der Ähnlichkeit zwischen bisheriger Arbeit und aktueller Routine ab. Beim Wechsel zu Routinen mit ähnlichen Aktionen und Gegenständen bleibt das meiste erhalten; bei stark abweichenden beginnt man niedriger. Mehrere unterschiedliche Routinen führen zu geringerer Meisterschaft als Spezialisierung.
 handbook.p2.tip,"Meisterschaft beeinflusst nur den AP-Verbrauch, nicht den Tageslohn; der Lohn hängt ausschließlich von der Stufe ab!"
 handbook.p2.title_level,Stufe:
@@ -1112,7 +1113,13 @@ session.no_selector_items,Nicht im Laden gefunden: {0}
 session.prof_floor,(Stufen-Mindestwert {0})
 session.prof_text,{0} Fertigkeit {1}/100{2} · AP ×{3}
 session.unassigned_schedule,Nicht zugewiesene Routinen
+settings.ap_scale,Lehrlings-AP-Faktor
+settings.ap_scale_desc,Multipliziert die täglichen AP jedes Lehrlings. Gilt für alle Spielstände.
 settings.automation_enabled,Lehrlings-Automatisierung aktivieren (Schichten ausführen)
+settings.cost_scale,Lehrlings-Kostenfaktor
+settings.cost_scale_desc,"Multipliziert Tageslohn, Anwerbe-, Erweiterungs- und Schulungsgebühren; ×0 macht sie kostenlos. Der Freischaltpreis richtet sich nach dem Schwierigkeitsgrad und bleibt unverändert. Gilt für alle Spielstände."
+settings.growth_scale,Lehrlings-Wachstumsfaktor
+settings.growth_scale_desc,"Multipliziert EP, Meisterschaftszuwachs und Schulungs-EP. Gilt für alle Spielstände."
 settings.show_all_tags,"Alle Spiel-Tags in Bedingungen auflisten (inkl. Kategoriemarkierungen, IDs usw.)"
 settings.ui_scale,UI-Skalierungsfaktor
 settings.ui_scale_desc,"Zusätzliche Skalierung zur automatischen Anpassung an die Bildschirmhöhe, z. B. 0.8 oder 1.2"

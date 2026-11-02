@@ -74,11 +74,11 @@ public static class Proficiency
     /// <summary>AP 系数：Scale × 100 / 有效熟练度（新人 Lv1 约 1.39，做熟约 0.8，熟练度 100 时 0.75）。</summary>
     public static double CostMult(int effective) => T.Scale * 100.0 / Math.Max(1, effective);
 
-    /// <summary>学习：p ← (1 − η)·p + η·w班。η = Rate（只要这一班干了活；MinShare 小于 1 时按 AP 比例，balance 工具对比用）。</summary>
+    /// <summary>学习：p ← (1 − η)·p + η·w班。η = Rate × 成长倍率（只要这一班干了活；MinShare 小于 1 时按 AP 比例，balance 工具对比用）。</summary>
     public static void Learn(Apprentice a, IReadOnlyDictionary<string, double> shiftWork, double apSpent)
     {
-        if (apSpent <= 0 || a.MaxAp <= 0) return;
-        double eta = Math.Min(1, T.Rate * Math.Max(T.MinShare, apSpent / a.MaxAp));
+        if (apSpent <= 0 || a.DailyAp <= 0) return;
+        double eta = Math.Min(1, T.Rate * Scales.Growth * Math.Max(T.MinShare, apSpent / a.DailyAp));
         var p = Normalize(a.Proficiency);
         var w = Normalize(shiftWork);
         a.Proficiency = p.Keys.ToDictionary(k => k, k => (1 - eta) * p[k] + eta * w[k]);

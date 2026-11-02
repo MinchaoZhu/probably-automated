@@ -591,6 +591,7 @@ agency.cash_insufficient,Insufficient cash ({0})
 agency.fee_expand,Agency expansion fee
 agency.fee_hire,Agency recruitment fee
 agency.fee_train_item,Training materials ({0})
+agency.free,Free
 agency.header_stats,Cash {0} · Slots {1}/{2}
 agency.hired_msg,{0} has joined. Please assign a routine on the Apprentice page.
 agency.level_up_info,Each level up adds {0} daily AP and {1} daily wage.
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,"Wages are settled every night upon sleeping. If funds a
 handbook.p1.title_ap,AP:
 handbook.p1.title_multi_sched,Multiple Routines:
 handbook.p2.banner,Proficiency & Level
-handbook.p2.text_level,"Each level adds 5 daily AP, 10 daily wage, and raises proficiency floor by 4 (level 1 is 54), preventing new routines from running too slowly. Studying training materials grants XP."
-handbook.p2.text_prof,"Apprentices have distinct proficiency (0-100) per routine, viewable in Details. Higher proficiency reduces AP cost: at 100 it is 0.75x base cost, while newcomers start around 1.4x. Running the same routine continuously reaches 85+ in about two weeks."
+handbook.p2.text_level,"Each level adds {0} daily AP, {1} daily wage, and raises proficiency floor by 4 (level 1 is 54), preventing new routines from running too slowly. Studying training materials grants XP."
+handbook.p2.text_prof,"Apprentices have distinct proficiency (0-100) per routine, viewable in Details. Higher proficiency reduces AP cost: at 100 it is 0.75x base cost, while newcomers start around 1.4x. With default settings, running the same routine continuously reaches 85+ in about two weeks."
 handbook.p2.text_switch,Proficiency depends on similarity between past work and current routine. Switching to routines with similar actions and items retains most proficiency; switching to very different ones starts lower. Running multiple disparate routines results in lower proficiency than specializing.
 handbook.p2.tip,"Proficiency only affects AP consumption, not daily wage; wage depends strictly on level!"
 handbook.p2.title_level,Level:
@@ -1112,7 +1113,13 @@ session.no_selector_items,Not found in shop: {0}
 session.prof_floor,(Level min {0})
 session.prof_text,{0} Proficiency {1}/100{2} · AP ×{3}
 session.unassigned_schedule,Unassigned routines
+settings.ap_scale,Apprentice AP Multiplier
+settings.ap_scale_desc,Multiplies each apprentice's daily AP. Applies to all saves.
 settings.automation_enabled,Enable apprentice automation (run shifts)
+settings.cost_scale,Apprentice Cost Multiplier
+settings.cost_scale_desc,"Multiplies daily wages, hiring, expansion and training fees; ×0 makes them free. The unlock price follows the game difficulty and is not affected. Applies to all saves."
+settings.growth_scale,Apprentice Growth Multiplier
+settings.growth_scale_desc,"Multiplies XP, proficiency gain and training XP. Applies to all saves."
 settings.show_all_tags,"List all game tags in conditions (including category marks, IDs, etc.)"
 settings.ui_scale,UI Scale Multiplier
 settings.ui_scale_desc,"Extra scale multiplier on top of auto-scaling by screen height, e.g. 0.8 or 1.2"

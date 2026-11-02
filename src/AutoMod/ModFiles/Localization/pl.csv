@@ -591,6 +591,7 @@ agency.cash_insufficient,Niewystarczające środki ({0})
 agency.fee_expand,Opłata za rozszerzenie agencji
 agency.fee_hire,Opłata rekrutacyjna agencji
 agency.fee_train_item,Materiały szkoleniowe ({0})
+agency.free,Za darmo
 agency.header_stats,Gotówka {0} · Miejsca {1}/{2}
 agency.hired_msg,{0} dołącza do zespołu. Wybierz procedurę na karcie praktykantów.
 agency.level_up_info,Każdy poziom zwiększa dzienne AP o {0} i stawkę dzienną o {1}.
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,Wypłaty są rozliczane każdej nocy podczas snu. W razi
 handbook.p1.title_ap,AP:
 handbook.p1.title_multi_sched,Wiele procedur:
 handbook.p2.banner,Biegłość i poziom
-handbook.p2.text_level,"Każdy poziom dodaje 5 AP dziennie, 10 do dniówki i podnosi próg minimalnej biegłości o 4 (poziom 1 to 54), zapobiegając zbyt powolnej pracy przy nowych procedurach. Czytanie materiałów szkoleniowych daje PD."
-handbook.p2.text_prof,"Praktykanci mają osobną biegłość (0-100) dla każdej procedury, widoczną w Szczegółach. Wyższa biegłość obniża koszt AP: przy 100 wynosi 0.75x kosztu bazowego, a nowicjusze zaczynają od około 1.4x. Ciągłe wykonywanie tej samej procedury pozwala osiągnąć 85+ w około dwa tygodnie."
+handbook.p2.text_level,"Każdy poziom dodaje {0} AP dziennie, {1} do dniówki i podnosi próg minimalnej biegłości o 4 (poziom 1 to 54), zapobiegając zbyt powolnej pracy przy nowych procedurach. Czytanie materiałów szkoleniowych daje PD."
+handbook.p2.text_prof,"Praktykanci mają osobną biegłość (0-100) dla każdej procedury, widoczną w Szczegółach. Wyższa biegłość obniża koszt AP: przy 100 wynosi 0.75x kosztu bazowego, a nowicjusze zaczynają od około 1.4x. Przy ustawieniach domyślnych ciągłe wykonywanie tej samej procedury pozwala osiągnąć 85+ w około dwa tygodnie."
 handbook.p2.text_switch,Biegłość zależy od podobieństwa między dawną pracą a obecną procedurą. Przejście do procedur o podobnych akcjach i przedmiotach zachowuje większość biegłości; przejście do bardzo odmiennych zaczyna się od niższego poziomu. Wykonywanie wielu różnych procedur daje niższą biegłość niż specjalizacja.
 handbook.p2.tip,"Biegłość wpływa tylko na zużycie AP, nie na dniówkę; dniówka zależy wyłącznie od poziomu!"
 handbook.p2.title_level,Poziom:
@@ -1112,7 +1113,13 @@ session.no_selector_items,Brak w sklepie: {0}
 session.prof_floor,(Minimum poziomu {0})
 session.prof_text,{0} Biegłość {1}/100{2} · AP ×{3}
 session.unassigned_schedule,Nieprzypisane procedury
+settings.ap_scale,Mnożnik AP praktykantów
+settings.ap_scale_desc,Mnoży dzienne AP każdego praktykanta. Dotyczy wszystkich zapisów.
 settings.automation_enabled,Włącz automatyzację praktykantów (wykonywanie zmian)
+settings.cost_scale,Mnożnik kosztów praktykantów
+settings.cost_scale_desc,"Mnoży dniówki oraz opłaty za zatrudnienie, rozszerzenie i szkolenie; przy ×0 są one darmowe. Cena odblokowania zależy od poziomu trudności gry i nie ulega zmianie. Dotyczy wszystkich zapisów."
+settings.growth_scale,Mnożnik rozwoju praktykantów
+settings.growth_scale_desc,"Mnoży doświadczenie, przyrost biegłości i doświadczenie ze szkoleń. Dotyczy wszystkich zapisów."
 settings.show_all_tags,"Wyświetl wszystkie tagi gry w warunkach (w tym oznaczenia kategorii, identyfikatory itp.)"
 settings.ui_scale,Mnożnik skali interfejsu
 settings.ui_scale_desc,"Dodatkowa skala oprócz automatycznego dopasowania do wysokości ekranu, np. 0.8 lub 1.2"

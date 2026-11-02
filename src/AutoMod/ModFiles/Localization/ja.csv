@@ -591,6 +591,7 @@ agency.cash_insufficient,所持金不足（{0}）
 agency.fee_expand,斡旋所枠拡張費
 agency.fee_hire,斡旋所採用手数料
 agency.fee_train_item,研修資料（{0}）
+agency.free,無料
 agency.header_stats,所持金 {0} · 枠数 {1}/{2}
 agency.hired_msg,{0} が加わりました。見習いページでルーチンを選択してください
 agency.level_up_info,レベルが1上がるごとに、毎日のAPが {0}、日給が {1} 増加します。
@@ -1036,8 +1037,8 @@ handbook.p1.tip_payroll,給与は毎晩の就寝時に精算されます。資�
 handbook.p1.title_ap,AP:
 handbook.p1.title_multi_sched,複数のルーチン:
 handbook.p2.banner,熟練度とレベル
-handbook.p2.text_level,レベルが1上がるごとに日々のAPが 5 増加、日給が 10 増加し、熟練度の最低保証が 4 引き上げられ（レベル 1 では 54）、新しいルーチンの実行が遅くなりすぎるのを防ぎます。研修教材を読むことで経験値を獲得できます。
-handbook.p2.text_prof,見習いはルーチンごとに個別の熟練度（0-100）を持ち、詳細で確認できます。熟練度が高いほどAP消費が減少し、100 では基礎消費の 0.75x、新人は約 1.4x から始まります。同一ルーチンを継続すると約二週間で 85+ に達します。
+handbook.p2.text_level,レベルが1上がるごとに日々のAPが {0} 増加、日給が {1} 増加し、熟練度の最低保証が 4 引き上げられ（レベル 1 では 54）、新しいルーチンの実行が遅くなりすぎるのを防ぎます。研修教材を読むことで経験値を獲得できます。
+handbook.p2.text_prof,見習いはルーチンごとに個別の熟練度（0-100）を持ち、詳細で確認できます。熟練度が高いほどAP消費が減少し、100 では基礎消費の 0.75x、新人は約 1.4x から始まります。初期設定では、同一ルーチンを継続すると約二週間で 85+ に達します。
 handbook.p2.text_switch,熟練度は過去の作業内容と現在のルーチンの類似度に依存します。類似したアクションやアイテムのルーチンへ切り替える場合は大半の熟練度が引き継がれますが、全く異なる内容では低い状態から始まります。多種多様なルーチンを兼任させると専門化させるより熟練度が低くなります。
 handbook.p2.tip,熟練度はアクションが消費する AP にのみ影響し、日給には影響しません。日給はレベルにのみ依存します！
 handbook.p2.title_level,レベル:
@@ -1112,7 +1113,13 @@ session.no_selector_items,店内にありません: {0}
 session.prof_floor,（レベル保証 {0}）
 session.prof_text,{0} 熟練度 {1}/100{2} · AP ×{3}
 session.unassigned_schedule,未割り当てのルーチン
+settings.ap_scale,見習いAP倍率
+settings.ap_scale_desc,見習いの1日のAPにこの倍率を掛けます。すべてのセーブデータに適用されます。
 settings.automation_enabled,見習い自動化を有効にする（シフトの実行）
+settings.cost_scale,見習い費用倍率
+settings.cost_scale_desc,日給、雇用料、増員料、研修料にこの倍率を掛けます。×0 で無料になります。アンロック価格はゲームの難易度に応じて決まり、この設定の影響を受けません。すべてのセーブデータに適用されます。
+settings.growth_scale,見習い成長倍率
+settings.growth_scale_desc,経験値、熟練度の上昇、研修の経験値にこの倍率を掛けます。すべてのセーブデータに適用されます。
 settings.show_all_tags,条件内にすべてのゲームタグ（カテゴリマーク、IDなどの内部タグ含む）を表示
 settings.ui_scale,UI倍率
 settings.ui_scale_desc,画面の高さに応じた自動拡大縮小に加えた追加倍率（例: 0.8 や 1.2）

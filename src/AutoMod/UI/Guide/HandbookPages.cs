@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AutoMod.Domain.Workforce;
 
 namespace AutoMod.UI.Guide;
 
@@ -115,7 +116,7 @@ public static class HandbookPages
             Banner(Domain.L.T("handbook.p2.banner"), Green),
             Entry("chemistry_guide", Domain.L.T("handbook.p2.title_prof"), Domain.L.T("handbook.p2.text_prof")),
             Entry("handnote", Domain.L.T("handbook.p2.title_switch"), Domain.L.T("handbook.p2.text_switch")),
-            Entry("newspaper", Domain.L.T("handbook.p2.title_level"), Domain.L.T("handbook.p2.text_level")),
+            Entry("newspaper", Domain.L.T("handbook.p2.title_level"), Domain.L.T("handbook.p2.text_level", Scales.DailyAp(SkillMath.StartAp + SkillMath.ApPerLevel) - Scales.DailyAp(SkillMath.StartAp), ApprenticeFactory.WageOf(new Apprentice { Level = 2 }) - ApprenticeFactory.WageOf(new Apprentice { Level = 1 }))),
             Tip(Domain.L.T("handbook.p2.tip")),
         },
         // 3 全店、设备名、筛选器、参数

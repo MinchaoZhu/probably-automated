@@ -1,4 +1,5 @@
 using AutoMod.Domain;
+using AutoMod.Domain.Workforce;
 
 namespace AutoMod.App;
 
@@ -12,6 +13,7 @@ public static class Settings
 
     private static ConfigEntry<bool> _enabled, _allTags;
     private static ConfigEntry<float> _scale;
+    private static ConfigEntry<string> _cost, _ap, _growth;
 
     /// <summary>学徒自动化总开关：关掉后不执行任何班次。</summary>
     public static bool AutomationEnabled => _enabled?.Value ?? true;
@@ -29,5 +31,25 @@ public static class Settings
         _scale = config.Define("ui_scale", 1f, Section, () => Domain.L.T("settings.ui_scale"), 0.6f, 2f,
             () => Domain.L.T("settings.ui_scale_desc"));
         _allTags = config.Define("show_all_tags", false, Section, () => Domain.L.T("settings.show_all_tags"));
+
+        // 学徒数值的三个倍率：下拉框显示和存的都是档位文字（“×1”），读到 Scales 里
+        _cost = config.Define("cost_scale", Scales.Default, Section, () => Domain.L.T("settings.cost_scale"), Scales.CostChoices,
+            () => Domain.L.T("settings.cost_scale_desc"));
+        _ap = config.Define("ap_scale", Scales.Default, Section, () => Domain.L.T("settings.ap_scale"), Scales.Choices,
+            () => Domain.L.T("settings.ap_scale_desc"));
+        _growth = config.Define("growth_scale", Scales.Default, Section, () => Domain.L.T("settings.growth_scale"), Scales.Choices,
+            () => Domain.L.T("settings.growth_scale_desc"));
+        _cost.OnChanged += _ => ApplyScales();
+        _ap.OnChanged += _ => ApplyScales();
+        _growth.OnChanged += _ => ApplyScales();
+        ApplyScales();
+    }
+
+    private static void ApplyScales()
+    {
+        Scales.Cost = Scales.Parse(_cost.Value, Scales.CostChoices);
+        Scales.Ap = Scales.Parse(_ap.Value, Scales.Choices);
+        Scales.Growth = Scales.Parse(_growth.Value, Scales.Choices);
+        Log.Info($"[Settings] 倍率：费用 ×{Scales.Cost}，AP ×{Scales.Ap}，成长 ×{Scales.Growth}");
     }
 }

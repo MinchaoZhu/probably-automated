@@ -162,7 +162,7 @@ public class ShiftReport
                         Reason = rule.Pre == PreResult.NotRun ? L.N("report.reason.notrun", rule.Deferred, rule.Why) : L.N("report.reason.no_ap", rule.Deferred) });
             }
         }
-        foreach (var w in workers) r.Workers[w.Name] = new[] { w.MaxAp, w.ApLeft };
+        foreach (var w in workers) r.Workers[w.Name] = new[] { w.DailyAp, w.ApLeft };
         r.Note = string.Join(" ", run.Notes);
         r.SummaryOverride = L.T("report.summary_override", AutoMod.Domain.Workforce.Shift.DisplayName(run.Shift), Text.RunSummary(run));
         return r;

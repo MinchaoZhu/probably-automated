@@ -192,7 +192,7 @@ internal static class RulesTests
 
         test("发薪：勾选的上岗付日薪，付不起从名册后面往前罢工", () =>
         {
-            Apprentice Wk(string n, int wage, bool paid) => new() { Name = n, Wage = wage, Paid = paid };
+            Apprentice Wk(string n, int wage, bool paid) => new() { Name = n, Level = (wage - 30) / 10, Paid = paid }; // 日薪 30 + 10 × 等级
             var apps = new List<Apprentice> { Wk("甲", 100, true), Wk("乙", 80, false), Wk("丙", 60, true) };
             Check(Payday.Settle(apps, 1000) == 160 && apps[0].OnDuty && !apps[1].OnDuty && apps[2].OnDuty, "钱够：勾选的都上岗");
             Check(Payday.Settle(apps, 120) == 100 && apps[0].OnDuty && apps[2].Striking && !apps[2].OnDuty, "钱不够：后面的先罢工");
@@ -510,6 +510,32 @@ internal static class RulesTests
             Check(g.Rules.SkipWhile(r => r.Name != "育肥笼出栏").Skip(1).All(r => r.Pre == PreResult.NotRun), "后面的规则未执行");
             Check(g.ApUsed <= g.ApTotal + 1e-9, $"AP {g.ApUsed}/{g.ApTotal}");
             Check(Rats(shop.Fat1) == 6 - ready.Done[ActVerb.Use], "宰掉的鼠离开了育肥笼");
+        });
+
+        test("规则·执行：模组配置的 AP 倍率和成长倍率", () =>
+        {
+            int Run(double apScale, double growth, out Apprentice a)
+            {
+                var shop = new RatShop();
+                var d = new RulesData();
+                var sch = Scenarios.Instantiate(d, Scenarios.Get("rats"), shop.Bindings, w: shop.W);
+                a = App("甲", 16, 0, sch.Id);
+                try
+                {
+                    Scales.Ap = apScale;
+                    Scales.Growth = growth;
+                    var g = new Interpreter(shop.W, d).RunShift(Shift.Morning, new[] { a }).Groups[0];
+                    Check(g.ApTotal == a.DailyAp && g.ApUsed <= a.DailyAp + 1e-9, $"AP ×{apScale}：用了 {g.ApUsed}/{g.ApTotal}，上限是 {a.DailyAp}");
+                    return ApMath.Ceil(g.ApUsed);
+                }
+                finally { Scales.Ap = Scales.Growth = 1; }
+            }
+            int base1 = Run(1, 1, out var a1);
+            int base2 = Run(2, 1, out var a2);
+            Check(a2.MaxAp == 16 && base2 > 16 && base2 > base1, $"AP ×2：基础 16 AP 的学徒这一班能用到 {base2} AP（×1 时 {base1}），存的基础值不变");
+            Run(1, 2, out var g2);
+            static int Total(Apprentice x) => Enumerable.Range(1, x.Level - 1).Sum(SkillMath.XpToNext) + x.Xp;
+            Check(Total(a1) > 0 && Math.Abs(Total(g2) - 2 * Total(a1)) <= 1, $"成长 ×2：同样的活经验 {Total(a1)} → {Total(g2)}");
         });
 
         test("规则·执行：动作独立（缺剪线钳仍移动）、记事本按次重置", () =>

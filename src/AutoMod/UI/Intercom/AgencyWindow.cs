@@ -9,7 +9,7 @@ using AutoMod.UI.Store;
 
 namespace AutoMod.UI.Intercom;
 
-/// <summary>呼叫中介窗口：雇用学徒（固定 Lv1、每天 25 AP）、扩编名额。</summary>
+/// <summary>呼叫中介窗口：雇用学徒（固定 Lv1、×1 时每天 25 AP）、扩编名额。</summary>
 public static class AgencyWindow
 {
     private const string Id = "am_agency";
@@ -23,10 +23,10 @@ public static class AgencyWindow
         b.AddLabel(Tone.Dim(Domain.L.T("agency.header_stats", Cash.Current, st.Apprentices.Count, st.Slots)));
         b.AddSeparator();
         int wage = ApprenticeFactory.WageOf(new Apprentice { Level = 1 });
-        b.AddLabel(Domain.L.T("agency.new_apprentice_info", 1, SkillMath.StartAp, wage, Proficiency.Floor(1)));
-        b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("agency.level_up_info", SkillMath.ApPerLevel, 10))));
+        b.AddLabel(Domain.L.T("agency.new_apprentice_info", 1, Scales.DailyAp(SkillMath.StartAp), wage, Proficiency.Floor(1)));
+        b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("agency.level_up_info", Scales.DailyAp(SkillMath.StartAp + SkillMath.ApPerLevel) - Scales.DailyAp(SkillMath.StartAp), ApprenticeFactory.WageOf(new Apprentice { Level = 2 }) - wage))));
         b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
-        if (Agency.CanHire(st)) b.AddButton(Domain.L.T("agency.btn_hire", Agency.HireFee), Ui.A(Hire)).Tip(Domain.L.T("agency.tip_hire"));
+        if (Agency.CanHire(st)) b.AddButton(Domain.L.T("agency.btn_hire", Price(Agency.HireFee)), Ui.A(Hire)).Tip(Domain.L.T("agency.tip_hire"));
         else b.AddLabel(Tone.Color(Domain.L.T("agency.slots_full"), Tone.Warn));
         b.End();
         if (_msg != null) b.AddLabel(Tone.Small(_msg));
@@ -34,8 +34,8 @@ public static class AgencyWindow
         b.AddSeparator();
         int expand = Agency.ExpandFee(st.Slots);
         b.BeginRow(8);
-        if (st.Slots >= ModState.MaxSlots || expand <= 0) b.AddLabel(Tone.Dim(Domain.L.T("agency.slots_maxed", ModState.MaxSlots)));
-        else b.AddLabel(Tone.Dim(Domain.L.T("agency.slots_expand", st.Slots, st.Slots + 1))).AddButton(Domain.L.T("agency.btn_expand", expand), Ui.A(Expand));
+        if (st.Slots >= ModState.MaxSlots) b.AddLabel(Tone.Dim(Domain.L.T("agency.slots_maxed", ModState.MaxSlots)));
+        else b.AddLabel(Tone.Dim(Domain.L.T("agency.slots_expand", st.Slots, st.Slots + 1))).AddButton(Domain.L.T("agency.btn_expand", Price(expand)), Ui.A(Expand));
         b.AddFlexibleSpace().AddButton(Domain.L.T("agency.btn_return"), Ui.A(() => { Ui.Close(Id); MainWindow.Show("apprentices"); }));
         b.End();
         b.Show();
@@ -55,13 +55,16 @@ public static class AgencyWindow
     private static void Expand()
     {
         var st = Automation.State;
+        if (st.Slots >= ModState.MaxSlots) return;
         int fee = Agency.ExpandFee(st.Slots);
-        if (fee <= 0) return;
         if (!Cash.TryPay(fee, Domain.L.T("agency.fee_expand"))) { _msg = Tone.Color(Domain.L.T("agency.cash_insufficient", fee), Tone.Bad); Show(); return; }
         st.Slots++;
         _msg = null;
         Refresh();
     }
+
+    /// <summary>按钮上的价格：费用倍率为 ×0 时显示“免费”。</summary>
+    internal static string Price(int fee) => fee <= 0 ? Domain.L.T("agency.free") : fee.ToString();
 
     /// <summary>刷新自己，并同步对讲机窗口。重建的窗口会跑到最上层，所以最后重建自己。</summary>
     private static void Refresh()
@@ -81,7 +84,7 @@ public static class Training
         int fee = Agency.TrainingFee(app.Level);
         Pickers.Confirm(Domain.L.T("agency.train_title", app.Name),
             new[] { Domain.L.T("agency.train_desc", Agency.TrainingXp(app.Level), Agency.TrainingAp), Tone.Dim(Domain.L.T("agency.train_cash", Cash.Current)) },
-            (Domain.L.T("agency.btn_buy_train", fee), () => Buy(app, fee)), (Domain.L.T("ui.cancel"), () => { }));
+            (Domain.L.T("agency.btn_buy_train", AgencyWindow.Price(fee)), () => Buy(app, fee)), (Domain.L.T("ui.cancel"), () => { }));
     }
 
     private static void Buy(Apprentice app, int fee)
