@@ -100,12 +100,20 @@ public static class ItemFacts
     }
 
     /// <summary>
-    /// 创建一件原型实例用来读取它的事实（不占存档 uid、不放进店里）。只能在店里调用（库存要建界面节点）。
-    /// 用完必须 Destroy。
+    /// 创建一件原型实例用来读取它的事实（不放进店里）。只能在店里调用（库存要建界面节点）。用完必须 Destroy。
+    /// 和游戏自己创建物品（DirectoryMaster.Item）一样，创建后立刻分配 uniqueId：游戏里不存在 uid 为 0 的普通物品，
+    /// 别的 mod 也按这个前提写代码（例如按 uid 登记界面状态），uid 为 0 的原型可能让它们反复重建、卡死游戏。
+    /// 代价是每件原型用掉存档 uid 计数器的一个号，计数器是 int，不影响存档。
     /// </summary>
     public static GameItem CreatePrototype(string id)
     {
-        try { return DirectoryMaster.Create<GameItem>(id); }
+        try
+        {
+            var item = DirectoryMaster.Create<GameItem>(id);
+            var store = GameApi.Store;
+            if (item != null && item.uniqueId == 0 && store != null) item.uniqueId = store.GetUniqueID();
+            return item;
+        }
         catch { return null; }
     }
 }
