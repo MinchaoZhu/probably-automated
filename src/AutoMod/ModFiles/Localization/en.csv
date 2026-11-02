@@ -1,0 +1,1410 @@
+# Probably Automated Localization Table: English (en)
+# Primary source and fallback for all localization strings.
+# ==============================================================================
+# Domain & Rules: Vocabulary & Operators
+# Vocabulary, aggregation functions, and system variables.
+# Placeholders: none.
+# ==============================================================================
+vocab.agg.avg,Average
+vocab.agg.count,Count
+vocab.agg.max,Max
+vocab.agg.min,Min
+vocab.agg.sum,Sum
+vocab.sys.ap_left,AP left this shift
+vocab.sys.day,Current day
+vocab.sys.shift,"Current shift (Morning=1, Night=2)"
+vocab.sys.shift.short,Current shift
+# ==============================================================================
+# Domain & Rules: Traits, Properties, Presets & Operations
+# Item traits, property definitions, preset conditions, and action verbs.
+# Placeholders: none.
+# ==============================================================================
+op.activate,Activate
+op.mark,Add mark
+op.move,Move
+op.note,Record
+op.press,Press
+op.swap,Swap
+op.toggle,Toggle
+op.unmark,Remove mark
+op.use,Use
+preset.adult,Adult
+preset.alive,Alive
+preset.dead,Dead
+preset.female,Female
+preset.hasroom,Has room
+preset.male,Male
+prop.age,Age
+prop.calories,Calories
+prop.cap,Capacity
+prop.count,Stored count
+prop.dead,Dead
+prop.dead.not,Alive
+prop.durability,Durability
+prop.durabilitypct,Durability%
+prop.energy,Energy
+prop.energymax,Max energy
+prop.energypct,Energy%
+prop.free,Free slots
+prop.freeml,Free volume (ml)
+prop.gene.fertility,Gene: Fertility
+prop.gene.growth,Gene: Growth
+prop.gene.immunity,Gene: Immunity
+prop.gene.litter,Gene: Litter size
+prop.gene.longevity,Gene: Longevity
+prop.gravid,Gravid
+prop.gravid.not,Not gravid
+prop.growpct,Growth%
+prop.health,Health
+prop.healthpct,Health%
+prop.hungerpct,Satiety%
+prop.inbatteryslot,In battery slot
+prop.inbatteryslot.not,Not in battery slot
+prop.instorage,In storage
+prop.instorage.not,Not in storage
+prop.labelok,Labeled correctly
+prop.labelok.not,Mislabeled
+prop.matingcount,Mating count
+prop.matingmax,Max matings
+prop.mature,Adult
+prop.mature.not,Not adult
+prop.neutered,Neutered
+prop.neutered.not,Intact
+prop.nutrientmax,Max required nutrients
+prop.nutrientmin,Min required nutrients
+prop.planthealth,Plant health%
+prop.powered,Powered
+prop.powered.not,Unpowered
+prop.progresspct,Progress%
+prop.purity,Water purity (%)
+prop.purity.grade_short,Purity
+prop.repairable,Repairable
+prop.repairable.not,Non-repairable
+prop.sex,Sex
+prop.volumeml,Water volume (ml)
+prop.wateruse,Nightly water use (ml)
+prop.weight,Weight
+prop.working,Working
+prop.working.not,Idle
+trait.animal,Any caged animal
+trait.battery,Any battery
+trait.blade,Any blade
+trait.cage,Animal cage
+trait.container,Any container
+trait.durable,Any durable item
+trait.filter,Any filter cartridge
+trait.filterholder,Water filter jug
+trait.fish,Any fish
+trait.food,Any food (with calories)
+trait.gun,Any firearm
+trait.liquid,Any liquid container
+trait.livestock,Any livestock
+trait.machine,Machine
+trait.meat,Any meat
+trait.seed,Any seed
+trait.selfcharging,Any self-charging battery
+trait.storage,Storage
+# ==============================================================================
+# Domain & Rules: Kinds & Game Items
+# Item kinds and categories used by catalog and filters.
+# Placeholders: {0} = kind/family name.
+# ==============================================================================
+kind.animal_cage,Animal Cage
+kind.any,All items
+kind.any_family,Any {0}
+trait.family.contraband,Contraband
+trait.family.chem,Chemicals
+trait.family.organ,Organs
+trait.family.amenity,Amenities
+trait.family.use_count,Limited-Use Items
+trait.family.permit,Permits
+trait.family.toolbox,Toolboxes
+trait.family.salvagable,Salvageable Items
+trait.family.progress,In-Progress Items
+trait.family.showcase_special,Showcase Specials
+trait.family.endangerment,Hazardous Items
+kind.any_type,Any {0}
+kind.bottle_printer,Bottle Printer
+kind.energy_credit,Battery
+kind.feces_large,Animal Feces (Large)
+kind.feces_medium,Animal Feces
+kind.feces_small,Animal Feces (Small)
+kind.fillerweed,Fillerweed
+kind.fillerweed_seed,Fillerweed Seed
+kind.fish_scrap,Fish Scrap
+kind.hydroponic,Hydroponic System
+kind.industrial_fish_feed,Industrial Fish Feed
+kind.kitchen_cleaver,Kitchen cleaver
+kind.labeler,Labeler
+kind.large_bottled_water,Bottle of Water (Large)
+kind.livestock_feed_dispenser,Livestock Feed Dispenser
+kind.morsel,Morsel
+kind.nutrient_tablet,Hydroponic Nutrient Tablet
+kind.nutrifruit,Nutrifruit
+kind.nutrifruit_seed,Nutrifruit Seed
+kind.printer,3D Printer
+kind.printer_chip_pistol,.22 Pistol 3D Printer Chip
+kind.printer_plastic,3D Printing Filament
+kind.ras,RAS
+kind.ras_water_tank,RAS Water Tank
+kind.rat,Rat
+kind.raw_meat,Raw meat
+kind.recharger,Recharger
+kind.self,The container itself
+kind.small_bottled_water,Bottle of Water (Small)
+kind.small_morsel,Small Morsel
+kind.small_raw_meat,Raw Meat (Small)
+kind.tilapia,Tilapia
+kind.vending_fountain,Water Vending Machine
+kind.water_filter,Water filter
+kind.water_filter_adv,Advanced water filter
+kind.water_jug,Water jug
+kind.water_purifier,Water Purifier
+kind.wire_cutter,Wire cutter
+# ==============================================================================
+# Domain & Rules: Machine Slots & Evaluation
+# Container slot names and source expansion evaluation strings.
+# Placeholders: {0} = container/slot name, {1} = slot name.
+# ==============================================================================
+eval.empty_no_items,"""[{0}]"" is currently empty"
+eval.empty_not_matching,"""[{1}]"" is currently empty (1 item in source, none match conditions)|""[{1}]"" is currently empty ({0} items in source, none match conditions)"
+eval.expand.contents,contents
+eval.expand.self,itself
+eval.expand.slot,{0}
+eval.from.contents,Contents of {0}
+eval.from.self,{0} itself
+eval.from.slot,{1} of {0}
+eval.no_named,No [{0}] in shop
+eval.slot.battery,Battery slots
+eval.slot.filter,Filter slots
+slot.backpack,Backpack
+slot.base_water,Base Water
+slot.batteries,Batteries
+slot.battery,Battery Slot
+slot.butcher,Butcher
+slot.chip,Chip
+slot.clean_water,Clean Water
+slot.container,Container
+slot.core,Core
+slot.dispenser,Dispenser
+slot.distillate,Distillate
+slot.filter,Filter Slot
+slot.filters,Filters
+slot.frame,Frame
+slot.input,Input
+slot.module,Module
+slot.note,Note
+slot.nutrient,Nutrient
+slot.output,Output
+slot.power,Battery
+slot.recipe,Recipe
+slot.seed,Seed
+slot.storage,Storage
+slot.tank,Tank
+slot.trap,Trap
+slot.water,Water
+slot.wine,Wine
+# ==============================================================================
+# Domain & Rules: Rule Cards & Action Templates
+# Rule card sentence templates, slots, and condition clauses.
+# Placeholders: {list} = items, {to} = target, {tool} = tool, {op} = action.
+# ==============================================================================
+card.cond.empty,is empty
+card.cond.every_shift,Every shift
+card.cond.every_shift_run,Run every shift
+card.cond.gt,has more than 1 item|has more than {0} items
+card.cond.lt,has fewer than 1 item|has fewer than {0} items
+card.cond.not_empty,is not empty
+card.cond.when,When {0}
+card.op.apply,Use
+card.op.press,Press
+card.param.button,Button
+card.param.list,Item
+card.param.pre,Item
+card.param.to,Target
+card.param.tool,Tool
+card.select_button,(choose button)
+card.select_param,(choose {0})
+card.times," (once each)| ({0} times each)"
+card.tpl.apply,{op} {tool} on {list}
+card.tpl.complex_colon,{complex}:
+card.tpl.cond_colon,{cond}:
+card.tpl.mark,{op} [{text}] on {list}
+card.tpl.place,{op} {list} into {to}
+card.tpl.press,{op} {button} on {list}
+card.tpl.swap,{op} {list} with {to}
+card.tpl.trigger,{op} {list}
+card.tpl.unmark,{op} [{text}] from {list}
+card.tpl.when,When {list} {cond}:
+# ==============================================================================
+# Domain & Rules: Text Formatting & Outcomes
+# Sentence generators, action text, preconditions, grades, and execution run summary.
+# Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
+# ==============================================================================
+action.activate,Activate {0}
+action.mark,Add mark [{1}] to {0}
+action.move,Move {0} to {1}
+action.note.add,Add {0} to {1}
+action.note.set,Write {0} to {1}
+action.press,Press [{1}] on {0}
+action.swap,Swap {0} with {1}
+action.times,", once each|, {0} times each"
+action.toggle,Toggle {0}
+action.unmark,Remove mark [{1}] from {0}
+action.use,Use {0} on {1}
+grade.at_least,at least
+grade.at_most,at most
+grade.better_than,better than
+grade.is,is
+grade.is_not,is not
+grade.worse_than,worse than
+pre.cmp,count of {0} {1} {2}
+pre.empty,{0} is empty
+pre.gt,{0} has more than {1} items
+pre.lt,{0} has fewer than {1} items
+pre.not_empty,{0} is not empty
+pre.where.cmp,count of {1} with {0} {2} {3}
+pre.where.empty,there are no {1} with {0}
+pre.where.gt,more than {2} of {1} with {0}
+pre.where.lt,fewer than {2} of {1} with {0}
+pre.where.not_empty,there are {1} with {0}
+prenot.no_less,{0} no less than {1} items
+prenot.no_more,{0} no more than {1} items
+prenot.where_no_less,{1} with {0} no less than {2} items
+prenot.where_no_more,{1} with {0} no more than {2} items
+runsummary.deferred,", 1 item skipped (not enough AP)|, {0} items skipped (not enough AP)"
+runsummary.done,1 item done|{0} items done
+runsummary.issues,", 1 task failed|, {0} tasks failed"
+runsummary.levelup,; {0} leveled up
+runsummary.no_apprentices,No apprentices on shift.
+text.ap,{0} / {1} AP used
+text.bracket,[{0}]
+text.pair,{0}: {1}
+text.pair_after,"{0}: "
+text.deleted,(deleted)
+text.dot_sep," · "
+text.members.all,{0} ({1} in total)
+text.members.more,{0} and more ({1} in total)
+text.object_def,Parameter = {0}{1}
+text.paren," ({0})"
+text.period,.
+text.prop_def,Formula = {0}
+text.selector.conds,Conditions: {0}
+text.selector.minus,Exclude: {0}
+text.selector.scope,Scope: {0}
+text.selector.stat_count,Count: {0}
+text.selector.stat_other,Stat {0}: {1}
+text.selector.take,Pick: {0}
+text.selector.type,Type: {0}
+text.selector.unset_from,(no source selected)
+text.short.minus,exclude {0}
+text.slot.battery," (battery slot)"
+text.slot.filter," (filter slot)"
+text.unset,(not selected)
+# ==============================================================================
+# Domain & Rules: Static Checks & Scope Rules
+# Rule validator error messages, warnings, and scoping conflict rules.
+# Placeholders: {0} = item/definition name, {1} = details.
+# ==============================================================================
+check.err.def_missing,Referenced definition does not exist
+check.err.expr_const_missing,Parameter in expression does not exist or not selected
+check.err.expr_empty,Expression has empty terms
+check.err.expr_note_missing,Counter in expression does not exist or not selected
+check.err.expr_note_scope,Counter cannot be used here
+check.err.expr_own_scope,Self property cannot be used here
+check.err.expr_sel_custom_prop,Custom property formula cannot reference a filter
+check.err.expr_sel_missing,Filter in expression does not exist or not selected
+check.err.expr_sys_missing,Expression has empty terms
+check.err.expr_sys_scope,System variable cannot be used here
+check.err.pre_note_missing,Condition counter does not exist
+check.err.pre_sel_missing,Condition filter does not exist
+check.err.pre_stat_where,Aggregation filter does not support condition-based count checks
+check.err.pre_sys_missing,"Unknown system variable ""{0}"""
+check.err.prop_cycle,Custom property cannot reference another custom property
+check.err.prop_prefix,"Property ""{0}"": {1}"
+check.err.rule_mark_empty,Mark name not specified
+check.err.rule_move_no_to,"""Move"" has no target selected"
+check.err.rule_move_not_box,"Target of Move must be a container: ""{0}"" is not a container"
+check.err.rule_no_actions,No actions set
+check.err.rule_note_missing,"""Record"" has no counter selected"
+check.err.rule_press_no_button,"""Press button"" has no button selected"
+check.err.rule_swap_no_to,"""Swap"" has no other item group selected"
+check.err.rule_target_missing,"""{0}"" has no item selected"
+check.err.rule_times_invalid,"""{0}"" count cannot be less than 1"
+check.err.rule_unknown_verb,"Unknown action ""{0}"" (please reselect)"
+check.err.rule_use_no_tool,"""Use"" has no tool selected"
+check.err.rule_use_times_invalid,"""Use"" count cannot be less than 1"
+check.err.rule_use_tool_kind,"Tool of ""Use"" must be a label, filter or fixture"
+check.err.sel_agg_prop_empty,Stat property not selected
+check.err.sel_cycle,Filter has circular reference
+check.err.sel_from_empty,No source selected
+check.err.sel_from_missing,Source definition does not exist
+check.err.sel_from_number,Source cannot be a number
+check.err.sel_from_param,"Source is a parameter (constant), must be a container or ""Whole Shop"""
+check.err.sel_minus_missing,Excluded filter does not exist
+check.err.sel_prefix,"Filter ""{0}"": {1}"
+check.err.sel_preset_missing,Preset condition does not exist
+check.err.sel_prop_empty,Property not selected
+check.ref.prop,Property {0}
+check.ref.selector,Filter {0}
+check.warn.sel_all_shop,"""[{0}]"" is all items in the whole shop; will process everything (including batteries in machines)"
+check.warn.sel_itself,"""""""[{0}]"""" refers to the container itself; to process its contents, use a filter whose source is [{0}]"""
+check.warn.tool_is_box,"Tool ""[{0}]"" is a container: will use the first available item inside, which might not be intended"
+scope.err.already_global,Already a global definition
+scope.err.conflict,"""{0}"" {1}, please rename first"
+scope.err.cross_ref_local,"Cross-routine reference to local definition ""{0}"" (only global definitions or local ones within the routine can be used)"
+scope.err.dup_global_param,"Conflicts with global parameter ""{0}"""
+scope.err.dup_global_selector,"Conflicts with global filter ""{0}"""
+scope.err.dup_local_param,"Conflicts with local parameter ""{1}"" in routine ""{0}"""
+scope.err.dup_local_selector,"Conflicts with local filter ""{1}"" in routine ""{0}"""
+scope.err.global_ref_local,"Global definition cannot reference local definition ""{0}"""
+scope.shop,Whole Shop
+# ==============================================================================
+# Domain & Simulation: Simulator Catalog & Items
+# Items, containers, and mock objects in Simulator.
+# Placeholders: none.
+# ==============================================================================
+sim.item.animal_cage,Animal Cage
+sim.item.battery_empty,Battery (Empty)
+sim.item.battery_full,Battery (Full)
+sim.item.battery_self,Self-Charging Battery
+sim.item.filter,Water Filter
+sim.item.filter_adv,Advanced Water Filter
+sim.item.jug_dirty,Water Jug (Dirty 3L)
+sim.item.jug_empty,Empty Water Jug
+sim.item.knife,Meat Cleaver
+sim.item.labeler,Labeler
+sim.item.machine,Powered Machine
+sim.item.meat,Raw Meat
+sim.item.moisture_farm,Moisture Farm
+sim.item.other,Misc Item
+sim.item.projector,Mirage Projector
+sim.item.rat_baby,Baby Rat
+sim.item.rat_f,Female Rat (Adult)
+sim.item.rat_fat,Fat Rat (Ready)
+sim.item.rat_m,Male Rat (Adult)
+sim.item.recharger,Recharger
+sim.item.storage,Storage Bay
+sim.item.toolbox,Toolbox
+sim.item.water_pitcher,Water Filter Pitcher
+sim.item.water_purifier,Water Purifier
+sim.item.wire_cutter,Wire Cutter
+# ==============================================================================
+# Domain & Simulation: Simulator Engine & UI
+# Simulator configuration, step execution, and outcome display.
+# Placeholders: {0} = item name/shift, {1} = parameter/quantity.
+# ==============================================================================
+sim.add_to_title,"Place in ""{0}"""
+sim.app_line,{0} · {1} · Lv{2} · {3} AP/day · Prof {4}
+sim.apprentices,Apprentices
+sim.battery_summary,Battery {0}
+sim.btn_add_items,+ Items
+sim.btn_add_vapp,+ Virtual Apprentice
+sim.btn_edit_schedule,Edit Routine
+sim.btn_start,Start Simulation
+sim.cannot_create_item,Cannot create {0}
+sim.copy_failed,Failed to copy shop: {0}
+sim.count_label,Count
+sim.daily_ap,Daily AP
+sim.day_shift_head,Day {0} · {1}
+sim.deferred_items_warn,{0} deferred due to insufficient AP
+sim.desc.battery,{0} #{1} ({2}%)
+sim.desc.dead,", dead"
+sim.desc.liquid,"{0} #{1} ({2}ml, purity {3}%)"
+sim.desc.neutered,", neutered"
+sim.desc.rat,"{0} rat #{1} ({2}g, {3} days{4}{5})"
+sim.duration,Duration
+sim.empty,Empty
+sim.fail.dest_full,{0} is full
+sim.fail.no_effect,No change
+sim.fail.simulated,Already processed in preview (effect unknown)
+sim.group_stats,{0} / {1} AP · ×{2}
+sim.in_shop_count,In shop: {0}
+sim.level,Level
+sim.lvl_up,Level Up: {0}
+sim.memo_tag,Counters: {0}
+sim.more_items_count,{0} more
+sim.more_kinds_search,{0} more kinds; enter search keyword.
+sim.no_apps_tip,No apprentices: add virtual apprentice to run
+sim.no_matching_items,No matching items.
+sim.no_pending_items,No pending items
+sim.no_schedules,No routines.
+sim.no_workers_this_shift,No workers this shift
+sim.none_in_shop,None in shop
+sim.op_done_count,{1} 1 item|{1} {0} items
+sim.pct_unchanged,Unchanged
+sim.place_in_battery_slot,In Battery Slot
+sim.place_in_container,In Container
+sim.place_into,Place Into
+sim.prof_label,Proficiency
+sim.ran_shifts_notice,"Ran 1 shift, will continue running|Ran {0} shifts, will continue running"
+sim.rat_dead_count,Dead: {0}
+sim.rats_summary,Male {0} · Female {1}
+sim.rule_deferred_warn,"    Insufficient AP: 1 item deferred this shift|    Insufficient AP: {0} items deferred this shift"
+sim.run_1_day,1 Day
+sim.run_1_shift,1 Shift
+sim.run_3_days,3 Days
+sim.run_7_days,7 Days
+sim.schedule,Routine
+sim.search_placeholder,Name or ID
+sim.sex.female,Female
+sim.sex.male,Male
+sim.shift_label,Shift
+sim.shop_copy,Shop Copy
+sim.slot_summary,Battery slot: {0}
+sim.start_shift,Start
+sim.start_morning,Morning
+sim.start_night,Night
+sim.step.add_mark,Add mark [{0}]
+sim.step.moved_to,Moved to {0}
+sim.step.remove_mark,Remove mark [{0}]
+sim.step.swapped,Swapped position with {0}
+sim.step.trigger_unknown,{0} (effect only known at execution)
+sim.step.unknown,{0} → {1} (effect only known at execution)
+sim.step.water_change,{0} water {1} → {2} ml
+sim.sub_summary,{0} ×{1} ({2})
+sim.tip,"Runs on a shop copy without affecting the actual shop.\nNight advances per game mechanics: batteries, collectors, purifiers, rats, fish, hydroponics, and machines with progress (advances progress only, no output).\nWater collection, pouring, and disposal are calculated; other ""use"", ""activate"", ""toggle"", and ""button"" actions only compute AP; actual effects depend on real execution."
+sim.tip_prof,Proficiency: {0}
+sim.title,Simulator
+sim.trigger.activate,Activate
+sim.trigger.press,Press [{0}]
+sim.trigger.toggle,Toggle
+sim.vapp_default_name,Virtual Apprentice
+sim.vapp_title,Virtual Apprentice
+sim.water_summary,Water {0}ml ({1}% purity)
+sim.welcome_tip,Run on a copy using current shop items and assigned apprentices (or virtual apprentices).
+# ==============================================================================
+# Domain & Reports: Failure Codes & Shift Reports
+# Execution failure codes, morning/night shift reports, and issue details.
+# Placeholders: {0} = apprentice/count, {1} = rule/reason.
+# ==============================================================================
+failcode.dest_full,Destination full
+failcode.destfull,Target full
+failcode.error,Error
+failcode.many,Many items
+failcode.needs_player,Player action required
+failcode.needsplayer,Player interaction required
+failcode.no_ap,Insufficient AP
+failcode.no_effect,No effect
+failcode.no_members,No container
+failcode.no_source,No supplies
+failcode.no_tool,Missing tool
+failcode.noap,Low AP
+failcode.noeffect,No effect
+failcode.nomembers,No container
+failcode.not_allowed,Game disallowed
+failcode.notallowed,Action not allowed by game
+failcode.notool,Missing tool
+failcode.other,Other
+failcode.simulated,Simulated
+report.apprentice,Apprentice
+report.cash_delta,Cash {0}
+report.consume_item,"Consumed ""{0}"""
+report.count_items,{0} item|{0} items
+report.detail.day,Day {0}
+report.detail.deferred,Deferred 1 item|Deferred {0} items
+report.detail.done,Done 1 item|Done {0} items
+report.detail.group_line,"  {0} ({1}): {2}"
+report.detail.dry_run,Dry Run
+report.detail.failed,Failed 1 task|Failed {0} tasks
+report.detail.levelup,", Leveled up!"
+report.detail.run,Run
+report.details.record,Write to notepad
+report.details.walk_cost,(startup cost {0} AP)
+report.error.broken,Error
+report.fail.dest_full,Target full
+report.fail.no_tool,Missing tool
+report.fail.unknown_action,Unknown action
+report.growth.learned,{0} proficiency {1} → {2}
+report.growth.levelup,"{0} (Lv{1}, {2} AP daily)"
+report.growth.prefix,Level up {0}
+report.idle.all_in_dest,Already in destination container
+report.idle.all_marked,All items already have this mark
+report.idle.no_items,No matching items found
+report.idle.none_marked,No items have this mark
+report.idle.same_place,"Already in the same container, no swap needed"
+report.issue.dest_full,"Target full: {1}, {2} item not put|Target full: {1}, {2} items not put"
+report.issue.many,"Repeated failures with no effect, stopping task"
+report.issue.no_effect,"No change after {1}, {2} item skipped|No change after {1}, {2} items skipped"
+report.issue.no_tool,"Missing tool: no {1} in shop, {2} item could not be processed ({3})|Missing tool: no {1} in shop, {2} items could not be processed ({3})"
+report.issue.not_allowed,"Game does not allow {1}, {2} item skipped|Game does not allow {1}, {2} items skipped"
+report.issue.op_failed,{0}: {1}
+report.no_change,No change
+report.note.no_apprentices,No apprentices on shift
+report.pre.broken,Invalid structure
+report.pre.disabled,Disabled
+report.pre.fail,Condition not met
+report.pre.notrun,Not executed
+report.pre.pass,Satisfied
+report.product_group,{0} ×{1}
+report.product_output,Products: {0}
+report.product_unplaced," ({0} item not placed in destination)| ({0} items not placed in destination)"
+report.reason.no_ap,"Out of AP, 1 item unprocessed|Out of AP, {0} items unprocessed"
+report.reason.notrun,"Not executed ({1}), 1 item unprocessed|Not executed ({1}), {0} items unprocessed"
+report.shift_deferred,", 1 item skipped (not enough AP)|, {0} items skipped (not enough AP)"
+report.shift_done,{0} ({1}): Completed {2} tasks ({3})
+report.shift_empty,{0} ({1}): No tasks.
+report.shift_failed,", 1 task failed|, {0} tasks failed"
+report.shift_levelup,; {0} leveled up
+report.shift_note,Apprentice {0}: {1}
+report.shift_waiting,", some operations blocked (game limitation; will resume when ready)"
+report.step.moved_to,Moved to {0}
+report.summary_override,Apprentice {0}: {1}
+report.text.no_ap,Out of AP
+report.why.no_ap,Low AP (previous tasks used {0} / {1} AP)
+report.window.deferred,1 item skipped (not enough AP)|{0} items skipped (not enough AP)
+report.window.done,1 item done|{0} items done
+report.window.dry_run," (Simulation)"
+report.window.empty,No pending items
+report.window.group_stats,1 item · {1} AP|{0} items · {1} AP
+report.window.problems,1 task failed|{0} tasks failed
+report.window.tab,Report
+report.window.title_full,{0} Report
+report.window.title,Day {0} · {1}
+# ==============================================================================
+# Domain & Workforce: Apprentices, Skills & Shifts
+# Apprentice name pool, shift schedules, and skill groups.
+# Placeholders: none.
+# ==============================================================================
+names.apprentice,Alex;Sam;Robin;Chris;Morgan;Taylor;Jordan;Casey;Riley;Jamie;Quinn;Avery;Dakota;Reese;Hayden;Jesse;Skyler;Drew;Logan;Cameron
+shift.morning,Morning
+shift.night,Night
+shift.off,Off
+shift.short.morning,Morning
+shift.short.night,Night
+shift.short.off,Off
+skill.husbandry,Husbandry
+skill.maintenance,Maintenance
+skill.misc,Misc
+skill.power,Power
+skill.water,Water
+# ==============================================================================
+# UI: Apprentice Intercom & Staffing Agency
+# Apprentice intercom window and Staffing Agency hiring/training.
+# Placeholders: {0} = apprentice name/credits, {1} = level/proficiency.
+# ==============================================================================
+agency.btn_buy_train,Purchase · {0}
+agency.btn_expand,Expand · {0}
+agency.btn_hire,Hire Apprentice · {0}
+agency.btn_return,Back
+agency.cash_insufficient,Insufficient cash ({0})
+agency.fee_expand,Agency expansion fee
+agency.fee_hire,Agency recruitment fee
+agency.fee_train_item,Training materials ({0})
+agency.header_stats,Cash {0} · Slots {1}/{2}
+agency.hired_msg,{0} has joined. Please assign a routine on the Apprentice page.
+agency.level_up_info,Each level up adds {0} daily AP and {1} daily wage.
+agency.materials,Materials fee
+agency.new_apprentice_info,"New apprentice: Lv{0}, {1} AP daily, daily wage {2}, proficiency min {3}."
+agency.slots_expand,Slots: {0} → {1}
+agency.slots_full,Slots full
+agency.slots_maxed,Slots reached max {0}
+agency.tip_hire,"After hiring, assign routines on the Apprentice page"
+agency.title,Agency
+agency.train_cash,Cash {0}
+agency.train_desc,"+{0} EXP. Read at the start of today's first shift, consuming {1} AP."
+agency.train_max_level,Training available up to Lv{0}.
+agency.train_no_cash_body,"Training materials {0}, cash {1}."
+agency.train_no_cash_title,Insufficient Cash
+agency.train_pending_read,Training materials not finished yet.
+agency.train_title,Training · {0}
+agency.training,Skill training: {0} proficiency +{1} ({2})
+agency.training_result,"[{0}] attended {1} training, {2} proficiency increased to {3} (+{4})."
+intercom.ap_tip,Daily AP: shared between night and next morning
+intercom.btn_add_duty,+ Add Routine
+intercom.btn_details,Details
+intercom.btn_fire,Fire
+intercom.btn_rest,Day Off
+intercom.btn_retry_player,Allow Apprentice Retry
+intercom.btn_train,Train...
+intercom.btn_work,Work
+intercom.call_agency,Call Agency
+intercom.col_ap,AP
+intercom.col_apprentice,Apprentice
+intercom.col_done,Done
+intercom.col_level,Level
+intercom.col_schedules,Routines
+intercom.col_wage,Wage
+intercom.col_report_wage,Wage
+intercom.confirm_fire_note,Purchased training materials are non-refundable.
+intercom.confirm_fire_title,Dismiss {0}?
+intercom.done_items,1 item|{0} items
+intercom.duty_item,{0} · {1}
+intercom.duty_item_tip,Click to remove this routine
+intercom.duty_shift_tip,"Morning: runs upon waking before opening; Night: runs when going to bed. AP starts from night, remainder kept for morning"
+intercom.duty_tip,"Executed in order; night shift first, then next morning. Configure in Details"
+intercom.handbook,Handbook
+intercom.header_stats,Slots {0}/{1} · {2} AP daily · Tonight wage {3}
+intercom.needs_player_warning,{0} actions require player interaction; apprentice has stopped trying
+intercom.no_apprentices,No apprentices. Hire from agency.
+intercom.no_reports,No shift reports yet.
+intercom.no_schedules_hint,(No routine assigned)
+intercom.no_schedules_toast,No routines. Please create one on the Routines page.
+intercom.none,(None)
+intercom.payroll_summary,Paid total wages of {0}G ({1} apprentices)
+intercom.payroll_title,Wage Settlement
+intercom.pick_schedule,Select Routine
+intercom.pick_schedule_tip,Select routine to assign to apprentice
+intercom.prof_empty,Prof. —
+intercom.prof_score,Prof. {0}
+intercom.prof_tip,"Level min {0}, calculated as {1}, AP cost ×{2}"
+intercom.select_schedule,(Select routine)
+intercom.shift_order_tip,Apprentices listed earlier execute first and get paid first when cash is low
+intercom.status_deferred,{0} items skipped (low AP)
+intercom.status_done,Completed
+intercom.status_issues,{0} tasks incomplete
+intercom.status_rest,Resting
+intercom.status_strike,On Strike
+intercom.status_unassigned_paid,Unassigned (paid)
+intercom.status_work,Working
+intercom.streak_days,({0} days in a row)
+intercom.strikers,· {0} on strike
+intercom.tab_apprentices,Apprentices
+intercom.tab_reports,Reports
+intercom.tab_schedules,Routines
+intercom.tip_add_duty,"An apprentice can run multiple routines, sequentially in order, sharing daily AP"
+intercom.tip_rest,"Rest: Does not participate in shifts, receives no wage"
+intercom.tip_work,"Work: Participates in next day shifts, receives wage when sleeping"
+intercom.title,Apprentice Intercom
+intercom.training_pending,Training material pending
+intercom.training_pending_tip,"Read at start of the day first shift, consumes {0} AP"
+intercom.unassigned_warning,Notice: the following apprentices have no routines assigned:
+intercom.wages_last_7_days,Past 7 days wages {0}
+intercom.xp_stat,XP {0}/{1}
+intercom.xp_tip,XP {0}/{1}
+payroll.log_strike,Apprentice strike: {0} (insufficient funds to pay wages).
+payroll.log_wages,Apprentice wages: {0} credits ({1}).
+# ==============================================================================
+# UI: Routines & Schedules Overview
+# Routines management tab, routine list, statistics, and device linking.
+# Placeholders: {0} = routine name/count, {1} = shift/AP.
+# ==============================================================================
+schedule.btn_add_device,Add...
+schedule.btn_edit,Edit
+schedule.btn_edit_selector,"Edit ""{0}""..."
+schedule.btn_export,Export
+schedule.btn_move_down,Move Down
+schedule.btn_move_up,Move Up
+schedule.btn_name_device,Name...
+schedule.btn_new,+ New Routine
+schedule.btn_open_in_editor,Open in Editor
+schedule.btn_simulator,Simulator...
+schedule.btn_stats,Stats
+schedule.col_ap,AP
+schedule.col_device_header,Devices
+schedule.col_done,Done
+schedule.col_rule,Task
+schedule.col_rule_header,Task
+schedule.col_top_issue,Most Common Issues
+schedule.cond_advanced,Advanced...
+schedule.cond_all,Match All
+schedule.cond_always,Run Every Shift
+schedule.cond_any,Match Any
+schedule.cond_count_gt,...when more than N items...
+schedule.cond_count_lt,...when fewer than N items...
+schedule.cond_empty,...when empty
+schedule.cond_not_empty,...when not empty
+schedule.copied_to_clipboard,"""{0}"" copied to clipboard."
+schedule.copy_name,{0} (Copy)
+schedule.count_gt_prompt,More than how many items
+schedule.count_items,1 item|{0} items
+schedule.count_units,1 unit|{0} units
+schedule.count_tasks,1 task|{0} tasks
+schedule.count_devices,1 device|{0} devices
+schedule.count_lt_prompt,Fewer than how many items
+schedule.current_tag," (Current)"
+schedule.day_shift,Day {0} · {1}
+schedule.default_name_seq,Routine {0}
+schedule.del_confirm_title,"Delete routine ""{0}""?"
+schedule.del_own_note,Its {0} parameters and filters will also be deleted.
+schedule.del_runners_note,{0} will no longer run this routine.
+schedule.device_label,Device: {0}
+schedule.device_none,None in shop
+schedule.device_tip,"After naming items in shop, tasks will use them automatically"
+schedule.empty,No routines.
+schedule.err_cannot_run,This task cannot be executed:
+schedule.import_clipboard,Import from Clipboard
+schedule.import_clipboard_tip,"Import a routine copied via ""Export"""
+schedule.new_blank,Create Blank Routine
+schedule.new_blank_tip,Contains no tasks
+schedule.new_title,New Routine
+schedule.no_buttons,Selected machine has no buttons
+schedule.param_shared,Shared by multiple routines
+schedule.pick_action,Select Action
+schedule.pick_button,Select Button
+schedule.pick_condition,Execution Condition
+schedule.pick_device_or_selector,Select device name or filter
+schedule.pick_param,Select Parameter
+schedule.rule_disabled,(Disabled)
+schedule.section_devices,Device Names
+schedule.section_params,Parameters
+schedule.section_rules,Task List
+schedule.selector_suffix," (Filter)"
+schedule.stats_done_items,Processed 1 item|Processed {0} items
+schedule.stats_empty,No records: this routine has not run yet.
+schedule.stats_issue_count,{1} 1 time|{1} {0} times
+schedule.stats_range,Past {0} shifts ({1} to {2})
+schedule.stats_summary,Completed {0} items · Avg {1} AP per shift · Issues {2} items
+schedule.stats_title,Stats · {0}
+schedule.status_errors,1 task with errors|{0} tasks with errors
+schedule.status_notes,{1} and 1 more note|{1} and {0} more notes
+schedule.status_ready,Ready
+schedule.tip_edit_in_editor,Modify in editor
+schedule.tip_export,"Copy to clipboard, can be imported in other saves (preserves device names)"
+schedule.tip_stats,"Recent shifts: items completed, AP, issues"
+schedule.token_named_item,Items of this name
+# ==============================================================================
+# UI: Routine Editor
+# Routine editor window, task reordering, actions, and preconditions.
+# Placeholders: {0} = task name/count, {1} = reference.
+# ==============================================================================
+editor.action_apply_to,"    Apply To"
+editor.action_button,"    Button"
+editor.action_mark,"    Mark"
+editor.action_swap_with,"    With"
+editor.action_target,"    Target"
+editor.action_value,"    Value"
+editor.add_cond_tip,Only count items matching condition
+editor.add_cond_title,Add Condition
+editor.advanced_stats,Custom Properties {0} · Counters {1}
+editor.btn_add_action,+ Action
+editor.btn_add_cond,+ Condition
+editor.btn_add_filter,+ Filter
+editor.btn_add_param,＋ Parameter
+editor.btn_disable,Disable
+editor.btn_edit,Edit
+editor.btn_enable,Enable
+editor.btn_name_device,＋ Name...
+editor.btn_new,+ New
+editor.btn_new_rule,＋ New Task
+editor.btn_only_refs,Referenced only
+editor.btn_return,Back
+editor.btn_show_all,Show All
+editor.btn_simple_when,Simple Mode
+editor.cmp_by_prop,Compare by property...
+editor.confirm_delete_rule,"""Delete task """"{0}""""?"""
+editor.counter_tag,Counter: {0}
+editor.default_rule_name,New Task
+editor.deferred_ap,Insufficient AP: 1 item deferred|Insufficient AP: {0} items deferred
+editor.device_none_named,No item with this name in shop currently
+editor.device_none_short,None
+editor.done_items,Completed 1 item|Completed {0} items
+editor.empty_none,(None)
+editor.entry_no_refs,\nNot referenced
+editor.entry_refs,\nReferenced in 1 place|\nReferenced in {0} places
+editor.global_used,Used {0} / {1}
+editor.group_global,Global
+editor.group_local,This Routine
+editor.input_mark_name,Mark Name
+editor.input_name,Routine name
+editor.input_rule_name,Task Name
+editor.label_counters,Counters
+editor.label_custom_props,Custom Properties
+editor.local_in_tasks,Another {0} filters used only in single tasks; edit within those tasks
+editor.menu_device_reuse,Use this name for other shop items...
+editor.menu_device_to_filter,Convert to filter...
+editor.no_actions,No actions yet
+editor.no_devices,None yet. Name shop items to select them directly in filters and actions.
+editor.no_rules,No tasks. Click button above to add.
+editor.note_add,Add to
+editor.note_default_name,Counter
+editor.note_desc,"Initial value {0}, resets at start of each shift"
+editor.note_init_val,Initial Value
+editor.note_set,Set to
+editor.note_still_used,This counter is still referenced by tasks.
+editor.note_title,Counter
+editor.note_title_new,New Counter
+editor.num_tag," (Number)"
+editor.pick_btn_placeholder,(Select button)
+editor.pick_counter_placeholder,(Select counter)
+editor.pick_dest_placeholder,(Select destination)
+editor.pick_target_placeholder,(Select target)
+editor.pick_tool_placeholder,(Select tool)
+editor.picker_placeholder,(Select)
+editor.pre_fail,Condition not met: {0}
+editor.preset_satisfied,"    Matches {0}"
+editor.satisfy_prefix,"    Matches"
+editor.sec_actions,Actions
+editor.sec_advanced,Advanced
+editor.sec_defs,Parameters & Filters
+editor.sec_devices,Device Names
+editor.sec_rules,Tasks
+editor.sec_when,Run When
+editor.selector_backref,"""{0}"" references ""{1}""; referenced filters must be placed above."
+editor.test_count_gt,Count >
+editor.test_count_lt,Count <
+editor.test_empty,Empty
+editor.test_not_empty,Not empty
+editor.times_each,Times per item:
+editor.times_unit,
+editor.tip_action_apply,"For each target item, try tool items in order; the first effective one applies to it.\nDirection is determined by the game: e.g. applying tap to empty bucket fills the bucket with water."
+editor.tip_action_swap,"Pair two groups of items in order and swap their positions. If counts differ, excess items remain in place."
+editor.tip_action_target,"Place each item into the first destination that fits. If multiple destinations exist, try them in order."
+editor.tip_add_pre_cond,"Only count items matching condition, e.g. '[A] Water > 1000 ml'"
+editor.tip_advanced_when,"Combine multiple conditions, counters, or system variables"
+editor.tip_cannot_run,This task cannot be executed:
+editor.tip_collapse_global,Collapse: show only global parameters and filters used by this routine
+editor.tip_device_to_filter,"Convert to filter: occurrences of [{0}] directly used in this routine will use a new filter where conditions, sorting, and limits can be added."
+editor.tip_disable,"""This task will not run, settings kept"""
+editor.tip_enable,Resume running this task
+editor.tip_expand_global,Expand: show all global parameters and filters (available to all routines)
+editor.tip_last_result,Last execution result
+editor.tip_name_device,Double-click a container or machine in shop to name it; other items can be named with blue labeler
+editor.tip_new_filter,Create a new filter here
+editor.tip_only_refs,Left column lists only parameters and filters used by expanded tasks
+editor.tip_rule_reorder,Click to expand or collapse; drag to reorder
+editor.tip_show_all,Show all parameters and filters in this routine
+editor.tip_warn,Notice:
+editor.tip_when,"""Only decides whether to run this task. To target specific items, add conditions to the action target filter."""
+editor.tip_when_sub,"""    Only decides whether to run this task. To target specific items, add conditions to the action target filter."""
+editor.unprocessed,Unprocessed: {0}
+editor.warn_prefix,Notice: {0}
+editor.when_gt_n,...more than N items
+editor.when_lt_n,...less than N items
+editor.window_title,Routine · {0}
+# ==============================================================================
+# UI: Filter & Condition Editors, Object Dialogs
+# Filter configuration, conditions, pick ordering, and parameter dialogs.
+# Placeholders: {0} = filter name/property, {1} = value/count.
+# ==============================================================================
+cond.at_least,at least
+cond.at_most,at most
+cond.group.base,Basic
+cond.group.ingredient,Ingredients
+cond.group.quality,Quality
+cond.group.ratio,Relative Max %
+cond.group.tag,Game Tags
+cond.group.type,Type
+cond.is,is
+cond.is_not,is not
+cond.type_is,is {0}
+cond.type_is_not,is not {0}
+expr.count,{0}.count
+expr.empty,(empty)
+expr.own,self.{0}
+expr.select_placeholder,(Select)
+expr.term.const,Parameter
+expr.term.note,Counter
+expr.term.num,Number
+expr.term.own,Own Property
+expr.term.stat,Statistic
+expr.term.sys,System Variable
+expr.tip_add,Add a term to add/subtract/multiply/divide with preceding terms
+expr.tip_remove,Remove the last term
+filter.auto_name.agg_count,Count of {1} in {0}
+filter.auto_name.agg_prop,{2} {3} of {1} in {0}
+filter.auto_name.default,New Filter
+filter.auto_name.items,Items
+filter.auto_name.items_in,{1} in {0}
+filter.auto_name.self,{0}
+filter.auto_name.shop,Whole Shop
+filter.auto_name.target,{0} {1}
+object_dlg.btn_confirm_promote,Promote to Global
+object_dlg.btn_promote,Promote to Global Parameter...
+object_dlg.default_name,New Parameter
+object_dlg.default_name_seq,New Parameter ({0})
+object_dlg.delete_still_used,The following tasks still reference this: {0}.
+object_dlg.hint_placeholder,Displayed when hovering over name
+object_dlg.name_empty,Name cannot be empty.
+object_dlg.name_exists,Name already exists.
+object_dlg.promote_note,The following parameters and filters will become available to all routines:
+object_dlg.promote_title,Promote to Global?
+object_dlg.prop_formula,Formula
+object_dlg.prop_tip,Define dynamically calculated property values for items
+object_dlg.scope_global,Global: Available to all routines
+object_dlg.scope_owner,"Only for ""{0}"""
+object_dlg.title_custom_prop,Custom Property
+object_dlg.title_edit,Parameter · {0}
+object_dlg.title_new,New Parameter
+object_dlg.unit,Unit
+object_dlg.unit_placeholder,"e.g. g, pcs, days"
+object_dlg.used_by_rules,Referenced by 1 task|Referenced by {0} tasks
+object_dlg.value_nan,Value must be a number.
+prop_dlg.default_name,New Property
+prop_dlg.delete_still_used,Cannot delete; still referenced by: {0}
+prop_dlg.formula,Formula
+prop_dlg.formula_display,Formula: {0}
+prop_dlg.formula_error,Formula contains errors
+prop_dlg.name_empty,Please enter a name
+prop_dlg.sample_calc,Sample calculation: {0}
+prop_dlg.sample_empty,No such items in shop
+prop_dlg.sample_none,No such items in shop
+prop_dlg.target_kind,Applicable Type
+prop_dlg.title_edit,Custom Property: {0}
+prop_dlg.title_new,New Custom Property
+property_dlg.no_properties,No matching properties found.
+property_dlg.search_placeholder,Search property name or ID
+property_dlg.title,Select Property
+selector.btn_add_cond,+ Condition
+selector.btn_add_cond_group,＋ Condition Group (any match)
+selector.btn_add_scope,＋ Add Scope
+selector.btn_collapse,Collapse
+selector.btn_del_group,Delete Group
+selector.btn_hide_tags,Hide Internal Tags
+selector.btn_more,More...
+selector.btn_promote,Make Global Filter...
+selector.btn_show_tags,Show Internal Tags
+selector.common_presets,Common Presets
+selector.cond_all,Match All
+selector.cond_any,Match Any
+selector.copy_name,{0} (Copy)
+selector.copy_name_seq,{0} (Copy {1})
+selector.delete_still_used,The following tasks are still referencing this filter: {0}.
+selector.group_prefix,Group of
+selector.items_unit," items"
+selector.kind_self_tip,"No need to select item type when scope is ""Itself"""
+selector.label_minus,Exclude
+selector.label_prop,Property
+selector.label_sort,Sort
+selector.label_stat,Aggregation
+selector.minus_none,(Do not exclude)
+selector.more_suffix," etc."
+selector.pick_all,All
+selector.pick_exclude_first_n,Exclude First N
+selector.pick_first_n,Pick First N
+selector.pick_number,Calculate Value
+selector.prefix_container,Container: {0}
+selector.prefix_family,Item Family:
+selector.prefix_item_type,Item Type:
+selector.save_no_scope,Please select a scope.
+selector.scope_all_inside,All items inside
+selector.scope_and,And
+selector.scope_count,Current {0}{1} items
+selector.scope_empty,Currently empty
+selector.scope_from,From
+selector.scope_items_inside,Items inside
+selector.scope_same_as_above,(Same as above)
+selector.scope_self,Itself
+selector.section_cond,Conditions
+selector.section_kind,Item Type
+selector.section_pick,Pick
+selector.section_scope,Scope
+selector.sort_asc,Low to High
+selector.sort_desc,High to Low
+selector.sort_unspecified,Unspecified
+selector.stat_tip,Statistical results can be used for execution conditions and values in conditions
+selector.take_count,Item count:
+selector.take_exclude_first,Exclude first
+selector.take_first,Pick first
+selector.take_start_from,Starting index:
+selector.tip_add_scope,"Items from multiple scopes are merged, earlier scopes take priority"
+selector.tip_minus,Exclude items selected by another filter
+selector.tip_more,"Condition groups (any match), exclude items selected by another filter"
+selector.tip_sort,"When swapping, both sides pair up according to their respective sort orders"
+selector.tip_tags,"Show game internal tags in property list (category marks, IDs, sprites, etc.)"
+selector.title_edit,Filter · {0}
+selector.title_new,New Filter
+selector.used_in_rules,Used in: {0}{1}
+sort.asc,{0} low to high
+sort.desc,{0} high to low
+take.by_sort,by {0}
+take.exclude_first,exclude first {0} items
+take.first,first {0} items
+take.sorted_take,{0} {1}
+# ==============================================================================
+# UI: Container Side Panel & Storage Bay
+# Placeholders: {0} = count/device name.
+# ==============================================================================
+device_dialog.clear,Clear Name
+device_dialog.name,Name
+device_dialog.tip,"Once named, this device can be referenced directly by name in filters and targets."
+device_dialog.title,Device Naming
+store.naming.cannot_open,Unable to open naming dialog at this time.
+store.naming.prompt,"Double-click an item to name it ""{0}"""
+store.naming.prompt_any,Double-click an item to name it
+# ==============================================================================
+# UI: Apprentice Handbook
+# Apprentice handbook pages (p1 to p7) and diagram annotations.
+# Placeholders: none (full self-contained prose).
+# ==============================================================================
+handbook.cannot_open,Cannot open handbook
+handbook.diagram.arrow_charge,② Put uncharged into recharger
+handbook.diagram.arrow_empty,① Swap empty out
+handbook.diagram.arrow_full,① Swap full in
+handbook.diagram.machines,Machines
+handbook.diagram.machines_note,Drains overnight
+handbook.diagram.recharger,Recharger
+handbook.diagram.recharger_note,Charges overnight
+handbook.diagram.storage,Storage
+handbook.diagram.storage_note,Idle batteries
+handbook.p1.banner_apprentices,Apprentices
+handbook.p1.banner_quickstart,Quick Start
+handbook.p1.steps_quickstart,"1. Double-click Apprentice Intercom, contact agency, and hire an apprentice.\n2. In Routines, create a routine (an ordered set of tasks); example routines can be used directly without configuration.\n3. Return to Apprentices tab and assign routines. You can assign multiple routines (morning or night shift) in Details. New apprentices work by default; toggle Rest if paused.\n4. Morning shift works upon waking before opening; night shift works when you sleep."
+handbook.p1.text_ap,"Daily workload for an apprentice. Refills upon sleeping after wages are paid; used first for that night's shift, remaining AP carries over to next morning. Actions consume AP; higher proficiency reduces cost. When AP is depleted, remaining work is deferred to next shift starting from task 1."
+handbook.p1.text_multi_sched,"An apprentice can run multiple routines, executed sequentially in order and sharing daily AP. When multiple apprentices run the same routine, they execute in order from the Apprentices tab, with later apprentices handling remaining items."
+handbook.p1.tip_payroll,"Wages are settled every night upon sleeping. If funds are insufficient, apprentices later in the list strike first; unassigned apprentices strike earliest!"
+handbook.p1.title_ap,AP:
+handbook.p1.title_multi_sched,Multiple Routines:
+handbook.p2.banner,Proficiency & Level
+handbook.p2.text_level,"Each level adds 5 daily AP, 10 daily wage, and raises proficiency floor by 4 (level 1 is 54), preventing new routines from running too slowly. Studying training materials grants XP."
+handbook.p2.text_prof,"Apprentices have distinct proficiency (0-100) per routine, viewable in Details. Higher proficiency reduces AP cost: at 100 it is 0.75x base cost, while newcomers start around 1.4x. Running the same routine continuously reaches 85+ in about two weeks."
+handbook.p2.text_switch,Proficiency depends on similarity between past work and current routine. Switching to routines with similar actions and items retains most proficiency; switching to very different ones starts lower. Running multiple disparate routines results in lower proficiency than specializing.
+handbook.p2.tip,"Proficiency only affects AP consumption, not daily wage; wage depends strictly on level!"
+handbook.p2.title_level,Level:
+handbook.p2.title_prof,Proficiency:
+handbook.p2.title_switch,Switching Routines:
+handbook.p3.banner,Routine Components
+handbook.p3.steps_conds,"Common presets (alive, dead, has slot, etc.) can be added directly; numerical values like charge or volume can be specified via Condition."
+handbook.p3.steps_pick,"Pick: All, First N (e.g. lowest charge first 1 item), Exclude First N (e.g. youngest exclude first 2), or aggregate as number (count, sum, etc.)."
+handbook.p3.text_filter,"Selects items to process by specifying scope, item type, conditions, and pick method. Can be created directly within tasks. Can be promoted to global filter for use across routines."
+handbook.p3.text_param,"Named numerical values, e.g. ""Battery Swap Threshold 30"". Can be shared across conditions and adjusted directly in Routines."
+handbook.p3.text_range,"Whole shop, specific label, or another filter; multiple can be added. ""Contents"" refers to contained items; ""Itself"" refers to container/machine itself (e.g. [Hydroponics] itself with condition ""has slot"" selects idle hydroponics)."
+handbook.p3.text_scope,"Filters search the whole shop by default (items you own, excluding items for sale). To target specific bays, machines, or containers, name them using the Blue Labeler (e.g. ""Hydro Storage"") or via ""＋ Name..."" in the routine editor. Multiple objects can share the same name."
+handbook.p3.tip_name,You can directly select custom names ([Name]) as filter target without creating a filter!
+handbook.p3.title_filter,Filters:
+handbook.p3.title_param,Parameters:
+handbook.p3.title_range,Scope:
+handbook.p3.title_scope,Whole Shop & Labels:
+handbook.p4.banner,Tasks
+handbook.p4.text_move,"Moves items to a container, storage bay, or machine (e.g. move uncharged batteries to recharger). Destination must be a container."
+handbook.p4.text_pre,"Runs every shift by default. Options like ""...when [A] not empty"" or ""...when [A] less than N"" can be chosen; skipped tasks consume no AP. More complex conditions are configured under ""Advanced..."", e.g. ""[A] Water > 1000 ml""."
+handbook.p4.text_press,"Presses buttons on machine interfaces (start, print, transfer all), unwraps packages, or toggles switches without opening windows."
+handbook.p4.text_swap,"Pairs two groups of items in order and swaps their positions. If counts differ, excess items remain in place."
+handbook.p4.text_use,"Applies a tool to an object, e.g. knife on rat, water jug on empty bottle. Direction is decided by game: faucet on empty bucket fills the bucket."
+handbook.p4.tip,"Which items, in what order, and how many are all defined in filters; the action only decides what to do!"
+handbook.p4.title_move,Move:
+handbook.p4.title_pre,Run When:
+handbook.p4.title_press,"Press Button, Activate, Toggle:"
+handbook.p4.title_swap,Swap:
+handbook.p4.title_use,Use:
+handbook.p5.banner_order,Execution Order
+handbook.p5.banner_swap,Auto Battery Swap
+handbook.p5.steps_swap,"① Swap Low Battery (charge ascending) with Full Battery (charge descending): replaces lowest battery with fullest, leaving depleted battery in recharger.\n② Put uncharged batteries from storage into rechargers with free slots."
+handbook.p5.text_seq,"Each shift executes in order from Apprentices tab: each apprentice runs their routines sequentially, and tasks run top-to-bottom. Tasks re-evaluate current shop state so already-processed items are not repeated. Adjust order using ↑↓."
+handbook.p5.title_seq,Sequential Execution:
+handbook.p6.banner,Example Routines
+handbook.p6.text_battery,"Swaps low batteries with full ones, and places uncharged idle batteries into rechargers. Ready to use without configuration."
+handbook.p6.text_hydro,"Harvests crops, replants seeds, swaps water (similar to battery loop), and inserts nutrient tablets."
+handbook.p6.text_organize,Moves loose medicine and food into [Medicine Storage] and [Food Storage]; multiple bays can share the same name.
+handbook.p6.text_print,"Inserts chips, replenishes filament/materials, and collects finished products."
+handbook.p6.text_ras,"Refills tanks with clean water, feeds hungry fish, removes dead fish, keeps one adult male and female for breeding, and butchers the rest."
+handbook.p6.text_rat,"Enables auto-mix on dispenser, replenishes feed, retains breeding stock (1 male, 2 females), slaughters adult rats, and cleans droppings."
+handbook.p6.text_vending,"Prints water bottles, collects water, purifies to base water, stocks shelves, and collects sales revenue."
+handbook.p6.tip,"Example routines require no configuration. To store outputs in specific bays, name them as used in examples (e.g. ""Hydro Storage"")!"
+handbook.p6.title_battery,Auto Battery Swap:
+handbook.p6.title_hydro,Hydroponics:
+handbook.p6.title_organize,Tidy Up:
+handbook.p6.title_print,3D Printing Firearms:
+handbook.p6.title_ras,Aquaculture:
+handbook.p6.title_rat,Rat Breeding:
+handbook.p6.title_vending,Water Vending:
+handbook.p7.banner,Simulator & Reports
+handbook.p7.text_report,"After the morning shift, an Apprentice Daily Report is issued (on the counter, or in the trash can if the game option is set); double-click to read; the paper summarizes last night's shift and this morning's shift. The Reports tab displays past shifts and daily wages."
+handbook.p7.text_sim,Runs on a shop copy for 1 shift up to 7 days to inspect task execution and AP consumption without affecting the actual shop.
+handbook.p7.tip,"Actions requiring manual player operation cannot be executed by apprentices and are skipped; choose ""Retry"" in Reports to retry."
+handbook.p7.title_report,Reports:
+handbook.p7.title_sim,Simulator:
+handbook.title,Apprentice Handbook
+# ==============================================================================
+# UI: General Common UI, Tables & Dialogs
+# Common UI buttons, settings window, session status, and mod transfer.
+# Placeholders: {0} = status/number, {1} = details.
+# ==============================================================================
+btn.mech_bottle_printer_btn_print_small,Print Small Bottle
+btn.mech_bottle_printer_btn_print_large,Print Large Bottle
+btn.mech_vending_btn_transfer,Transfer All
+gamedialog.no_text,(No text)
+picker.number,Value
+picker.pick_in_shop,Select in Shop
+session.container_missing,(No longer exists #{0})
+session.no_device,Shop has no [{0}]
+session.no_selector_items,Not found in shop: {0}
+session.prof_floor,(Level min {0})
+session.prof_text,{0} Proficiency {1}/100{2} · AP ×{3}
+session.unassigned_schedule,Unassigned routines
+settings.automation_enabled,Enable apprentice automation (run shifts)
+settings.show_all_tags,"List all game tags in conditions (including category marks, IDs, etc.)"
+settings.ui_scale,UI Scale Multiplier
+settings.ui_scale_desc,"Extra scale multiplier on top of auto-scaling by screen height, e.g. 0.8 or 1.2"
+style.credits,{0} Credits
+table.ap,AP
+table.result,Result
+table.rule,Task
+table.btn_details,Details
+transfer.dup_suffix,{0} ({1})
+layout.handbook.gap,6
+layout.handbook.body_size,13
+layout.handbook.p5_label_x,156
+layout.handbook.p5_full_y,6
+layout.handbook.p5_empty_y,56
+layout.handbook.diagram.arrow_full_x,156
+layout.handbook.diagram.arrow_full_y,6
+layout.handbook.diagram.arrow_full_w,160
+layout.handbook.diagram.arrow_empty_x,156
+layout.handbook.diagram.arrow_empty_y,56
+layout.handbook.diagram.arrow_empty_w,160
+layout.handbook.diagram.arrow_charge_x,84
+layout.handbook.diagram.arrow_charge_y,151
+layout.handbook.diagram.arrow_charge_w,230
+layout.handbook.diagram.machines_x,320
+layout.handbook.diagram.machines_w,150
+layout.handbook.diagram.recharger_w,150
+layout.handbook.diagram.storage_w,150
+layout.intercom.shift_width,100
+layout.intercom.prof_width,85
+layout.intercom.col_done_width,80
+layout.intercom.status_width,185
+layout.cond.value_width,160
+layout.selector.scope_label_width,50
+transfer.err.clipboard_empty,Clipboard is empty
+transfer.err.newer_version,This routine was created with a newer version of Probably Automated and is not supported
+transfer.err.not_a_routine,Clipboard content is not an Probably Automated routine
+transfer.err.older_version,Older routine format is not supported
+transfer.marker,[ProbablyAutomatedRoutine]
+ui.add,Add
+ui.cancel,Cancel
+ui.clear,Clear
+ui.close,Close
+ui.collapse,Collapse
+ui.confirm,Confirm
+ui.copy,Copy
+ui.delete,Delete
+ui.expand,Expand
+ui.hint,Description
+ui.move_down,Move Down
+ui.move_up,Move Up
+ui.name,Name
+ui.ok,OK
+ui.reset,Reset
+ui.save,Save
+ui.search,Search
+ui.value,Value
+unlock.desc,"Wilde's Agency will recruit apprentices to assist with shop operations before opening and after closing. Includes an Apprentice Intercom, Apprentice Handbook, and a blue label printer for naming devices."
+unlock.title,Apprentice Dispatch
+# ==============================================================================
+# Adapter & Game Integration: Names & Labels
+# Game entity names, battery status, fish species, and hardware fixtures.
+# Placeholders: {0} = item name/percentage, {1} = target.
+# ==============================================================================
+battery.desc,{0} ({1}%)
+fish.dead,", dead"
+fish.desc,"{0} ({1}{2}g, {3} days{4})"
+fish.female,"Female, "
+fish.male,"Male, "
+fixture.drain,Drain
+fixture.faucet,Faucet
+fmt.arrow_prop,{0} {1} → {2}
+fmt.colon,{0}: {1}
+fmt.copy_suffix,{0} (Copy)
+fmt.end_dot,.
+gameworld.action_error,{0} error: {1}
+gameworld.action_needs_player,{1} on {0} requires player interaction and cannot be performed by apprentice
+gameworld.add_mark,Add tag [{0}]
+gameworld.box_cannot_accept,Cannot place into {0}
+gameworld.box_full,{0} is full
+gameworld.box_no_slot,{0} has no {1}
+gameworld.button_needs_player,[{1}] on {0} requires player interaction and cannot be performed by apprentice
+gameworld.confirm_needs_player,"Player confirmation needed for ""{0}""; apprentice cannot execute"
+gameworld.game_tip,Game tip:
+gameworld.move_error,Move error: {0}
+gameworld.move_to,Move to {0}
+gameworld.need_player_ui,{0} requires player interaction and cannot be performed by apprentice
+gameworld.no_button,{0} has no [{1}] button
+gameworld.press_button,Press [{0}]
+gameworld.remove_mark,Remove tag [{0}]
+gameworld.swap_error,Swap error: {0}
+gameworld.swap_not_allowed,Game does not allow swapping
+gameworld.swap_with,Swap position with {0}
+item.handbook.desc,"A handy handbook with instructions on apprentices, routines, and tasks. Double-click to read."
+item.handbook.name,Apprentice Handbook
+item.intercom.desc,"An intercom issued by Wilde's Agency, used to hire apprentices, write routines, and view shift reports. Double-click to use."
+item.intercom.name,Apprentice Intercom
+liquid.desc,"{0} ({1}ml, {2}% purity)"
+names.kind.combat_knife,Combat Knife
+names.kind.hatchet,Hatchet
+names.kind.kitchen_cleaver,Meat Cleaver
+names.kind.labeler,Labeler
+names.kind.rat,Rat
+names.kind.raw_meat,Raw Meat
+names.kind.water_filter,Water Filter
+names.kind.water_filter_adv,Advanced Water Filter
+names.kind.water_jug,Water Jug
+names.kind.wire_cutter,Wire Cutter
+names.prop.has,{0} (Presence)
+names.prop.liq,Contains {0} (ml)
+names.prop.mark,Mark [{0}]
+names.prop.pct,{0} %
+names.prop.str,{0} (Text)
+names.prop.unselected,(None)
+propbindings.none,(None)
+quality.prop.grade,{0} Grade
+quality.prop.grade_name,{0} Grade Name
+quality.prop.label_grade,{0} Labeled Grade
+quality.prop.label_ok,{0} Labeled Correctly
+quality.prop.verified,{0} Verified
+quality.cat.category_wine_quality,Wine Quality
+# ==============================================================================
+# Examples: Routine & Preset Examples
+# Pre-packaged routine examples: water, ranching, battery, hydro, etc.
+# Placeholders: {0} = container/target name.
+# ==============================================================================
+example.aqua.rule.clear_dead,Clear dead fish
+example.aqua.rule.feed,Feed fish
+example.aqua.rule.fill_jug,Fill jugs
+example.aqua.rule.fill_tank,Add water to tank
+example.aqua.rule.harvest,Harvest adult fish
+example.aqua.rule.store_meat,Store fish meat
+example.aqua.sel.adult_f,Harvestable adult female fish
+example.aqua.sel.adult_m,Harvestable adult male fish
+example.aqua.sel.dead_fish,Dead fish
+example.aqua.sel.feed,One portion of fish feed
+example.aqua.sel.feed_in,Feed in tank
+example.aqua.sel.hungry_fish,Hungry fish
+example.aqua.sel.jugs,Idle water jugs
+example.aqua.sel.knives,Blades
+example.aqua.sel.low_water,Low-water tanks
+example.aqua.sel.meat,Fish meat in system
+example.aqua.sel.ras,Recirculating aquaculture systems
+example.aqua.sel.tank,Water tanks
+example.aqua.store,Aquaculture Storage
+example.battery.name,Auto Battery Swap
+example.battery.param.full,Full battery target
+example.battery.param.full.hint,Battery at this percentage or higher is considered full
+example.battery.param.low,Low battery threshold
+example.battery.param.low.hint,Replace battery in machines when below this value
+example.battery.rule.charge,Charge
+example.battery.rule.swap,Swap batteries
+example.battery.sel.free_recharger,Rechargers with room
+example.battery.sel.full_battery,Full batteries
+example.battery.sel.idle_battery,Idle uncharged batteries
+example.battery.sel.low_battery,Low batteries
+example.battery.sel.machines,Machines
+example.gun.rule.chip,Install chip
+example.gun.rule.collect,Collect finished firearms
+example.gun.rule.feed,Add filament
+example.gun.sel.chip,One printing chip
+example.gun.sel.chip_in,Chip slots
+example.gun.sel.idle,Idle printers
+example.gun.sel.output,Output slots
+example.gun.sel.plastic,Two filament spools
+example.gun.sel.plastic_in,Filament in input slot
+example.gun.sel.printer,Printers
+example.gun.store,Gunsmith Storage
+example.hydro.rule.add_nutrient,Add nutrients
+example.hydro.rule.fill_water,Refill water
+example.hydro.rule.harvest,Harvest
+example.hydro.rule.plant,Plant seeds
+example.hydro.rule.swap_water,Swap water
+example.hydro.sel.crop,Crop output
+example.hydro.sel.dry,Low-water bottles in units
+example.hydro.sel.empty,Unfilled water bottles
+example.hydro.sel.full,Full water bottles
+example.hydro.sel.hydro,Hydroponic units
+example.hydro.sel.lean,Nutrient-deficient bottles
+example.hydro.sel.planted,Seeds in seed slot
+example.hydro.sel.ready,Idle hydroponic units
+example.hydro.sel.seed,One seed
+example.hydro.sel.tablets,Nutrient tablets
+example.hydro.store,Hydroponics Storage
+example.ranch.rule.auto_blend,Enable auto-blend
+example.ranch.rule.butcher_dead,Butcher dead rats
+example.ranch.rule.cull,Cull rats
+example.ranch.rule.feed,Refill feed
+example.ranch.rule.store_meat,Store rat meat
+example.ranch.rule.store_poop,Clean feces
+example.ranch.sel.breeders,Breeding rats
+example.ranch.sel.cage,Animal cages
+example.ranch.sel.dead,Dead rats
+example.ranch.sel.dispenser,Dispensers in cages
+example.ranch.sel.fat,Cullable rats
+example.ranch.sel.food,Plant feed
+example.ranch.sel.knives,Blades
+example.ranch.sel.low_feed,Low-feed dispensers
+example.ranch.sel.meat,Meat in cages
+example.ranch.sel.poop,Feces
+example.ranch.sel.sire_f,Breeding female rats
+example.ranch.sel.sire_m,Breeding male rats
+example.ranch.sel.unblended,Dispensers without auto-blend
+example.ranch.store,Ranch Storage
+example.sel.any_storage,Storage with room
+example.sel.store_or_any,{0} or other storage
+example.spec.aqua.name,Aquaculture
+example.spec.aqua.note,"Refill water tanks, feed hungry fish, clear dead fish, keep 1 male and 1 female adult fish for breeding, and harvest the rest"
+example.spec.gun.name,3D Gun Printing
+example.spec.gun.note,"Install chips, refill plastic filament, and collect finished firearms"
+example.spec.hydro.name,Hydroponics
+example.spec.hydro.note,"Harvest crops, replant seeds, swap water bottles, refill water, and add nutrient tablets"
+example.spec.ranch.name,Rat Ranching
+example.spec.ranch.note,"Enable auto-blend, refill feed dispensers, keep breeders (1 male, 2 females), cull heavy rats, and clean feces"
+example.spec.tidy.name,Tidy Up
+example.spec.tidy.note,Sort loose medicine and food into [Medicine Storage] and [Food Storage] (multiple storage bays can share the same name)
+example.spec.water.name,Water Vending
+example.spec.water.note,"Print water bottles, collect water, purify to base water, bottle and stock, and collect vending cash"
+example.tidy.rule.food,Sort food
+example.tidy.rule.medical,Sort medicine
+example.tidy.sel.loose_food,Loose food to sort
+example.tidy.sel.loose_medical,Loose medicine to sort
+example.tidy.store.food,Food Storage
+example.tidy.store.medical,Medicine Storage
+example.water.rule.bottle,Bottle water
+example.water.rule.cash,Collect cash
+example.water.rule.fill_empty,Fill empty jugs
+example.water.rule.fountain_jug,Load jug into fountain
+example.water.rule.fountain_refill,Refill fountain
+example.water.rule.print_bottle,Print bottles
+example.water.rule.purify,Purify raw water
+example.water.rule.take_bottle,Collect bottles
+example.water.rule.take_purified,Take purified jugs
+example.water.sel.cash,Fountains with cash
+example.water.sel.empty_bottles,Empty water bottles
+example.water.sel.empty_jugs,Empty water jugs
+example.water.sel.f_base,Fountain base water tanks
+example.water.sel.f_low,Low fountain water tanks
+example.water.sel.fountain,Vending fountains
+example.water.sel.full_bottles,Filled water bottles
+example.water.sel.one_pure,One jug of clean water
+example.water.sel.printed,Printed bottles
+example.water.sel.printer,Bottle printers
+example.water.sel.pur_box,Jugs in purifier
+example.water.sel.pur_done,Purified jugs
+example.water.sel.pure_jugs,Clean water jugs
+example.water.sel.purifier,Water purifiers
+example.water.sel.raw_jug,One jug of raw water
+example.water.store,Water Storage
+# ==============================================================================
+# Other Localization Keys
+# Remaining rule templates and misc labels.
+# Placeholders: {0} = condition, {1} = action.
+# ==============================================================================
+rule.no_actions,(no action set)
+rule.when_arrow,When {0} → {1}
+cond.equal,Equals
+cond.not_equal,Does not equal
+cond.text_input,Text
+layout.btn_more_width,78
+layout.editor.when_dropdown_width,180
+layout.new_schedule.btn_width,160
+layout.sim.start_width,105
+conj.and,and
+conj.or,or
+
+# ==============================================================================
+# Apprentice Daily Report (newspaper item issued after the morning shift)
+# ==============================================================================
+daily.all_fine,All clear
+daily.cannot_open,Can't open the Apprentice Daily Report right now.
+daily.col.ap,AP
+daily.col.morning,Morning
+daily.col.night,Night
+daily.dateline,Day {0} · Last Night + This Morning
+daily.dateline_morning,Day {0} · This Morning
+daily.deferred,1 item deferred due to insufficient AP|{0} items deferred due to insufficient AP
+daily.flow_problems,1 issue|{0} issues
+daily.flows_more,{0} more routines…
+daily.footer,See the Reports tab of the Intercom for details
+daily.log_issued,A new Apprentice Daily Report has been issued.
+daily.log_none,No apprentice is on the morning shift today; no Apprentice Daily Report.
+daily.log_replaced,The old Apprentice Daily Report has been recycled; a new one has been issued.
+daily.problems_more,{0} more
+daily.section.apprentices,Apprentices
+daily.section.flows,Routines
+daily.section.problems,Issues
+daily.stat.ap,AP Used
+daily.stat.done,Tasks Done
+daily.stat.problems,Issues
+daily.stat.wage,Wages
+daily.strike,1 apprentice struck last night due to lack of funds|{0} apprentices struck last night due to lack of funds
+daily.publisher,Probably Automated Mod
+daily.title,Apprentice Daily Report
+item.daily.desc,"Summary of apprentice work from last night and this morning, issued by the Probably Automated mod. Double-click to read."
+item.daily.name,Apprentice Daily Report

@@ -1,0 +1,1410 @@
+# Probably Automated Localization Table: English (en)
+# Primary source and fallback for all localization strings.
+# ==============================================================================
+# Domain & Rules: Vocabulary & Operators
+# Vocabulary, aggregation functions, and system variables.
+# Placeholders: none.
+# ==============================================================================
+vocab.agg.avg,平均值
+vocab.agg.count,数量
+vocab.agg.max,最大值
+vocab.agg.min,最小值
+vocab.agg.sum,合计
+vocab.sys.ap_left,本班剩余 AP
+vocab.sys.day,当前天数
+vocab.sys.shift,当前班次（早班=1，晚班=2）
+vocab.sys.shift.short,当前班次
+# ==============================================================================
+# Domain & Rules: Traits, Properties, Presets & Operations
+# Item traits, property definitions, preset conditions, and action verbs.
+# Placeholders: none.
+# ==============================================================================
+op.activate,激活
+op.mark,添加标记
+op.move,放入
+op.note,记录
+op.press,按按钮
+op.swap,交换
+op.toggle,开关
+op.unmark,移除标记
+op.use,使用
+preset.adult,已成年
+preset.alive,存活
+preset.dead,已死亡
+preset.female,雌性
+preset.hasroom,有空位
+preset.male,雄性
+prop.age,年龄
+prop.calories,热量
+prop.cap,容量
+prop.count,已存放数量
+prop.dead,已死亡
+prop.dead.not,未死亡
+prop.durability,耐久
+prop.durabilitypct,耐久%
+prop.energy,电量
+prop.energymax,最大电量
+prop.energypct,电量%
+prop.free,空位数
+prop.freeml,剩余容量（毫升）
+prop.gene.fertility,基因·生育力
+prop.gene.growth,基因·生长
+prop.gene.immunity,基因·免疫
+prop.gene.litter,基因·产仔
+prop.gene.longevity,基因·寿命
+prop.gravid,怀卵
+prop.gravid.not,未怀卵
+prop.growpct,生长进度%
+prop.health,健康
+prop.healthpct,健康%
+prop.hungerpct,饱食度%
+prop.inbatteryslot,在电池槽里
+prop.inbatteryslot.not,不在电池槽里
+prop.instorage,在储藏区里
+prop.instorage.not,不在储藏区里
+prop.labelok,标签正确
+prop.labelok.not,标签不正确
+prop.matingcount,交配次数
+prop.matingmax,交配上限
+prop.mature,已成年
+prop.mature.not,未成年
+prop.neutered,已绝育
+prop.neutered.not,未绝育
+prop.nutrientmax,所需营养上限
+prop.nutrientmin,所需营养下限
+prop.planthealth,植株健康%
+prop.powered,有电
+prop.powered.not,没电
+prop.progresspct,进度%
+prop.purity,水质（%）
+prop.purity.grade_short,水质
+prop.repairable,可修理
+prop.repairable.not,不可修理
+prop.sex,性别
+prop.volumeml,水量（毫升）
+prop.wateruse,每晚用水（毫升）
+prop.weight,体重
+prop.working,工作中
+prop.working.not,未工作
+trait.animal,任意笼养动物
+trait.battery,任意电池
+trait.blade,任意刀具
+trait.cage,动物笼
+trait.container,任意容器
+trait.durable,任意有耐久的
+trait.filter,任意滤芯
+trait.filterholder,过滤水罐
+trait.fish,任意鱼
+trait.food,任意食物（有热量）
+trait.gun,任意枪械
+trait.liquid,任意液体容器
+trait.livestock,任意活物
+trait.machine,机器
+trait.meat,任意肉类
+trait.seed,任意种子
+trait.selfcharging,任意自充电电池
+trait.storage,存放类
+# ==============================================================================
+# Domain & Rules: Kinds & Game Items
+# Item kinds and categories used by catalog and filters.
+# Placeholders: {0} = kind/family name.
+# ==============================================================================
+kind.animal_cage,animal_cage
+kind.any,全部物品
+kind.any_family,任意{0}
+trait.family.contraband,违禁品
+trait.family.chem,化学品
+trait.family.organ,器官
+trait.family.amenity,生活用品
+trait.family.use_count,有使用次数的物品
+trait.family.permit,许可证
+trait.family.toolbox,工具箱
+trait.family.salvagable,可拆解物品
+trait.family.progress,有进度的物品
+trait.family.showcase_special,展示特殊物品
+trait.family.endangerment,危险物品
+kind.any_type,任意{0}
+kind.bottle_printer,bottle_printer
+kind.energy_credit,电池
+kind.feces_large,feces_large
+kind.feces_medium,feces_medium
+kind.feces_small,feces_small
+kind.fillerweed,fillerweed
+kind.fillerweed_seed,fillerweed_seed
+kind.fish_scrap,fish_scrap
+kind.hydroponic,hydroponic
+kind.industrial_fish_feed,industrial_fish_feed
+kind.kitchen_cleaver,切肉刀
+kind.labeler,标签打印机
+kind.large_bottled_water,large_bottled_water
+kind.livestock_feed_dispenser,livestock_feed_dispenser
+kind.morsel,morsel
+kind.nutrient_tablet,nutrient_tablet
+kind.nutrifruit,nutrifruit
+kind.nutrifruit_seed,nutrifruit_seed
+kind.printer,printer
+kind.printer_chip_pistol,printer_chip_pistol
+kind.printer_plastic,printer_plastic
+kind.ras,ras
+kind.ras_water_tank,ras_water_tank
+kind.rat,老鼠
+kind.raw_meat,生肉
+kind.recharger,recharger
+kind.self,容器本身
+kind.small_bottled_water,small_bottled_water
+kind.small_morsel,small_morsel
+kind.small_raw_meat,small_raw_meat
+kind.tilapia,tilapia
+kind.vending_fountain,vending_fountain
+kind.water_filter,滤水器
+kind.water_filter_adv,高级滤水器
+kind.water_jug,桶装水
+kind.water_purifier,water_purifier
+kind.wire_cutter,剪线钳
+# ==============================================================================
+# Domain & Rules: Machine Slots & Evaluation
+# Container slot names and source expansion evaluation strings.
+# Placeholders: {0} = container/slot name, {1} = slot name.
+# ==============================================================================
+eval.empty_no_items,「{0}」当前为空
+eval.empty_not_matching,「{1}」当前为空（来源中有 {0} 件，都不满足条件）
+eval.expand.contents,内的物品
+eval.expand.self,本身
+eval.expand.slot,的{0}
+eval.from.contents,{0}内的物品
+eval.from.self,{0} 本身
+eval.from.slot,{0} 的{1}
+eval.no_named,店内没有【{0}】
+eval.slot.battery,电池槽
+eval.slot.filter,滤芯槽
+slot.backpack,背包
+slot.base_water,base_water
+slot.batteries,电池组
+slot.battery,电池槽
+slot.butcher,屠宰机
+slot.chip,chip
+slot.clean_water,纯净水
+slot.container,容器
+slot.core,核心
+slot.dispenser,分配器
+slot.distillate,馏出物
+slot.filter,滤芯槽
+slot.filters,滤芯
+slot.frame,框架
+slot.input,原料
+slot.module,模组
+slot.note,便签
+slot.nutrient,营养液
+slot.output,产出
+slot.power,电池
+slot.recipe,配方
+slot.seed,种子
+slot.storage,储存
+slot.tank,鱼缸
+slot.trap,陷阱
+slot.water,水
+slot.wine,酒
+# ==============================================================================
+# Domain & Rules: Rule Cards & Action Templates
+# Rule card sentence templates, slots, and condition clauses.
+# Placeholders: {list} = items, {to} = target, {tool} = tool, {op} = action.
+# ==============================================================================
+card.cond.empty,为空
+card.cond.every_shift,每班
+card.cond.every_shift_run,每班执行
+card.cond.gt,多于 {0} 个
+card.cond.lt,少于 {0} 个
+card.cond.not_empty,不为空
+card.cond.when,当 {0} 时
+card.op.apply,作用于
+card.op.press,按
+card.param.button,按钮
+card.param.list,对象
+card.param.pre,对象
+card.param.to,目标
+card.param.tool,工具
+card.select_button,（选择按钮）
+card.select_param,（选择{0}）
+card.times,（每件 {0} 次）
+card.tpl.apply,用 {tool} {op} {list}
+card.tpl.complex_colon,{complex}：
+card.tpl.cond_colon,{cond}：
+card.tpl.mark,为 {list} {op}【{text}】
+card.tpl.place,将 {list} {op} {to}
+card.tpl.press,{op} {list} 的{button}
+card.tpl.swap,{op} {list} 与 {to}
+card.tpl.trigger,{op} {list}
+card.tpl.unmark,为 {list} {op}【{text}】
+card.tpl.when,当 {list} {cond} 时：
+# ==============================================================================
+# Domain & Rules: Text Formatting & Outcomes
+# Sentence generators, action text, preconditions, grades, and execution run summary.
+# Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
+# ==============================================================================
+action.activate,激活 {0}
+action.mark,为 {0} 添加标记【{1}】
+action.move,将 {0} 放入 {1}
+action.note.add,将 {0} 累加到 {1}
+action.note.set,将 {0} 写入 {1}
+action.press,按 {0} 的【{1}】
+action.swap,交换 {0} 与 {1}
+action.times,，每件 {0} 次
+action.toggle,开关 {0}
+action.unmark,移除 {0} 的标记【{1}】
+action.use,用 {0} 作用于 {1}
+grade.at_least,至少是
+grade.at_most,至多是
+grade.better_than,好于
+grade.is,是
+grade.is_not,不是
+grade.worse_than,差于
+pre.cmp,{0} 数量 {1} {2}
+pre.empty,{0} 为空
+pre.gt,{0} 多于 {1} 个
+pre.lt,{0} 少于 {1} 个
+pre.not_empty,{0} 不为空
+pre.where.cmp,有 {0} 的 {1} 数量 {2} {3}
+pre.where.empty,没有 {0} 的 {1}
+pre.where.gt,有 {0} 的 {1} 多于 {2} 个
+pre.where.lt,有 {0} 的 {1} 少于 {2} 个
+pre.where.not_empty,有 {0} 的 {1}
+prenot.no_less,{0} 不少于 {1} 个
+prenot.no_more,{0} 不多于 {1} 个
+prenot.where_no_less,{0} 的 {1} 不少于 {2} 个
+prenot.where_no_more,{0} 的 {1} 不多于 {2} 个
+runsummary.deferred,，{0} 件因 AP 不足未做
+runsummary.done,完成 {0} 件
+runsummary.issues,，{0} 项未完成
+runsummary.levelup,；{0} 升级
+runsummary.no_apprentices,无当班学徒。
+text.ap,已用 {0} / 共 {1} AP
+text.bracket,【{0}】
+text.pair,{0}：{1}
+text.pair_after,{0}：
+text.deleted,（已删除）
+text.dot_sep,·
+text.members.all,{0}（共 {1} 个）
+text.members.more,{0} 等（共 {1} 个）
+text.object_def,参数 = {0}{1}
+text.paren,（{0}）
+text.period,。
+text.prop_def,公式 = {0}
+text.selector.conds,条件：{0}
+text.selector.minus,排除：{0}
+text.selector.scope,范围：{0}
+text.selector.stat_count,统计数量：{0}
+text.selector.stat_other,统计{0}：{1}
+text.selector.take,选取：{0}
+text.selector.type,类型：{0}
+text.selector.unset_from,（未选择来源）
+text.short.minus,排除 {0}
+text.slot.battery,（电池槽）
+text.slot.filter,（滤芯槽）
+text.unset,（未选择）
+# ==============================================================================
+# Domain & Rules: Static Checks & Scope Rules
+# Rule validator error messages, warnings, and scoping conflict rules.
+# Placeholders: {0} = item/definition name, {1} = details.
+# ==============================================================================
+check.err.def_missing,引用的定义不存在
+check.err.expr_const_missing,表达式引用的参数不存在或未选择
+check.err.expr_empty,表达式存在空项
+check.err.expr_note_missing,表达式引用的计数器不存在或未选择
+check.err.expr_note_scope,此处不能使用计数器
+check.err.expr_own_scope,此处不能使用自身属性
+check.err.expr_sel_custom_prop,自定义属性的公式不能引用筛选器
+check.err.expr_sel_missing,表达式引用的筛选器不存在或未选择
+check.err.expr_sys_missing,表达式存在空项
+check.err.expr_sys_scope,此处不能使用系统变量
+check.err.pre_note_missing,执行前提引用的计数器不存在
+check.err.pre_sel_missing,执行前提引用的筛选器不存在
+check.err.pre_stat_where,统计筛选器不支持带条件的数量检查
+check.err.pre_sys_missing,未知的系统变量“{0}”
+check.err.prop_cycle,自定义属性不能引用其他自定义属性
+check.err.prop_prefix,属性“{0}”：{1}
+check.err.rule_mark_empty,未填写标记名称
+check.err.rule_move_no_to,“放入”未选择目标
+check.err.rule_move_not_box,放入的目标须为容器：「{0}」不是容器
+check.err.rule_no_actions,未设置动作
+check.err.rule_note_missing,“记录”未选择计数器
+check.err.rule_press_no_button,“按按钮”未选择按钮
+check.err.rule_swap_no_to,“交换”未选择另一组物品
+check.err.rule_target_missing,“{0}”未选择对象
+check.err.rule_times_invalid,“{0}”的次数不能小于 1
+check.err.rule_unknown_verb,未知动作“{0}”（请重新选择）
+check.err.rule_use_no_tool,“使用”未选择工具
+check.err.rule_use_times_invalid,“使用”的次数不能小于 1
+check.err.rule_use_tool_kind,“使用”的工具须为设备名、筛选器或固定设施
+check.err.sel_agg_prop_empty,未选择统计属性
+check.err.sel_cycle,筛选器存在循环引用
+check.err.sel_from_empty,未选择来源
+check.err.sel_from_missing,来源引用的定义不存在
+check.err.sel_from_number,来源不能是数字
+check.err.sel_from_param,来源是参数（常量），必须是容器或“全店”
+check.err.sel_minus_missing,排除的筛选器不存在
+check.err.sel_prefix,筛选器“{0}”：{1}
+check.err.sel_preset_missing,用到的预设条件不存在
+check.err.sel_prop_empty,未选择属性
+check.ref.prop,属性 {0}
+check.ref.selector,筛选器 {0}
+check.warn.sel_all_shop,「{0}」是全店的全部物品，将处理店内所有物品（包括机器中的电池）
+check.warn.sel_itself,【{0}】指该容器本身；如需处理其中的物品，请使用来源为【{0}】的筛选器
+check.warn.tool_is_box,工具「{0}」是容器：将使用其中第一件可用的物品，未必是预期的物品
+scope.err.already_global,已经是全局定义
+scope.err.conflict,“{0}”{1}，请先重命名
+scope.err.cross_ref_local,引用了其他流程的本流程定义“{0}”
+scope.err.dup_global_param,与全局参数“{0}”重名
+scope.err.dup_global_selector,与全局筛选器“{0}”重名
+scope.err.dup_local_param,与流程“{0}”的本流程参数“{1}”重名
+scope.err.dup_local_selector,与流程“{0}”的本流程筛选器“{1}”重名
+scope.err.global_ref_local,全局定义不能引用本流程的定义“{0}”
+scope.shop,全店
+# ==============================================================================
+# Domain & Simulation: Simulator Catalog & Items
+# Items, containers, and mock objects in Simulator.
+# Placeholders: none.
+# ==============================================================================
+sim.item.animal_cage,动物笼
+sim.item.battery_empty,电池（空）
+sim.item.battery_full,电池（满）
+sim.item.battery_self,自充电电池
+sim.item.filter,滤水器
+sim.item.filter_adv,高级滤水器
+sim.item.jug_dirty,桶装水（脏水 3L）
+sim.item.jug_empty,空水桶
+sim.item.knife,切肉刀
+sim.item.labeler,标签打印机
+sim.item.machine,用电机器
+sim.item.meat,生肉
+sim.item.moisture_farm,水分收集器
+sim.item.other,杂物（占一格）
+sim.item.projector,幻影投影仪
+sim.item.rat_baby,幼鼠
+sim.item.rat_f,母鼠（成年）
+sim.item.rat_fat,肥鼠（可出栏）
+sim.item.rat_m,公鼠（成年）
+sim.item.recharger,充能器
+sim.item.storage,储藏区
+sim.item.toolbox,工具箱
+sim.item.water_pitcher,过滤水罐
+sim.item.water_purifier,净水器
+sim.item.wire_cutter,剪线钳
+# ==============================================================================
+# Domain & Simulation: Simulator Engine & UI
+# Simulator configuration, step execution, and outcome display.
+# Placeholders: {0} = item name/shift, {1} = parameter/quantity.
+# ==============================================================================
+sim.add_to_title,放入「{0}」
+sim.app_line,{0} · {1} · Lv{2} · 每天 {3} AP · 熟练度 {4}
+sim.apprentices,学徒
+sim.battery_summary,电池 {0}
+sim.btn_add_items,＋ 物品
+sim.btn_add_vapp,＋ 虚拟学徒
+sim.btn_edit_schedule,编辑流程
+sim.btn_start,开始模拟
+sim.cannot_create_item,无法创建 {0}
+sim.copy_failed,复制店铺失败：{0}
+sim.count_label,件数
+sim.daily_ap,每天 AP
+sim.day_shift_head,第 {0} 天 · {1}
+sim.deferred_items_warn,{0} 件因 AP 不足未做
+sim.desc.battery,{0}#{1}（{2}%）
+sim.desc.dead,，已死亡
+sim.desc.liquid,{0}#{1}（{2}ml，水质 {3}%）
+sim.desc.neutered,，已绝育
+sim.desc.rat,{0}鼠#{1}（{2}g，{3} 天{4}{5}）
+sim.duration,时长
+sim.empty,空
+sim.fail.dest_full,{0} 已满
+sim.fail.no_effect,无变化
+sim.fail.simulated,预演中已处理过（实际效果未知）
+sim.group_stats,{0} / {1} AP · ×{2}
+sim.in_shop_count,店内 {0} 件
+sim.level,等级
+sim.lvl_up,升级：{0}
+sim.memo_tag,计数器：{0}
+sim.more_items_count,另有 {0} 个
+sim.more_kinds_search,还有 {0} 种，请输入搜索词。
+sim.no_apps_tip,暂无学徒：添加虚拟学徒后运行
+sim.no_matching_items,没有匹配的物品。
+sim.no_pending_items,无待处理物品
+sim.no_schedules,暂无流程。
+sim.no_workers_this_shift,本班无人执行
+sim.none_in_shop,店内暂无
+sim.op_done_count,{1} {0} 件
+sim.pct_unchanged,不变
+sim.place_in_battery_slot,电池槽
+sim.place_in_container,容器里
+sim.place_into,放到
+sim.prof_label,熟练度
+sim.ran_shifts_notice,已运行 {0} 个班，将继续运行
+sim.rat_dead_count,已死亡 {0}
+sim.rats_summary,雄 {0} · 雌 {1}
+sim.rule_deferred_warn,AP 不足，{0} 件本班未做
+sim.run_1_day,1 天
+sim.run_1_shift,1 个班
+sim.run_3_days,3 天
+sim.run_7_days,7 天
+sim.schedule,流程
+sim.search_placeholder,名称或 ID
+sim.sex.female,雌
+sim.sex.male,雄
+sim.shift_label,班次
+sim.shop_copy,店铺副本
+sim.slot_summary,电池槽 {0}
+sim.start_shift,起始
+sim.start_morning,早班
+sim.start_night,晚班
+sim.step.add_mark,添加标记【{0}】
+sim.step.moved_to,移至 {0}
+sim.step.remove_mark,移除标记【{0}】
+sim.step.swapped,与 {0} 交换位置
+sim.step.trigger_unknown,{0}（效果在实际执行时才知道）
+sim.step.unknown,{0} → {1}（效果在实际执行时才知道）
+sim.step.water_change,{0} 水量 {1} → {2} ml
+sim.sub_summary,{0} ×{1}（{2}）
+sim.tip,在店铺副本上运行，不影响实际店铺。\n夜间按游戏规则推进：电池、收集器、净水器、鼠、鱼、水培及带进度的机器（仅推进进度，不产出物品）。\n接水、倒水和倒入下水道按实际计算；其他“使用”“激活”“开关”“按按钮”仅计算 AP，实际效果以执行结果为准。
+sim.tip_prof,熟练度：{0}
+sim.title,策略模拟器
+sim.trigger.activate,激活
+sim.trigger.press,按【{0}】
+sim.trigger.toggle,开关
+sim.vapp_default_name,虚拟学徒
+sim.vapp_title,虚拟学徒
+sim.water_summary,水 {0}ml（水质 {1}%）
+sim.welcome_tip,以店内现有物品和执行此流程的学徒（或虚拟学徒），在副本上运行。
+# ==============================================================================
+# Domain & Reports: Failure Codes & Shift Reports
+# Execution failure codes, morning/night shift reports, and issue details.
+# Placeholders: {0} = apprentice/count, {1} = rule/reason.
+# ==============================================================================
+failcode.dest_full,放不下
+failcode.destfull,目标已满
+failcode.error,出错
+failcode.many,数量较多
+failcode.needs_player,需要玩家操作
+failcode.needsplayer,需要玩家操作
+failcode.no_ap,AP 不足
+failcode.no_effect,无效果
+failcode.no_members,没有容器
+failcode.no_source,缺物资
+failcode.no_tool,缺工具
+failcode.noap,AP 不足
+failcode.noeffect,无效果
+failcode.nomembers,没有容器
+failcode.not_allowed,游戏不允许
+failcode.notallowed,受游戏限制暂不可执行
+failcode.notool,缺少工具
+failcode.other,其他
+failcode.simulated,已预演
+report.apprentice,学徒
+report.cash_delta,现金 {0}
+report.consume_item,消耗「{0}」
+report.count_items,{0} 项
+report.detail.day,第{0}天
+report.detail.deferred,未处理 {0} 件
+report.detail.done,完成 {0} 件
+report.detail.group_line,"  {0}（{1}）：{2}"
+report.detail.dry_run,试运行
+report.detail.failed,未完成 {0} 项
+report.detail.levelup,，升级！
+report.detail.run,执行
+report.details.record,写入记事本
+report.details.walk_cost,（启动耗费 {0} AP）
+report.error.broken,出错
+report.fail.dest_full,目标已满
+report.fail.no_tool,缺少工具
+report.fail.unknown_action,未知动作
+report.growth.learned,{0} 熟练度 {1} → {2}
+report.growth.levelup,{0}（Lv{1}，每天 {2} AP）
+report.growth.prefix,升级 {0}
+report.idle.all_in_dest,都已经在目标容器里了
+report.idle.all_marked,都已有该标记
+report.idle.no_items,没找到符合条件的东西
+report.idle.none_marked,都没有该标记
+report.idle.same_place,都在同一个容器里，无需交换
+report.issue.dest_full,目标已满：{1}，{2} 件未放入
+report.issue.many,连试多次均无效果，中止本任务
+report.issue.no_effect,{1}后无变化，{2} 件已跳过
+report.issue.no_tool,缺少工具：店内没有{1}，{2} 件未能{3}
+report.issue.not_allowed,游戏暂不允许{1}，{2} 件已跳过
+report.issue.op_failed,{0}：{1}
+report.no_change,无变化
+report.note.no_apprentices,无当班学徒
+report.pre.broken,结构错误
+report.pre.disabled,已停用
+report.pre.fail,执行条件不满足
+report.pre.notrun,未执行
+report.pre.pass,满足
+report.product_group,{0} ×{1}
+report.product_output,产物 {0}
+report.product_unplaced,（{0} 件未放入产物去向）
+report.reason.no_ap,AP 耗尽，{0} 件未处理
+report.reason.notrun,未执行（{1}），{0} 件未处理
+report.shift_deferred,，{0} 项因 AP 不足未做
+report.shift_done,{0}（{1}）：完成 {2} 项（{3}）
+report.shift_empty,{0}（{1}）：无待处理事项。
+report.shift_failed,，{0} 项未完成
+report.shift_levelup,；{0} 升级了
+report.shift_note,学徒{0}：{1}
+report.shift_waiting,，部分操作暂不可执行（受游戏限制，条件满足后自动处理）
+report.step.moved_to,移至 {0}
+report.summary_override,学徒{0}：{1}
+report.text.no_ap,AP 耗尽
+report.why.no_ap,AP 不足（前面的任务已用 {0} / 共 {1} AP）
+report.window.deferred,{0} 件因 AP 不足未做
+report.window.done,完成 {0} 件
+report.window.dry_run,（试运行）
+report.window.empty,无待处理物品
+report.window.group_stats,{0} 件 · {1} AP
+report.window.problems,{0} 项未完成
+report.window.tab,报告
+report.window.title_full,{0}报告
+report.window.title,第 {0} 天 · {1}
+# ==============================================================================
+# Domain & Workforce: Apprentices, Skills & Shifts
+# Apprentice name pool, shift schedules, and skill groups.
+# Placeholders: none.
+# ==============================================================================
+names.apprentice,小张;小李;小王;小赵;小钱;小孙;小周;小吴;小郑;小陈;大明;建国;翠花;铁柱;大山;豆子;小灰;阿强;阿花;二狗
+shift.morning,早班
+shift.night,晚班
+shift.off,休息
+shift.short.morning,早
+shift.short.night,晚
+shift.short.off,休息
+skill.husbandry,养殖
+skill.maintenance,维护
+skill.misc,杂务
+skill.power,电力
+skill.water,水务
+# ==============================================================================
+# UI: Apprentice Intercom & Staffing Agency
+# Apprentice intercom window and Staffing Agency hiring/training.
+# Placeholders: {0} = apprentice name/credits, {1} = level/proficiency.
+# ==============================================================================
+agency.btn_buy_train,购买 · {0}
+agency.btn_expand,扩编 · {0}
+agency.btn_hire,雇用学徒 · {0}
+agency.btn_return,返回
+agency.cash_insufficient,现金不足（{0}）
+agency.fee_expand,中介扩编费
+agency.fee_hire,中介招聘费
+agency.fee_train_item,培训材料（{0}）
+agency.header_stats,现金 {0} · 名额 {1}/{2}
+agency.hired_msg,{0} 已加入，请在学徒页选择流程
+agency.level_up_info,每升一级，每天的 AP 增加 {0}，日薪增加 {1}。
+agency.materials,耗材费
+agency.new_apprentice_info,新学徒：Lv{0}，每天 {1} AP，日薪 {2}，熟练度保底 {3}。
+agency.slots_expand,名额 {0} → {1}
+agency.slots_full,名额已满
+agency.slots_maxed,名额已到上限 {0}
+agency.tip_hire,雇用后在学徒页选择流程
+agency.title,中介
+agency.train_cash,现金 {0}
+agency.train_desc,+{0} 经验。当天第一个班次开始时阅读，消耗 {1} AP。
+agency.train_max_level,培训最高可至 Lv{0}。
+agency.train_no_cash_body,培训材料 {0}，现金 {1}。
+agency.train_no_cash_title,现金不足
+agency.train_pending_read,培训材料尚未读完。
+agency.train_title,培训 · {0}
+agency.training,技能培训：{0} 熟练度 +{1}（{2}）
+agency.training_result,【{0}】接受了{1}培训，{2}熟练度提升至 {3}（+{4}）。
+intercom.ap_tip,每天的 AP：晚班和第二天早班共用
+intercom.btn_add_duty,＋ 添加流程
+intercom.btn_details,详情
+intercom.btn_fire,解雇
+intercom.btn_rest,设为休息
+intercom.btn_retry_player,允许学徒重试
+intercom.btn_train,培训…
+intercom.btn_work,设为上班
+intercom.call_agency,呼叫中介
+intercom.col_ap,AP
+intercom.col_apprentice,学徒
+intercom.col_done,完成
+intercom.col_level,等级
+intercom.col_schedules,流程
+intercom.col_wage,日薪
+intercom.col_report_wage,工资
+intercom.confirm_fire_note,已购培训材料不予退还。
+intercom.confirm_fire_title,解雇 {0}？
+intercom.done_items,{0} 件
+intercom.duty_item,{0} · {1}
+intercom.duty_item_tip,点击移除此流程
+intercom.duty_shift_tip,早班：醒来后、开店前执行；晚班：玩家上床入睡时执行。当天的 AP 从晚班开始算，晚班用剩的留给第二天早班
+intercom.duty_tip,按顺序执行；当天先做晚班的，再做第二天早班的。在“详情”中设置
+intercom.handbook,手册
+intercom.header_stats,名额 {0}/{1} · 每天 {2} AP · 今晚工资 {3}
+intercom.needs_player_warning,{0} 种动作需玩家手动操作，学徒已停止尝试
+intercom.no_apprentices,暂无学徒。请通过中介所雇佣。
+intercom.no_reports,暂无班次报告。
+intercom.no_schedules_hint,（未指派流程）
+intercom.no_schedules_toast,暂无流程，请先在“流程”页新建。
+intercom.none,（无）
+intercom.payroll_summary,共支付工资 {0}G（学徒 {1} 人）
+intercom.payroll_title,工资结算
+intercom.pick_schedule,选择流程
+intercom.pick_schedule_tip,选择要指派给该学徒的流程
+intercom.prof_empty,熟练度 —
+intercom.prof_score,熟练度 {0}
+intercom.prof_tip,等级保底 {0}，按 {1} 计，AP 花费 ×{2}
+intercom.select_schedule,（选择流程）
+intercom.shift_order_tip,排在前面的学徒先执行，资金不足时先发工资
+intercom.status_deferred,{0} 件因 AP 不足未做
+intercom.status_done,已完成
+intercom.status_issues,{0} 项未完成
+intercom.status_rest,休息中
+intercom.status_strike,罢工中
+intercom.status_unassigned_paid,未指派（仍付工资）
+intercom.status_work,上班
+intercom.streak_days,（连续 {0} 天）
+intercom.strikers,· {0} 人罢工
+intercom.tab_apprentices,学徒
+intercom.tab_reports,报告
+intercom.tab_schedules,流程
+intercom.tip_add_duty,一名学徒可以执行多个流程，按顺序串行执行，共用当天的 AP
+intercom.tip_rest,休息：不参与班次，不支付工资
+intercom.tip_work,上班：参与下一天的班次，入睡时支付工资
+intercom.title,学徒对讲机
+intercom.training_pending,培训材料待读
+intercom.training_pending_tip,当天第一个班次开始时阅读，消耗 {0} AP
+intercom.unassigned_warning,提醒：以下学徒尚未安排流程：
+intercom.wages_last_7_days,近 7 天工资 {0}
+intercom.xp_stat,经验 {0}/{1}
+intercom.xp_tip,经验 {0}/{1}
+payroll.log_strike,学徒罢工：{0}（资金不足，无法支付工资）。
+payroll.log_wages,学徒工资：{0} 信用点（{1}）。
+# ==============================================================================
+# UI: Routines & Schedules Overview
+# Routines management tab, routine list, statistics, and device linking.
+# Placeholders: {0} = routine name/count, {1} = shift/AP.
+# ==============================================================================
+schedule.btn_add_device,添加…
+schedule.btn_edit,编辑
+schedule.btn_edit_selector,编辑“{0}”…
+schedule.btn_export,导出
+schedule.btn_move_down,下移
+schedule.btn_move_up,上移
+schedule.btn_name_device,命名…
+schedule.btn_new,＋ 新建流程
+schedule.btn_open_in_editor,在编辑器中打开
+schedule.btn_simulator,策略模拟器…
+schedule.btn_stats,统计
+schedule.col_ap,AP
+schedule.col_device_header,设备名
+schedule.col_done,已完成
+schedule.col_rule,任务
+schedule.col_rule_header,任务
+schedule.col_top_issue,最常见的问题
+schedule.cond_advanced,高级条件…
+schedule.cond_all,全部满足
+schedule.cond_always,每班执行
+schedule.cond_any,任一满足
+schedule.cond_count_gt,……多于 N 件时…
+schedule.cond_count_lt,……少于 N 件时…
+schedule.cond_empty,……为空时
+schedule.cond_not_empty,……不为空时
+schedule.copied_to_clipboard,「{0}」已复制到剪贴板。
+schedule.copy_name,{0}（副本）
+schedule.count_gt_prompt,多于几件
+schedule.count_items,{0} 件
+schedule.count_units,{0} 个
+schedule.count_tasks,{0} 个
+schedule.count_devices,{0} 个
+schedule.count_lt_prompt,少于几件
+schedule.current_tag,（当前）
+schedule.day_shift,第 {0} 天 · {1}
+schedule.default_name_seq,流程 {0}
+schedule.del_confirm_title,删除流程“{0}”？
+schedule.del_own_note,其所属的 {0} 个参数和筛选器将一并删除。
+schedule.del_runners_note,{0} 将不再执行此流程。
+schedule.device_label,设备：{0}
+schedule.device_none,店内暂无
+schedule.device_tip,在店内为物品命名后，任务将自动使用
+schedule.empty,暂无流程。
+schedule.err_cannot_run,此任务无法执行：
+schedule.import_clipboard,从剪贴板导入
+schedule.import_clipboard_tip,导入通过“导出”复制的流程
+schedule.new_blank,从空白流程创建
+schedule.new_blank_tip,不含任何任务
+schedule.new_title,新建流程
+schedule.no_buttons,所选机器没有按钮
+schedule.param_shared,多个流程共用
+schedule.pick_action,选择动作
+schedule.pick_button,选择按钮
+schedule.pick_condition,执行条件
+schedule.pick_device_or_selector,选择设备名或筛选器
+schedule.pick_param,选择参数
+schedule.rule_disabled,（已停用）
+schedule.section_devices,设备名
+schedule.section_params,流程参数
+schedule.section_rules,任务列表
+schedule.selector_suffix,（筛选器）
+schedule.stats_done_items,处理 {0} 件物品
+schedule.stats_empty,暂无记录：此流程尚未执行。
+schedule.stats_issue_count,{1}（{0} 次）
+schedule.stats_range,最近 {0} 个班次（{1} 至 {2}）
+schedule.stats_summary,完成 {0} 件 · 平均每班用 {1} AP · 问题 {2} 项
+schedule.stats_title,统计 · {0}
+schedule.status_errors,{0} 个任务有误
+schedule.status_notes,{1} 等 {0} 条提醒
+schedule.status_ready,就绪
+schedule.tip_edit_in_editor,在编辑器中修改
+schedule.tip_export,复制到剪贴板，可在其他存档中导入（保留设备名）
+schedule.tip_stats,最近班次的执行情况：完成件数、AP、问题
+schedule.token_named_item,该名称的物品
+# ==============================================================================
+# UI: Routine Editor
+# Routine editor window, task reordering, actions, and preconditions.
+# Placeholders: {0} = task name/count, {1} = reference.
+# ==============================================================================
+editor.action_apply_to,作用于
+editor.action_button,按钮
+editor.action_mark,标记
+editor.action_swap_with,与
+editor.action_target,目标
+editor.action_value,数值
+editor.add_cond_tip,仅统计满足条件的物品
+editor.add_cond_title,添加条件
+editor.advanced_stats,自定义属性 {0} · 计数器 {1}
+editor.btn_add_action,＋ 动作
+editor.btn_add_cond,＋ 条件
+editor.btn_add_filter,＋筛选器
+editor.btn_add_param,＋参数
+editor.btn_disable,停用
+editor.btn_edit,编辑
+editor.btn_enable,启用
+editor.btn_name_device,＋ 命名…
+editor.btn_new,＋ 新建
+editor.btn_new_rule,＋ 新建任务
+editor.btn_only_refs,仅显示此任务引用的项
+editor.btn_return,返回
+editor.btn_show_all,显示全部
+editor.btn_simple_when,简单写法
+editor.cmp_by_prop,按属性比较…
+editor.confirm_delete_rule,删除任务“{0}”？
+editor.counter_tag,计数器：{0}
+editor.default_rule_name,新任务
+editor.deferred_ap,AP 不足，{0} 件未做
+editor.device_none_named,店内暂无此名称的物品
+editor.device_none_short,暂无
+editor.done_items,完成 {0} 件
+editor.empty_none,暂无
+editor.entry_no_refs,\n未被引用
+editor.entry_refs,\n引用 {0} 处
+editor.global_used,已用 {0} / {1}
+editor.group_global,全局
+editor.group_local,本流程
+editor.input_mark_name,标记名称
+editor.input_name,流程名称
+editor.input_rule_name,任务名称
+editor.label_counters,计数器
+editor.label_custom_props,自定义属性
+editor.local_in_tasks,另有 {0} 个筛选器仅用于单个任务，请在该任务中编辑
+editor.menu_device_reuse,为店内其他物品使用此名称…
+editor.menu_device_to_filter,转为筛选器…
+editor.no_actions,暂无动作
+editor.no_devices,暂无。为店内物品命名后，可在筛选器和动作中直接选用。
+editor.no_rules,暂无任务。点击上方按钮添加。
+editor.note_add,累加到
+editor.note_default_name,计数
+editor.note_desc,初始值 {0}，每班开始时重置
+editor.note_init_val,初始值
+editor.note_set,写入
+editor.note_still_used,仍有任务引用此计数器。
+editor.note_title,计数器
+editor.note_title_new,新建计数器
+editor.num_tag,（数值）
+editor.pick_btn_placeholder,（选择按钮）
+editor.pick_counter_placeholder,（选择计数器）
+editor.pick_dest_placeholder,（选择目标）
+editor.pick_target_placeholder,（选择对象）
+editor.pick_tool_placeholder,（选择工具）
+editor.picker_placeholder,（选择）
+editor.pre_fail,条件不满足：{0}
+editor.preset_satisfied,满足 {0}
+editor.satisfy_prefix,满足
+editor.sec_actions,动作
+editor.sec_advanced,高级
+editor.sec_defs,参数与筛选器
+editor.sec_devices,设备名
+editor.sec_rules,任务
+editor.sec_when,执行条件
+editor.selector_backref,“{0}”引用了“{1}”，被引用的筛选器须排在上方。
+editor.test_count_gt,数量 >
+editor.test_count_lt,数量 <
+editor.test_empty,为空
+editor.test_not_empty,不为空
+editor.times_each,每件
+editor.times_unit,次
+editor.tip_action_apply,对象的每一件按顺序尝试工具中的物品，第一件生效的作用于它。\n方向由游戏判断：例如用水龙头作用于空桶，即为空桶接水。
+editor.tip_action_swap,两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。
+editor.tip_action_target,逐件放入目标中第一个放得下的。目标有多个时按其顺序依次尝试。
+editor.tip_add_pre_cond,仅统计满足条件的物品，例如“【A】含水 > 1000 毫升”
+editor.tip_advanced_when,几个条件一起判断、用计数器或系统变量
+editor.tip_cannot_run,此任务无法执行：
+editor.tip_collapse_global,收起：只显示本流程用到的全局参数和筛选器
+editor.tip_device_to_filter,转为筛选器：本流程中直接使用【{0}】的位置将改用一个新筛选器，可在其中添加条件、排序和数量限制。
+editor.tip_disable,停用后这个任务不再执行，设置保留
+editor.tip_enable,恢复执行这个任务
+editor.tip_expand_global,展开：显示全部全局参数和筛选器（所有流程可用）
+editor.tip_last_result,上次执行结果
+editor.tip_name_device,在店内双击要命名的容器或机器；其他物品可用蓝色标签打印机命名
+editor.tip_new_filter,在此新建筛选器
+editor.tip_only_refs,左栏只列出展开的任务用到的参数和筛选器
+editor.tip_rule_reorder,点击展开或收起；拖动可调整顺序
+editor.tip_show_all,显示本流程的全部参数和筛选器
+editor.tip_warn,提醒：
+editor.tip_when,仅决定是否执行此任务。如需只处理部分物品，请在动作对象的筛选器中添加条件。
+editor.tip_when_sub,仅决定是否执行此任务。如需只处理部分物品，请在动作对象的筛选器中添加条件。
+editor.unprocessed,未处理 {0} 件
+editor.warn_prefix,提醒：{0}
+editor.when_gt_n,……多于 N 件时
+editor.when_lt_n,……少于 N 件时
+editor.window_title,流程 · {0}
+# ==============================================================================
+# UI: Filter & Condition Editors, Object Dialogs
+# Filter configuration, conditions, pick ordering, and parameter dialogs.
+# Placeholders: {0} = filter name/property, {1} = value/count.
+# ==============================================================================
+cond.at_least,至少是
+cond.at_most,至多是
+cond.group.base,基本属性
+cond.group.ingredient,成分
+cond.group.quality,品质
+cond.group.ratio,相对上限 %
+cond.group.tag,游戏标签
+cond.group.type,类型
+cond.is,是
+cond.is_not,不是
+cond.type_is,是{0}
+cond.type_is_not,不是{0}
+expr.count,{0}.数量
+expr.empty,（空）
+expr.own,自身.{0}
+expr.select_placeholder,（选择）
+expr.term.const,参数
+expr.term.note,计数器
+expr.term.num,数值
+expr.term.own,自身属性
+expr.term.stat,统计值
+expr.term.sys,系统变量
+expr.tip_add,添加一项，与前面的项做加减乘除
+expr.tip_remove,去掉最后一项
+filter.auto_name.agg_count,{0}的{1}数量
+filter.auto_name.agg_prop,{0}的{1}{2}{3}
+filter.auto_name.default,新筛选器
+filter.auto_name.items,物品
+filter.auto_name.items_in,{0}的{1}
+filter.auto_name.self,{0}
+filter.auto_name.shop,全店
+filter.auto_name.target,{0}{1}
+object_dlg.btn_confirm_promote,设为全局
+object_dlg.btn_promote,设为全局参数…
+object_dlg.default_name,新参数
+object_dlg.default_name_seq,新参数（{0}）
+object_dlg.delete_still_used,以下任务仍在引用：{0}。
+object_dlg.hint_placeholder,悬停名称时显示
+object_dlg.name_empty,名称不能为空。
+object_dlg.name_exists,已存在同名对象。
+object_dlg.promote_note,以下参数和筛选器将对所有流程可用：
+object_dlg.promote_title,设为全局？
+object_dlg.prop_formula,计算公式
+object_dlg.prop_tip,为物品定义动态计算的属性数值
+object_dlg.scope_global,全局：所有流程可用
+object_dlg.scope_owner,仅「{0}」可用
+object_dlg.title_custom_prop,自定义属性
+object_dlg.title_edit,参数 · {0}
+object_dlg.title_new,新建参数
+object_dlg.unit,单位
+object_dlg.unit_placeholder,g、只、天
+object_dlg.used_by_rules,被 {0} 个任务引用
+object_dlg.value_nan,数值必须是数字。
+prop_dlg.default_name,新属性
+prop_dlg.delete_still_used,无法删除，仍被引用：{0}
+prop_dlg.formula,公式
+prop_dlg.formula_display,公式：{0}
+prop_dlg.formula_error,公式存在错误
+prop_dlg.name_empty,请输入名称
+prop_dlg.sample_calc,示例计算：{0}
+prop_dlg.sample_empty,店内暂无此类物品
+prop_dlg.sample_none,店内暂无此类物品
+prop_dlg.target_kind,适用类型
+prop_dlg.title_edit,自定义属性：{0}
+prop_dlg.title_new,新建自定义属性
+property_dlg.no_properties,未找到匹配的属性。
+property_dlg.search_placeholder,搜索属性名称或 ID
+property_dlg.title,属性选择
+selector.btn_add_cond,＋ 条件
+selector.btn_add_cond_group,＋ 条件组（任一满足）
+selector.btn_add_scope,＋ 添加范围
+selector.btn_collapse,收起
+selector.btn_del_group,删除此组
+selector.btn_hide_tags,隐藏内部标签
+selector.btn_more,更多…
+selector.btn_promote,设为全局筛选器…
+selector.btn_show_tags,显示内部标签
+selector.common_presets,常用条件
+selector.cond_all,全部满足
+selector.cond_any,任一满足
+selector.copy_name,{0}（副本）
+selector.copy_name_seq,{0}（副本 {1}）
+selector.delete_still_used,以下任务仍在引用此筛选器：{0}。
+selector.group_prefix,一组
+selector.items_unit,件
+selector.kind_self_tip,范围为“本身”时无需选择类型
+selector.label_minus,排除
+selector.label_prop,属性
+selector.label_sort,排序
+selector.label_stat,统计方式
+selector.minus_none,（不排除）
+selector.more_suffix," 等"
+selector.pick_all,全部
+selector.pick_exclude_first_n,排除前 N 件
+selector.pick_first_n,选取前 N 件
+selector.pick_number,统计数值
+selector.prefix_container,容器：{0}
+selector.prefix_family,物品家族：
+selector.prefix_item_type,商品类型：
+selector.save_no_scope,请选择范围。
+selector.scope_all_inside,内全部物品
+selector.scope_and,和
+selector.scope_count,当前 {0}{1} 件
+selector.scope_empty,当前为空
+selector.scope_from,从
+selector.scope_items_inside,内的物品
+selector.scope_same_as_above,（同上）
+selector.scope_self,本身
+selector.section_cond,条件
+selector.section_kind,物品类型
+selector.section_pick,选取
+selector.section_scope,范围
+selector.sort_asc,从低到高
+selector.sort_desc,从高到低
+selector.sort_unspecified,不指定
+selector.stat_tip,统计结果可用于执行条件和条件中的数值
+selector.take_count,件数：
+selector.take_exclude_first,排除前
+selector.take_first,选取前
+selector.take_start_from,起始序号：
+selector.tip_add_scope,多个范围的物品合并，靠前的范围优先
+selector.tip_minus,排除另一个筛选器选出的物品
+selector.tip_more,条件组（任一满足）、排除另一个筛选器选出的物品
+selector.tip_sort,交换时，两边按各自的排序一一配对
+selector.tip_tags,在属性列表中显示游戏内部标签（类别标记、编号、贴图等）
+selector.title_edit,筛选器 · {0}
+selector.title_new,新建筛选器
+selector.used_in_rules,用于 {0}{1}
+sort.asc,{0}从低到高
+sort.desc,{0}从高到低
+take.by_sort,按{0}
+take.exclude_first,排除前 {0} 件
+take.first,前 {0} 件
+take.sorted_take,{0} {1}
+# ==============================================================================
+# UI: Container Side Panel & Storage Bay
+# Placeholders: {0} = count/device name.
+# ==============================================================================
+device_dialog.clear,清除名称
+device_dialog.name,名称
+device_dialog.tip,命名后可在筛选器和动作目标中直接按名称引用此设备。
+device_dialog.title,设备命名
+store.naming.cannot_open,暂时无法打开命名界面。
+store.naming.prompt,双击要命名为「{0}」的物品
+store.naming.prompt_any,双击要命名的物品
+# ==============================================================================
+# UI: Apprentice Handbook
+# Apprentice handbook pages (p1 to p7) and diagram annotations.
+# Placeholders: none (full self-contained prose).
+# ==============================================================================
+handbook.cannot_open,手册暂时打不开
+handbook.diagram.arrow_charge,② 未充满的去充电
+handbook.diagram.arrow_empty,① 没电的换回来
+handbook.diagram.arrow_full,① 满电的换过去
+handbook.diagram.machines,机器
+handbook.diagram.machines_note,夜间耗电
+handbook.diagram.recharger,充能器
+handbook.diagram.recharger_note,夜间充电
+handbook.diagram.storage,储藏区
+handbook.diagram.storage_note,闲置电池
+handbook.p1.banner_apprentices,学徒
+handbook.p1.banner_quickstart,快速上手
+handbook.p1.steps_quickstart,1. 双击学徒对讲机，选择“呼叫中介”，雇用一名学徒。\n2. 在“流程”页新建流程。流程是一组按顺序执行的任务；示例流程无需设置，可直接使用。\n3. 返回“学徒”页，为学徒选择流程。在“详情”中可添加多个流程，并为每个流程选择早班或晚班。新雇用的学徒默认上班；如需暂停，选择“设为休息”。\n4. 早班在醒来后、开店前工作；晚班在玩家上床入睡时工作。
+handbook.p1.text_ap,学徒每天的工作量。入睡时发工资后回满，先用于当晚的晚班，剩下的留给第二天早班。每项动作消耗一定 AP，熟练度越高消耗越少；AP 耗尽后，剩下的工作不再做，下一班从第 1 个任务重新开始。
+handbook.p1.text_multi_sched,一名学徒可以执行多个流程，按“详情”中的顺序依次执行，共用当天的 AP。多名学徒执行同一流程时，按“学徒”页的顺序先后执行，后面的学徒接着处理剩下的物品。
+handbook.p1.tip_payroll,每晚入睡时结算工资。资金不足时，“学徒”页中排在后面的学徒先罢工，未指派流程的最先罢工！
+handbook.p1.title_ap,AP：
+handbook.p1.title_multi_sched,多个流程：
+handbook.p2.banner,熟练度与等级
+handbook.p2.text_level,每升一级，每天的 AP 增加 5，日薪增加 10，熟练度保底提高 4（1 级为 54），接手新流程时不至于太慢。阅读培训材料可获得经验。
+handbook.p2.text_prof,学徒对每个流程有各自的熟练度（0～100），在“详情”中查看。熟练度越高，动作消耗的 AP 越少：熟练度 100 时为基础消耗的 0.75 倍，新学徒刚接手时约 1.4 倍。持续执行同一流程，约两周可达 85 以上。
+handbook.p2.text_switch,熟练度取决于学徒做过的工作与流程的相似程度。换成动作和物品相近的流程，熟练度基本保留；换成差别大的流程，则从较低处重新提升。同时执行几个差别大的流程，各自的熟练度会低于只做一个。
+handbook.p2.tip,熟练度只影响 AP 消耗，不影响日薪；日薪只看等级！
+handbook.p2.title_level,等级：
+handbook.p2.title_prof,熟练度：
+handbook.p2.title_switch,更换流程：
+handbook.p3.banner,流程的组成
+handbook.p3.steps_conds,常用条件（存活、已死亡、有空位等）可直接添加；电量、水量这类数值，请添加“条件”自行填写。
+handbook.p3.steps_pick,选取：全部、前 N 件（如电量从低到高前 1 件）、排除前 N 件（如年龄从低到高排除前 2 件），或统计数值（数量、合计等）。
+handbook.p3.text_filter,用于选出需要处理的物品，依次设置范围、物品类型、条件和选取方式。可在任务中直接新建。需要在多个流程中使用时，可设为全局筛选器。
+handbook.p3.text_param,带名称的数值，例如“换电阈值 30”。可供多个条件共用，并可在流程页直接修改。
+handbook.p3.text_range,全店、某个设备名或另一个筛选器，可添加多个。“内的物品”指其中的物品，“本身”指这些容器或机器本身，例如【水培机】本身加上条件“有空位”，即为空闲的水培机。
+handbook.p3.text_scope,筛选器默认在全店范围内查找，即店内归你所有的物品，不含待售商品。如需指定某个储藏区、机器或容器，可用蓝色标签打印机为其命名（例如“水培仓库”），也可在流程编辑器中选择“＋ 命名…”。多个物品可使用同一名称。
+handbook.p3.tip_name,可以直接选中自定义名称（【名称】）作为筛选条件，无需另建筛选器！
+handbook.p3.title_filter,筛选器：
+handbook.p3.title_param,参数：
+handbook.p3.title_range,范围：
+handbook.p3.title_scope,全店与设备名：
+handbook.p4.banner,任务
+handbook.p4.text_move,将对象逐件放入目标中第一个放得下的容器，槽位由游戏选择。目标有多个时按顺序尝试，可用于设置备用位置。
+handbook.p4.text_pre,默认每班执行。也可选择“【A】不为空时”“【A】少于 N 件时”等；条件不成立时跳过该任务，不消耗 AP。更复杂的条件在“高级条件…”中设置，例如“【A】的 含水 > 1000 毫升”。
+handbook.p4.text_press,按下机器窗口中的按钮（启动、打印、全部转移），拆开包装，或切换开关。无需打开窗口。
+handbook.p4.text_swap,两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。
+handbook.p4.text_use,用工具作用于对象，例如用刀处理鼠、用满桶为空瓶加水。方向由游戏判断：用水龙头作用于空桶，即为空桶接水。
+handbook.p4.tip,处理哪些物品、按何种顺序、处理多少件，均在筛选器中设置；动作本身只决定做什么！
+handbook.p4.title_move,放入：
+handbook.p4.title_pre,执行条件：
+handbook.p4.title_press,按按钮、激活、开关：
+handbook.p4.title_swap,交换：
+handbook.p4.title_use,使用：
+handbook.p5.banner_order,执行顺序
+handbook.p5.banner_swap,自动换电
+handbook.p5.steps_swap,① 交换 低电量电池（电量从低到高）与 满电电池（电量从高到低）：电量最低的换上最满的一块，换下的电池留在原处，通常就在充能器中。\n② 将储藏区中未充满的电池放入有空位的充能器。
+handbook.p5.text_seq,每个班次按“学徒”页的顺序执行：每名学徒依次执行自己在该班次的流程，流程内按任务顺序执行。每个任务开始时按当前状态重新筛选，前面已处理的物品不会被重复处理。可在“学徒”页用 ↑↓ 调整顺序。
+handbook.p5.title_seq,依次执行：
+handbook.p6.banner,示例流程
+handbook.p6.text_battery,将电量低的电池换成充满的电池，未充满的闲置电池放入充能器。无需设置，可直接使用。
+handbook.p6.text_hydro,收获作物、补种、换水（与自动换电同理）、添加营养片。
+handbook.p6.text_organize,将散放的药品、食品分别放入【药品仓库】【食品仓库】；可为多个储藏区起同一名称。
+handbook.p6.text_print,安装芯片、补充耗材、取出成品。
+handbook.p6.text_ras,为水箱补水、喂食饥饿的鱼、清理死鱼，公母各保留一条成年鱼繁殖，其余宰杀。
+handbook.p6.text_rat,开启饲料分配器的自动混合、补充饲料、保留种鼠（1 公 2 母）、出栏达标的鼠、清理粪便。
+handbook.p6.text_vending,打印水瓶、接水、净化至基础水、装瓶上架、收取货款。
+handbook.p6.tip,示例流程无需设置。如需将产物放入指定储藏区，请将其命名为示例中使用的名称，例如“水培仓库”！
+handbook.p6.title_battery,自动换电：
+handbook.p6.title_hydro,水培：
+handbook.p6.title_organize,整理：
+handbook.p6.title_print,3D 打印枪械：
+handbook.p6.title_ras,水产养殖：
+handbook.p6.title_rat,养鼠：
+handbook.p6.title_vending,卖水：
+handbook.p7.banner,策略模拟器与报告
+handbook.p7.text_report,早班结束后发放一份工作日报（放在柜台；游戏里选了“早报放进垃圾桶”则放进垃圾桶），双击阅读；日报汇总昨夜晚班和今晨早班。对讲机的“报告”页可查看近期班次与每晚工资。
+handbook.p7.text_sim,在店铺副本上运行 1 个班至 7 天，查看各任务的执行情况与 AP 消耗。不影响实际店铺。
+handbook.p7.tip,需要玩家在弹出界面中操作的动作，学徒无法执行，此后不再尝试；可在“报告”页选择“允许学徒重试”。
+handbook.p7.title_report,报告：
+handbook.p7.title_sim,策略模拟器：
+handbook.title,学徒手册
+# ==============================================================================
+# UI: General Common UI, Tables & Dialogs
+# Common UI buttons, settings window, session status, and mod transfer.
+# Placeholders: {0} = status/number, {1} = details.
+# ==============================================================================
+btn.mech_bottle_printer_btn_print_small,打印小号水瓶
+btn.mech_bottle_printer_btn_print_large,打印大号水瓶
+btn.mech_vending_btn_transfer,全部转移
+gamedialog.no_text,（无文字）
+picker.number,数值
+picker.pick_in_shop,在店内选择
+session.container_missing,（已不存在 #{0}）
+session.no_device,店内没有【{0}】
+session.no_selector_items,店内没有：{0}
+session.prof_floor,（等级保底 {0}）
+session.prof_text,{0} 熟练度 {1}/100{2} · AP ×{3}
+session.unassigned_schedule,未指派流程
+settings.automation_enabled,启用学徒自动化（执行班次）
+settings.show_all_tags,条件里列出全部游戏标签（含类别标记、编号等内部标签）
+settings.ui_scale,界面大小倍数
+settings.ui_scale_desc,在按屏幕高度自动缩放的基础上额外缩放，例如 0.8 或 1.2
+style.credits,{0} 信用点
+table.ap,AP
+table.result,结果
+table.rule,任务
+table.btn_details,详情
+transfer.dup_suffix,{0}（{1}）
+layout.handbook.gap,8
+layout.handbook.body_size,15
+layout.handbook.p5_label_x,235
+layout.handbook.p5_full_y,8
+layout.handbook.p5_empty_y,58
+layout.handbook.diagram.arrow_full_x,235
+layout.handbook.diagram.arrow_full_y,8
+layout.handbook.diagram.arrow_full_w,150
+layout.handbook.diagram.arrow_empty_x,235
+layout.handbook.diagram.arrow_empty_y,58
+layout.handbook.diagram.arrow_empty_w,150
+layout.handbook.diagram.arrow_charge_x,84
+layout.handbook.diagram.arrow_charge_y,151
+layout.handbook.diagram.arrow_charge_w,230
+layout.handbook.diagram.machines_x,320
+layout.handbook.diagram.machines_w,150
+layout.handbook.diagram.recharger_w,150
+layout.handbook.diagram.storage_w,150
+layout.intercom.shift_width,80
+layout.intercom.prof_width,90
+layout.intercom.col_done_width,80
+layout.intercom.status_width,150
+layout.cond.value_width,120
+layout.selector.scope_label_width,24
+transfer.err.clipboard_empty,剪贴板为空
+transfer.err.newer_version,该流程由更新版本的 Probably Automated 创建，当前版本不支持
+transfer.err.not_a_routine,剪贴板内容不是 Probably Automated 流程
+transfer.err.older_version,不支持旧版流程格式
+transfer.marker,【Probably Automated流程】
+ui.add,添加
+ui.cancel,取消
+ui.clear,清空
+ui.close,关闭
+ui.collapse,收起
+ui.confirm,确定
+ui.copy,复制
+ui.delete,删除
+ui.expand,展开
+ui.hint,说明
+ui.move_down,下移
+ui.move_up,上移
+ui.name,名称
+ui.ok,好
+ui.reset,重置
+ui.save,保存
+ui.search,搜索
+ui.value,数值
+unlock.desc,王尔德的中介将为你招募学徒，在开店前和打烊后协助经营。附赠学徒对讲机、《学徒手册》以及一台用于为设备命名的蓝色标签打印机。
+unlock.title,学徒派遣
+# ==============================================================================
+# Adapter & Game Integration: Names & Labels
+# Game entity names, battery status, fish species, and hardware fixtures.
+# Placeholders: {0} = item name/percentage, {1} = target.
+# ==============================================================================
+battery.desc,{0}（{1}%）
+fish.dead,，已死亡
+fish.desc,{0}（{1}{2}g，{3} 天{4}）
+fish.female,雌，
+fish.male,雄，
+fixture.drain,下水道
+fixture.faucet,水龙头
+fmt.arrow_prop,{0} {1} → {2}
+fmt.colon,{0}：{1}
+fmt.copy_suffix,{0}（副本）
+fmt.end_dot,。
+gameworld.action_error,{0}出错：{1}
+gameworld.action_needs_player,{0}{1}时需要玩家在界面中操作，学徒无法执行
+gameworld.add_mark,添加标记【{0}】
+gameworld.box_cannot_accept,{0} 无法放入
+gameworld.box_full,{0} 已满
+gameworld.box_no_slot,{0} 没有{1}
+gameworld.button_needs_player,{0}的【{1}】需要玩家在界面中操作，学徒无法执行
+gameworld.confirm_needs_player,需要玩家确认“{0}”，学徒无法执行
+gameworld.game_tip,游戏提示：
+gameworld.move_error,移动出错：{0}
+gameworld.move_to,移至 {0}
+gameworld.need_player_ui,{0}需要玩家在界面中操作，学徒无法执行
+gameworld.no_button,{0}没有【{1}】按钮
+gameworld.press_button,按【{0}】
+gameworld.remove_mark,移除标记【{0}】
+gameworld.swap_error,交换出错：{0}
+gameworld.swap_not_allowed,游戏不允许交换
+gameworld.swap_with,与 {0} 交换位置
+item.handbook.desc,一本实用手册，收录了学徒、流程与任务的相关说明。双击阅读。
+item.handbook.name,学徒手册
+item.intercom.desc,王尔德的中介配发的对讲机，可用于雇用学徒、编写流程和查看班次报告。双击使用。
+item.intercom.name,学徒对讲机
+liquid.desc,{0}（{1}ml，水质 {2}%）
+names.kind.combat_knife,战斗匕首
+names.kind.hatchet,短柄斧
+names.kind.kitchen_cleaver,切肉刀
+names.kind.labeler,标签打印机
+names.kind.rat,老鼠
+names.kind.raw_meat,生肉
+names.kind.water_filter,滤水器
+names.kind.water_filter_adv,高级滤水器
+names.kind.water_jug,桶装水
+names.kind.wire_cutter,剪线钳
+names.prop.has,{0}（有无）
+names.prop.liq,含{0}（毫升）
+names.prop.mark,标记【{0}】
+names.prop.pct,{0} %
+names.prop.str,{0}（文字）
+names.prop.unselected,（未选）
+propbindings.none,（无）
+quality.prop.grade,{0}等级
+quality.prop.grade_name,{0}等级名
+quality.prop.label_grade,{0}标签等级
+quality.prop.label_ok,{0}标签属实
+quality.prop.verified,{0}已验过
+quality.cat.category_wine_quality,酒品质
+# ==============================================================================
+# Examples: Routine & Preset Examples
+# Pre-packaged routine examples: water, ranching, battery, hydro, etc.
+# Placeholders: {0} = container/target name.
+# ==============================================================================
+example.aqua.rule.clear_dead,清理死鱼
+example.aqua.rule.feed,喂鱼
+example.aqua.rule.fill_jug,桶接水
+example.aqua.rule.fill_tank,水箱加水
+example.aqua.rule.harvest,收获成年鱼
+example.aqua.rule.store_meat,收起鱼肉
+example.aqua.sel.adult_f,可收获的成年母鱼
+example.aqua.sel.adult_m,可收获的成年公鱼
+example.aqua.sel.dead_fish,死鱼
+example.aqua.sel.feed,一份鱼饲料
+example.aqua.sel.feed_in,鱼缸中的饲料
+example.aqua.sel.hungry_fish,饥饿的鱼
+example.aqua.sel.jugs,闲置的桶
+example.aqua.sel.knives,刀具
+example.aqua.sel.low_water,缺水的水箱
+example.aqua.sel.meat,养殖系统中的鱼肉
+example.aqua.sel.ras,养殖系统
+example.aqua.sel.tank,水箱
+example.aqua.store,水产仓库
+example.battery.name,自动换电
+example.battery.param.full,满电标准
+example.battery.param.full.hint,电量达到此百分比即视为充满
+example.battery.param.low,换电阈值
+example.battery.param.low.hint,机器中的电池电量低于此值时更换
+example.battery.rule.charge,充电
+example.battery.rule.swap,换电池
+example.battery.sel.free_recharger,有空位的充能器
+example.battery.sel.full_battery,满电电池
+example.battery.sel.idle_battery,未充满的闲置电池
+example.battery.sel.low_battery,低电量电池
+example.battery.sel.machines,机器
+example.gun.rule.chip,装芯片
+example.gun.rule.collect,取成品
+example.gun.rule.feed,补充耗材
+example.gun.sel.chip,一块打印芯片
+example.gun.sel.chip_in,芯片槽
+example.gun.sel.idle,空闲打印机
+example.gun.sel.output,输出槽
+example.gun.sel.plastic,两份耗材
+example.gun.sel.plastic_in,输入槽中的耗材
+example.gun.sel.printer,打印机
+example.gun.store,枪匠仓库
+example.hydro.rule.add_nutrient,加营养片
+example.hydro.rule.fill_water,接水
+example.hydro.rule.harvest,收获
+example.hydro.rule.plant,种下种子
+example.hydro.rule.swap_water,换水
+example.hydro.sel.crop,作物输出
+example.hydro.sel.dry,水培机里缺水的瓶子
+example.hydro.sel.empty,没满的水瓶
+example.hydro.sel.full,满水瓶
+example.hydro.sel.hydro,水培机
+example.hydro.sel.lean,缺营养的水瓶
+example.hydro.sel.planted,种子槽中的种子
+example.hydro.sel.ready,空闲水培机
+example.hydro.sel.seed,一颗种子
+example.hydro.sel.tablets,营养片
+example.hydro.store,水培仓库
+example.ranch.rule.auto_blend,开启自动混合
+example.ranch.rule.butcher_dead,分解死鼠
+example.ranch.rule.cull,出栏
+example.ranch.rule.feed,补充饲料
+example.ranch.rule.store_meat,收起鼠肉
+example.ranch.rule.store_poop,清理粪便
+example.ranch.sel.breeders,种鼠
+example.ranch.sel.cage,鼠笼
+example.ranch.sel.dead,死鼠
+example.ranch.sel.dispenser,笼中的分配器
+example.ranch.sel.fat,可出栏的鼠
+example.ranch.sel.food,植物饲料
+example.ranch.sel.knives,刀具
+example.ranch.sel.low_feed,饲料不足的分配器
+example.ranch.sel.meat,鼠笼中的肉
+example.ranch.sel.poop,粪便
+example.ranch.sel.sire_f,种母鼠
+example.ranch.sel.sire_m,种公鼠
+example.ranch.sel.unblended,未开启自动混合的分配器
+example.ranch.store,牧场仓库
+example.sel.any_storage,有空位的储藏区
+example.sel.store_or_any,{0}或其他储藏区
+example.spec.aqua.name,水产养殖
+example.spec.aqua.note,为水箱补水、喂食饥饿的鱼、清理死鱼，公母各保留一条成年鱼繁殖，其余宰杀
+example.spec.gun.name,3D 打印枪械
+example.spec.gun.note,安装芯片、补充耗材、取出成品
+example.spec.hydro.name,水培
+example.spec.hydro.note,收获作物、补种、换水、接水、添加营养片
+example.spec.ranch.name,养鼠
+example.spec.ranch.note,开启自动混合、补充饲料、保留种鼠（1 公 2 母）、出栏达标的鼠、清理粪便
+example.spec.tidy.name,整理
+example.spec.tidy.note,把散放在各储藏区的药品、食品分别放进【药品仓库】【食品仓库】（可以给多个储藏区起同一个名字）
+example.spec.water.name,卖水
+example.spec.water.note,打印水瓶、接水、净化至基础水、装瓶上架、收取货款
+example.tidy.rule.food,整理食品
+example.tidy.rule.medical,整理药品
+example.tidy.sel.loose_food,待整理的食品
+example.tidy.sel.loose_medical,待整理的药品
+example.tidy.store.food,食品仓库
+example.tidy.store.medical,药品仓库
+example.water.rule.bottle,装瓶
+example.water.rule.cash,收取货款
+example.water.rule.fill_empty,空桶接水
+example.water.rule.fountain_jug,售水机装桶
+example.water.rule.fountain_refill,售水机补水
+example.water.rule.print_bottle,打印水瓶
+example.water.rule.purify,净化生水
+example.water.rule.take_bottle,取水瓶
+example.water.rule.take_purified,取出已净化的桶
+example.water.sel.cash,有货款的售水机
+example.water.sel.empty_bottles,空水瓶
+example.water.sel.empty_jugs,空桶
+example.water.sel.f_base,售水机基础水箱
+example.water.sel.f_low,余量不足的水箱
+example.water.sel.fountain,售水机
+example.water.sel.full_bottles,已灌装的水瓶
+example.water.sel.one_pure,一桶纯水
+example.water.sel.printed,打印出的水瓶
+example.water.sel.printer,水瓶打印机
+example.water.sel.pur_box,净水器中的桶
+example.water.sel.pur_done,已净化的桶
+example.water.sel.pure_jugs,纯水桶
+example.water.sel.purifier,净水器
+example.water.sel.raw_jug,一桶生水
+example.water.store,水商仓库
+# ==============================================================================
+# Other Localization Keys
+# Remaining rule templates and misc labels.
+# Placeholders: {0} = condition, {1} = action.
+# ==============================================================================
+rule.no_actions,（未设置动作）
+rule.when_arrow,当 {0} 时 → {1}
+cond.equal,等于
+cond.not_equal,不等于
+cond.text_input,文字
+layout.btn_more_width,50
+layout.editor.when_dropdown_width,180
+layout.new_schedule.btn_width,160
+layout.sim.start_width,80
+conj.and,且
+conj.or,或
+
+# ==============================================================================
+# 工作日报（早班结束后发放的报纸物品）
+# ==============================================================================
+daily.all_fine,一切正常
+daily.cannot_open,暂时无法打开工作日报。
+daily.col.ap,AP
+daily.col.morning,早班
+daily.col.night,晚班
+daily.dateline,第 {0} 天 · 昨夜晚班 + 今晨早班
+daily.dateline_morning,第 {0} 天 · 今晨早班
+daily.deferred,{0} 件因 AP 不足留到下次
+daily.flow_problems,{0} 项问题
+daily.flows_more,其余 {0} 个流程…
+daily.footer,明细见对讲机的“报告”页
+daily.log_issued,新的学徒工作日报已发放。
+daily.log_none,今天早班没有学徒当班，没有工作日报。
+daily.log_replaced,旧的工作日报已回收，新的工作日报已发放。
+daily.problems_more,另有 {0} 项
+daily.section.apprentices,学徒
+daily.section.flows,流程一览
+daily.section.problems,问题
+daily.stat.ap,使用 AP
+daily.stat.done,完成任务
+daily.stat.problems,问题
+daily.stat.wage,工资
+daily.strike,昨夜 {0} 名学徒因资金不足罢工
+daily.publisher,Probably Automated 模组
+daily.title,学徒工作日报
+item.daily.desc,学徒昨夜晚班与今晨早班的工作汇总，由 Probably Automated 模组提供。双击阅读。
+item.daily.name,学徒工作日报

@@ -1,0 +1,539 @@
+agency.btn_buy_train	购买 · {fee}
+agency.btn_expand	扩编 · {expand}
+agency.btn_hire	雇用学徒 · {Agency.HireFee}
+agency.btn_return	返回
+agency.cash_insufficient	现金不足（{fee}）
+agency.fee_expand	中介扩编费
+agency.fee_hire	中介招聘费
+agency.fee_train_item	培训材料（{app.Name}）
+agency.header_stats	现金 {Cash.Current} · 名额 {st.Apprentices.Count}/{st.Slots}
+agency.hired_msg	{a.Name} 已加入，请在学徒页选择流程
+agency.slots_expand	名额 {st.Slots} → {st.Slots + 1}
+agency.slots_full	名额已满
+agency.slots_maxed	名额已到上限 {ModState.MaxSlots}
+agency.tip_hire	雇用后在学徒页选择流程
+agency.title	中介
+agency.train_cash	现金 {Cash.Current}
+agency.train_desc	+{Agency.TrainingXp(app.Level)} 经验。当天第一个班次开始时阅读，消耗 {Agency.TrainingAp} AP。
+agency.train_max_level	培训最高可至 Lv{Agency.TrainingMaxLevel}。
+agency.train_no_cash_body	培训材料 {fee}，现金 {Cash.Current}。
+agency.train_no_cash_title	现金不足
+agency.train_pending_read	培训材料尚未读完。
+agency.train_title	培训 · {app.Name}
+cond.at_least	至少是
+cond.at_most	至多是
+cond.equal	等于
+cond.group.base	基本属性
+cond.group.ingredient	成分
+cond.group.quality	品质
+cond.group.ratio	相对上限 %
+cond.group.tag	游戏标签
+cond.group.type	类型
+cond.is	是
+cond.is_not	不是
+cond.not_equal	不等于
+cond.text_input	文字
+editor.action_apply_to	    作用于
+editor.action_button	    按钮
+editor.action_mark	    标记
+editor.action_swap_with	    与
+editor.action_target	    目标
+editor.action_value	    数值
+editor.add_cond_tip	仅统计满足条件的物品
+editor.add_cond_title	添加条件
+editor.advanced_stats	自定义属性 {D.Properties.Count} · 计数器 {s.Notepad.Count}
+editor.btn_add_action	＋ 动作
+editor.btn_add_cond	＋ 条件
+editor.btn_add_filter	＋筛选器
+editor.btn_add_param	＋参数
+editor.btn_disable	停用
+editor.btn_edit	编辑
+editor.btn_enable	启用
+editor.btn_name_device	＋ 命名…
+editor.btn_new	＋ 新建
+editor.btn_new_rule	＋ 新建任务
+editor.btn_only_refs	仅显示此任务引用的项
+editor.btn_return	返回
+editor.btn_show_all	显示全部
+editor.btn_simple_when	简单写法
+editor.cmp_by_prop	按属性比较…
+editor.confirm_delete_rule	删除任务“{r.Name}”？
+editor.deferred_ap	AP 不足，{rr.Deferred} 件未做
+editor.device_none_named	店内暂无此名称的物品
+editor.device_none_short	暂无
+editor.done_items	完成 {mine.Count} 件
+editor.empty_none	暂无
+editor.entry_no_refs	\n未被引用
+editor.entry_refs	\n引用 {refs} 处
+editor.global_used	已用 {used} / {globObjs.Count + globSels.Count}
+editor.group_global	全局
+editor.group_local	本流程
+editor.input_mark_name	标记名称
+editor.input_name	流程名称
+editor.input_rule_name	任务名称
+editor.label_counters	计数器
+editor.label_custom_props	自定义属性
+editor.local_in_tasks	另有 {inTasks} 个筛选器仅用于单个任务，请在该任务中编辑
+editor.menu_device_reuse	为店内其他物品使用此名称…
+editor.menu_device_to_filter	转为筛选器…
+editor.no_actions	暂无动作
+editor.no_devices	暂无。为店内物品命名后，可在筛选器和动作中直接选用。
+editor.note_add	累加到
+editor.note_default_name	计数
+editor.note_desc	初始值 {note.Init:0.##}，每班开始时重置
+editor.note_init_val	初始值
+editor.note_set	写入
+editor.note_still_used	仍有任务引用此计数器。
+editor.note_title	计数器
+editor.note_title_new	新建计数器
+editor.num_tag	（数值）
+editor.pick_btn_placeholder	（选择按钮）
+editor.pick_counter_placeholder	（选择计数器）
+editor.pick_dest_placeholder	（选择目标）
+editor.pick_target_placeholder	（选择对象）
+editor.pick_tool_placeholder	（选择工具）
+editor.picker_placeholder	（选择）
+editor.satisfy_prefix	    满足
+editor.sec_actions	动作
+editor.sec_advanced	高级
+editor.sec_defs	参数与筛选器
+editor.sec_devices	设备名
+editor.sec_rules	任务
+editor.sec_when	执行条件
+editor.selector_backref	“{back.a.Name}”引用了“{back.b.Name}”，被引用的筛选器须排在上方。
+editor.test_count_gt	数量 >
+editor.test_count_lt	数量 <
+editor.test_empty	为空
+editor.test_not_empty	不为空
+editor.times_each	每件
+editor.times_unit	次
+editor.tip_action_apply	对象的每一件按顺序尝试工具中的物品，第一件生效的作用于它。\n方向由游戏判断：例如用水龙头作用于空桶，即为空桶接水。
+editor.tip_action_swap	两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。
+editor.tip_action_target	逐件放入目标中第一个放得下的。目标有多个时按其顺序依次尝试。
+editor.tip_add_pre_cond	仅统计满足条件的物品，例如“【A】含水 > 1000 毫升”
+editor.tip_advanced_when	几个条件一起判断、用计数器或系统变量
+editor.tip_cannot_run	此任务无法执行：\n
+editor.tip_collapse_global	收起：只显示本流程用到的全局参数和筛选器
+editor.tip_disable	停用后这个任务不再执行，设置保留
+editor.tip_enable	恢复执行这个任务
+editor.tip_expand_global	展开：显示全部全局参数和筛选器（所有流程可用）
+editor.tip_last_result	上次执行结果
+editor.tip_name_device	在店内双击要命名的容器或机器；其他物品可用蓝色标签打印机命名
+editor.tip_new_filter	在此新建筛选器
+editor.tip_only_refs	左栏只列出展开的任务用到的参数和筛选器
+editor.tip_rule_reorder	点击展开或收起；拖动可调整顺序
+editor.tip_show_all	显示本流程的全部参数和筛选器
+editor.tip_warn	提醒：\n
+editor.tip_when	仅决定是否执行此任务。如需只处理部分物品，请在动作对象的筛选器中添加条件。
+editor.tip_when_sub	    仅决定是否执行此任务。如需只处理部分物品，请在动作对象的筛选器中添加条件。
+editor.when_gt_n	……多于 N 件时
+editor.when_lt_n	……少于 N 件时
+editor.window_title	流程 · {s.Name}
+expr.select_placeholder	（选择）
+expr.term.const	参数
+expr.term.note	计数器
+expr.term.num	数值
+expr.term.own	自身属性
+expr.term.stat	统计值
+expr.term.sys	系统变量
+expr.tip_add	添加一项，与前面的项做加减乘除
+expr.tip_remove	去掉最后一项
+filter.auto_name.default	新筛选器
+filter.auto_name.items	物品
+filter.auto_name.shop	全店
+fish.female	雌，
+fish.male	雄，
+gamedialog.no_text	（无文字）
+gameworld.action_needs_player	{name}{verb}时需要玩家在界面中操作，学徒无法执行
+gameworld.add_mark	添加标记【{text}】
+gameworld.box_cannot_accept	{BoxName(b)} 无法放入
+gameworld.box_full	{BoxName(b)} 已满
+gameworld.button_needs_player	{name}的【{label}】需要玩家在界面中操作，学徒无法执行
+gameworld.confirm_needs_player	需要玩家确认“{msg.text}”，学徒无法执行
+gameworld.game_tip	游戏提示：
+gameworld.move_to	移至 {BoxName(b)}
+gameworld.need_player_ui	{name}需要玩家在界面中操作，学徒无法执行
+gameworld.no_button	{name}没有【{label}】按钮
+gameworld.press_button	按【{label}】
+gameworld.remove_mark	移除标记【{text}】
+gameworld.swap_not_allowed	游戏不允许交换
+gameworld.swap_with	与 {Describe(r)} 交换位置
+handbook.cannot_open	手册暂时打不开
+handbook.diagram.arrow_charge	② 未充满的去充电
+handbook.diagram.arrow_empty	① 没电的换回来
+handbook.diagram.arrow_full	① 满电的换过去
+handbook.diagram.machines	机器
+handbook.diagram.machines_note	夜间耗电
+handbook.diagram.recharger	充能器
+handbook.diagram.recharger_note	夜间充电
+handbook.diagram.storage	储藏区
+handbook.diagram.storage_note	闲置电池
+handbook.p1.banner_apprentices	学徒
+handbook.p1.banner_quickstart	快速上手
+handbook.p1.text_ap	学徒每天的工作量。入睡时发工资后回满，先用于当晚的晚班，剩下的留给第二天早班。每项动作消耗一定 AP，熟练度越高消耗越少；AP 耗尽后，剩下的工作不再做，下一班从第 1 个任务重新开始。
+handbook.p1.text_multi_sched	一名学徒可以执行多个流程，按“详情”中的顺序依次执行，共用当天的 AP。多名学徒执行同一流程时，按“学徒”页的顺序先后执行，后面的学徒接着处理剩下的物品。
+handbook.p1.tip_payroll	每晚入睡时结算工资。资金不足时，“学徒”页中排在后面的学徒先罢工，未指派流程的最先罢工！
+handbook.p1.title_multi_sched	多个流程：
+handbook.p2.banner	熟练度与等级
+handbook.p2.text_level	每升一级，每天的 AP 增加 5，日薪增加 10，熟练度保底提高 4（1 级为 54），接手新流程时不至于太慢。阅读培训材料可获得经验。
+handbook.p2.text_prof	学徒对每个流程有各自的熟练度（0～100），在“详情”中查看。熟练度越高，动作消耗的 AP 越少：熟练度 100 时为基础消耗的 0.75 倍，新学徒刚接手时约 1.4 倍。持续执行同一流程，约两周可达 85 以上。
+handbook.p2.text_switch	熟练度取决于学徒做过的工作与流程的相似程度。换成动作和物品相近的流程，熟练度基本保留；换成差别大的流程，则从较低处重新提升。同时执行几个差别大的流程，各自的熟练度会低于只做一个。
+handbook.p2.tip	熟练度只影响 AP 消耗，不影响日薪；日薪只看等级！
+handbook.p2.title_level	等级：
+handbook.p2.title_prof	熟练度：
+handbook.p2.title_switch	更换流程：
+handbook.p3.banner	流程的组成
+handbook.p3.steps_conds	常用条件（存活、已死亡、有空位等）可直接添加；电量、水量这类数值，请添加“条件”自行填写。
+handbook.p3.steps_pick	选取：全部、前 N 件（如电量从低到高前 1 件）、排除前 N 件（如年龄从低到高排除前 2 件），或统计数值（数量、合计等）。
+handbook.p3.text_filter	用于选出需要处理的物品，依次设置范围、物品类型、条件和选取方式。可在任务中直接新建。需要在多个流程中使用时，可设为全局筛选器。
+handbook.p3.text_param	带名称的数值，例如“换电阈值 30”。可供多个条件共用，并可在流程页直接修改。
+handbook.p3.text_range	全店、某个设备名或另一个筛选器，可添加多个。“内的物品”指其中的物品，“本身”指这些容器或机器本身，例如【水培机】本身加上条件“有空位”，即为空闲的水培机。
+handbook.p3.text_scope	筛选器默认在全店范围内查找，即店内归你所有的物品，不含待售商品。如需指定某个储藏区、机器或容器，可用蓝色标签打印机为其命名（例如“水培仓库”），也可在流程编辑器中选择“＋ 命名…”。多个物品可使用同一名称。
+handbook.p3.tip_name	可以直接选中自定义名称（【名称】）作为筛选条件，无需另建筛选器！
+handbook.p3.title_filter	筛选器：
+handbook.p3.title_param	参数：
+handbook.p3.title_range	范围：
+handbook.p3.title_scope	全店与设备名：
+handbook.p4.banner	任务
+handbook.p4.text_move	将对象逐件放入目标中第一个放得下的容器，槽位由游戏选择。目标有多个时按顺序尝试，可用于设置备用位置。
+handbook.p4.text_pre	默认每班执行。也可选择“【A】不为空时”“【A】少于 N 件时”等；条件不成立时跳过该任务，不消耗 AP。更复杂的条件在“高级条件…”中设置，例如“【A】的 含水 > 1000 毫升”。
+handbook.p4.text_press	按下机器窗口中的按钮（启动、打印、全部转移），拆开包装，或切换开关。无需打开窗口。
+handbook.p4.text_swap	两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。
+handbook.p4.text_use	用工具作用于对象，例如用刀处理鼠、用满桶为空瓶加水。方向由游戏判断：用水龙头作用于空桶，即为空桶接水。
+handbook.p4.tip	处理哪些物品、按何种顺序、处理多少件，均在筛选器中设置；动作本身只决定做什么！
+handbook.p4.title_move	放入：
+handbook.p4.title_pre	执行条件：
+handbook.p4.title_press	按按钮、激活、开关：
+handbook.p4.title_swap	交换：
+handbook.p4.title_use	使用：
+handbook.p5.banner_order	执行顺序
+handbook.p5.banner_swap	自动换电
+handbook.p5.steps_swap	① 交换 低电量电池（电量从低到高）与 满电电池（电量从高到低）：电量最低的换上最满的一块，换下的电池留在原处，通常就在充能器中。\n② 将储藏区中未充满的电池放入有空位的充能器。
+handbook.p5.text_seq	每个班次按“学徒”页的顺序执行：每名学徒依次执行自己在该班次的流程，流程内按任务顺序执行。每个任务开始时按当前状态重新筛选，前面已处理的物品不会被重复处理。可在“学徒”页用 ↑↓ 调整顺序。
+handbook.p5.title_seq	依次执行：
+handbook.p6.banner	示例流程
+handbook.p6.text_battery	将电量低的电池换成充满的电池，未充满的闲置电池放入充能器。无需设置，可直接使用。
+handbook.p6.text_hydro	收获作物、补种、换水（与自动换电同理）、添加营养片。
+handbook.p6.text_organize	将散放的药品、食品分别放入【药品仓库】【食品仓库】；可为多个储藏区起同一名称。
+handbook.p6.text_print	安装芯片、补充耗材、取出成品。
+handbook.p6.text_ras	为水箱补水、喂食饥饿的鱼、清理死鱼，公母各保留一条成年鱼繁殖，其余宰杀。
+handbook.p6.text_rat	开启饲料分配器的自动混合、补充饲料、保留种鼠（1 公 2 母）、出栏达标的鼠、清理粪便。
+handbook.p6.text_vending	打印水瓶、接水、净化至基础水、装瓶上架、收取货款。
+handbook.p6.tip	示例流程无需设置。如需将产物放入指定储藏区，请将其命名为示例中使用的名称，例如“水培仓库”！
+handbook.p6.title_battery	自动换电：
+handbook.p6.title_hydro	水培：
+handbook.p6.title_organize	整理：
+handbook.p6.title_print	3D 打印枪械：
+handbook.p6.title_ras	水产养殖：
+handbook.p6.title_rat	养鼠：
+handbook.p6.title_vending	卖水：
+handbook.p7.banner	策略模拟器与报告
+handbook.p7.text_report	早班结束后发放一份工作日报（放在柜台；游戏里选了“早报放进垃圾桶”则放进垃圾桶），双击阅读；日报汇总昨夜晚班和今晨早班。对讲机的“报告”页可查看近期班次与每晚工资。
+handbook.p7.text_sim	在店铺副本上运行 1 个班至 7 天，查看各任务的执行情况与 AP 消耗。不影响实际店铺。
+handbook.p7.tip	需要玩家在弹出界面中操作的动作，学徒无法执行，此后不再尝试；可在“报告”页选择“允许学徒重试”。
+handbook.p7.title_report	报告：
+handbook.p7.title_sim	策略模拟器：
+handbook.title	学徒手册
+intercom.ap_tip	每天的 AP：晚班和第二天早班共用
+intercom.btn_add_duty	＋ 添加流程
+intercom.btn_details	详情
+intercom.btn_fire	解雇
+intercom.btn_rest	设为休息
+intercom.btn_retry_player	允许学徒重试
+intercom.btn_train	培训…
+intercom.btn_work	设为上班
+intercom.call_agency	呼叫中介
+intercom.col_apprentice	学徒
+intercom.col_done	完成
+intercom.done_items	{0} 件
+intercom.col_level	等级
+intercom.col_report_wage	工资
+intercom.col_schedules	流程
+intercom.col_wage	日薪
+intercom.confirm_fire_note	已购培训材料不予退还。
+intercom.confirm_fire_title	解雇 {app.Name}？
+intercom.duty_shift_tip	早班：醒来后、开店前执行；晚班：玩家上床入睡时执行。当天的 AP 从晚班开始算，晚班用剩的留给第二天早班
+intercom.duty_tip	按顺序执行；当天先做晚班的，再做第二天早班的。在“详情”中设置
+intercom.handbook	手册
+intercom.header_stats	名额 {st.Apprentices.Count}/{st.Slots} · 每天 {dayAp} AP · 今晚工资 {Tone.Money(App.Payroll.Tonight())}
+intercom.needs_player_warning	{np} 种动作需玩家手动操作，学徒已停止尝试
+intercom.no_reports	暂无班次报告。
+intercom.no_schedules_toast	暂无流程，请先在“流程”页新建。
+intercom.prof_empty	熟练度 —
+intercom.prof_score	熟练度 {p.Value.score}
+intercom.prof_tip	等级保底 {Proficiency.Floor(app.Level)}，按 {p.Value.effective} 计，AP 花费 ×{p.Value.mult:0.00}
+intercom.select_schedule	（选择流程）
+intercom.shift_order_tip	排在前面的学徒先执行，资金不足时先发工资
+intercom.status_deferred	{r.Deferred} 件因 AP 不足未做
+intercom.status_issues	{bad} 项未完成
+intercom.status_unassigned_paid	未指派（仍付工资）
+intercom.status_work	上班
+intercom.streak_days	（连续 {t.days} 天）
+intercom.strikers	 · {wage.Strikers} 人罢工
+intercom.tab_apprentices	学徒
+intercom.tab_reports	报告
+intercom.tab_schedules	流程
+intercom.tip_add_duty	一名学徒可以执行多个流程，按顺序串行执行，共用当天的 AP
+intercom.tip_rest	休息：不参与班次，不支付工资
+intercom.tip_work	上班：参与下一天的班次，入睡时支付工资
+intercom.title	学徒对讲机
+intercom.training_pending	培训材料待读
+intercom.training_pending_tip	当天第一个班次开始时阅读，消耗 {Agency.TrainingAp} AP
+intercom.wages_last_7_days	近 7 天工资 {Tone.Money(st.WagesSince(today - 6))}
+intercom.xp_stat	经验 {app.Xp}/{SkillMath.XpToNext(app.Level)}
+intercom.xp_tip	经验 {app.Xp}/{SkillMath.XpToNext(app.Level)}
+item.handbook.desc	一本实用手册，收录了学徒、流程与任务的相关说明。双击阅读。
+item.handbook.name	学徒手册
+item.intercom.desc	王尔德的中介配发的对讲机，可用于雇用学徒、编写流程和查看班次报告。双击使用。
+item.intercom.name	学徒对讲机
+kind.any	全部物品
+names.prop.has	{prop[4..]}（有无）
+names.prop.liq	含{LiquidName(prop[4..])}（毫升）
+names.prop.mark	标记【{prop[5..]}】
+names.prop.str	{prop[4..]}（文字）
+names.prop.unselected	（未选）
+object_dlg.btn_confirm_promote	设为全局
+object_dlg.btn_promote	设为全局参数…
+object_dlg.default_name	新参数
+object_dlg.default_name_seq	新参数（{i}）
+object_dlg.hint_placeholder	悬停名称时显示
+object_dlg.name_empty	名称不能为空。
+object_dlg.promote_note	以下参数和筛选器将对所有流程可用：
+object_dlg.promote_title	设为全局？
+object_dlg.scope_global	全局：所有流程可用
+object_dlg.scope_owner	仅「{d.Schedules.FirstOrDefault(s => s.Id == owner)?.Name}」可用
+object_dlg.title_edit	参数 · {_orig.Name}
+object_dlg.title_new	新建参数
+object_dlg.unit	单位
+object_dlg.unit_placeholder	g、只、天
+object_dlg.used_by_rules	被 {users.Count} 个任务引用
+object_dlg.value_nan	数值必须是数字。
+op.activate	激活
+op.toggle	开关
+picker.number	数值
+picker.pick_in_shop	在店内选择
+prop.sex	性别
+prop_dlg.default_name	新属性
+prop_dlg.formula	公式
+prop_dlg.formula_display	<size=13>公式：{AutoMod.Domain.Rules.Text.Expr(D, d.Formula)}</size>
+prop_dlg.formula_error	公式存在错误
+prop_dlg.name_empty	请输入名称
+prop_dlg.sample_calc	<size=13>示例计算：{Sample(d)}</size>
+prop_dlg.sample_none	店内暂无此类物品
+prop_dlg.target_kind	适用类型
+prop_dlg.title_edit	自定义属性：{_orig.Name}
+prop_dlg.title_new	新建自定义属性
+propbindings.none	（无）
+report.cash_delta	现金 {cashDelta:+#;-#}
+report.no_change	无变化
+report.product_unplaced	（{created.Count - moved} 件未放入产物去向）
+report.window.deferred	{r.Deferred} 件因 AP 不足未做
+report.window.done	完成 {r.Done} 件
+report.window.dry_run	（试运行）
+report.window.empty	无待处理物品
+report.window.group_stats	{done.Count} 件 · {ap:0.#} AP
+report.window.problems	{problems} 项未完成
+report.window.tab	报告
+report.window.title	第 {r.Day} 天 · {Shift.DisplayName(r.Shift)}
+schedule.btn_add_device	添加…
+schedule.btn_edit	编辑
+schedule.btn_edit_selector	编辑“{current.Name}”…
+schedule.btn_export	导出
+schedule.btn_move_down	下移
+schedule.btn_move_up	上移
+schedule.btn_name_device	命名…
+schedule.btn_new	＋ 新建流程
+schedule.btn_open_in_editor	在编辑器中打开
+schedule.btn_simulator	策略模拟器…
+schedule.btn_stats	统计
+schedule.col_device_header	设备名
+schedule.col_rule	任务
+schedule.col_rule_header	任务
+schedule.col_top_issue	最常见的问题
+schedule.cond_advanced	高级条件…
+schedule.cond_all	全部满足
+schedule.cond_always	每班执行
+schedule.cond_any	任一满足
+schedule.cond_count_gt	……多于 N 件时…
+schedule.cond_count_lt	……少于 N 件时…
+schedule.cond_empty	……为空时
+schedule.cond_not_empty	……不为空时
+schedule.copied_to_clipboard	「{s.Name}」已复制到剪贴板。
+schedule.count_gt_prompt	多于几件
+schedule.count_lt_prompt	少于几件
+schedule.count_units	{items.Count} 个
+schedule.current_tag	（当前）
+schedule.default_name_seq	流程 {D.Schedules.Count + 1}
+schedule.del_confirm_title	删除流程“{s.Name}”？
+schedule.del_own_note	其所属的 {own} 个参数和筛选器将一并删除。
+schedule.device_none	店内暂无
+schedule.device_tip	在店内为物品命名后，任务将自动使用
+schedule.empty	暂无流程。
+schedule.err_cannot_run	此任务无法执行：\n
+schedule.import_clipboard	从剪贴板导入
+schedule.import_clipboard_tip	导入通过“导出”复制的流程
+schedule.new_blank	从空白流程创建
+schedule.new_blank_tip	不含任何任务
+schedule.new_title	新建流程
+schedule.no_buttons	所选机器没有按钮
+schedule.param_shared	多个流程共用
+schedule.pick_action	选择动作
+schedule.pick_button	选择按钮
+schedule.pick_condition	执行条件
+schedule.pick_device_or_selector	选择设备名或筛选器
+schedule.section_devices	设备名
+schedule.selector_suffix	（筛选器）
+schedule.stats_empty	暂无记录：此流程尚未执行。
+schedule.stats_issue_count	{issues[0].First().Reason}（{issues[0].Count()} 次）
+schedule.stats_range	最近 {reports.Count} 个班次（{from} 至 {to}）
+schedule.stats_summary	完成 {done} 件 · 平均每班用 {used / reports.Count:0} AP · 问题 {entries.Count(e => !e.Ok && e.Code != FailCode.Many)} 项
+schedule.stats_title	统计 · {s.Name}
+schedule.status_errors	{errs} 个任务有误
+schedule.status_notes	{notes[0]} 等 {notes.Count} 条提醒
+schedule.status_ready	就绪
+schedule.tip_edit_in_editor	在编辑器中修改
+schedule.tip_export	复制到剪贴板，可在其他存档中导入（保留设备名）
+schedule.tip_stats	最近班次的执行情况：完成件数、AP、问题
+schedule.token_named_item	该名称的物品
+scope.shop	全店
+selector.btn_add_cond	＋ 条件
+selector.btn_add_cond_group	＋ 条件组（任一满足）
+selector.btn_add_scope	＋ 添加范围
+selector.btn_collapse	收起
+selector.btn_del_group	删除此组
+selector.btn_hide_tags	隐藏内部标签
+selector.btn_more	更多…
+selector.btn_promote	设为全局筛选器…
+selector.btn_show_tags	显示内部标签
+selector.common_presets	常用条件
+selector.cond_all	全部满足
+selector.cond_any	任一满足
+selector.copy_name_seq	{_d.Name}（副本 {i}）
+selector.group_prefix	一组
+selector.items_unit	件
+selector.kind_self_tip	范围为“本身”时无需选择类型
+selector.label_minus	排除
+selector.label_prop	属性
+selector.label_sort	排序
+selector.minus_none	（不排除）
+selector.more_suffix	 等
+selector.pick_all	全部
+selector.pick_exclude_first_n	排除前 N 件
+selector.pick_number	统计数值
+selector.prefix_family	物品家族：
+selector.prefix_item_type	商品类型：
+selector.save_no_scope	请选择范围。
+selector.scope_all_inside	内全部物品
+selector.scope_and	和
+selector.scope_empty	当前为空
+selector.scope_from	从
+selector.scope_items_inside	内的物品
+selector.scope_same_as_above	（同上）
+selector.scope_self	本身
+selector.section_cond	条件
+selector.section_kind	物品类型
+selector.section_pick	选取
+selector.section_scope	范围
+selector.sort_asc	从低到高
+selector.sort_desc	从高到低
+selector.sort_unspecified	不指定
+selector.stat_tip	统计结果可用于执行条件和条件中的数值
+selector.take_count	件数：
+selector.take_exclude_first	排除前
+selector.take_start_from	起始序号：
+selector.tip_add_scope	多个范围的物品合并，靠前的范围优先
+selector.tip_minus	排除另一个筛选器选出的物品
+selector.tip_more	条件组（任一满足）、排除另一个筛选器选出的物品
+selector.tip_sort	交换时，两边按各自的排序一一配对
+selector.tip_tags	在属性列表中显示游戏内部标签（类别标记、编号、贴图等）
+selector.title_edit	筛选器 · {_orig.Name}
+selector.title_new	新建筛选器
+session.container_missing	（已不存在 #{uid}）
+session.no_device	店内没有【{n}】
+session.no_selector_items	店内没有：{sel.Name}
+session.prof_floor	（等级保底 {eff}）
+session.unassigned_schedule	未指派流程
+settings.automation_enabled	启用学徒自动化（执行班次）
+settings.show_all_tags	条件里列出全部游戏标签（含类别标记、编号等内部标签）
+settings.ui_scale	界面大小倍数
+settings.ui_scale_desc	在按屏幕高度自动缩放的基础上额外缩放，例如 0.8 或 1.2
+shift.morning	早班
+shift.night	晚班
+shift.short.morning	早
+shift.short.night	晚
+sim.add_to_title	放入「{title}」
+sim.app_line	{app.Name} · {shifts} · Lv{app.Level} · 每天 {app.MaxAp} AP · 熟练度 {x}
+sim.apprentices	学徒
+sim.btn_add_items	＋ 物品
+sim.btn_add_vapp	＋ 虚拟学徒
+sim.btn_edit_schedule	编辑流程
+sim.btn_start	开始模拟
+sim.cannot_create_item	无法创建 {name}
+sim.count_label	件数
+sim.daily_ap	每天 AP
+sim.day_shift_head	第 {r.Day} 天 · {Shift.DisplayName(r.Shift)}
+sim.deferred_items_warn	{g.Deferred} 件因 AP 不足未做
+sim.duration	时长
+sim.empty	空
+sim.in_shop_count	店内 {inShop} 件
+sim.level	等级
+sim.more_items_count	另有 {boxes.Count - 6} 个
+sim.more_kinds_search	<size=12>还有 {kinds.Count - max} 种，请输入搜索词。</size>
+sim.no_apps_tip	暂无学徒：添加虚拟学徒后运行
+sim.no_matching_items	没有匹配的物品。
+sim.no_pending_items	无待处理物品
+sim.no_schedules	暂无流程。
+sim.no_workers_this_shift	本班无人执行
+sim.none_in_shop	店内暂无
+sim.op_done_count	{Catalog.Op(kv.Key).Name} {kv.Value} 件
+sim.pct_unchanged	不变
+sim.place_in_battery_slot	电池槽
+sim.place_in_container	容器里
+sim.place_into	放到
+sim.prof_label	熟练度
+sim.ran_shifts_notice	已运行 {Results.Count} 个班，将继续运行
+sim.rule_deferred_warn	    AP 不足，{rr.Deferred} 件本班未做
+sim.run_1_day	1 天
+sim.run_1_shift	1 个班
+sim.run_3_days	3 天
+sim.run_7_days	7 天
+sim.schedule	流程
+sim.search_placeholder	名称或 ID
+sim.sex.female	雌
+sim.sex.male	雄
+sim.shift_label	班次
+sim.shop_copy	店铺副本
+sim.start_shift	起始
+sim.title	策略模拟器
+sim.vapp_default_name	虚拟学徒
+sim.vapp_title	虚拟学徒
+sim.welcome_tip	以店内现有物品和执行此流程的学徒（或虚拟学徒），在副本上运行。
+slot.battery	电池槽
+slot.filter	滤芯槽
+store.naming.cannot_open	暂时无法打开命名界面。
+store.naming.prompt	双击要命名为「{suggested}」的物品
+store.naming.prompt_any	双击要命名的物品
+style.credits	{n} 信用点
+table.btn_details	详情
+table.result	结果
+table.rule	任务
+ui.add	添加
+ui.cancel	取消
+ui.clear	清空
+ui.close	关闭
+ui.collapse	收起
+ui.confirm	确定
+ui.copy	复制
+ui.delete	删除
+ui.expand	展开
+ui.hint	说明
+ui.move_down	下移
+ui.move_up	上移
+ui.name	名称
+ui.ok	好
+ui.reset	重置
+ui.save	保存
+ui.search	搜索
+ui.value	数值
+unlock.desc	王尔德的中介将为你招募学徒，在开店前和打烊后协助经营。附赠学徒对讲机、《学徒手册》以及一台用于为设备命名的蓝色标签打印机。
+unlock.title	学徒派遣

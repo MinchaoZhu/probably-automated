@@ -1,0 +1,1410 @@
+# Probably Automated Localization Table: English (en)
+# Primary source and fallback for all localization strings.
+# ==============================================================================
+# Domain & Rules: Vocabulary & Operators
+# Vocabulary, aggregation functions, and system variables.
+# Placeholders: none.
+# ==============================================================================
+vocab.agg.avg,平均値
+vocab.agg.count,数量
+vocab.agg.max,最大値
+vocab.agg.min,最小値
+vocab.agg.sum,合計
+vocab.sys.ap_left,今シフトの残りAP
+vocab.sys.day,現在の日数
+vocab.sys.shift,現在のシフト（早番=1、遅番=2）
+vocab.sys.shift.short,現在のシフト
+# ==============================================================================
+# Domain & Rules: Traits, Properties, Presets & Operations
+# Item traits, property definitions, preset conditions, and action verbs.
+# Placeholders: none.
+# ==============================================================================
+op.activate,作動
+op.mark,マーク追加
+op.move,入れる
+op.note,記録
+op.press,ボタンを押す
+op.swap,交換
+op.toggle,オン/オフ
+op.unmark,マーク解除
+op.use,使用
+preset.adult,成体
+preset.alive,生存
+preset.dead,死亡
+preset.female,メス
+preset.hasroom,空きあり
+preset.male,オス
+prop.age,年齢
+prop.calories,カロリー
+prop.cap,容量
+prop.count,保管数
+prop.dead,死亡
+prop.dead.not,生存
+prop.durability,耐久度
+prop.durabilitypct,耐久度%
+prop.energy,電力量
+prop.energymax,最大電力量
+prop.energypct,電力量%
+prop.free,空きスロット数
+prop.freeml,空き容量（ml）
+prop.gene.fertility,遺伝子・生殖能力
+prop.gene.growth,遺伝子・成長速度
+prop.gene.immunity,遺伝子・免疫力
+prop.gene.litter,遺伝子・産仔数
+prop.gene.longevity,遺伝子・寿命
+prop.gravid,抱卵中
+prop.gravid.not,未抱卵
+prop.growpct,成長進捗%
+prop.health,健康
+prop.healthpct,健康%
+prop.hungerpct,満腹度%
+prop.inbatteryslot,バッテリー枠内
+prop.inbatteryslot.not,バッテリー枠外
+prop.instorage,保管ケース内
+prop.instorage.not,保管ケース外
+prop.labelok,正しいラベル
+prop.labelok.not,誤ったラベル
+prop.matingcount,交尾回数
+prop.matingmax,最大交尾回数
+prop.mature,成体
+prop.mature.not,未成熟
+prop.neutered,不妊化済み
+prop.neutered.not,未不妊化
+prop.nutrientmax,必要栄養上限
+prop.nutrientmin,必要栄養下限
+prop.planthealth,植物の健康度%
+prop.powered,給電中
+prop.powered.not,電力不足
+prop.progresspct,進捗%
+prop.purity,水質純度
+prop.purity.grade_short,水質
+prop.repairable,修理可能
+prop.repairable.not,修理不可
+prop.sex,性別
+prop.volumeml,水量（ml）
+prop.wateruse,毎晩の消費水量（ml）
+prop.weight,体重
+prop.working,稼働中
+prop.working.not,待機中
+trait.animal,ケージ内の動物全般
+trait.battery,バッテリー全般
+trait.blade,刃物全般
+trait.cage,動物の檻
+trait.container,容器全般
+trait.durable,耐久度を持つ物品全般
+trait.filter,フィルター全般
+trait.filterholder,ろ過水筒
+trait.fish,魚類全般
+trait.food,食料全般（カロリーあり）
+trait.gun,銃器全般
+trait.liquid,液体容器全般
+trait.livestock,家畜・生体全般
+trait.machine,機械
+trait.meat,肉類全般
+trait.seed,種子全般
+trait.selfcharging,自己充電バッテリー全般
+trait.storage,保管用
+# ==============================================================================
+# Domain & Rules: Kinds & Game Items
+# Item kinds and categories used by catalog and filters.
+# Placeholders: {0} = kind/family name.
+# ==============================================================================
+kind.animal_cage,動物の檻
+kind.any,全アイテム
+kind.any_family,任意の{0}
+trait.family.contraband,密輸品
+trait.family.chem,化学物質
+trait.family.organ,臓器
+trait.family.amenity,生活用品
+trait.family.use_count,使用回数制限のあるアイテム
+trait.family.permit,許可証
+trait.family.toolbox,工具箱
+trait.family.salvagable,解体可能なアイテム
+trait.family.progress,進行状況のあるアイテム
+trait.family.showcase_special,ショーケース用特別アイテム
+trait.family.endangerment,危険物
+kind.any_type,任意の{0}
+kind.bottle_printer,ボトルプリンター
+kind.energy_credit,バッテリー
+kind.feces_large,動物のフン（大）
+kind.feces_medium,動物のフン
+kind.feces_small,動物のフン（小）
+kind.fillerweed,フィラーウィード
+kind.fillerweed_seed,フィラーウィードの種
+kind.fish_scrap,魚の内臓
+kind.hydroponic,水耕システム
+kind.industrial_fish_feed,産業用の魚のエサ
+kind.kitchen_cleaver,肉切り包丁
+kind.labeler,ラベラー
+kind.large_bottled_water,水（大）
+kind.livestock_feed_dispenser,家畜用エサやり器
+kind.morsel,肉の切れ端
+kind.nutrient_tablet,水耕栄養タブレット
+kind.nutrifruit,ニュートリフルーツ
+kind.nutrifruit_seed,ニュートリフルーツの種
+kind.printer,3Dプリンター
+kind.printer_chip_pistol,.22ピストルの3Dプリンターチップ
+kind.printer_plastic,3Dプリント用フィラメント
+kind.ras,RAS水槽
+kind.ras_water_tank,RAS水槽タンク
+kind.rat,ネズミ
+kind.raw_meat,生肉
+kind.recharger,リチャージャー
+kind.self,容器自体
+kind.small_bottled_water,水（小）
+kind.small_morsel,肉の切れ端（小）
+kind.small_raw_meat,生肉（小）
+kind.tilapia,ティラピア
+kind.vending_fountain,水の自動販売機
+kind.water_filter,ろ過器
+kind.water_filter_adv,高度なろ過器
+kind.water_jug,水差し
+kind.water_purifier,浄水器
+kind.wire_cutter,ワイヤーカッター
+# ==============================================================================
+# Domain & Rules: Machine Slots & Evaluation
+# Container slot names and source expansion evaluation strings.
+# Placeholders: {0} = container/slot name, {1} = slot name.
+# ==============================================================================
+eval.empty_no_items,「[{0}]」は現在空です
+eval.empty_not_matching,「[{1}]」は現在空です（元の場所に{0}個ありますが条件に一致しません）
+eval.expand.contents,内容物
+eval.expand.self,それ自体
+eval.expand.slot,{0}
+eval.from.contents,{0}の内容物
+eval.from.self,{0}自体
+eval.from.slot,{0}の{1}
+eval.no_named,店内に[{0}]がありません
+eval.slot.battery,バッテリー枠
+eval.slot.filter,フィルター枠
+slot.backpack,リュック
+slot.base_water,原水
+slot.batteries,バッテリー群
+slot.battery,電池スロット
+slot.butcher,解体機
+slot.chip,チップ
+slot.clean_water,純水
+slot.container,容器
+slot.core,コア
+slot.dispenser,ディスペンサー
+slot.distillate,蒸留物
+slot.filter,フィルタースロット
+slot.filters,フィルター群
+slot.frame,フレーム
+slot.input,原料
+slot.module,モジュール
+slot.note,メモ
+slot.nutrient,栄養液
+slot.output,産出
+slot.power,電源
+slot.recipe,レシピ
+slot.seed,種子
+slot.storage,保管
+slot.tank,水槽
+slot.trap,トラップ
+slot.water,水
+slot.wine,酒
+# ==============================================================================
+# Domain & Rules: Rule Cards & Action Templates
+# Rule card sentence templates, slots, and condition clauses.
+# Placeholders: {list} = items, {to} = target, {tool} = tool, {op} = action.
+# ==============================================================================
+card.cond.empty,空である
+card.cond.every_shift,毎シフト
+card.cond.every_shift_run,毎シフト実行
+card.cond.gt,{0}個より多い
+card.cond.lt,{0}個より少ない
+card.cond.not_empty,空でない
+card.cond.when,{0}のとき
+card.op.apply,使用
+card.op.press,押す
+card.param.button,ボタン
+card.param.list,対象
+card.param.pre,対象
+card.param.to,移動先
+card.param.tool,道具
+card.select_button,（ボタンを選択）
+card.select_param,（{0}を選択）
+card.times,（各{0}回）
+card.tpl.apply,{tool}を{list}に{op}
+card.tpl.complex_colon,{complex}：
+card.tpl.cond_colon,{cond}：
+card.tpl.mark,{list}に[{text}]を{op}
+card.tpl.place,{list}を{to}に{op}
+card.tpl.press,{list}の{button}を{op}
+card.tpl.swap,{list}と{to}を{op}
+card.tpl.trigger,{list}を{op}
+card.tpl.unmark,{list}から[{text}]を{op}
+card.tpl.when,{list}が{cond}のとき：
+# ==============================================================================
+# Domain & Rules: Text Formatting & Outcomes
+# Sentence generators, action text, preconditions, grades, and execution run summary.
+# Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
+# ==============================================================================
+action.activate,{0}を作動
+action.mark,{0}にマーク[{1}]を追加
+action.move,{0}を{1}に入れる
+action.note.add,{0}を{1}に加算
+action.note.set,{0}を{1}に記録
+action.press,{0}の[{1}]を押す
+action.swap,{0}と{1}を交換
+action.times,、各{0}回
+action.toggle,{0}を切り替え
+action.unmark,{0}からマーク[{1}]を削除
+action.use,{0}を{1}に使用
+grade.at_least,以上
+grade.at_most,以下
+grade.better_than,より良い
+grade.is,である
+grade.is_not,でない
+grade.worse_than,より悪い
+pre.cmp,{0}の数量が{1} {2}
+pre.empty,{0}は空
+pre.gt,{0}は{1}個より多い
+pre.lt,{0}は{1}個より少ない
+pre.not_empty,{0}は空でない
+pre.where.cmp,{0}を持つ{1}の数量が{2} {3}
+pre.where.empty,{0}を持つ{1}が存在しない
+pre.where.gt,{0}を持つ{1}が{2}個より多い
+pre.where.lt,{0}を持つ{1}が{2}個より少ない
+pre.where.not_empty,{0}を持つ{1}が存在する
+prenot.no_less,{0}は{1}個以上
+prenot.no_more,{0}は{1}個以下
+prenot.where_no_less,{0}を持つ{1}は{2}個以上
+prenot.where_no_more,{0}を持つ{1}は{2}個以下
+runsummary.deferred,、AP不足で{0}件未処理
+runsummary.done,{0}件完了
+runsummary.issues,、{0}件未完了
+runsummary.levelup,；{0}がレベルアップ
+runsummary.no_apprentices,当番の見習いはいません。
+text.ap,{0} / {1} AP使用
+text.bracket,【{0}】
+text.pair,{0}：{1}
+text.pair_after,{0}：
+text.deleted,（削除済み）
+text.dot_sep,·
+text.members.all,{0}（合計{1}個）
+text.members.more,{0}他（合計{1}個）
+text.object_def,パラメータ = {0}{1}
+text.paren,（{0}）
+text.period,。
+text.prop_def,計算式 = {0}
+text.selector.conds,条件：{0}
+text.selector.minus,除外：{0}
+text.selector.scope,範囲：{0}
+text.selector.stat_count,カウント：{0}
+text.selector.stat_other,集計 {0}：{1}
+text.selector.take,抽出：{0}
+text.selector.type,種類：{0}
+text.selector.unset_from,（元の場所が未選択）
+text.short.minus,除外 {0}
+text.slot.battery,（バッテリー枠）
+text.slot.filter,（フィルター枠）
+text.unset,（未選択）
+# ==============================================================================
+# Domain & Rules: Static Checks & Scope Rules
+# Rule validator error messages, warnings, and scoping conflict rules.
+# Placeholders: {0} = item/definition name, {1} = details.
+# ==============================================================================
+check.err.def_missing,参照された定義が存在しません
+check.err.expr_const_missing,式内のパラメータが存在しないか未選択です
+check.err.expr_empty,式に空の項目があります
+check.err.expr_note_missing,式内のカウンターが存在しないか未選択です
+check.err.expr_note_scope,ここではカウンターを使用できません
+check.err.expr_own_scope,ここでは自身のプロパティを使用できません
+check.err.expr_sel_custom_prop,カスタムプロパティの計算式はフィルターを参照できません
+check.err.expr_sel_missing,式内のフィルターが存在しないか未選択です
+check.err.expr_sys_missing,式に空の項目があります
+check.err.expr_sys_scope,ここではシステム変数を使用できません
+check.err.pre_note_missing,前提条件のカウンターが存在しません
+check.err.pre_sel_missing,前提条件のフィルターが存在しません
+check.err.pre_stat_where,集計フィルターは条件付き数量チェックに対応していません
+check.err.pre_sys_missing,未分類のシステム変数「{0}」
+check.err.prop_cycle,カスタムプロパティは他のカスタムプロパティを参照できません
+check.err.prop_prefix,プロパティ「{0}」：{1}
+check.err.rule_mark_empty,マーク名が未入力です
+check.err.rule_move_no_to,「入れる」の移動先が未選択です
+check.err.rule_move_not_box,入れる対象は容器である必要があります：「{0}」は容器ではありません
+check.err.rule_no_actions,アクションが設定されていません
+check.err.rule_note_missing,「記録」のカウンターが未選択です
+check.err.rule_press_no_button,「ボタンを押す」のボタンが未選択です
+check.err.rule_swap_no_to,「交換」の対象グループが未選択です
+check.err.rule_target_missing,「{0}」のアイテムが未選択です
+check.err.rule_times_invalid,「{0}」の回数は1未満にできません
+check.err.rule_unknown_verb,不明なアクション「{0}」（再選択してください）
+check.err.rule_use_no_tool,「使用」の道具が未選択です
+check.err.rule_use_times_invalid,「使用」の回数は1未満にできません
+check.err.rule_use_tool_kind,「使用」の道具は機器名、フィルター、または設備である必要があります
+check.err.sel_agg_prop_empty,集計プロパティが未選択です
+check.err.sel_cycle,フィルターに循環参照があります
+check.err.sel_from_empty,元の場所が未選択です
+check.err.sel_from_missing,フィルターの元の場所が存在しないか未選択です
+check.err.sel_from_number,元の場所を数値にはできません
+check.err.sel_from_param,元の場所がパラメータ（定数）です。容器または「店全体」である必要があります
+check.err.sel_minus_missing,除外フィルターが存在しません
+check.err.sel_prefix,フィルター「{0}」：{1}
+check.err.sel_preset_missing,プリセット条件が存在しません
+check.err.sel_prop_empty,プロパティが未選択です
+check.ref.prop,プロパティ {0}
+check.ref.selector,フィルター {0}
+check.warn.sel_all_shop,「[{0}]」は店全体の全アイテムを対象とし、機械内のバッテリーを含むすべてを処理します
+check.warn.sel_itself,「[{0}]」は容器自体を指しています。内容物を処理するには、元の場所を[{0}]にしたフィルターを使用してください
+check.warn.tool_is_box,道具「[{0}]」は容器です: 内部の最初に見つかった使用可能なアイテムが使われます
+scope.err.already_global,既にグローバル定義です
+scope.err.conflict,「{0}」は{1}です。先に名前を変更してください
+scope.err.cross_ref_local,ローカル定義「{0}」へのルーチン間参照（グローバル定義またはルーチン内のローカル定義のみ使用可能）
+scope.err.dup_global_param,全体パラメータ「{0}」と競合しています
+scope.err.dup_global_selector,全体フィルター「{0}」と競合しています
+scope.err.dup_local_param,ルーチン「{0}」のローカルパラメータ「{1}」と競合しています
+scope.err.dup_local_selector,ルーチン「{0}」のローカルフィルター「{1}」と競合しています
+scope.err.global_ref_local,グローバル定義はローカル定義「{0}」を参照できません
+scope.shop,店全体
+# ==============================================================================
+# Domain & Simulation: Simulator Catalog & Items
+# Items, containers, and mock objects in Simulator.
+# Placeholders: none.
+# ==============================================================================
+sim.item.animal_cage,動物の檻
+sim.item.battery_empty,バッテリー（空）
+sim.item.battery_full,バッテリー（満充電）
+sim.item.battery_self,自己充電バッテリー
+sim.item.filter,ろ過器
+sim.item.filter_adv,高度なろ過器
+sim.item.jug_dirty,ボトル水（汚水3L）
+sim.item.jug_empty,空の水差し
+sim.item.knife,肉切り包丁
+sim.item.labeler,ラベラー
+sim.item.machine,通電機械
+sim.item.meat,生肉
+sim.item.moisture_farm,水分捕集器
+sim.item.other,その他の物品
+sim.item.projector,ミラージュプロジェクター
+sim.item.rat_baby,子ネズミ
+sim.item.rat_f,メスネズミ（成体）
+sim.item.rat_fat,肥育ネズミ（出荷可）
+sim.item.rat_m,オスネズミ（成体）
+sim.item.recharger,リチャージャー
+sim.item.storage,保管ケース
+sim.item.toolbox,ツールボックス
+sim.item.water_pitcher,ろ過水筒
+sim.item.water_purifier,浄水器
+sim.item.wire_cutter,ワイヤーカッター
+# ==============================================================================
+# Domain & Simulation: Simulator Engine & UI
+# Simulator configuration, step execution, and outcome display.
+# Placeholders: {0} = item name/shift, {1} = parameter/quantity.
+# ==============================================================================
+sim.add_to_title,「{0}」に入れる
+sim.app_line,{0} · {1} · Lv{2} · {3} AP/日 · 熟練度 {4}
+sim.apprentices,見習い
+sim.battery_summary,バッテリー {0}
+sim.btn_add_items,+ アイテム
+sim.btn_add_vapp,+ 仮想見習い
+sim.btn_edit_schedule,ルーチンを編集
+sim.btn_start,シミュレーション開始
+sim.cannot_create_item,{0}を作成できません
+sim.copy_failed,店舗の複製に失敗しました: {0}
+sim.count_label,個数
+sim.daily_ap,毎日のAP
+sim.day_shift_head,第{0}日 · {1}
+sim.deferred_items_warn,AP不足のため{0}件未処理
+sim.desc.battery,{0} #{1} ({2}%)
+sim.desc.dead,、死亡
+sim.desc.liquid,{0} #{1} ({2}ml、水質 {3}%)
+sim.desc.neutered,、不妊化済み
+sim.desc.rat,{0}ネズミ #{1} ({2}g、{3}日{4}{5})
+sim.duration,期間
+sim.empty,空
+sim.fail.dest_full,{0}は満杯
+sim.fail.no_effect,変化なし
+sim.fail.simulated,シミュレーションで処理済み（実際の影響は不明）
+sim.group_stats,{0} / {1} AP · ×{2}
+sim.in_shop_count,店内: {0}
+sim.level,レベル
+sim.lvl_up,レベルアップ: {0}
+sim.memo_tag,カウンター: {0}
+sim.more_items_count,他 {0} 件
+sim.more_kinds_search,他 {0} 種類あります。検索ワードを入力してください。
+sim.no_apps_tip,見習いがいません: 仮想見習いを追加して実行
+sim.no_matching_items,一致するアイテムがありません。
+sim.no_pending_items,保留中のアイテムはありません
+sim.no_schedules,ルーチンがありません。
+sim.no_workers_this_shift,今シフトの担当者はいません
+sim.none_in_shop,店内にありません
+sim.op_done_count,{1} {0}件
+sim.pct_unchanged,変化なし
+sim.place_in_battery_slot,バッテリー枠へ
+sim.place_in_container,容器へ
+sim.place_into,入れる
+sim.prof_label,熟練度
+sim.ran_shifts_notice,{0}シフト実行済み、引き続き実行します
+sim.rat_dead_count,死亡: {0}
+sim.rats_summary,オス {0} · メス {1}
+sim.rule_deferred_warn,AP不足：今シフトで{0}件未処理
+sim.run_1_day,1日
+sim.run_1_shift,1シフト
+sim.run_3_days,3日
+sim.run_7_days,7日
+sim.schedule,ルーチン
+sim.search_placeholder,名前またはID
+sim.sex.female,メス
+sim.sex.male,オス
+sim.shift_label,シフト
+sim.shop_copy,店舗コピー
+sim.slot_summary,バッテリー枠: {0}
+sim.start_shift,開始
+sim.start_morning,朝
+sim.start_night,夜
+sim.step.add_mark,マーク[{0}]を追加
+sim.step.moved_to,{0}へ移動
+sim.step.remove_mark,マーク[{0}]を削除
+sim.step.swapped,{0}と位置を交換
+sim.step.trigger_unknown,{0}（実際の実行時にのみ効果判明）
+sim.step.unknown,{0} → {1}（実際の実行時にのみ効果判明）
+sim.step.water_change,{0} 水量 {1} → {2} ml
+sim.sub_summary,{0} ×{1} ({2})
+sim.tip,店舗のコピー上で実行され、実際の店舗には影響しません。\n夜間はゲームのルールに従って進行します：バッテリー、集水器、浄水器、ネズミ、魚、水耕栽培、および進捗のある機械（進捗のみ進行、生成なし）。\n水の回収、注ぎ、廃棄は計算されますが、その他の「使用」「作動」「切り替え」「ボタン」はAPのみ計算され、実際の影響は実行結果に依存します。
+sim.tip_prof,熟練度: {0}
+sim.title,シミュレーター
+sim.trigger.activate,作動
+sim.trigger.press,[{0}]を押す
+sim.trigger.toggle,オン/オフ
+sim.vapp_default_name,仮想見習い
+sim.vapp_title,仮想見習い
+sim.water_summary,水 {0}ml（水質 {1}%）
+sim.welcome_tip,店内の現在のアイテムと担当の見習い（または仮想見習い）を使用してコピー上で実行します。
+# ==============================================================================
+# Domain & Reports: Failure Codes & Shift Reports
+# Execution failure codes, morning/night shift reports, and issue details.
+# Placeholders: {0} = apprentice/count, {1} = rule/reason.
+# ==============================================================================
+failcode.dest_full,満杯
+failcode.destfull,目標満杯
+failcode.error,エラー
+failcode.many,多数のアイテム
+failcode.needs_player,プレイヤー操作が必要
+failcode.needsplayer,プレイヤー操作が必要
+failcode.no_ap,AP不足
+failcode.no_effect,効果なし
+failcode.no_members,容器なし
+failcode.no_source,物資不足
+failcode.no_tool,道具不足
+failcode.noap,AP不足
+failcode.noeffect,効果なし
+failcode.nomembers,容器なし
+failcode.not_allowed,ゲームで不許可
+failcode.notallowed,ゲームルールにより制限
+failcode.notool,道具不足
+failcode.other,その他
+failcode.simulated,シミュレーション済み
+report.apprentice,見習い
+report.cash_delta,所持金 {0}
+report.consume_item,「{0}」を消費
+report.count_items,{0}個
+report.detail.day,第{0}日
+report.detail.deferred,未処理 {0}件
+report.detail.done,完了 {0}件
+report.detail.group_line,"  {0}（{1}）：{2}"
+report.detail.dry_run,テスト実行
+report.detail.failed,未完了 {0}件
+report.detail.levelup,、レベルアップ！
+report.detail.run,実行
+report.details.record,メモに記録
+report.details.walk_cost,（開始コスト {0} AP）
+report.error.broken,エラー
+report.fail.dest_full,目標満杯
+report.fail.no_tool,道具不足
+report.fail.unknown_action,不明なアクション
+report.growth.learned,{0}の習熟度 {1} → {2}
+report.growth.levelup,{0}（Lv{1}、毎日 {2} AP）
+report.growth.prefix,レベルアップ {0}
+report.idle.all_in_dest,すでに移動先の容器に入っています
+report.idle.all_marked,すべてすでにマークが付いています
+report.idle.no_items,条件に一致するアイテムが見つかりません
+report.idle.none_marked,マークが付いているものはありません
+report.idle.same_place,すでに同じ容器内にあるため交換不要です
+report.issue.dest_full,目標満杯：{1}、{2}個入れられず
+report.issue.many,連続して効果が得られないため、タスクを中止しました
+report.issue.no_effect,{1}後に変化なし、{2}個スキップ
+report.issue.no_tool,道具不足：店内に{1}がなく、{2}個{3}できず
+report.issue.not_allowed,ゲーム制限により{1}不可、{2}個スキップ
+report.issue.op_failed,{0}：{1}
+report.no_change,変化なし
+report.note.no_apprentices,当番の見習いはいません
+report.pre.broken,構造エラー
+report.pre.disabled,無効化中
+report.pre.fail,実行条件不一致
+report.pre.notrun,未実行
+report.pre.pass,条件成立
+report.product_group,{0} ×{1}
+report.product_output,生産物: {0}
+report.product_unplaced,（{0}個 未配置）
+report.reason.no_ap,AP切れ、{0}件未処理
+report.reason.notrun,未実行（{1}）、{0}件未処理
+report.shift_deferred,、AP不足で{0}件未処理
+report.shift_done,{0}（{1}）：{2}件完了（{3}）
+report.shift_empty,{0}（{1}）：タスクなし。
+report.shift_failed,、{0}件未完了
+report.shift_levelup,；{0}がレベルアップ
+report.shift_note,見習い{0}：{1}
+report.shift_waiting,、一部の操作が保留中（ゲーム制限による。準備でき次第再開）
+report.step.moved_to,{0}へ移動
+report.summary_override,見習い{0}：{1}
+report.text.no_ap,AP切れ
+report.why.no_ap,AP不足（前のタスクが {0} / 全 {1} APを使用）
+report.window.deferred,AP不足で{0}件未処理
+report.window.done,{0}件完了
+report.window.dry_run,（シミュレーション）
+report.window.empty,保留中のアイテムはありません
+report.window.group_stats,{0}件 · {1} AP
+report.window.problems,{0}件未完了
+report.window.tab,レポート
+report.window.title_full,{0}レポート
+report.window.title,第 {0} 日 · {1}
+# ==============================================================================
+# Domain & Workforce: Apprentices, Skills & Shifts
+# Apprentice name pool, shift schedules, and skill groups.
+# Placeholders: none.
+# ==============================================================================
+names.apprentice,レン;ハルト;ソウタ;ユウト;アオイ;リク;ユウキ;コウタ;ハルキ;ソラ;ユイ;アオイ;ヒナ;リン;サクラ;メイ;ユウナ;ミオ;コハル;エマ
+shift.morning,早番
+shift.night,遅番
+shift.off,休日
+shift.short.morning,早番
+shift.short.night,遅番
+shift.short.off,休日
+skill.husbandry,飼育
+skill.maintenance,整備
+skill.misc,雑務
+skill.power,電力
+skill.water,水務
+# ==============================================================================
+# UI: Apprentice Intercom & Staffing Agency
+# Apprentice intercom window and Staffing Agency hiring/training.
+# Placeholders: {0} = apprentice name/credits, {1} = level/proficiency.
+# ==============================================================================
+agency.btn_buy_train,購入 · {0}
+agency.btn_expand,枠拡張 · {0}
+agency.btn_hire,見習いを雇用 · {0}
+agency.btn_return,戻る
+agency.cash_insufficient,所持金不足（{0}）
+agency.fee_expand,斡旋所枠拡張費
+agency.fee_hire,斡旋所採用手数料
+agency.fee_train_item,研修資料（{0}）
+agency.header_stats,所持金 {0} · 枠数 {1}/{2}
+agency.hired_msg,{0} が加わりました。見習いページでルーチンを選択してください
+agency.level_up_info,レベルが1上がるごとに、毎日のAPが {0}、日給が {1} 増加します。
+agency.materials,教材費
+agency.new_apprentice_info,新規見習い: Lv{0}、日給 {2}、毎日 {1} AP、熟練度保証 {3}。
+agency.slots_expand,枠数：{0} → {1}
+agency.slots_full,枠が満杯です
+agency.slots_maxed,枠数が上限 {0} に達しました
+agency.tip_hire,雇用後、見習いページでルーチンを選択してください
+agency.title,仲介
+agency.train_cash,所持金 {0}
+agency.train_desc,+{0} 経験値。当日の最初のシフト開始時に読まれ、{1} AP を消費します。
+agency.train_max_level,研修は最大 Lv{0} まで可能です。
+agency.train_no_cash_body,研修資料 {0}、所持金 {1}。
+agency.train_no_cash_title,所持金不足
+agency.train_pending_read,研修資料をまだ読み終えていません。
+agency.train_title,研修 · {0}
+agency.training,スキル研修：{0}熟練度 +{1}（{2}）
+agency.training_result,【{0}】は{1}研修を受け、{2}熟練度が {3}（+{4}）に上昇しました。
+intercom.ap_tip,毎日のAP: 夜勤と翌日の早朝勤務で共有
+intercom.btn_add_duty,＋ ルーチン追加
+intercom.btn_details,詳細
+intercom.btn_fire,解雇
+intercom.btn_rest,休日に設定
+intercom.btn_retry_player,見習いの再試行を許可
+intercom.btn_train,研修…
+intercom.btn_work,勤務に設定
+intercom.call_agency,仲介を呼ぶ
+intercom.col_ap,AP
+intercom.col_apprentice,見習い
+intercom.col_done,完了
+intercom.col_level,レベル
+intercom.col_schedules,ルーチン
+intercom.col_wage,日給
+intercom.col_report_wage,給与
+intercom.confirm_fire_note,購入済みの研修資料は返金されません。
+intercom.confirm_fire_title,{0} を解雇しますか？
+intercom.done_items,{0}件
+intercom.duty_item,{0} · {1}
+intercom.duty_item_tip,クリックしてこのルーチンを解除
+intercom.duty_shift_tip,早朝: 起床後、開店前に実行。夜勤: 就寝時に実行。当日のAPは夜勤から消費され、残りは翌朝に持ち越されます
+intercom.duty_tip,順次実行。当日は夜勤を先に行い、翌日早朝を次に行います。「詳細」で設定
+intercom.handbook,マニュアル
+intercom.header_stats,枠 {0}/{1} · 毎日 {2} AP · 今晩の給与 {3}
+intercom.needs_player_warning,{0} 種類の動作にプレイヤーの手動操作が必要なため、見習いは試行を停止しました
+intercom.no_apprentices,見習いがいません。紹介所で雇用してください。
+intercom.no_reports,シフト報告はまだありません。
+intercom.no_schedules_hint,（ルーチン未割当）
+intercom.no_schedules_toast,ルーチンがありません。「ルーチン」ページで新規作成してください。
+intercom.none,（なし）
+intercom.payroll_summary,合計給与 {0}G 支払い済み（見習い {1}人）
+intercom.payroll_title,給与精算
+intercom.pick_schedule,ルーチンを選択
+intercom.pick_schedule_tip,見習いに割り当てるルーチンを選択
+intercom.prof_empty,熟練度 —
+intercom.prof_score,熟練度 {0}
+intercom.prof_tip,レベル保証 {0}、計算値 {1}、AP消費 ×{2}
+intercom.select_schedule,（ルーチンを選択）
+intercom.shift_order_tip,上部にいる見習いから順に実行し、資金不足時は優先して給与が支払われます
+intercom.status_deferred,AP不足で{0}件未処理
+intercom.status_done,完了
+intercom.status_issues,{0}件のタスクが未完了
+intercom.status_rest,休暇中
+intercom.status_strike,ストライキ中
+intercom.status_unassigned_paid,未指派（有給）
+intercom.status_work,勤務中
+intercom.streak_days,（連続 {0} 日）
+intercom.strikers,· {0} 人ストライキ中
+intercom.tab_apprentices,見習い
+intercom.tab_reports,レポート
+intercom.tab_schedules,ルーチン
+intercom.tip_add_duty,見習いは複数のルーチンを順番に実行でき、その日のAPを共有します
+intercom.tip_rest,休暇：シフトに参加せず、給料は支払われません
+intercom.tip_work,出勤：翌日のシフトに参加し、睡眠時に給料が支払われます
+intercom.title,見習いトランシーバー
+intercom.training_pending,研修資料の確認待ち
+intercom.training_pending_tip,その日の最初のシフト開始時に読まれ、{0} APを消費します
+intercom.unassigned_warning,注意：以下の見習いにはルーチンが割り当てられていません：
+intercom.wages_last_7_days,過去7日間の給料 {0}
+intercom.xp_stat,経験値 {0}/{1}
+intercom.xp_tip,経験値 {0}/{1}
+payroll.log_strike,見習いのストライキ：{0}（資金不足のため給与を支払えません）。
+payroll.log_wages,見習い給与：{0} クレジット（{1}）。
+# ==============================================================================
+# UI: Routines & Schedules Overview
+# Routines management tab, routine list, statistics, and device linking.
+# Placeholders: {0} = routine name/count, {1} = shift/AP.
+# ==============================================================================
+schedule.btn_add_device,追加...
+schedule.btn_edit,編集
+schedule.btn_edit_selector,「{0}」を編集...
+schedule.btn_export,エクスポート
+schedule.btn_move_down,下へ
+schedule.btn_move_up,上へ
+schedule.btn_name_device,命名...
+schedule.btn_new,+ 新規ルーチン
+schedule.btn_open_in_editor,エディターで開く
+schedule.btn_simulator,シミュレーター…
+schedule.btn_stats,統計
+schedule.col_ap,AP
+schedule.col_device_header,機器名
+schedule.col_done,完了
+schedule.col_rule,タスク
+schedule.col_rule_header,タスク
+schedule.col_top_issue,最も多い問題
+schedule.cond_advanced,高度な条件...
+schedule.cond_all,すべて一致
+schedule.cond_always,毎シフト実行
+schedule.cond_any,いずれか一致
+schedule.cond_count_gt,……N 個より多い時……
+schedule.cond_count_lt,……N 個より少ない時……
+schedule.cond_empty,...空のとき
+schedule.cond_not_empty,...空でないとき
+schedule.copied_to_clipboard,「{0}」をクリップボードにコピーしました。
+schedule.copy_name,{0}（コピー）
+schedule.count_gt_prompt,何個より多い時
+schedule.count_items,{0}件
+schedule.count_units,{0}個
+schedule.count_tasks,{0}件
+schedule.count_devices,{0}個
+schedule.count_lt_prompt,何個より少ない時
+schedule.current_tag,（現在）
+schedule.day_shift,第{0}日 · {1}
+schedule.default_name_seq,ルーチン {0}
+schedule.del_confirm_title,ルーチン「{0}」を削除しますか？
+schedule.del_own_note,所属する {0} 個のパラメータとフィルターも一緒に削除されます。
+schedule.del_runners_note,{0} はこのルーチンを実行しなくなります。
+schedule.device_label,機器: {0}
+schedule.device_none,店内にありません
+schedule.device_tip,店内でアイテムに命名後、タスクが自動的に使用します
+schedule.empty,ルーチンがありません。
+schedule.err_cannot_run,このタスクは実行できません:
+schedule.import_clipboard,クリップボードからインポート
+schedule.import_clipboard_tip,「エクスポート」でコピーしたルーチンをインポート
+schedule.new_blank,空のルーチンから作成
+schedule.new_blank_tip,タスクを含みません
+schedule.new_title,新規ルーチン
+schedule.no_buttons,選択した機器にボタンがありません
+schedule.param_shared,複数のルーチンで共有
+schedule.pick_action,アクションを選択
+schedule.pick_button,ボタンを選択
+schedule.pick_condition,実行条件
+schedule.pick_device_or_selector,機器名またはフィルターを選択
+schedule.pick_param,パラメータを選択
+schedule.rule_disabled,（無効）
+schedule.section_devices,機器名
+schedule.section_params,パラメータ
+schedule.section_rules,タスク一覧
+schedule.selector_suffix,(フィルター)
+schedule.stats_done_items,{0}件処理済み
+schedule.stats_empty,記録なし: このルーチンはまだ実行されていません。
+schedule.stats_issue_count,{1} {0}回
+schedule.stats_range,最近 {0} 回のシフト（{1} から {2}）
+schedule.stats_summary,{0} 個完了 · シフト平均 {1} AP · 問題 {2} 件
+schedule.stats_title,統計 · {0}
+schedule.status_errors,{0} 個のタスクにエラー
+schedule.status_notes,{1}など計{0}件の通知
+schedule.status_ready,準備完了
+schedule.tip_edit_in_editor,エディターで編集
+schedule.tip_export,クリップボードにコピー。他のセーブデータにインポート可能
+schedule.tip_stats,最近のシフトの実行状況: 完了件数、AP、問題
+schedule.token_named_item,その名称のアイテム
+# ==============================================================================
+# UI: Routine Editor
+# Routine editor window, task reordering, actions, and preconditions.
+# Placeholders: {0} = task name/count, {1} = reference.
+# ==============================================================================
+editor.action_apply_to,適用先
+editor.action_button,ボタン
+editor.action_mark,マーク
+editor.action_swap_with,対象
+editor.action_target,移動先
+editor.action_value,値
+editor.add_cond_tip,条件を満たすアイテムのみをカウント
+editor.add_cond_title,条件を追加
+editor.advanced_stats,カスタムプロパティ {0} · カウンター {1}
+editor.btn_add_action,+ アクション
+editor.btn_add_cond,+ 条件
+editor.btn_add_filter,＋ フィルター
+editor.btn_add_param,＋パラメータ
+editor.btn_disable,無効化
+editor.btn_edit,編集
+editor.btn_enable,有効化
+editor.btn_name_device,＋ 命名…
+editor.btn_new,+ 新規
+editor.btn_new_rule,＋ 新規タスク
+editor.btn_only_refs,このタスクで使われる項目のみ
+editor.btn_return,戻る
+editor.btn_show_all,すべて表示
+editor.btn_simple_when,シンプル
+editor.cmp_by_prop,プロパティで比較…
+editor.confirm_delete_rule,タスク「{0}」を削除しますか？
+editor.counter_tag,カウンター: {0}
+editor.default_rule_name,新規タスク
+editor.deferred_ap,AP不足、{0}件を次回に持ち越し
+editor.device_none_named,現在店内にこの名称のアイテムはありません
+editor.device_none_short,なし
+editor.done_items,完了 {0}件
+editor.empty_none,（なし）
+editor.entry_no_refs,\n参照なし
+editor.entry_refs,\n参照箇所：{0}箇所
+editor.global_used,{0} / {1}
+editor.group_global,全体定義
+editor.group_local,このルーチン
+editor.input_mark_name,マーク名
+editor.input_name,ルーチン名
+editor.input_rule_name,タスク名
+editor.label_counters,カウンター
+editor.label_custom_props,カスタムプロパティ
+editor.local_in_tasks,他に {0} 個のフィルターが単一タスクでのみ使用されています
+editor.menu_device_reuse,店内の他のアイテムにこの名前を使用…
+editor.menu_device_to_filter,フィルターに変換…
+editor.no_actions,アクションがまだありません
+editor.no_devices,なし。店内のアイテムに名前を付けると、フィルターやアクションで直接選択できます。
+editor.no_rules,タスクがありません。上のボタンをクリックして追加してください。
+editor.note_add,加算先
+editor.note_default_name,カウンター
+editor.note_desc,初期値 {0}、各シフト開始時にリセット
+editor.note_init_val,初期値
+editor.note_set,書き込み
+editor.note_still_used,このカウンターはまだタスクから参照されています。
+editor.note_title,カウンター
+editor.note_title_new,新規カウンター
+editor.num_tag,（数値）
+editor.pick_btn_placeholder,（ボタン選択）
+editor.pick_counter_placeholder,（カウンター選択）
+editor.pick_dest_placeholder,（移動先選択）
+editor.pick_target_placeholder,（対象選択）
+editor.pick_tool_placeholder,（道具選択）
+editor.picker_placeholder,（選択）
+editor.pre_fail,条件不一致: {0}
+editor.preset_satisfied,{0}に一致
+editor.satisfy_prefix,一致
+editor.sec_actions,アクション
+editor.sec_advanced,詳細
+editor.sec_defs,パラメータとフィルター
+editor.sec_devices,機器名
+editor.sec_rules,タスク
+editor.sec_when,実行条件
+editor.selector_backref,「{0}」は「{1}」を参照しています。参照先フィルターは上に配置してください。
+editor.test_count_gt,数量 >
+editor.test_count_lt,数量 <
+editor.test_empty,空
+editor.test_not_empty,空でない
+editor.times_each,各個
+editor.times_unit,回
+editor.tip_action_apply,対象の各アイテムに対して道具を順番に試行し、最初に有効なものが適用されます。\n作用の向きはゲームが判断します：例として蛇口を空のバケツに使用するとバケツに水が入ります。
+editor.tip_action_swap,2つのグループのアイテムを順番にペアにして位置を交換します。数量が異なる場合、余分なアイテムは移動しません。
+editor.tip_action_target,各アイテムを最初に入る移動先に入れます。移動先が複数ある場合は順に試します。
+editor.tip_add_pre_cond,条件に一致するアイテムのみをカウント（例：『[A] 水 > 1000 ml』）
+editor.tip_advanced_when,複数の条件、カウンター、システム変数を組み合わせて判定
+editor.tip_cannot_run,このタスクは実行できません:
+editor.tip_collapse_global,折りたたむ: このルーチンで使用されているグローバルのみ表示
+editor.tip_device_to_filter,フィルターに変換: このルーチン内の [{0}] は条件付きの新規フィルターに置き換えられます
+editor.tip_disable,このタスクは実行されなくなりますが、設定は保持されます
+editor.tip_enable,このタスクの実行を再開
+editor.tip_expand_global,展開する: すべてのグローバル項目を表示
+editor.tip_last_result,前回の実行結果
+editor.tip_name_device,店内の容器や機器をダブルクリックして命名。その他のアイテムは青いラベルプリンターで命名
+editor.tip_new_filter,ここで新しいフィルターを作成
+editor.tip_only_refs,このルーチンのタスクで参照されているパラメータとフィルターのみ表示
+editor.tip_rule_reorder,クリックで開閉、ドラッグで順序変更
+editor.tip_show_all,このルーチンのすべてのパラメータとフィルターを表示
+editor.tip_warn,注意:
+editor.tip_when,タスクを実行するかどうかのみを判断します。一部のアイテムを対象にするにはフィルターに条件を追加してください。
+editor.tip_when_sub,タスクを実行するかどうかのみを判断します。一部のアイテムを対象にするにはフィルターに条件を追加してください。
+editor.unprocessed,未処理: {0}
+editor.warn_prefix,注意: {0}
+editor.when_gt_n,...N個より多いとき
+editor.when_lt_n,...N個より少ないとき
+editor.window_title,ルーチン · {0}
+# ==============================================================================
+# UI: Filter & Condition Editors, Object Dialogs
+# Filter configuration, conditions, pick ordering, and parameter dialogs.
+# Placeholders: {0} = filter name/property, {1} = value/count.
+# ==============================================================================
+cond.at_least,以上
+cond.at_most,以下
+cond.group.base,基本
+cond.group.ingredient,成分
+cond.group.quality,品質
+cond.group.ratio,相対上限 %
+cond.group.tag,ゲームタグ
+cond.group.type,タイプ
+cond.is,一致
+cond.is_not,不一致
+cond.type_is,{0}
+cond.type_is_not,{0}以外
+expr.count,{0}.数量
+expr.empty,（空）
+expr.own,自身.{0}
+expr.select_placeholder,（選択）
+expr.term.const,パラメータ
+expr.term.note,カウンター
+expr.term.num,数値
+expr.term.own,自身のプロパティ
+expr.term.stat,統計値
+expr.term.sys,システム変数
+expr.tip_add,前の項目と四則演算を行う項目を追加
+expr.tip_remove,最後の項目を削除
+filter.auto_name.agg_count,{0}内の{1}の数
+filter.auto_name.agg_prop,{0}内の{1}の{2}{3}
+filter.auto_name.default,新規フィルター
+filter.auto_name.items,アイテム
+filter.auto_name.items_in,{0}の{1}
+filter.auto_name.self,{0}
+filter.auto_name.shop,店全体
+filter.auto_name.target,{0}{1}
+object_dlg.btn_confirm_promote,グローバルに設定
+object_dlg.btn_promote,グローバルパラメータに昇格…
+object_dlg.default_name,新規パラメータ
+object_dlg.default_name_seq,新規パラメータ（{0}）
+object_dlg.delete_still_used,以下のタスクがまだ参照しています: {0}。
+object_dlg.hint_placeholder,名前にホバーしたときに表示
+object_dlg.name_empty,名前を空にすることはできません。
+object_dlg.name_exists,同名のオブジェクトが既に存在します。
+object_dlg.promote_note,以下のパラメータとフィルターはすべてのルーチンで使用可能になります:
+object_dlg.promote_title,グローバルに設定しますか？
+object_dlg.prop_formula,計算式
+object_dlg.prop_tip,アイテムに動的計算されるプロパティ値を定義
+object_dlg.scope_global,グローバル: すべてのルーチンで利用可能
+object_dlg.scope_owner,「{0}」専用
+object_dlg.title_custom_prop,カスタムプロパティ
+object_dlg.title_edit,パラメータ · {0}
+object_dlg.title_new,新規パラメータ
+object_dlg.unit,単位
+object_dlg.unit_placeholder,例: g、個、日
+object_dlg.used_by_rules,{0}個のタスクから参照
+object_dlg.value_nan,値は数値である必要があります。
+prop_dlg.default_name,新規プロパティ
+prop_dlg.delete_still_used,削除できません。まだ参照されています: {0}
+prop_dlg.formula,計算式
+prop_dlg.formula_display,計算式: {0}
+prop_dlg.formula_error,計算式にエラーがあります
+prop_dlg.name_empty,名前を入力してください
+prop_dlg.sample_calc,計算例: {0}
+prop_dlg.sample_empty,店内に該当アイテムがありません
+prop_dlg.sample_none,店内に該当する物品がありません
+prop_dlg.target_kind,適用タイプ
+prop_dlg.title_edit,カスタムプロパティ: {0}
+prop_dlg.title_new,新規カスタムプロパティ
+property_dlg.no_properties,一致するプロパティが見つかりません。
+property_dlg.search_placeholder,プロパティ名またはIDを検索
+property_dlg.title,プロパティ選択
+selector.btn_add_cond,+ 条件
+selector.btn_add_cond_group,＋ 条件グループ（いずれか一致）
+selector.btn_add_scope,＋ 範囲を追加
+selector.btn_collapse,折りたたむ
+selector.btn_del_group,このグループを削除
+selector.btn_hide_tags,内部タグを非表示
+selector.btn_more,その他…
+selector.btn_promote,グローバルフィルターに設定…
+selector.btn_show_tags,内部タグを表示
+selector.common_presets,共通プリセット
+selector.cond_all,すべて一致
+selector.cond_any,いずれか一致
+selector.copy_name,{0}（コピー）
+selector.copy_name_seq,{0}（コピー {1}）
+selector.delete_still_used,以下のタスクがまだこのフィルターを参照しています: {0}。
+selector.group_prefix,グループ
+selector.items_unit,件
+selector.kind_self_tip,範囲が「自身」の場合、タイプを選択する必要はありません
+selector.label_minus,除外
+selector.label_prop,プロパティ
+selector.label_sort,ソート
+selector.label_stat,集計方法
+selector.minus_none,（除外しない）
+selector.more_suffix," 等"
+selector.pick_all,すべて選択
+selector.pick_exclude_first_n,先頭 N 件を除外
+selector.pick_first_n,先頭 N 件を選択
+selector.pick_number,数値を集計
+selector.prefix_container,コンテナ: {0}
+selector.prefix_family,アイテム系統:
+selector.prefix_item_type,商品タイプ:
+selector.save_no_scope,範囲を選択してください。
+selector.scope_all_inside,内全部物品
+selector.scope_and,追加
+selector.scope_count,現在 {0}{1} 個
+selector.scope_empty,現在空
+selector.scope_from,起点
+selector.scope_items_inside,内の物品
+selector.scope_same_as_above,（同上）
+selector.scope_self,自身
+selector.section_cond,条件
+selector.section_kind,物品タイプ
+selector.section_pick,抽出
+selector.section_scope,範囲
+selector.sort_asc,昇順
+selector.sort_desc,降順
+selector.sort_unspecified,指定なし
+selector.stat_tip,統計結果は実行条件や条件内の数値に使用できます
+selector.take_count,個数:
+selector.take_exclude_first,先頭を除外
+selector.take_first,先頭を選択
+selector.take_start_from,開始位置:
+selector.tip_add_scope,複数の範囲のアイテムを結合し、前の範囲を優先します
+selector.tip_minus,別のフィルターで選択された物品を除外
+selector.tip_more,条件グループ（いずれか一致）、別のフィルターで選択されたアイテムの除外
+selector.tip_sort,交換時、両側がそれぞれの並び順に従って1対1で対応します
+selector.tip_tags,プロパティ一覧にゲームの内部タグを表示
+selector.title_edit,フィルター · {0}
+selector.title_new,新規フィルター
+selector.used_in_rules,使用箇所: {0}{1}
+sort.asc,{0}が低い順
+sort.desc,{0}が高い順
+take.by_sort,{0}順
+take.exclude_first,先頭 {0} 件を除外
+take.first,先頭 {0} 件
+take.sorted_take,{0} {1}
+# ==============================================================================
+# UI: Container Side Panel & Storage Bay
+# Placeholders: {0} = count/device name.
+# ==============================================================================
+device_dialog.clear,名前を消去
+device_dialog.name,名前
+device_dialog.tip,命名後、この機器はフィルターやアクション移動先で名前により直接参照できます。
+device_dialog.title,機器の命名
+store.naming.cannot_open,現在命名画面を開けません。
+store.naming.prompt,「{0}」と命名するアイテムをダブルクリック
+store.naming.prompt_any,命名するアイテムをダブルクリック
+# ==============================================================================
+# UI: Apprentice Handbook
+# Apprentice handbook pages (p1 to p7) and diagram annotations.
+# Placeholders: none (full self-contained prose).
+# ==============================================================================
+handbook.cannot_open,ハンドブックを開けません
+handbook.diagram.arrow_charge,② 未充電を充電器へ
+handbook.diagram.arrow_empty,① 空を回収
+handbook.diagram.arrow_full,① 満電を投入
+handbook.diagram.machines,機器
+handbook.diagram.machines_note,夜間に電力を消費
+handbook.diagram.recharger,充電器
+handbook.diagram.recharger_note,夜間に充電
+handbook.diagram.storage,保管エリア
+handbook.diagram.storage_note,空きバッテリー
+handbook.p1.banner_apprentices,見習い
+handbook.p1.banner_quickstart,クイックスタート
+handbook.p1.steps_quickstart,1. 見習いトランシーバーをダブルクリックし、仲介に連絡して見習いを雇用します。\n2. ルーチンでルーチン（順序付けられたタスクのセット）を作成します。サンプルルーチンは設定なしでそのまま使えます。\n3. 見習いタブに戻り、ルーチンを割り当てます。詳細で複数のルーチン（早番または遅番）を割り当てられます。新規雇用された見習いは標準で稼働状態です。一時停止する場合は休日に設定を選びます。\n4. 早番は起床後・開店前に作業し、遅番は就寝中に作業します。
+handbook.p1.text_ap,見習いの1日の作業量。就寝時の給料支払い後に全回復し、当夜の遅番で先に消費され、余りは翌朝の早番に持ち越されます。各アクションはAPを消費し、熟練度が高いほど消費が減ります。APが尽きると残りの作業は繰り越され、次のシフトでタスク 1 から再開します。
+handbook.p1.text_multi_sched,見習いは複数のルーチンを実行でき、詳細の順序に従って順次実行され、毎日のAPを共有します。複数の見習いが同一ルーチンを実行する場合、見習いタブの順序で順次実行され、後続の見習いが残りのアイテムを処理します。
+handbook.p1.tip_payroll,給与は毎晩の就寝時に精算されます。資金不足の場合、見習いリストの後ろの見習いから順にストライキに入り、ルーチン未割り当ての見習いが最も早くストライキします！
+handbook.p1.title_ap,AP:
+handbook.p1.title_multi_sched,複数のルーチン:
+handbook.p2.banner,熟練度とレベル
+handbook.p2.text_level,レベルが1上がるごとに日々のAPが 5 増加、日給が 10 増加し、熟練度の最低保証が 4 引き上げられ（レベル 1 では 54）、新しいルーチンの実行が遅くなりすぎるのを防ぎます。研修教材を読むことで経験値を獲得できます。
+handbook.p2.text_prof,見習いはルーチンごとに個別の熟練度（0-100）を持ち、詳細で確認できます。熟練度が高いほどAP消費が減少し、100 では基礎消費の 0.75x、新人は約 1.4x から始まります。同一ルーチンを継続すると約二週間で 85+ に達します。
+handbook.p2.text_switch,熟練度は過去の作業内容と現在のルーチンの類似度に依存します。類似したアクションやアイテムのルーチンへ切り替える場合は大半の熟練度が引き継がれますが、全く異なる内容では低い状態から始まります。多種多様なルーチンを兼任させると専門化させるより熟練度が低くなります。
+handbook.p2.tip,熟練度はアクションが消費する AP にのみ影響し、日給には影響しません。日給はレベルにのみ依存します！
+handbook.p2.title_level,レベル:
+handbook.p2.title_prof,熟練度:
+handbook.p2.title_switch,ルーチンの切り替え:
+handbook.p3.banner,ルーチンの構成
+handbook.p3.steps_conds,よく使うプリセット（生存、死亡、空きスロットありなど）は直接追加できます。電力量や水量などの数値は条件を追加して指定します。
+handbook.p3.steps_pick,抽出: 全て、先頭 N 件（例: 電力量が低い順に先頭 1 件）、先頭 N 件を除外（例: 年齢が若い順に先頭 2 件を除外）、または数値集計（件数、合計など）。
+handbook.p3.text_filter,範囲、物品タイプ、条件、抽出方法を指定して処理対象アイテムを選び出します。タスク内で直接作成できます。複数のルーチンで共有するグローバルフィルターへ昇格させることも可能です。
+handbook.p3.text_param,名前付きの数値（例: 「バッテリー交換しきい値 30」）。複数の条件で共有でき、ルーチン画面で直接変更できます。
+handbook.p3.text_range,店全体、特定の機器名、または別のフィルターを指定でき、複数追加も可能です。「中身」は内部のアイテムを指し、「自身」は容器や機器自体を指します（例: [水耕栽培機] 自身に条件「空きスロットあり」を指定すると空き機器を抽出）。
+handbook.p3.text_scope,フィルターは標準で店全体（販売用商品を除く所有アイテム）を検索します。特定の保管エリア、機器、コンテナを対象にするには、青いラベラーで名前を付けるか（例: 「水培倉庫」）、ルーチンエディターの「＋ 命名…」を使用します。複数のオブジェクトに同じ名前を付けられます。
+handbook.p3.tip_name,フィルターを新規作成しなくても、カスタム名（[名前]）をフィルター対象として直接選択できます！
+handbook.p3.title_filter,フィルター:
+handbook.p3.title_param,パラメーター:
+handbook.p3.title_range,対象範囲:
+handbook.p3.title_scope,店全体と機器名:
+handbook.p4.banner,タスク
+handbook.p4.text_move,コンテナ、保管エリア、機器にアイテムを移動します（例: 未充電のバッテリーを充電器へ移動）。移動先はコンテナである必要があります。
+handbook.p4.text_pre,標準で毎シフト実行されます。「...[A] が空でない時」や「...[A] が N 未満の時」などを選択でき、スキップされたタスクは AP を消費しません。より複雑な条件は「高度な条件...」で設定します（例: 「[A] 水分 > 1000 ml」）。
+handbook.p4.text_press,画面を開かずに、機器ウィンドウ内のボタン（開始、印刷、すべて移動）の押下、包みの開封、スイッチの切り替えを行います。
+handbook.p4.text_swap,二組のアイテムを順番通りにペアにして位置を入れ替えます。個数が一致しない場合、余ったアイテムはその場に残ります。
+handbook.p4.text_use,対象に道具を使用します（例: ネズミに包丁、空のボトルに水差し）。作用する方向はゲームが判断します（空のバケツに蛇口を使うと、バケツに水を汲みます）。
+handbook.p4.tip,どのアイテムを、どの順序で、何個処理するかはすべてフィルターで定義され、アクション自体は何をするかだけを決めます！
+handbook.p4.title_move,入れる:
+handbook.p4.title_pre,実行条件:
+handbook.p4.title_press,ボタンを押す、作動、切替:
+handbook.p4.title_swap,交換:
+handbook.p4.title_use,使用:
+handbook.p5.banner_order,実行順序
+handbook.p5.banner_swap,バッテリー自動交換
+handbook.p5.steps_swap,① 残量の少ないバッテリー（昇順）を満充電バッテリー（降順）と交換: 最も残量の少ないものに満充電のものを載せ替え、外したバッテリーはその場（通常は充電器内）に残します。\n② 保管エリアの未充電バッテリーを空きスロットのある充電器へ入れます。
+handbook.p5.text_seq,各シフトは見習いタブの順序で実行されます: 各見習いがそのシフトのルーチンを順次実行し、タスクは上から下へ実行されます。各タスク開始時に最新状態で再抽出されるため、処理済みのアイテムが重複処理されることはありません。順序は ↑↓ で調整できます。
+handbook.p5.title_seq,順次実行:
+handbook.p6.banner,サンプルルーチン
+handbook.p6.text_battery,残量の少ないバッテリーを満充電のものと交換し、未充電の予備バッテリーを充電器に入れます。設定不要ですぐに使えます。
+handbook.p6.text_hydro,作物の収穫、種の植え替え、水の交換（バッテリー交換と同様）、栄養錠剤の追加を行います。
+handbook.p6.text_organize,散らばった医薬品や食料をそれぞれ [医薬品倉庫] や [食料倉庫] に片付けます。複数の保管エリアに同じ名前を付けることも可能です。
+handbook.p6.text_print,チップを装着し、フィラメントと素材を補充し、完成品を回収します。
+handbook.p6.text_ras,タンクへの給水、空腹の魚への餌やり、死んだ魚の回収を行い、成魚を雌雄一匹ずつ残して他を屠殺します。
+handbook.p6.text_rat,ディスペンサーの自動調合を有効化し、飼料を補充し、種ネズミ（1 雄、2 雌）を残して成体ネズミを間引き、糞を掃除します。
+handbook.p6.text_vending,水ボトルを印刷し、水を汲み、基本水に浄化して棚に並べ、売上金を回収します。
+handbook.p6.tip,サンプルルーチンは設定不要です。特定の保管エリアに成果物を入れたい場合は、サンプルの名前（例: 「水培倉庫」）に合わせて命名してください！
+handbook.p6.title_battery,バッテリー自動交換:
+handbook.p6.title_hydro,水耕栽培:
+handbook.p6.title_organize,整理整頓:
+handbook.p6.title_print,銃器の3Dプリント:
+handbook.p6.title_ras,水産養殖:
+handbook.p6.title_rat,ネズミ養殖:
+handbook.p6.title_vending,水販売:
+handbook.p7.banner,シミュレーターとレポート
+handbook.p7.text_report,早番終了後に見習い日報が発行され（カウンター、またはゲームの新聞をゴミ箱へ設定時はゴミ箱に入ります）、ダブルクリックで読めます。日報は昨夜の遅番と今朝の早番をまとめます。レポートタブで過去のシフトと日給を確認できます。
+handbook.p7.text_sim,実際の店舗に影響を与えることなく、店舗の複製データ上で 1 シフトから最大 7 日間実行し、各タスクの実行状況とAP消費を確認できます。
+handbook.p7.tip,プレイヤーの手動操作が必要なアクションは見習いには実行できずスキップされます。レポートで「再試行」を選択すると再試行できます。
+handbook.p7.title_report,レポート:
+handbook.p7.title_sim,シミュレーター:
+handbook.title,見習いハンドブック
+# ==============================================================================
+# UI: General Common UI, Tables & Dialogs
+# Common UI buttons, settings window, session status, and mod transfer.
+# Placeholders: {0} = status/number, {1} = details.
+# ==============================================================================
+btn.mech_bottle_printer_btn_print_small,瓶（小）をプリント
+btn.mech_bottle_printer_btn_print_large,瓶（大）をプリント
+btn.mech_vending_btn_transfer,すべて移動させよう
+gamedialog.no_text,（テキストなし）
+picker.number,数値
+picker.pick_in_shop,店内で選択
+session.container_missing,（存在しません #{0}）
+session.no_device,店内に【{0}】がありません
+session.no_selector_items,店内にありません: {0}
+session.prof_floor,（レベル保証 {0}）
+session.prof_text,{0} 熟練度 {1}/100{2} · AP ×{3}
+session.unassigned_schedule,未割り当てのルーチン
+settings.automation_enabled,見習い自動化を有効にする（シフトの実行）
+settings.show_all_tags,条件内にすべてのゲームタグ（カテゴリマーク、IDなどの内部タグ含む）を表示
+settings.ui_scale,UI倍率
+settings.ui_scale_desc,画面の高さに応じた自動拡大縮小に加えた追加倍率（例: 0.8 や 1.2）
+style.credits,{0} クレジット
+table.ap,AP
+table.result,結果
+table.rule,タスク
+table.btn_details,詳細
+transfer.dup_suffix,{0}（{1}）
+layout.handbook.gap,6
+layout.handbook.body_size,13
+layout.handbook.p5_label_x,156
+layout.handbook.p5_full_y,6
+layout.handbook.p5_empty_y,56
+layout.handbook.diagram.arrow_full_x,156
+layout.handbook.diagram.arrow_full_y,6
+layout.handbook.diagram.arrow_full_w,160
+layout.handbook.diagram.arrow_empty_x,156
+layout.handbook.diagram.arrow_empty_y,56
+layout.handbook.diagram.arrow_empty_w,160
+layout.handbook.diagram.arrow_charge_x,84
+layout.handbook.diagram.arrow_charge_y,151
+layout.handbook.diagram.arrow_charge_w,230
+layout.handbook.diagram.machines_x,320
+layout.handbook.diagram.machines_w,150
+layout.handbook.diagram.recharger_w,150
+layout.handbook.diagram.storage_w,150
+layout.intercom.shift_width,80
+layout.intercom.prof_width,90
+layout.intercom.col_done_width,80
+layout.intercom.status_width,150
+layout.cond.value_width,120
+layout.selector.scope_label_width,40
+transfer.err.clipboard_empty,クリップボードが空です
+transfer.err.newer_version,このルーチンは新しいバージョンのProbably Automatedで作成されたため、サポートされていません
+transfer.err.not_a_routine,クリップボードの内容がProbably Automatedルーチンではありません
+transfer.err.older_version,旧バージョンのルーチン形式はサポートされていません
+transfer.marker,【Probably Automatedルーチン】
+ui.add,追加
+ui.cancel,キャンセル
+ui.clear,クリア
+ui.close,閉じる
+ui.collapse,閉じる
+ui.confirm,決定
+ui.copy,コピー
+ui.delete,削除
+ui.expand,展開
+ui.hint,説明
+ui.move_down,下に移動
+ui.move_up,上に移動
+ui.name,名前
+ui.ok,OK
+ui.reset,リセット
+ui.save,保存
+ui.search,検索
+ui.value,値
+unlock.desc,ワイルドの斡旋所が見習いを募集し、開店前や閉店後の店舗運営を支援します。見習いトランシーバー、『見習いマニュアル』、設備に名前を付けるための青いラベルプリンターが付属します。
+unlock.title,見習い派遣
+# ==============================================================================
+# Adapter & Game Integration: Names & Labels
+# Game entity names, battery status, fish species, and hardware fixtures.
+# Placeholders: {0} = item name/percentage, {1} = target.
+# ==============================================================================
+battery.desc,{0} ({1}%)
+fish.dead,、死亡
+fish.desc,{0} ({1}{2}g、{3}日{4})
+fish.female,雌、
+fish.male,雄、
+fixture.drain,排水口
+fixture.faucet,蛇口
+fmt.arrow_prop,{0} {1} → {2}
+fmt.colon,{0}: {1}
+fmt.copy_suffix,{0}（コピー）
+fmt.end_dot,。
+gameworld.action_error,{0} エラー: {1}
+gameworld.action_needs_player,{0} の {1} はプレイヤーの操作が必要なため、見習いは実行できません
+gameworld.add_mark,タグ【{0}】を追加
+gameworld.box_cannot_accept,{0} に配置できません
+gameworld.box_full,{0}は満杯です
+gameworld.box_no_slot,{0}には{1}がありません
+gameworld.button_needs_player,{0} の [{1}] はプレイヤーの操作が必要なため、見習いは実行できません
+gameworld.confirm_needs_player,「{0}」の確認が必要なため、見習いは実行できません
+gameworld.game_tip,ゲームのヒント:
+gameworld.move_error,移動エラー: {0}
+gameworld.move_to,{0}に移動
+gameworld.need_player_ui,{0} はプレイヤーの操作が必要なため、見習いは実行できません
+gameworld.no_button,{0} にはボタン [{1}] がありません
+gameworld.press_button,[{0}] を押す
+gameworld.remove_mark,タグ【{0}】を削除
+gameworld.swap_error,交換エラー: {0}
+gameworld.swap_not_allowed,ゲームにより交換が許可されていません
+gameworld.swap_with,{0}と位置を交換
+item.handbook.desc,見習い、ルーチン、タスクに関する手順を解説した便利なハンドブック。ダブルクリックで読む。
+item.handbook.name,見習いマニュアル
+item.intercom.desc,ワイルドの人材派遣会社から提供されたトランシーバー。見習いの雇用、ルーチンの作成、シフトレポートの閲覧が可能。ダブルクリックで使用。
+item.intercom.name,見習いトランシーバー
+liquid.desc,{0}（{1}ml、水質 {2}%）
+names.kind.combat_knife,戦闘ナイフ
+names.kind.hatchet,手斧
+names.kind.kitchen_cleaver,肉切り包丁
+names.kind.labeler,ラベラー
+names.kind.rat,ネズミ
+names.kind.raw_meat,生肉
+names.kind.water_filter,ろ過器
+names.kind.water_filter_adv,高度なろ過器
+names.kind.water_jug,水差し
+names.kind.wire_cutter,ワイヤーカッター
+names.prop.has,{0} (有無)
+names.prop.liq,{0} 含有 (ml)
+names.prop.mark,マーク [{0}]
+names.prop.pct,{0} %
+names.prop.str,{0} (テキスト)
+names.prop.unselected,（未選択）
+propbindings.none,（なし）
+quality.prop.grade,{0}ランク
+quality.prop.grade_name,{0}ランク名
+quality.prop.label_grade,{0}ラベルランク
+quality.prop.label_ok,{0}ラベル適合
+quality.prop.verified,{0}検証済み
+quality.cat.category_wine_quality,ワイン品質
+# ==============================================================================
+# Examples: Routine & Preset Examples
+# Pre-packaged routine examples: water, ranching, battery, hydro, etc.
+# Placeholders: {0} = container/target name.
+# ==============================================================================
+example.aqua.rule.clear_dead,死魚を清掃
+example.aqua.rule.feed,魚にエサやり
+example.aqua.rule.fill_jug,ボトルに給水
+example.aqua.rule.fill_tank,水槽に給水
+example.aqua.rule.harvest,成魚を収穫
+example.aqua.rule.store_meat,魚肉を収納
+example.aqua.sel.adult_f,収穫可能な成体メス魚
+example.aqua.sel.adult_m,収穫可能な成体オス魚
+example.aqua.sel.dead_fish,死魚
+example.aqua.sel.feed,魚用飼料1食分
+example.aqua.sel.feed_in,水槽内の飼料
+example.aqua.sel.hungry_fish,空腹の魚
+example.aqua.sel.jugs,空きボトル
+example.aqua.sel.knives,刃物類
+example.aqua.sel.low_water,水不足の水槽
+example.aqua.sel.meat,養殖システム内の魚肉
+example.aqua.sel.ras,循環式水産養殖システム
+example.aqua.sel.tank,水槽
+example.aqua.store,水産倉庫
+example.battery.name,自動換電
+example.battery.param.full,満充電基準
+example.battery.param.full.hint,この割合以上を満充電と判定
+example.battery.param.low,残量少の閾値
+example.battery.param.low.hint,機器内の電力量がこれを下回った場合に交換
+example.battery.rule.charge,充電
+example.battery.rule.swap,電池交換
+example.battery.sel.free_recharger,空きスロットのある充電器
+example.battery.sel.full_battery,満充電電池
+example.battery.sel.idle_battery,未充電の予備電池
+example.battery.sel.low_battery,残量少電池
+example.battery.sel.machines,機器
+example.gun.rule.chip,チップ装着
+example.gun.rule.collect,完成銃器を回収
+example.gun.rule.feed,材料補充
+example.gun.sel.chip,プリントチップ1個
+example.gun.sel.chip_in,チップスロット
+example.gun.sel.idle,待機中のプリンター
+example.gun.sel.output,出力スロット
+example.gun.sel.plastic,フィラメント2個
+example.gun.sel.plastic_in,入力スロット内の材料
+example.gun.sel.printer,プリンター
+example.gun.store,銃器倉庫
+example.hydro.rule.add_nutrient,栄養剤投入
+example.hydro.rule.fill_water,給水
+example.hydro.rule.harvest,収穫
+example.hydro.rule.plant,播種
+example.hydro.rule.swap_water,水交換
+example.hydro.sel.crop,作物
+example.hydro.sel.dry,水耕機内の水不足ボトル
+example.hydro.sel.empty,未満タンの水筒
+example.hydro.sel.full,満水ボトル
+example.hydro.sel.hydro,水耕栽培ユニット
+example.hydro.sel.lean,栄養不足のボトル
+example.hydro.sel.planted,スロット内の種
+example.hydro.sel.ready,空き水耕栽培ユニット
+example.hydro.sel.seed,種1個
+example.hydro.sel.tablets,栄養錠剤
+example.hydro.store,水培倉庫
+example.ranch.rule.auto_blend,自動混合を有効化
+example.ranch.rule.butcher_dead,死んだネズミを処理
+example.ranch.rule.cull,ネズミを出荷
+example.ranch.rule.feed,飼料補充
+example.ranch.rule.store_meat,ネズミ肉を収納
+example.ranch.rule.store_poop,排泄物を清掃
+example.ranch.sel.breeders,種親ネズミ
+example.ranch.sel.cage,飼育ケージ
+example.ranch.sel.dead,死んだネズミ
+example.ranch.sel.dispenser,ケージ内ディスペンサー
+example.ranch.sel.fat,出荷基準ネズミ
+example.ranch.sel.food,植物飼料
+example.ranch.sel.knives,刃物類
+example.ranch.sel.low_feed,残量少ディスペンサー
+example.ranch.sel.meat,ケージ内の肉
+example.ranch.sel.poop,排泄物
+example.ranch.sel.sire_f,種母ネズミ
+example.ranch.sel.sire_m,種父ネズミ
+example.ranch.sel.unblended,自動混合未設定ディスペンサー
+example.ranch.store,牧場倉庫
+example.sel.any_storage,空きのある保管場所
+example.sel.store_or_any,{0}または他の保管場所
+example.spec.aqua.name,水産養殖
+example.spec.aqua.note,水槽に給水、飢餓魚にエサやり、死魚回収、親魚ペアを残して残りを処理
+example.spec.gun.name,銃器3Dプリント
+example.spec.gun.note,チップ装着、材料補充、完成銃器を回収
+example.spec.hydro.name,水耕栽培
+example.spec.hydro.note,収穫、播種、水筒交換、給水、栄養剤投入
+example.spec.ranch.name,ネズミ養殖
+example.spec.ranch.note,自動混合有効化、飼料補充、親個体（オス1メス2）維持、成体出荷、糞便清掃
+example.spec.tidy.name,整理整頓
+example.spec.tidy.note,散乱した薬品や食料を【薬品倉庫】【食品倉庫】に分別収納（複数の保管場所に同名を設定可能）
+example.spec.water.name,水販売
+example.spec.water.note,ボトルプリント、給水、基本水に浄水、ボトリングして陳列、売上金回収
+example.tidy.rule.food,食品を整理
+example.tidy.rule.medical,薬品を整理
+example.tidy.sel.loose_food,未整理の食品
+example.tidy.sel.loose_medical,未整理の薬品
+example.tidy.store.food,食品倉庫
+example.tidy.store.medical,薬品倉庫
+example.water.rule.bottle,ボトリング
+example.water.rule.cash,売上金回収
+example.water.rule.fill_empty,空ボトルに給水
+example.water.rule.fountain_jug,自販機にボトル装填
+example.water.rule.fountain_refill,自販機に給水
+example.water.rule.print_bottle,ボトルプリント
+example.water.rule.purify,生水を浄水
+example.water.rule.take_bottle,ボトルを取り出す
+example.water.rule.take_purified,浄水済みボトルを取り出す
+example.water.sel.cash,売上金のある自販機
+example.water.sel.empty_bottles,空の水筒
+example.water.sel.empty_jugs,空ボトル
+example.water.sel.f_base,自販機の基本水タンク
+example.water.sel.f_low,残量少自販機タンク
+example.water.sel.fountain,水自販機
+example.water.sel.full_bottles,充填済み水筒
+example.water.sel.one_pure,清浄水ボトル1個
+example.water.sel.printed,プリント済みボトル
+example.water.sel.printer,ボトルプリンター
+example.water.sel.pur_box,浄水器内のボトル
+example.water.sel.pur_done,浄水済みボトル
+example.water.sel.pure_jugs,清浄水ボトル
+example.water.sel.purifier,浄水器
+example.water.sel.raw_jug,生水ボトル1個
+example.water.store,水商倉庫
+# ==============================================================================
+# Other Localization Keys
+# Remaining rule templates and misc labels.
+# Placeholders: {0} = condition, {1} = action.
+# ==============================================================================
+rule.no_actions,（アクション未設定）
+rule.when_arrow,{0}の時 → {1}
+cond.equal,等しい
+cond.not_equal,等しくない
+cond.text_input,テキスト
+layout.btn_more_width,60
+layout.editor.when_dropdown_width,180
+layout.new_schedule.btn_width,160
+layout.sim.start_width,80
+conj.and,かつ
+conj.or,または
+
+# ==============================================================================
+# 見習い日報（早番終了後に配布される新聞アイテム）
+# ==============================================================================
+daily.all_fine,すべて正常
+daily.cannot_open,現在見習い日報を開けません。
+daily.col.ap,AP
+daily.col.morning,早番
+daily.col.night,遅番
+daily.dateline,第 {0} 日 · 昨夜の遅番 ＋ 今朝の早番
+daily.dateline_morning,第 {0} 日 · 今朝の早番
+daily.deferred,AP不足のため{0}件を次回に持ち越し
+daily.flow_problems,{0}件の問題
+daily.flows_more,他 {0} 件のルーチン…
+daily.footer,詳細はトランシーバーの「レポート」タブをご確認ください
+daily.log_issued,新しい見習い日報が発行されました。
+daily.log_none,本日の早番に見習いはおらず、見習い日報はありません。
+daily.log_replaced,古い見習い日報は回収され、新しい日報が発行されました。
+daily.problems_more,他 {0} 件
+daily.section.apprentices,見習い
+daily.section.flows,ルーチン一覧
+daily.section.problems,問題
+daily.stat.ap,消費AP
+daily.stat.done,完了タスク
+daily.stat.problems,問題
+daily.stat.wage,日給
+daily.strike,昨夜資金不足のため見習い{0}名がストライキを行いました
+daily.publisher,Probably Automated MOD
+daily.title,見習い日報
+item.daily.desc,昨夜の遅番と今朝の早番における見習いの作業概要。Probably Automated MOD が発行。ダブルクリックで読む。
+item.daily.name,見習い日報

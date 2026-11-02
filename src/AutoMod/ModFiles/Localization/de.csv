@@ -1,0 +1,1410 @@
+# Probably Automated Localization Table: English (en)
+# Primary source and fallback for all localization strings.
+# ==============================================================================
+# Domain & Rules: Vocabulary & Operators
+# Vocabulary, aggregation functions, and system variables.
+# Placeholders: none.
+# ==============================================================================
+vocab.agg.avg,Mittelwert
+vocab.agg.count,Anzahl
+vocab.agg.max,Maximum
+vocab.agg.min,Minimum
+vocab.agg.sum,Summe
+vocab.sys.ap_left,Verbleibende AP dieser Schicht
+vocab.sys.day,Aktueller Tag
+vocab.sys.shift,"Aktuelle Schicht (Früh=1, Spät=2)"
+vocab.sys.shift.short,Aktuelle Schicht
+# ==============================================================================
+# Domain & Rules: Traits, Properties, Presets & Operations
+# Item traits, property definitions, preset conditions, and action verbs.
+# Placeholders: none.
+# ==============================================================================
+op.activate,Aktivieren
+op.mark,Markierung hinzufügen
+op.move,Verschieben
+op.note,Erfassen
+op.press,Drücken
+op.swap,Austauschen
+op.toggle,Umschalten
+op.unmark,Markierung entfernen
+op.use,Verwenden
+preset.adult,Erwachsen
+preset.alive,Lebendig
+preset.dead,Tot
+preset.female,Weiblich
+preset.hasroom,Hat Platz
+preset.male,Männlich
+prop.age,Alter
+prop.calories,Kalorien
+prop.cap,Kapazität
+prop.count,Gelagerte Anzahl
+prop.dead,Tot
+prop.dead.not,Lebendig
+prop.durability,Haltbarkeit
+prop.durabilitypct,Haltbarkeit %
+prop.energy,Energie
+prop.energymax,Max. Energie
+prop.energypct,Energie %
+prop.free,Freie Plätze
+prop.freeml,Freies Volumen (ml)
+prop.gene.fertility,Gen: Fruchtbarkeit
+prop.gene.growth,Gen: Wachstum
+prop.gene.immunity,Gen: Immunität
+prop.gene.litter,Gen: Wurfgröße
+prop.gene.longevity,Gen: Langlebigkeit
+prop.gravid,Trächtig
+prop.gravid.not,Nicht trächtig
+prop.growpct,Wachstum %
+prop.health,Gesundheit
+prop.healthpct,Gesundheit %
+prop.hungerpct,Sättigung %
+prop.inbatteryslot,Im Batteriefach
+prop.inbatteryslot.not,Nicht im Batteriefach
+prop.instorage,Im Lager
+prop.instorage.not,Nicht im Lager
+prop.labelok,Korrekt etikettiert
+prop.labelok.not,Falsch etikettiert
+prop.matingcount,Paarungen
+prop.matingmax,Max. Paarungen
+prop.mature,Ausgewachsen
+prop.mature.not,Nicht ausgewachsen
+prop.neutered,Kastriert
+prop.neutered.not,Unkastriert
+prop.nutrientmax,Max. Nährstoffbedarf
+prop.nutrientmin,Min. Nährstoffbedarf
+prop.planthealth,Pflanzengesundheit %
+prop.powered,Mit Strom
+prop.powered.not,Ohne Strom
+prop.progresspct,Fortschritt %
+prop.purity,Wasserreinheit
+prop.purity.grade_short,Reinheit
+prop.repairable,Reparierbar
+prop.repairable.not,Nicht reparierbar
+prop.sex,Geschlecht
+prop.volumeml,Wasservolumen (ml)
+prop.wateruse,Wasserverbrauch pro Nacht (ml)
+prop.weight,Gewicht
+prop.working,In Betrieb
+prop.working.not,Im Leerlauf
+trait.animal,Beliebiges Käfigtier
+trait.battery,Beliebige Batterie
+trait.blade,Beliebige Klinge
+trait.cage,Tierkäfig
+trait.container,Beliebiger Behälter
+trait.durable,Beliebiger haltbarer Gegenstand
+trait.filter,Beliebige Filterpatrone
+trait.filterholder,Wasserfilterkanne
+trait.fish,Beliebiger Fisch
+trait.food,Beliebige Nahrung (mit Kalorien)
+trait.gun,Beliebige Schusswaffe
+trait.liquid,Beliebiger Flüssigkeitsbehälter
+trait.livestock,Beliebiges Nutztier
+trait.machine,Gerät
+trait.meat,Beliebiges Fleisch
+trait.seed,Beliebiges Saatgut
+trait.selfcharging,Beliebige selbstladende Batterie
+trait.storage,Lager
+# ==============================================================================
+# Domain & Rules: Kinds & Game Items
+# Item kinds and categories used by catalog and filters.
+# Placeholders: {0} = kind/family name.
+# ==============================================================================
+kind.animal_cage,Tierkäfig
+kind.any,Alle Gegenstände
+kind.any_family,Beliebiger {0}
+trait.family.contraband,Schmuggelware
+trait.family.chem,Chemikalien
+trait.family.organ,Organe
+trait.family.amenity,Bedarfsartikel
+trait.family.use_count,Gegenstände mit begrenzter Nutzung
+trait.family.permit,Genehmigungen
+trait.family.toolbox,Werkzeugkästen
+trait.family.salvagable,Verwertbare Gegenstände
+trait.family.progress,Gegenstände mit Fortschritt
+trait.family.showcase_special,Besondere Vitrinenstücke
+trait.family.endangerment,Gefährliche Gegenstände
+kind.any_type,Beliebiger {0}
+kind.bottle_printer,Flaschendrucker
+kind.energy_credit,Batterie
+kind.feces_large,Tierkot (groß)
+kind.feces_medium,Tierkot
+kind.feces_small,Tierkot (klein)
+kind.fillerweed,Füllkraut
+kind.fillerweed_seed,Füllkrautsamen
+kind.fish_scrap,Fischrest
+kind.hydroponic,Hydrokultursystem
+kind.industrial_fish_feed,Industrielles Fischfutter
+kind.kitchen_cleaver,Fleischerbeil
+kind.labeler,Etikettendrucker
+kind.large_bottled_water,Flasche Wasser (groß)
+kind.livestock_feed_dispenser,Futterautomat
+kind.morsel,Happen
+kind.nutrient_tablet,Hydroponik-Nährstofftablette
+kind.nutrifruit,Nutrifrucht
+kind.nutrifruit_seed,Nutrifrucht-Saatgut
+kind.printer,3D-Drucker
+kind.printer_chip_pistol,3D-Druckerchip für 0.22-Pistole
+kind.printer_plastic,3D-Druck-Filament
+kind.ras,GAKS
+kind.ras_water_tank,GAKS-Wassertank
+kind.rat,Ratte
+kind.raw_meat,Rohes Fleisch
+kind.recharger,Ladegerät
+kind.self,Der Behälter selbst
+kind.small_bottled_water,Flasche Wasser (klein)
+kind.small_morsel,Kleiner Happen
+kind.small_raw_meat,Rohes Fleisch (klein)
+kind.tilapia,Tilapia
+kind.vending_fountain,Wasserautomat
+kind.water_filter,Wasserfilter
+kind.water_filter_adv,Fortschrittlicher Wasserfilter
+kind.water_jug,Krug Wasser
+kind.water_purifier,Wasserreiniger
+kind.wire_cutter,Seitenschneider
+# ==============================================================================
+# Domain & Rules: Machine Slots & Evaluation
+# Container slot names and source expansion evaluation strings.
+# Placeholders: {0} = container/slot name, {1} = slot name.
+# ==============================================================================
+eval.empty_no_items,„[{0}]“ ist derzeit leer
+eval.empty_not_matching,"„[{1}]“ ist derzeit leer (1 Gegenstand in Quelle, keiner erfüllt Bedingungen)|„[{1}]“ ist derzeit leer ({0} Gegenstände in Quelle, keiner erfüllt Bedingungen)"
+eval.expand.contents,Inhalt
+eval.expand.self,selbst
+eval.expand.slot,{0}
+eval.from.contents,Inhalt von {0}
+eval.from.self,{0} selbst
+eval.from.slot,{1} von {0}
+eval.no_named,Kein [{0}] im Laden
+eval.slot.battery,Batteriefächer
+eval.slot.filter,Filtersteckplätze
+slot.backpack,Rucksack
+slot.base_water,Basiswasser
+slot.batteries,Batterien
+slot.battery,Batteriefach
+slot.butcher,Schlachthaus
+slot.chip,Chip
+slot.clean_water,Sauberes Wasser
+slot.container,Behälter
+slot.core,Kern
+slot.dispenser,Spender
+slot.distillate,Destillat
+slot.filter,Filtersteckplatz
+slot.filters,Filter
+slot.frame,Rahmen
+slot.input,Eingang
+slot.module,Modul
+slot.note,Notiz
+slot.nutrient,Nährstoff
+slot.output,Ausgang
+slot.power,Strom
+slot.recipe,Rezept
+slot.seed,Saatgut
+slot.storage,Lager
+slot.tank,Tank
+slot.trap,Falle
+slot.water,Wasser
+slot.wine,Wein
+# ==============================================================================
+# Domain & Rules: Rule Cards & Action Templates
+# Rule card sentence templates, slots, and condition clauses.
+# Placeholders: {list} = items, {to} = target, {tool} = tool, {op} = action.
+# ==============================================================================
+card.cond.empty,leer sind
+card.cond.every_shift,Jede Schicht
+card.cond.every_shift_run,Jede Schicht ausführen
+card.cond.gt,mehr als 1 Gegenstand haben|mehr als {0} Gegenstände haben
+card.cond.lt,weniger als 1 Gegenstand haben|weniger als {0} Gegenstände haben
+card.cond.not_empty,nicht leer sind
+card.cond.when,Wenn {0}
+card.op.apply,Anwenden
+card.op.press,Drücken
+card.param.button,Taste
+card.param.list,Gegenstand
+card.param.pre,Gegenstand
+card.param.to,Ziel
+card.param.tool,Werkzeug
+card.select_button,(Taste wählen)
+card.select_param,({0} wählen)
+card.times,(je 1-mal)| (je {0}-mal)
+card.tpl.apply,{tool} auf {list} {op}
+card.tpl.complex_colon,{complex}:
+card.tpl.cond_colon,{cond}:
+card.tpl.mark,{op} [{text}] auf {list}
+card.tpl.place,{op} {list} in {to}
+card.tpl.press,{op} {button} an {list}
+card.tpl.swap,{op} {list} mit {to}
+card.tpl.trigger,{op} {list}
+card.tpl.unmark,{op} [{text}] von {list}
+card.tpl.when,Wenn {list} {cond}:
+# ==============================================================================
+# Domain & Rules: Text Formatting & Outcomes
+# Sentence generators, action text, preconditions, grades, and execution run summary.
+# Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
+# ==============================================================================
+action.activate,{0} aktivieren
+action.mark,Markierung [{1}] zu {0} hinzufügen
+action.move,{0} in {1} verschieben
+action.note.add,{0} zu {1} addieren
+action.note.set,{0} in {1} schreiben
+action.press,[{1}] an {0} drücken
+action.swap,{0} mit {1} austauschen
+action.times,", je 1-mal|, je {0}-mal"
+action.toggle,{0} umschalten
+action.unmark,Markierung [{1}] von {0} entfernen
+action.use,{0} auf {1} anwenden
+grade.at_least,mindestens
+grade.at_most,höchstens
+grade.better_than,besser als
+grade.is,ist
+grade.is_not,ist nicht
+grade.worse_than,schlechter als
+pre.cmp,Anzahl von {0} {1} {2}
+pre.empty,{0} leer ist
+pre.gt,{0} mehr als {1} Gegenstände hat
+pre.lt,{0} weniger als {1} Gegenstände hat
+pre.not_empty,{0} nicht leer ist
+pre.where.cmp,Anzahl von {1} mit {0} {2} {3}
+pre.where.empty,keine {1} mit {0} vorhanden
+pre.where.gt,mehr als {2} {1} mit {0}
+pre.where.lt,weniger als {2} {1} mit {0}
+pre.where.not_empty,{1} mit {0} vorhanden
+prenot.no_less,{0} nicht weniger als {1} Gegenstände
+prenot.no_more,{0} nicht mehr als {1} Gegenstände
+prenot.where_no_less,{1} mit {0} nicht weniger als {2} Gegenstände
+prenot.where_no_more,{1} mit {0} nicht mehr als {2} Gegenstände
+runsummary.deferred,", 1 Gegenstand übersprungen (zu wenig AP)|, {0} Gegenstände übersprungen (zu wenig AP)"
+runsummary.done,1 Gegenstand erledigt|{0} Gegenstände erledigt
+runsummary.issues,", 1 Aufgabe fehlgeschlagen|, {0} Aufgaben fehlgeschlagen"
+runsummary.levelup,; {0} Stufe aufgestiegen
+runsummary.no_apprentices,Keine Lehrlinge im Dienst.
+text.ap,{0} / {1} AP verbraucht
+text.bracket,[{0}]
+text.pair,{0}: {1}
+text.pair_after,"{0}: "
+text.deleted,(gelöscht)
+text.dot_sep,·
+text.members.all,{0} (insgesamt {1})
+text.members.more,{0} und weitere (insgesamt {1})
+text.object_def,Parameter = {0}{1}
+text.paren," ({0})"
+text.period,.
+text.prop_def,Formel = {0}
+text.selector.conds,Bedingungen: {0}
+text.selector.minus,Ausschließen: {0}
+text.selector.scope,Bereich: {0}
+text.selector.stat_count,Zählung: {0}
+text.selector.stat_other,Statistik {0}: {1}
+text.selector.take,Wählen: {0}
+text.selector.type,Typ: {0}
+text.selector.unset_from,(keine Quelle gewählt)
+text.short.minus,ohne {0}
+text.slot.battery,(Batteriefach)
+text.slot.filter,(Filtersteckplatz)
+text.unset,(nicht ausgewählt)
+# ==============================================================================
+# Domain & Rules: Static Checks & Scope Rules
+# Rule validator error messages, warnings, and scoping conflict rules.
+# Placeholders: {0} = item/definition name, {1} = details.
+# ==============================================================================
+check.err.def_missing,Referenzierte Definition existiert nicht
+check.err.expr_const_missing,Parameter im Ausdruck existiert nicht oder ist nicht ausgewählt
+check.err.expr_empty,Ausdruck enthält leere Elemente
+check.err.expr_note_missing,Zähler im Ausdruck existiert nicht oder ist nicht ausgewählt
+check.err.expr_note_scope,Zähler kann hier nicht verwendet werden
+check.err.expr_own_scope,Eigene Eigenschaft kann hier nicht verwendet werden
+check.err.expr_sel_custom_prop,Formel für benutzerdefinierte Eigenschaft darf keinen Filter referenzieren
+check.err.expr_sel_missing,Filter im Ausdruck existiert nicht oder ist nicht ausgewählt
+check.err.expr_sys_missing,Ausdruck enthält leere Elemente
+check.err.expr_sys_scope,Systemvariable kann hier nicht verwendet werden
+check.err.pre_note_missing,Bedingungszähler existiert nicht
+check.err.pre_sel_missing,Bedingungsfilter existiert nicht
+check.err.pre_stat_where,Aggregationsfilter unterstützt keine bedingte Anzahlprüfung
+check.err.pre_sys_missing,Unbekannte Systemvariable „{0}“
+check.err.prop_cycle,Benutzerdefinierte Eigenschaft darf keine andere benutzerdefinierte Eigenschaft referenzieren
+check.err.prop_prefix,Eigenschaft „{0}“: {1}
+check.err.rule_mark_empty,Markierungsname nicht angegeben
+check.err.rule_move_no_to,Für „Verschieben“ ist kein Ziel ausgewählt
+check.err.rule_move_not_box,Ziel von Verschieben muss ein Behälter sein: „{0}“ ist kein Behälter
+check.err.rule_no_actions,Keine Aktionen festgelegt
+check.err.rule_note_missing,Für „Erfassen“ ist kein Zähler ausgewählt
+check.err.rule_press_no_button,Für „Taste drücken“ ist keine Taste ausgewählt
+check.err.rule_swap_no_to,Für „Austauschen“ ist keine andere Gegenstandsgruppe ausgewählt
+check.err.rule_target_missing,Für „{0}“ ist kein Gegenstand ausgewählt
+check.err.rule_times_invalid,Anzahl für „{0}“ darf nicht kleiner als 1 sein
+check.err.rule_unknown_verb,Unbekannte Aktion „{0}“ (bitte erneut auswählen)
+check.err.rule_use_no_tool,Für „Anwenden“ ist kein Werkzeug ausgewählt
+check.err.rule_use_times_invalid,Anzahl für „Anwenden“ darf nicht kleiner als 1 sein
+check.err.rule_use_tool_kind,"Werkzeug für „Anwenden“ muss ein Gerätename, Filter oder Einrichtungsgegenstand sein"
+check.err.sel_agg_prop_empty,Statistikeigenschaft nicht ausgewählt
+check.err.sel_cycle,Filter hat zirkuläre Referenz
+check.err.sel_from_empty,Keine Quelle ausgewählt
+check.err.sel_from_missing,Filterquelle existiert nicht oder ist nicht ausgewählt
+check.err.sel_from_number,Quelle darf keine Zahl sein
+check.err.sel_from_param,Quelle ist ein Parameter (Konstante); muss ein Behälter oder „Gesamter Laden“ sein
+check.err.sel_minus_missing,Ausgeschlossener Filter existiert nicht
+check.err.sel_prefix,Filter „{0}“: {1}
+check.err.sel_preset_missing,Voreingestellte Bedingung existiert nicht
+check.err.sel_prop_empty,Eigenschaft nicht ausgewählt
+check.ref.prop,Eigenschaft {0}
+check.ref.selector,Filter {0}
+check.warn.sel_all_shop,„[{0}]“ umfasst alle Gegenstände im gesamten Laden; verarbeitet alles (inkl. Batterien in Maschinen)
+check.warn.sel_itself,"„[{0}]“ bezieht sich auf den Behälter selbst; um seinen Inhalt zu verarbeiten, verwende einen Filter mit Quelle [{0}]"
+check.warn.tool_is_box,Werkzeug „[{0}]“ ist ein Behälter: verwendet den ersten verfügbaren Gegenstand darin
+scope.err.already_global,Bereits eine globale Definition
+scope.err.conflict,"„{0}“ {1}, bitte zuerst umbenennen"
+scope.err.cross_ref_local,Routinenübergreifende Referenz auf lokale Definition „{0}“ (nur globale oder lokale innerhalb der Routine erlaubt)
+scope.err.dup_global_param,Konflikt mit globalem Parameter „{0}“
+scope.err.dup_global_selector,Konflikt mit globalem Filter „{0}“
+scope.err.dup_local_param,Kollidiert mit lokalem Parameter „{1}“ in Routine „{0}“
+scope.err.dup_local_selector,Kollidiert mit lokalem Filter „{1}“ in Routine „{0}“
+scope.err.global_ref_local,Globale Definition darf lokale Definition „{0}“ nicht referenzieren
+scope.shop,Gesamter Laden
+# ==============================================================================
+# Domain & Simulation: Simulator Catalog & Items
+# Items, containers, and mock objects in Simulator.
+# Placeholders: none.
+# ==============================================================================
+sim.item.animal_cage,Tierkäfig
+sim.item.battery_empty,Batterie (leer)
+sim.item.battery_full,Batterie (voll)
+sim.item.battery_self,Selbstladende Batterie
+sim.item.filter,Wasserfilter
+sim.item.filter_adv,Fortschrittlicher Wasserfilter
+sim.item.jug_dirty,Wasserkrug (schmutzig 3L)
+sim.item.jug_empty,Leerer Wasserkrug
+sim.item.knife,Fleischerbeil
+sim.item.labeler,Etikettendrucker
+sim.item.machine,Elektrogerät
+sim.item.meat,Rohes Fleisch
+sim.item.moisture_farm,Feuchtigkeitssammler
+sim.item.other,Sonstiger Gegenstand
+sim.item.projector,Mirage-Projektor
+sim.item.rat_baby,Rattenjunges
+sim.item.rat_f,Weibliche Ratte (erwachsen)
+sim.item.rat_fat,Fette Ratte (bereit)
+sim.item.rat_m,Männliche Ratte (erwachsen)
+sim.item.recharger,Ladegerät
+sim.item.storage,Lagerbox
+sim.item.toolbox,Werkzeugkasten
+sim.item.water_pitcher,Wasserfilterkanne
+sim.item.water_purifier,Wasserreiniger
+sim.item.wire_cutter,Seitenschneider
+# ==============================================================================
+# Domain & Simulation: Simulator Engine & UI
+# Simulator configuration, step execution, and outcome display.
+# Placeholders: {0} = item name/shift, {1} = parameter/quantity.
+# ==============================================================================
+sim.add_to_title,Legen in „{0}“
+sim.app_line,{0} · {1} · St.{2} · {3} AP/Tag · Kompetenz {4}
+sim.apprentices,Lehrlinge
+sim.battery_summary,Batterie {0}
+sim.btn_add_items,+ Gegenstände
+sim.btn_add_vapp,+ Virt. Lehrling
+sim.btn_edit_schedule,Routine bearbeiten
+sim.btn_start,Simulation starten
+sim.cannot_create_item,{0} konnte nicht erstellt werden
+sim.copy_failed,Laden konnte nicht kopiert werden: {0}
+sim.count_label,Anzahl
+sim.daily_ap,Tägliche AP
+sim.day_shift_head,Tag {0} · {1}
+sim.deferred_items_warn,{0} übersprungen wegen zu wenig AP
+sim.desc.battery,{0} #{1} ({2}%)
+sim.desc.dead,", tot"
+sim.desc.liquid,"{0} #{1} ({2} ml, Reinheit {3}%)"
+sim.desc.neutered,", kastriert"
+sim.desc.rat,"{0}-Ratte #{1} ({2} g, {3} Tage{4}{5})"
+sim.duration,Dauer
+sim.empty,Leer
+sim.fail.dest_full,{0} ist voll
+sim.fail.no_effect,Keine Änderung
+sim.fail.simulated,Bereits in Vorschau verarbeitet (Wirkung unbekannt)
+sim.group_stats,{0} / {1} AP · ×{2}
+sim.in_shop_count,Im Laden: {0}
+sim.level,Stufe
+sim.lvl_up,Stufenaufstieg: {0}
+sim.memo_tag,Zähler: {0}
+sim.more_items_count,weitere {0}
+sim.more_kinds_search,Noch {0} Arten; Suchbegriff eingeben.
+sim.no_apps_tip,Keine Lehrlinge: virtuellen Lehrling hinzufügen
+sim.no_matching_items,Keine passenden Gegenstände.
+sim.no_pending_items,Keine ausstehenden Gegenstände
+sim.no_schedules,Keine Routinen vorhanden.
+sim.no_workers_this_shift,Keine Arbeiter in dieser Schicht
+sim.none_in_shop,Nicht im Laden vorhanden
+sim.op_done_count,{1} 1 Gegenstand|{1} {0} Gegenstände
+sim.pct_unchanged,Unverändert
+sim.place_in_battery_slot,In Batteriefach
+sim.place_in_container,In Behälter
+sim.place_into,Legen in
+sim.prof_label,Kompetenz
+sim.ran_shifts_notice,"1 Schicht ausgeführt, Ausführung wird fortgesetzt|{0} Schichten ausgeführt, Ausführung wird fortgesetzt"
+sim.rat_dead_count,Tot: {0}
+sim.rats_summary,Männchen {0} · Weibchen {1}
+sim.rule_deferred_warn,Unzureichende AP: 1 Gegenstand in dieser Schicht übersprungen|    Unzureichende AP: {0} Gegenstände in dieser Schicht übersprungen
+sim.run_1_day,1 Tag
+sim.run_1_shift,1 Schicht
+sim.run_3_days,3 Tage
+sim.run_7_days,7 Tage
+sim.schedule,Routine
+sim.search_placeholder,Name oder ID
+sim.sex.female,Weibchen
+sim.sex.male,Männchen
+sim.shift_label,Schicht
+sim.shop_copy,Ladenkopie
+sim.slot_summary,Batteriefach: {0}
+sim.start_shift,Start
+sim.start_morning,Früh
+sim.start_night,Spät
+sim.step.add_mark,Markierung [{0}] hinzufügen
+sim.step.moved_to,Verschoben nach {0}
+sim.step.remove_mark,Markierung [{0}] entfernen
+sim.step.swapped,Platz mit {0} getauscht
+sim.step.trigger_unknown,{0} (Wirkung erst bei Ausführung bekannt)
+sim.step.unknown,{0} → {1} (Wirkung erst bei Ausführung bekannt)
+sim.step.water_change,{0} Wasser {1} → {2} ml
+sim.sub_summary,{0} ×{1} ({2})
+sim.tip,"Läuft auf einer Ladenkopie, ohne den eigentlichen Laden zu beeinflussen.\nNachtschaltung nach Spielregeln: Batterien, Sammler, Reiniger, Ratten, Fische, Hydrokultur und Maschinen mit Fortschritt (nur Fortschritt, keine Ausgabe).\nWasser sammeln, umfüllen und entsorgen werden exakt berechnet; andere Aktionen („Anwenden“, „Aktivieren“, „Umschalten“, „Taste“) berechnen nur AP, tatsächliche Effekte hängen von realer Ausführung ab."
+sim.tip_prof,Kompetenz: {0}
+sim.title,Simulator
+sim.trigger.activate,Aktivieren
+sim.trigger.press,[{0}] drücken
+sim.trigger.toggle,Umschalten
+sim.vapp_default_name,Virtueller Lehrling
+sim.vapp_title,Virtueller Lehrling
+sim.water_summary,Wasser {0} ml (Reinheit {1}%)
+sim.welcome_tip,Auf einer Kopie mit aktuellen Gegenständen im Laden und zugewiesenen Lehrlingen (oder virtuellen Lehrlingen) ausführen.
+# ==============================================================================
+# Domain & Reports: Failure Codes & Shift Reports
+# Execution failure codes, morning/night shift reports, and issue details.
+# Placeholders: {0} = apprentice/count, {1} = rule/reason.
+# ==============================================================================
+failcode.dest_full,Voll
+failcode.destfull,Ziel voll
+failcode.error,Fehler
+failcode.many,Viele Gegenstände
+failcode.needs_player,Spieleraktion erforderlich
+failcode.needsplayer,Spieleraktion erforderlich
+failcode.no_ap,Unzureichende AP
+failcode.no_effect,Keine Wirkung
+failcode.no_members,Kein Behälter
+failcode.no_source,Kein Material
+failcode.no_tool,Fehlendes Werkzeug
+failcode.noap,Zu wenig AP
+failcode.noeffect,Keine Wirkung
+failcode.nomembers,Kein Behälter
+failcode.not_allowed,Vom Spiel nicht erlaubt
+failcode.notallowed,Durch Spielregel blockiert
+failcode.notool,Fehlendes Werkzeug
+failcode.other,Sonstiges
+failcode.simulated,Simuliert
+report.apprentice,Lehrling
+report.cash_delta,Bargeld {0}
+report.consume_item,„{0}“ verbraucht
+report.count_items,1 Gegenstand|{0} Gegenstände
+report.detail.day,Tag {0}
+report.detail.deferred,1 Gegenstand aufgeschoben|{0} Gegenstände aufgeschoben
+report.detail.done,1 Gegenstand erledigt|{0} Gegenstände erledigt
+report.detail.group_line,"  {0} ({1}): {2}"
+report.detail.dry_run,Testlauf
+report.detail.failed,1 Aufgabe fehlgeschlagen|{0} Aufgaben fehlgeschlagen
+report.detail.levelup,", Stufe aufgestiegen!"
+report.detail.run,Ausführung
+report.details.record,In Notizblock schreiben
+report.details.walk_cost,(Anlaufkosten {0} AP)
+report.error.broken,Fehler
+report.fail.dest_full,Ziel voll
+report.fail.no_tool,Fehlendes Werkzeug
+report.fail.unknown_action,Unbekannte Aktion
+report.growth.learned,{0} Fertigkeit {1} → {2}
+report.growth.levelup,"{0} (St.{1}, {2} AP täglich)"
+report.growth.prefix,Stufenaufstieg {0}
+report.idle.all_in_dest,Bereits im Zielbehälter
+report.idle.all_marked,Alle Gegenstände haben bereits diese Markierung
+report.idle.no_items,Keine passenden Gegenstände gefunden
+report.idle.none_marked,Kein Gegenstand hat diese Markierung
+report.idle.same_place,"Bereits im selben Behälter, kein Tausch nötig"
+report.issue.dest_full,"Ziel voll: {1}, {2} Gegenstand nicht abgelegt|Ziel voll: {1}, {2} Gegenstände nicht abgelegt"
+report.issue.many,"Wiederholte Fehlversuche ohne Wirkung, Aufgabe abgebrochen"
+report.issue.no_effect,"Keine Änderung nach {1}, {2} Gegenstand übersprungen|Keine Änderung nach {1}, {2} Gegenstände übersprungen"
+report.issue.no_tool,"Fehlendes Werkzeug: kein {1} im Laden, {2} Gegenstand konnte nicht verarbeitet werden ({3})|Fehlendes Werkzeug: kein {1} im Laden, {2} Gegenstände konnten nicht verarbeitet werden ({3})"
+report.issue.not_allowed,"Spiel erlaubt {1} nicht, {2} Gegenstand übersprungen|Spiel erlaubt {1} nicht, {2} Gegenstände übersprungen"
+report.issue.op_failed,{0}: {1}
+report.no_change,Keine Änderung
+report.note.no_apprentices,Keine Lehrlinge im Dienst
+report.pre.broken,Ungültige Struktur
+report.pre.disabled,Deaktiviert
+report.pre.fail,Bedingung nicht erfüllt
+report.pre.notrun,Nicht ausgeführt
+report.pre.pass,Erfüllt
+report.product_group,{0} ×{1}
+report.product_output,Produkte: {0}
+report.product_unplaced,({0} Gegenstand nicht platziert)| ({0} Gegenstände nicht platziert)
+report.reason.no_ap,"Keine AP mehr, 1 Gegenstand unbearbeitet|Keine AP mehr, {0} Gegenstände unbearbeitet"
+report.reason.notrun,"Nicht ausgeführt ({1}), 1 Gegenstand unbearbeitet|Nicht ausgeführt ({1}), {0} Gegenstände unbearbeitet"
+report.shift_deferred,", 1 Gegenstand übersprungen (zu wenig AP)|, {0} Gegenstände übersprungen (zu wenig AP)"
+report.shift_done,{0} ({1}): {2} Aufgaben abgeschlossen ({3})
+report.shift_empty,{0} ({1}): Keine Aufgaben.
+report.shift_failed,", 1 Aufgabe fehlgeschlagen|, {0} Aufgaben fehlgeschlagen"
+report.shift_levelup,; {0} Stufe aufgestiegen
+report.shift_note,Lehrling {0}: {1}
+report.shift_waiting,", einige Aktionen blockiert (Spielregel; Fortsetzung wenn bereit)"
+report.step.moved_to,Verschoben nach {0}
+report.summary_override,Lehrling {0}: {1}
+report.text.no_ap,Keine AP mehr
+report.why.no_ap,Zu wenig AP (vorherige Aufgaben verbrauchten {0} / {1} AP)
+report.window.deferred,1 Gegenstand übersprungen (zu wenig AP)|{0} Gegenstände übersprungen (zu wenig AP)
+report.window.done,1 Gegenstand erledigt|{0} Gegenstände erledigt
+report.window.dry_run,(Simulation)
+report.window.empty,Keine ausstehenden Gegenstände
+report.window.group_stats,1 Gegenstand · {1} AP|{0} Gegenstände · {1} AP
+report.window.problems,1 Aufgabe fehlgeschlagen|{0} Aufgaben fehlgeschlagen
+report.window.tab,Bericht
+report.window.title_full,{0}-Bericht
+report.window.title,Tag {0} · {1}
+# ==============================================================================
+# Domain & Workforce: Apprentices, Skills & Shifts
+# Apprentice name pool, shift schedules, and skill groups.
+# Placeholders: none.
+# ==============================================================================
+names.apprentice,Lukas;Leon;Finn;Jonas;Felix;Noah;Paul;Elias;Ben;Luca;Anna;Emma;Mia;Hannah;Sophia;Emilia;Lina;Marie;Lena;Leah
+shift.morning,Frühschicht
+shift.night,Spätschicht
+shift.off,Frei
+shift.short.morning,Früh
+shift.short.night,Spät
+shift.short.off,Frei
+skill.husbandry,Tierzucht
+skill.maintenance,Wartung
+skill.misc,Verschiedenes
+skill.power,Energie
+skill.water,Wasserwirtschaft
+# ==============================================================================
+# UI: Apprentice Intercom & Staffing Agency
+# Apprentice intercom window and Staffing Agency hiring/training.
+# Placeholders: {0} = apprentice name/credits, {1} = level/proficiency.
+# ==============================================================================
+agency.btn_buy_train,Kaufen · {0}
+agency.btn_expand,Erweitern · {0}
+agency.btn_hire,Lehrling einstellen · {0}
+agency.btn_return,Zurück
+agency.cash_insufficient,Nicht genug Bargeld ({0})
+agency.fee_expand,Erweiterungsgebühr der Agentur
+agency.fee_hire,Vermittlungsgebühr der Agentur
+agency.fee_train_item,Schulungsmaterialien ({0})
+agency.header_stats,Bargeld {0} · Plätze {1}/{2}
+agency.hired_msg,{0} ist beigetreten. Bitte Routine auf der Lehrlingsseite zuweisen.
+agency.level_up_info,Jede Stufe erhöht die täglichen AP um {0} und den Tageslohn um {1}.
+agency.materials,Materialkosten
+agency.new_apprentice_info,"Neuer Lehrling: Lv{0}, {1} AP täglich, Tageslohn {2}, Fertigkeits-Mindestwert {3}."
+agency.slots_expand,Plätze: {0} → {1}
+agency.slots_full,Plätze voll
+agency.slots_maxed,Maximale Plätze {0} erreicht
+agency.tip_hire,Nach der Einstellung Routinen auf der Lehrlingsseite zuweisen
+agency.title,Agentur
+agency.train_cash,Bargeld {0}
+agency.train_desc,"+{0} Erfahrung. Wird zu Beginn der ersten Tagesschicht gelesen, verbraucht {1} AP."
+agency.train_max_level,Ausbildung ist bis zu Lv{0} möglich.
+agency.train_no_cash_body,"Schulungsmaterialien {0}, Bargeld {1}."
+agency.train_no_cash_title,Nicht genug Bargeld
+agency.train_pending_read,Schulungsmaterialien wurden noch nicht fertig gelesen.
+agency.train_title,Ausbildung · {0}
+agency.training,Ausbildung: Kompetenz {0} +{1} ({2})
+agency.training_result,"[{0}] hat Ausbildung „{1}“ absolviert, Kompetenz {2} stieg auf {3} (+{4})."
+intercom.ap_tip,Tägliche AP: geteilt zwischen Nacht- und Folgetagsschicht
+intercom.btn_add_duty,＋ Routine hinzufügen
+intercom.btn_details,Details
+intercom.btn_fire,Entlassen
+intercom.btn_rest,Freier Tag
+intercom.btn_retry_player,Lehrlingswiederholung erlauben
+intercom.btn_train,Ausbildung…
+intercom.btn_work,Arbeiten
+intercom.call_agency,Agentur anrufen
+intercom.col_ap,AP
+intercom.col_apprentice,Lehrling
+intercom.col_done,Erledigt
+intercom.col_level,Stufe
+intercom.col_schedules,Routinen
+intercom.col_wage,Tageslohn
+intercom.col_report_wage,Lohn
+intercom.confirm_fire_note,Gekaufte Schulungsmaterialien werden nicht erstattet.
+intercom.confirm_fire_title,{0} entlassen?
+intercom.done_items,1 Gegenstand|{0} Gegenstände
+intercom.duty_item,{0} · {1}
+intercom.duty_item_tip,"Klicken, um Routine zu entfernen"
+intercom.duty_shift_tip,"Morgens: nach dem Aufwachen vor Ladenöffnung; Nachts: beim Schlafengehen. AP beginnen nachts, Rest bleibt für den Morgen"
+intercom.duty_tip,"Ausführung in Reihenfolge; erst Nachtschicht, dann Folgemorgen. Unter Details einstellen"
+intercom.handbook,Handbuch
+intercom.header_stats,Plätze {0}/{1} · {2} AP täglich · Heute Lohn {3}
+intercom.needs_player_warning,{0} Aktionen erfordern Spielerinteraktion; Lehrling hat Versuche eingestellt
+intercom.no_apprentices,Keine Lehrlinge. Bei Agentur einstellen.
+intercom.no_reports,Noch keine Schichtberichte.
+intercom.no_schedules_hint,(keine Routine zugewiesen)
+intercom.no_schedules_toast,Keine Routinen vorhanden. Bitte zuerst auf der Seite „Routinen“ erstellen.
+intercom.none,(keine)
+intercom.payroll_summary,Gesamtlohn von {0}G gezahlt ({1} Lehrlinge)
+intercom.payroll_title,Lohnabrechnung
+intercom.pick_schedule,Routine auswählen
+intercom.pick_schedule_tip,Wähle eine Routine für diesen Lehrling
+intercom.prof_empty,Fert. —
+intercom.prof_score,Fert. {0}
+intercom.prof_tip,"Stufen-Mindestwert {0}, gerechnet als {1}, AP-Kosten ×{2}"
+intercom.select_schedule,(Routine auswählen)
+intercom.shift_order_tip,Früher gelistete Lehrlinge arbeiten zuerst und werden bei Geldmangel zuerst bezahlt
+intercom.status_deferred,{0} Gegenst. aufgeschoben
+intercom.status_done,Abgeschlossen
+intercom.status_issues,{0} Aufg. offen
+intercom.status_rest,Ruht
+intercom.status_strike,Streikt
+intercom.status_unassigned_paid,Nicht zugewiesen (bezahlt)
+intercom.status_work,Arbeitet
+intercom.streak_days,({0} Tage in Folge)
+intercom.strikers,· {0} im Streik
+intercom.tab_apprentices,Lehrlinge
+intercom.tab_reports,Berichte
+intercom.tab_schedules,Routinen
+intercom.tip_add_duty,Ein Lehrling kann mehrere Routinen nacheinander ausführen und teilt sich die täglichen AP
+intercom.tip_rest,"Ruhe: nimmt nicht an Schichten teil, kein Lohn"
+intercom.tip_work,"Arbeit: nimmt an Schichten des nächsten Tages teil, Lohn beim Schlafen"
+intercom.title,Lehrlings-Funkgerät
+intercom.training_pending,Schulungsmaterial wartet auf Lektüre
+intercom.training_pending_tip,"Wird zu Beginn der ersten Schicht des Tages gelesen, verbraucht {0} AP"
+intercom.unassigned_warning,Warnung: Folgenden Lehrlingen sind keine Routinen zugewiesen:
+intercom.wages_last_7_days,Löhne der letzten 7 Tage {0}
+intercom.xp_stat,EP {0}/{1}
+intercom.xp_tip,EP {0}/{1}
+payroll.log_strike,Lehrlingsstreik: {0} (unzureichende Mittel zur Lohnzahlung).
+payroll.log_wages,Lehrlingslöhne: {0} Credits ({1}).
+# ==============================================================================
+# UI: Routines & Schedules Overview
+# Routines management tab, routine list, statistics, and device linking.
+# Placeholders: {0} = routine name/count, {1} = shift/AP.
+# ==============================================================================
+schedule.btn_add_device,Hinzufügen...
+schedule.btn_edit,Bearbeiten
+schedule.btn_edit_selector,„{0}“ bearbeiten...
+schedule.btn_export,Exportieren
+schedule.btn_move_down,Nach unten
+schedule.btn_move_up,Nach oben
+schedule.btn_name_device,Benennen...
+schedule.btn_new,+ Neue Routine
+schedule.btn_open_in_editor,Im Editor öffnen
+schedule.btn_simulator,Strategie-Simulator…
+schedule.btn_stats,Statistik
+schedule.col_ap,AP
+schedule.col_device_header,Geräte
+schedule.col_done,Erledigt
+schedule.col_rule,Aufgabe
+schedule.col_rule_header,Aufgabe
+schedule.col_top_issue,Häufigste Probleme
+schedule.cond_advanced,Erweitert...
+schedule.cond_all,Alle erfüllen
+schedule.cond_always,Jede Schicht
+schedule.cond_any,Beliebiges erfüllen
+schedule.cond_count_gt,… wenn mehr als N Gegenstände …
+schedule.cond_count_lt,… wenn weniger als N Gegenstände …
+schedule.cond_empty,...wenn leer
+schedule.cond_not_empty,...wenn nicht leer
+schedule.copied_to_clipboard,„{0}“ in die Zwischenablage kopiert.
+schedule.copy_name,{0} (Kopie)
+schedule.count_gt_prompt,Mehr als wie viele Gegenstände
+schedule.count_items,1 Gegenstand|{0} Gegenstände
+schedule.count_units,1 Einheit|{0} Einheiten
+schedule.count_tasks,1 Aufgabe|{0} Aufgaben
+schedule.count_devices,1 Gerät|{0} Geräte
+schedule.count_lt_prompt,Weniger als wie viele Gegenstände
+schedule.current_tag,(Aktuell)
+schedule.day_shift,Tag {0} · {1}
+schedule.default_name_seq,Routine {0}
+schedule.del_confirm_title,Routine „{0}“ löschen?
+schedule.del_own_note,Zugehörige {0} Parameter und Filter werden ebenfalls gelöscht.
+schedule.del_runners_note,{0} wird diese Routine nicht mehr ausführen.
+schedule.device_label,Gerät: {0}
+schedule.device_none,Nicht im Laden
+schedule.device_tip,Wird nach Benennung im Laden automatisch von Aufgaben verwendet
+schedule.empty,Keine Routinen vorhanden.
+schedule.err_cannot_run,Diese Aufgabe kann nicht ausgeführt werden:
+schedule.import_clipboard,Aus Zwischenablage importieren
+schedule.import_clipboard_tip,Über „Exportieren“ kopierte Routine importieren
+schedule.new_blank,Leere Routine erstellen
+schedule.new_blank_tip,Enthält keine Aufgaben
+schedule.new_title,Neue Routine
+schedule.no_buttons,Gewählte Maschine hat keine Tasten
+schedule.param_shared,Von mehreren Routinen geteilt
+schedule.pick_action,Aktion auswählen
+schedule.pick_button,Taste auswählen
+schedule.pick_condition,Ausführungsbedingung
+schedule.pick_device_or_selector,Gerätename oder Filter wählen
+schedule.pick_param,Parameter auswählen
+schedule.rule_disabled,(Deaktiviert)
+schedule.section_devices,Gerätenamen
+schedule.section_params,Parameter
+schedule.section_rules,Aufgabenliste
+schedule.selector_suffix,(Filter)
+schedule.stats_done_items,1 Gegenstand verarbeitet|{0} Gegenstände verarbeitet
+schedule.stats_empty,Keine Aufzeichnungen: Diese Routine wurde noch nicht ausgeführt.
+schedule.stats_issue_count,{1} 1-mal|{1} {0}-mal
+schedule.stats_range,Letzte {0} Schichten ({1} bis {2})
+schedule.stats_summary,{0} Objekte fertiggestellt · Schnitt {1} AP/Schicht · Probleme {2}
+schedule.stats_title,Statistik · {0}
+schedule.status_errors,1 Aufgabe fehlerhaft|{0} Aufgaben fehlerhaft
+schedule.status_notes,{1} und 1 weiterer Hinweis|{1} und {0} weitere Hinweise
+schedule.status_ready,Bereit
+schedule.tip_edit_in_editor,Im Editor bearbeiten
+schedule.tip_export,In Zwischenablage kopieren; kann in anderen Spielständen importiert werden
+schedule.tip_stats,"Letzte Schichten: Erledigte Objekte, AP, Probleme"
+schedule.token_named_item,Gegenstände dieses Namens
+# ==============================================================================
+# UI: Routine Editor
+# Routine editor window, task reordering, actions, and preconditions.
+# Placeholders: {0} = task name/count, {1} = reference.
+# ==============================================================================
+editor.action_apply_to,Anwenden auf
+editor.action_button,Taste
+editor.action_mark,Markierung
+editor.action_swap_with,Mit
+editor.action_target,Ziel
+editor.action_value,Wert
+editor.add_cond_tip,"Nur Gegenstände zählen, die der Bedingung entsprechen"
+editor.add_cond_title,Bedingung hinzufügen
+editor.advanced_stats,Eigene Eigenschaften {0} · Zähler {1}
+editor.btn_add_action,+ Aktion
+editor.btn_add_cond,+ Bedingung
+editor.btn_add_filter,＋ Filter
+editor.btn_add_param,＋ Parameter
+editor.btn_disable,Deaktivieren
+editor.btn_edit,Bearbeiten
+editor.btn_enable,Aktivieren
+editor.btn_name_device,＋ Benennen…
+editor.btn_new,+ Neu
+editor.btn_new_rule,＋ Neue Aufgabe
+editor.btn_only_refs,Nur von dieser Aufgabe verwendete
+editor.btn_return,Zurück
+editor.btn_show_all,Alle anzeigen
+editor.btn_simple_when,Einfacher Modus
+editor.cmp_by_prop,Nach Eigenschaft vergleichen...
+editor.confirm_delete_rule,Aufgabe „{0}“ löschen?
+editor.counter_tag,Zähler: {0}
+editor.default_rule_name,Neue Aufgabe
+editor.deferred_ap,Nicht genug AP: 1 Gegenstand aufgeschoben|Nicht genug AP: {0} Gegenstände aufgeschoben
+editor.device_none_named,Derzeit kein Gegenstand mit diesem Namen im Laden
+editor.device_none_short,Keine
+editor.done_items,1 Gegenstand fertiggestellt|{0} Gegenstände fertiggestellt
+editor.empty_none,(Keine)
+editor.entry_no_refs,\nNicht referenziert
+editor.entry_refs,\nIn 1 Stelle referenziert|\nIn {0} Stellen referenziert
+editor.global_used,Genutzt {0} / {1}
+editor.group_global,Global
+editor.group_local,Diese Routine
+editor.input_mark_name,Name der Markierung
+editor.input_name,Name des Ablaufs
+editor.input_rule_name,Aufgabenname
+editor.label_counters,Zähler
+editor.label_custom_props,Benutzerdefinierte Eigenschaften
+editor.local_in_tasks,Weitere {0} Filter werden nur in einzelnen Aufgaben verwendet
+editor.menu_device_reuse,Diesen Namen für andere Objekte verwenden…
+editor.menu_device_to_filter,In Filter umwandeln…
+editor.no_actions,Noch keine Aktionen
+editor.no_devices,Noch keine. Benannte Gegenstände können direkt in Filtern und Aktionen gewählt werden.
+editor.no_rules,Keine Aufgaben. Klicke oben zum Hinzufügen.
+editor.note_add,Addieren zu
+editor.note_default_name,Zähler
+editor.note_desc,"Startwert {0}, wird zu Schichtbeginn zurückgesetzt"
+editor.note_init_val,Anfangswert
+editor.note_set,Setzen auf
+editor.note_still_used,Dieser Zähler wird noch von Aufgaben referenziert.
+editor.note_title,Zähler
+editor.note_title_new,Neuer Zähler
+editor.num_tag,(Zahl)
+editor.pick_btn_placeholder,(Taste wählen)
+editor.pick_counter_placeholder,(Zähler wählen)
+editor.pick_dest_placeholder,(Ziel wählen)
+editor.pick_target_placeholder,(Gegenstand wählen)
+editor.pick_tool_placeholder,(Werkzeug wählen)
+editor.picker_placeholder,(auswählen)
+editor.pre_fail,Bedingung nicht erfüllt: {0}
+editor.preset_satisfied,Entspricht {0}
+editor.satisfy_prefix,Erfüllt
+editor.sec_actions,Aktionen
+editor.sec_advanced,Erweitert
+editor.sec_defs,Parameter & Filter
+editor.sec_devices,Gerätenamen
+editor.sec_rules,Aufgaben
+editor.sec_when,Ausführen wenn
+editor.selector_backref,„{0}“ referenziert „{1}“; referenzierte Filter müssen weiter oben stehen.
+editor.test_count_gt,Anzahl >
+editor.test_count_lt,Anzahl <
+editor.test_empty,Leer
+editor.test_not_empty,Nicht leer
+editor.times_each,Häufigkeit pro Gegenstand:
+editor.times_unit,
+editor.tip_action_apply,Für jeden Zielgegenstand Werkzeuge der Reihe nach testen; das erste wirksame wird angewendet.\nRichtung wird vom Spiel bestimmt: z. B. Hahn auf leeren Eimer füllt ihn mit Wasser.
+editor.tip_action_swap,Zwei Gruppen von Gegenständen der Reihe nach paaren und Positionen tauschen. Bei ungleicher Anzahl bleiben überschüssige liegen.
+editor.tip_action_target,Jeden Gegenstand in das erste passende Ziel legen. Bei mehreren Zielen der Reihe nach versuchen.
+editor.tip_add_pre_cond,"Nur Gegenstände zählen, die Bedingung erfüllen, z. B. „[A] Wasser > 1000 ml“"
+editor.tip_advanced_when,"Mehrere Bedingungen, Zähler oder Systemvariablen kombinieren"
+editor.tip_cannot_run,Diese Aufgabe kann nicht ausgeführt werden:
+editor.tip_collapse_global,Einklappen: Nur von dieser Routine verwendete globale anzeigen
+editor.tip_device_to_filter,In Filter umwandeln: Vorkommen von [{0}] in dieser Routine nutzen einen neuen Filter mit Bedingungen
+editor.tip_disable,"Diese Aufgabe wird nicht ausgeführt, Einstellungen bleiben"
+editor.tip_enable,Ausführung dieser Aufgabe fortsetzen
+editor.tip_expand_global,Ausklappen: Alle globalen Parameter und Filter anzeigen
+editor.tip_last_result,Letztes Ausführungsergebnis
+editor.tip_name_device,Behälter oder Maschinen im Laden doppelklicken zum Benennen; andere Gegenstände mit blauem Drucker
+editor.tip_new_filter,Hier einen neuen Filter erstellen
+editor.tip_only_refs,Nur von Aufgaben dieser Routine referenzierte Parameter und Filter anzeigen
+editor.tip_rule_reorder,Klicken zum Ein-/Ausklappen; Ziehen zum Ändern der Reihenfolge
+editor.tip_show_all,Alle Parameter und Filter dieser Routine anzeigen
+editor.tip_warn,Hinweis:
+editor.tip_when,Entscheidet nur über Ausführung. Zur Zielauswahl Bedingungen im Filter ergänzen.
+editor.tip_when_sub,Entscheidet nur über Ausführung. Zur Zielauswahl Bedingungen im Filter ergänzen.
+editor.unprocessed,Unbearbeitet: {0}
+editor.warn_prefix,Hinweis: {0}
+editor.when_gt_n,...mehr als N Gegenstände
+editor.when_lt_n,...weniger als N Gegenstände
+editor.window_title,Routine · {0}
+# ==============================================================================
+# UI: Filter & Condition Editors, Object Dialogs
+# Filter configuration, conditions, pick ordering, and parameter dialogs.
+# Placeholders: {0} = filter name/property, {1} = value/count.
+# ==============================================================================
+cond.at_least,mindestens
+cond.at_most,höchstens
+cond.group.base,Allgemein
+cond.group.ingredient,Zutaten
+cond.group.quality,Qualität
+cond.group.ratio,Relatives Max %
+cond.group.tag,Spiel-Tags
+cond.group.type,Typ
+cond.is,ist
+cond.is_not,ist nicht
+cond.type_is,ist {0}
+cond.type_is_not,ist nicht {0}
+expr.count,{0}.anzahl
+expr.empty,(leer)
+expr.own,selbst.{0}
+expr.select_placeholder,(Auswählen)
+expr.term.const,Parameter
+expr.term.note,Zähler
+expr.term.num,Zahl
+expr.term.own,Eigene Eigenschaft
+expr.term.stat,Statistik
+expr.term.sys,Systemvariable
+expr.tip_add,"Einen Term hinzufügen, um ihn mit vorherigen zu verrechnen"
+expr.tip_remove,Letzten Term entfernen
+filter.auto_name.agg_count,Anzahl von {1} in {0}
+filter.auto_name.agg_prop,{2} {3} von {1} in {0}
+filter.auto_name.default,Neuer Filter
+filter.auto_name.items,Gegenstände
+filter.auto_name.items_in,{1} in {0}
+filter.auto_name.self,{0}
+filter.auto_name.shop,Ganzer Laden
+filter.auto_name.target,{0} {1}
+object_dlg.btn_confirm_promote,Zu global machen
+object_dlg.btn_promote,Zu globalem Parameter machen...
+object_dlg.default_name,Neuer Parameter
+object_dlg.default_name_seq,Neuer Parameter ({0})
+object_dlg.delete_still_used,Folgende Aufgaben verweisen noch darauf: {0}.
+object_dlg.hint_placeholder,Wird beim Zeigen auf den Namen angezeigt
+object_dlg.name_empty,Name darf nicht leer sein.
+object_dlg.name_exists,Name existiert bereits.
+object_dlg.promote_note,Folgende Parameter und Filter werden für alle Routinen verfügbar:
+object_dlg.promote_title,Zu global machen?
+object_dlg.prop_formula,Formel
+object_dlg.prop_tip,Dynamisch berechnete Eigenschaftswerte für Gegenstände festlegen
+object_dlg.scope_global,Global: In allen Routinen verfügbar
+object_dlg.scope_owner,Nur für „{0}“
+object_dlg.title_custom_prop,Benutzerdefinierte Eigenschaft
+object_dlg.title_edit,Parameter · {0}
+object_dlg.title_new,Neuer Parameter
+object_dlg.unit,Einheit
+object_dlg.unit_placeholder,"z. B. g, Stk, Tage"
+object_dlg.used_by_rules,In 1 Aufgabe verwendet|In {0} Aufgaben verwendet
+object_dlg.value_nan,Wert muss eine Zahl sein.
+prop_dlg.default_name,Neue Eigenschaft
+prop_dlg.delete_still_used,Kann nicht gelöscht werden; noch referenziert von: {0}
+prop_dlg.formula,Formel
+prop_dlg.formula_display,Formel: {0}
+prop_dlg.formula_error,Formel enthält Fehler
+prop_dlg.name_empty,Bitte einen Namen eingeben
+prop_dlg.sample_calc,Beispielberechnung: {0}
+prop_dlg.sample_empty,Keine solchen Gegenstände im Laden
+prop_dlg.sample_none,Keine solchen Gegenstände im Laden
+prop_dlg.target_kind,Anwendbarer Typ
+prop_dlg.title_edit,Benutzerdefinierte Eigenschaft: {0}
+prop_dlg.title_new,Neue benutzerdefinierte Eigenschaft
+property_dlg.no_properties,Keine passenden Eigenschaften gefunden.
+property_dlg.search_placeholder,Eigenschaftsname oder ID suchen
+property_dlg.title,Eigenschaft auswählen
+selector.btn_add_cond,+ Bedingung
+selector.btn_add_cond_group,＋ Bedingungsgruppe (eine erfüllt)
+selector.btn_add_scope,＋ Bereich hinzufügen
+selector.btn_collapse,Einklappen
+selector.btn_del_group,Diese Gruppe löschen
+selector.btn_hide_tags,Interne Tags verbergen
+selector.btn_more,Mehr...
+selector.btn_promote,Als globalen Filter festlegen…
+selector.btn_show_tags,Interne Tags anzeigen
+selector.common_presets,Häufige Voreinstellungen
+selector.cond_all,Alle erfüllen
+selector.cond_any,Eines erfüllen
+selector.copy_name,{0} (Kopie)
+selector.copy_name_seq,{0} (Kopie {1})
+selector.delete_still_used,Folgende Aufgaben verweisen noch auf diesen Filter: {0}.
+selector.group_prefix,Gruppe von
+selector.items_unit,Gegenstände
+selector.kind_self_tip,"Keine Typauswahl nötig, wenn der Bereich „Selbst“ ist"
+selector.label_minus,Ausschließen
+selector.label_prop,Eigenschaft
+selector.label_sort,Sortierung
+selector.label_stat,Aggregation
+selector.minus_none,(Nicht ausschließen)
+selector.more_suffix," usw."
+selector.pick_all,Alle auswählen
+selector.pick_exclude_first_n,Erste N ausschließen
+selector.pick_first_n,Erste N auswählen
+selector.pick_number,Wert berechnen
+selector.prefix_container,Behälter: {0}
+selector.prefix_family,Objektfamilie:
+selector.prefix_item_type,Warentyp:
+selector.save_no_scope,Bitte einen Bereich auswählen.
+selector.scope_all_inside,Alle Gegenstände darin
+selector.scope_and,Und
+selector.scope_count,Aktuell {0}{1} Gegenstände
+selector.scope_empty,Derzeit leer
+selector.scope_from,Aus
+selector.scope_items_inside,Gegenstände darin
+selector.scope_same_as_above,(Wie oben)
+selector.scope_self,Selbst
+selector.section_cond,Bedingungen
+selector.section_kind,Gegenstandstyp
+selector.section_pick,Auswahl
+selector.section_scope,Bereich
+selector.sort_asc,Niedrig nach Hoch
+selector.sort_desc,Hoch nach Niedrig
+selector.sort_unspecified,Nicht spezifiziert
+selector.stat_tip,Statistiken können für Ausführungsbedingungen und Werte genutzt werden
+selector.take_count,Stückzahl:
+selector.take_exclude_first,Erste ausschließen
+selector.take_first,Erste auswählen
+selector.take_start_from,Startindex:
+selector.tip_add_scope,Gegenstände aus mehreren Bereichen werden zusammengeführt; frühere Bereiche haben Vorrang
+selector.tip_minus,Gegenstände aus anderem Filter ausschließen
+selector.tip_more,"Bedingungsgruppen (mindestens eine erfüllt), Ausschluss anderer Filter"
+selector.tip_sort,Beim Tausch werden beide Seiten nach ihrer Sortierung gepaart
+selector.tip_tags,Interne Tags des Spiels in der Attributliste anzeigen
+selector.title_edit,Filter · {0}
+selector.title_new,Neuer Filter
+selector.used_in_rules,Verwendet in: {0}{1}
+sort.asc,{0} niedrig bis hoch
+sort.desc,{0} hoch bis niedrig
+take.by_sort,nach {0}
+take.exclude_first,erste {0} Gegenstände ausschließen
+take.first,erste {0} Gegenstände
+take.sorted_take,{0} {1}
+# ==============================================================================
+# UI: Container Side Panel & Storage Bay
+# Placeholders: {0} = count/device name.
+# ==============================================================================
+device_dialog.clear,Name löschen
+device_dialog.name,Name
+device_dialog.tip,Nach der Benennung kann dieses Gerät in Filtern und Zielen direkt beim Namen genannt werden.
+device_dialog.title,Gerätebenennung
+store.naming.cannot_open,Benennungsfenster kann derzeit nicht geöffnet werden.
+store.naming.prompt,"Objekt doppelklicken, um es „{0}“ zu nennen"
+store.naming.prompt_any,Objekt zum Benennen doppelklicken
+# ==============================================================================
+# UI: Apprentice Handbook
+# Apprentice handbook pages (p1 to p7) and diagram annotations.
+# Placeholders: none (full self-contained prose).
+# ==============================================================================
+handbook.cannot_open,Handbuch kann nicht geöffnet werden
+handbook.diagram.arrow_charge,② Ungeladene aufladen
+handbook.diagram.arrow_empty,① Leere raus
+handbook.diagram.arrow_full,① Volle einsetzen
+handbook.diagram.machines,Maschinen
+handbook.diagram.machines_note,Verbraucht nachts
+handbook.diagram.recharger,Ladestation
+handbook.diagram.recharger_note,Lädt nachts auf
+handbook.diagram.storage,Lager
+handbook.diagram.storage_note,Ungenutzte Batterien
+handbook.p1.banner_apprentices,Lehrlinge
+handbook.p1.banner_quickstart,Schnellstart
+handbook.p1.steps_quickstart,"1. Doppelklick auf Lehrlings-Funkgerät, Agentur anrufen und Lehrling einstellen.\n2. Unter Routinen eine Routine erstellen (geordnete Aufgabenfolge); Beispiel-Routinen sind sofort nutzbar.\n3. Zum Tab Lehrlinge zurückkehren und Routinen zuweisen. In Details können mehrere Routinen (Früh- oder Spätschicht) zugewiesen werden. Neue Lehrlinge arbeiten standardmäßig; Freier Tag pausiert.\n4. Frühschicht arbeitet beim Aufwachen vor Ladenöffnung; Spätschicht während des Schlafs."
+handbook.p1.text_ap,"Tägliches Arbeitspensum eines Lehrlings. Füllt sich beim Schlafen nach Lohnzahlung auf; wird zuerst für die Spätschicht genutzt, der Rest für den nächsten Morgen. Aktionen kosten AP; höhere Meisterschaft senkt die Kosten. Sind die AP erschöpft, wird die restliche Arbeit auf die nächste Schicht verschoben, beginnend ab Aufgabe 1."
+handbook.p1.text_multi_sched,"Ein Lehrling kann mehrere Routinen ausführen, die der Reihe nach ablaufen und sich die täglichen AP teilen. Führen mehrere Lehrlinge dieselbe Routine aus, arbeiten sie in der Reihenfolge des Tabs Lehrlinge, wobei spätere Lehrlinge verbleibende Gegenstände übernehmen."
+handbook.p1.tip_payroll,"Löhne werden jede Nacht beim Schlafen abgerechnet. Reicht das Geld nicht, streiken Lehrlinge weiter unten in der Liste zuerst; nicht zugewiesene Lehrlinge streiken am frühesten!"
+handbook.p1.title_ap,AP:
+handbook.p1.title_multi_sched,Mehrere Routinen:
+handbook.p2.banner,Meisterschaft & Stufe
+handbook.p2.text_level,"Jede Stufe bringt täglich 5 AP mehr, 10 mehr Tageslohn und erhöht die Meisterschafts-Untergrenze um 4 (Stufe 1 ist 54), damit neue Routinen nicht zu langsam laufen. Das Lesen von Schulungsmaterial bringt EP."
+handbook.p2.text_prof,"Lehrlinge haben für jede Routine eine eigene Meisterschaft (0-100), einsehbar in den Details. Höhere Meisterschaft senkt die AP-Kosten: Bei 100 betragen sie das 0.75x der Basiskosten, Neulinge beginnen bei etwa 1.4x. Wird dieselbe Routine kontinuierlich ausgeführt, erreicht man in etwa zwei Wochen 85+."
+handbook.p2.text_switch,Die Meisterschaft hängt von der Ähnlichkeit zwischen bisheriger Arbeit und aktueller Routine ab. Beim Wechsel zu Routinen mit ähnlichen Aktionen und Gegenständen bleibt das meiste erhalten; bei stark abweichenden beginnt man niedriger. Mehrere unterschiedliche Routinen führen zu geringerer Meisterschaft als Spezialisierung.
+handbook.p2.tip,"Meisterschaft beeinflusst nur den AP-Verbrauch, nicht den Tageslohn; der Lohn hängt ausschließlich von der Stufe ab!"
+handbook.p2.title_level,Stufe:
+handbook.p2.title_prof,Meisterschaft:
+handbook.p2.title_switch,Routinewechsel:
+handbook.p3.banner,Aufbau einer Routine
+handbook.p3.steps_conds,"Häufige Vorlagen (lebend, tot, hat freien Platz usw.) können direkt hinzugefügt werden; Zahlenwerte wie Ladung oder Menge lassen sich über Bedingungen festlegen."
+handbook.p3.steps_pick,"Auswahl: Alle, Erste N (z. B. geringste Ladung zuerst 1 Gegenstand), Erste N ausschließen (z. B. jüngste ausschließen erste 2) oder als Zahl zusammenfassen (Anzahl, Summe usw.)."
+handbook.p3.text_filter,"Wählt zu verarbeitende Gegenstände nach Bereich, Gegenstandstyp, Bedingungen und Auswahlmethode aus. Kann direkt in Aufgaben erstellt werden. Kann zum globalen Filter für mehrere Routinen befördert werden."
+handbook.p3.text_param,"Benannte Zahlenwerte, z. B. ""Batteriewechsel-Schwelle 30"". Können von mehreren Bedingungen geteilt und direkt in den Routinen angepasst werden."
+handbook.p3.text_range,"Gesamter Laden, ein Gerätename oder ein anderer Filter; mehrere hinzufügbar. ""Inhalt"" bezieht sich auf enthaltene Gegenstände; ""Selbst"" auf den Behälter bzw. die Maschine selbst (z. B. [Hydrokultur] selbst mit Bedingung ""hat freien Platz"" wählt freie Hydrokulturen)."
+handbook.p3.text_scope,"Filter durchsuchen standardmäßig den gesamten Laden (eigene Gegenstände, keine Verkaufsware). Um bestimmte Lager, Maschinen oder Behälter anzusprechen, benenne sie mit dem blauen Etikettierer (z. B. ""Hydro-Lager"") oder über ""＋ Benennen…"" im Routinen-Editor. Mehrere Objekte können denselben Namen teilen."
+handbook.p3.tip_name,"Du kannst benutzerdefinierte Namen ([Name]) direkt als Filterziel auswählen, ohne einen Filter zu erstellen!"
+handbook.p3.title_filter,Filter:
+handbook.p3.title_param,Parameter:
+handbook.p3.title_range,Bereich:
+handbook.p3.title_scope,Gesamter Laden & Gerätenamen:
+handbook.p4.banner,Aufgaben
+handbook.p4.text_move,"Verschiebt Gegenstände in einen Behälter, ein Lager oder eine Maschine (z. B. ungeladene Batterien in die Ladestation). Das Ziel muss ein Behälter sein."
+handbook.p4.text_pre,"Wird standardmäßig jede Schicht ausgeführt. Optionen wie ""...wenn [A] nicht leer"" oder ""...wenn [A] weniger als N"" sind wählbar; übersprungene Aufgaben kosten keine AP. Komplexere Bedingungen werden unter ""Erweitert..."" eingestellt, z. B. ""[A] Wasser > 1000 ml""."
+handbook.p4.text_press,"Drückt Tasten auf Maschinenoberflächen (Start, Drucken, Alle übertragen), packt Pakete aus oder betätigt Schalter, ohne Fenster öffnen zu müssen."
+handbook.p4.text_swap,Paart zwei Gruppen von Gegenständen der Reihe nach und tauscht ihre Plätze. Bei unterschiedlicher Anzahl bleiben überschüssige Gegenstände an Ort und Stelle.
+handbook.p4.text_use,"Wendet ein Werkzeug auf ein Objekt an, z. B. Messer auf Ratte, Wasserkrug auf leere Flasche. Die Wirkungsrichtung bestimmt das Spiel: Wasserhahn auf leeren Eimer füllt den Eimer."
+handbook.p4.tip,"Welche Gegenstände, in welcher Reihenfolge und wie viele, wird komplett in Filtern festgelegt; die Aktion bestimmt nur, was getan wird!"
+handbook.p4.title_move,Einlegen:
+handbook.p4.title_pre,Ausführbedingung:
+handbook.p4.title_press,"Taste drücken, Aktivieren, Umschalten:"
+handbook.p4.title_swap,Tauschen:
+handbook.p4.title_use,Verwenden:
+handbook.p5.banner_order,Ausführungsreihenfolge
+handbook.p5.banner_swap,Automatischer Batteriewechsel
+handbook.p5.steps_swap,① Tausche leere Batterien (Ladung aufsteigend) gegen volle Batterien (Ladung absteigend): Ersetzt die schwächste Batterie durch die vollste; die entnommene verbleibt in der Ladestation.\n② Lege ungeladene Batterien aus dem Lager in freie Plätze der Ladestation.
+handbook.p5.text_seq,"Jede Schicht läuft in der Reihenfolge des Tabs Lehrlinge ab: Jeder Lehrling führt seine Routinen nacheinander aus, und Aufgaben laufen von oben nach unten ab. Aufgaben prüfen den Ladenstatus neu, damit bereits verarbeitete Gegenstände nicht wiederholt werden. Reihenfolge per ↑↓ anpassen."
+handbook.p5.title_seq,Nacheinander ausführen:
+handbook.p6.banner,Beispiel-Routinen
+handbook.p6.text_battery,Tauscht schwache Batterien gegen volle aus und legt ungeladene Batterien in Ladestationen. Ohne Einrichtung sofort einsatzbereit.
+handbook.p6.text_hydro,"Erntet Pflanzen, pflanzt Samen nach, wechselt Wasser (ähnlich wie Batteriewechsel) und fügt Nährstofftabletten hinzu."
+handbook.p6.text_organize,Räumt lose Medikamente und Lebensmittel in [Medizinlager] und [Lebensmittellager]; mehrere Lager können denselben Namen tragen.
+handbook.p6.text_print,"Setzt Chips ein, füllt Filament und Materialien nach und entnimmt fertige Produkte."
+handbook.p6.text_ras,"Füllt Tanks mit frischem Wasser nach, füttert hungrige Fische, entfernt tote Fische, behält je ein erwachsenes Männchen und Weibchen zur Zucht und schlachtet den Rest."
+handbook.p6.text_rat,"Aktiviert Automischung am Futterspender, füllt Futter nach, behält Zuchttiere (1 Männchen, 2 Weibchen), schlachtet ausgewachsene Ratten und beseitigt Kot."
+handbook.p6.text_vending,"Druckt Wasserflaschen, sammelt Wasser, reinigt zu Basiswasser, füllt Regale auf und kassiert Einnahmen."
+handbook.p6.tip,"Beispiel-Routinen erfordern keine Konfiguration. Um Ausgaben in bestimmten Lagern abzulegen, benenne sie wie in den Beispielen (z. B. ""Hydro-Lager"")!"
+handbook.p6.title_battery,Automatischer Batteriewechsel:
+handbook.p6.title_hydro,Hydrokultur:
+handbook.p6.title_organize,Aufräumen:
+handbook.p6.title_print,3D-Druck von Schusswaffen:
+handbook.p6.title_ras,Aquakultur:
+handbook.p6.title_rat,Rattenzucht:
+handbook.p6.title_vending,Wasserverkauf:
+handbook.p7.banner,Simulator & Berichte
+handbook.p7.text_report,"Nach der Frühschicht wird ein Lehrlings-Tagesbericht ausgegeben (auf dem Tresen oder im Mülleimer, wenn die Option Zeitung in den Mülleimer aktiviert ist); Doppelklick zum Lesen; der Bericht fasst die gestrige Spätschicht und heutige Frühschicht zusammen. Der Tab Berichte zeigt vergangene Schichten und Tageslöhne an."
+handbook.p7.text_sim,"Läuft auf einer Kopie des Ladens für 1 Schicht bis zu 7 Tage, um Aufgabenausführung und AP-Verbrauch ohne Auswirkung auf den echten Laden zu prüfen."
+handbook.p7.tip,"Aktionen, die ein manuelles Eingreifen des Spielers erfordern, können von Lehrlingen nicht ausgeführt werden und werden übersprungen; wähle ""Wiederholen"" unter Berichte, um es erneut zu versuchen."
+handbook.p7.title_report,Berichte:
+handbook.p7.title_sim,Simulator:
+handbook.title,Lehrlings-Handbuch
+# ==============================================================================
+# UI: General Common UI, Tables & Dialogs
+# Common UI buttons, settings window, session status, and mod transfer.
+# Placeholders: {0} = status/number, {1} = details.
+# ==============================================================================
+btn.mech_bottle_printer_btn_print_small,Kleine Flasche drucken
+btn.mech_bottle_printer_btn_print_large,Große Flasche drucken
+btn.mech_vending_btn_transfer,Platziere ALLES
+gamedialog.no_text,(Kein Text)
+picker.number,Wert
+picker.pick_in_shop,Im Laden auswählen
+session.container_missing,(Existiert nicht mehr #{0})
+session.no_device,Laden hat kein [{0}]
+session.no_selector_items,Nicht im Laden gefunden: {0}
+session.prof_floor,(Stufen-Mindestwert {0})
+session.prof_text,{0} Fertigkeit {1}/100{2} · AP ×{3}
+session.unassigned_schedule,Nicht zugewiesene Routinen
+settings.automation_enabled,Lehrlings-Automatisierung aktivieren (Schichten ausführen)
+settings.show_all_tags,"Alle Spiel-Tags in Bedingungen auflisten (inkl. Kategoriemarkierungen, IDs usw.)"
+settings.ui_scale,UI-Skalierungsfaktor
+settings.ui_scale_desc,"Zusätzliche Skalierung zur automatischen Anpassung an die Bildschirmhöhe, z. B. 0.8 oder 1.2"
+style.credits,{0} Credits
+table.ap,AP
+table.result,Ergebnis
+table.rule,Aufgabe
+table.btn_details,Details
+transfer.dup_suffix,{0} ({1})
+layout.handbook.gap,6
+layout.handbook.body_size,13
+layout.handbook.p5_label_x,156
+layout.handbook.p5_full_y,6
+layout.handbook.p5_empty_y,56
+layout.handbook.diagram.arrow_full_x,156
+layout.handbook.diagram.arrow_full_y,6
+layout.handbook.diagram.arrow_full_w,160
+layout.handbook.diagram.arrow_empty_x,156
+layout.handbook.diagram.arrow_empty_y,56
+layout.handbook.diagram.arrow_empty_w,160
+layout.handbook.diagram.arrow_charge_x,84
+layout.handbook.diagram.arrow_charge_y,151
+layout.handbook.diagram.arrow_charge_w,230
+layout.handbook.diagram.machines_x,320
+layout.handbook.diagram.machines_w,150
+layout.handbook.diagram.recharger_w,150
+layout.handbook.diagram.storage_w,150
+layout.intercom.shift_width,80
+layout.intercom.prof_width,85
+layout.intercom.col_done_width,110
+layout.intercom.status_width,180
+layout.cond.value_width,160
+layout.selector.scope_label_width,50
+transfer.err.clipboard_empty,Zwischenablage ist leer
+transfer.err.newer_version,Diese Routine wurde mit einer neueren Version von Probably Automated erstellt und wird nicht unterstützt
+transfer.err.not_a_routine,Inhalt der Zwischenablage ist keine Probably-Automated-Routine
+transfer.err.older_version,Älteres Routine-Format wird nicht unterstützt
+transfer.marker,[ProbablyAutomatedRoutine]
+ui.add,Hinzufügen
+ui.cancel,Abbrechen
+ui.clear,Löschen
+ui.close,Schließen
+ui.collapse,Zuklappen
+ui.confirm,Bestätigen
+ui.copy,Kopieren
+ui.delete,Löschen
+ui.expand,Ausklappen
+ui.hint,Beschreibung
+ui.move_down,Nach unten
+ui.move_up,Nach oben
+ui.name,Name
+ui.ok,OK
+ui.reset,Zurücksetzen
+ui.save,Speichern
+ui.search,Suchen
+ui.value,Wert
+unlock.desc,"Wildes Agentur stellt Lehrlinge ein, die vor Ladenöffnung und nach Geschäftsschluss im Betrieb helfen. Beinhaltet ein Lehrlings-Funkgerät, das Lehrlingshandbuch und einen blauen Etikettendrucker zum Benennen von Geräten."
+unlock.title,Lehrlingsentsendung
+# ==============================================================================
+# Adapter & Game Integration: Names & Labels
+# Game entity names, battery status, fish species, and hardware fixtures.
+# Placeholders: {0} = item name/percentage, {1} = target.
+# ==============================================================================
+battery.desc,{0} ({1}%)
+fish.dead,", tot"
+fish.desc,"{0} ({1}{2} g, {3} Tage{4})"
+fish.female,"Weiblich, "
+fish.male,"Männlich, "
+fixture.drain,Abfluss
+fixture.faucet,Wasserhahn
+fmt.arrow_prop,{0} {1} → {2}
+fmt.colon,{0}: {1}
+fmt.copy_suffix,{0} (Kopie)
+fmt.end_dot,.
+gameworld.action_error,{0}-Fehler: {1}
+gameworld.action_needs_player,{1} an {0} erfordert Spielerinteraktion; Lehrling kann dies nicht ausführen
+gameworld.add_mark,Markierung [{0}] hinzufügen
+gameworld.box_cannot_accept,{0} kann nicht platziert werden
+gameworld.box_full,{0} ist voll
+gameworld.box_no_slot,{0} hat keinen {1}
+gameworld.button_needs_player,[{1}] an {0} erfordert Spielerinteraktion; Lehrling kann dies nicht ausführen
+gameworld.confirm_needs_player,Bestätigung für „{0}“ erforderlich; Lehrling kann nicht fortfahren
+gameworld.game_tip,Spielhinweis:
+gameworld.move_error,Fehler beim Verschieben: {0}
+gameworld.move_to,Nach {0} verschieben
+gameworld.need_player_ui,{0} erfordert Spielerinteraktion; Lehrling kann dies nicht ausführen
+gameworld.no_button,{0} hat keine Taste [{1}]
+gameworld.press_button,Drücke [{0}]
+gameworld.remove_mark,Markierung [{0}] entfernen
+gameworld.swap_error,Fehler beim Tauschen: {0}
+gameworld.swap_not_allowed,Spiel erlaubt keinen Tausch
+gameworld.swap_with,Position mit {0} tauschen
+item.handbook.desc,"Ein praktisches Handbuch mit Anleitungen zu Lehrlingen, Routinen und Aufgaben. Doppelklick zum Lesen."
+item.handbook.name,Lehrlingshandbuch
+item.intercom.desc,"Ein Funkgerät von Wildes Agentur zum Einstellen von Lehrlingen, Verfassen von Routinen und Einsehen von Schichtberichten. Doppelklick zum Verwenden."
+item.intercom.name,Lehrlings-Funkgerät
+liquid.desc,"{0} ({1} ml, Reinheit {2}%)"
+names.kind.combat_knife,Kampfmesser
+names.kind.hatchet,Handbeil
+names.kind.kitchen_cleaver,Fleischerbeil
+names.kind.labeler,Etikettendrucker
+names.kind.rat,Ratte
+names.kind.raw_meat,Rohes Fleisch
+names.kind.water_filter,Wasserfilter
+names.kind.water_filter_adv,Fortgeschrittener Wasserfilter
+names.kind.water_jug,Krug Wasser
+names.kind.wire_cutter,Seitenschneider
+names.prop.has,{0} (Vorhanden)
+names.prop.liq,Enthält {0} (ml)
+names.prop.mark,Markierung [{0}]
+names.prop.pct,{0} %
+names.prop.str,{0} (Text)
+names.prop.unselected,(Nicht gewählt)
+propbindings.none,(Keine)
+quality.prop.grade,{0}-Stufe
+quality.prop.grade_name,{0}-Stufenname
+quality.prop.label_grade,Etikettierte {0}-Stufe
+quality.prop.label_ok,{0}-Etikett korrekt
+quality.prop.verified,{0} verifiziert
+quality.cat.category_wine_quality,Weinqualität
+# ==============================================================================
+# Examples: Routine & Preset Examples
+# Pre-packaged routine examples: water, ranching, battery, hydro, etc.
+# Placeholders: {0} = container/target name.
+# ==============================================================================
+example.aqua.rule.clear_dead,Tote Fische entfernen
+example.aqua.rule.feed,Fische füttern
+example.aqua.rule.fill_jug,Wasser in Krüge füllen
+example.aqua.rule.fill_tank,Wasser in Becken füllen
+example.aqua.rule.harvest,Erwachsene Fische ernten
+example.aqua.rule.store_meat,Fischfleisch lagern
+example.aqua.sel.adult_f,Erntebereite weibliche Fische
+example.aqua.sel.adult_m,Erntebereite männliche Fische
+example.aqua.sel.dead_fish,Tote Fische
+example.aqua.sel.feed,Eine Portion Fischfutter
+example.aqua.sel.feed_in,Futter im Becken
+example.aqua.sel.hungry_fish,Hungrige Fische
+example.aqua.sel.jugs,Freie Wasserkrüge
+example.aqua.sel.knives,Messer
+example.aqua.sel.low_water,Becken mit wenig Wasser
+example.aqua.sel.meat,Fischfleisch im System
+example.aqua.sel.ras,Aquakulturanlagen
+example.aqua.sel.tank,Wasserbecken
+example.aqua.store,Aquakultur-Lager
+example.battery.name,Automatischer Batteriewechsel
+example.battery.param.full,Kriterium für volle Batterie
+example.battery.param.full.hint,Batterie ab diesem Prozentsatz als voll betrachtet
+example.battery.param.low,Schwellenwert für Batteriewechsel
+example.battery.param.low.hint,"Batterie in Maschinen ersetzen, wenn Ladung darunter fällt"
+example.battery.rule.charge,Aufladen
+example.battery.rule.swap,Batterien tauschen
+example.battery.sel.free_recharger,Ladegeräte mit freien Plätzen
+example.battery.sel.full_battery,Volle Batterien
+example.battery.sel.idle_battery,Freie ungeladene Batterien
+example.battery.sel.low_battery,Schwache Batterien
+example.battery.sel.machines,Maschinen
+example.gun.rule.chip,Chip einsetzen
+example.gun.rule.collect,Fertige Schusswaffen entnehmen
+example.gun.rule.feed,Filament nachfüllen
+example.gun.sel.chip,Ein Druck-Chip
+example.gun.sel.chip_in,Chip-Schächte
+example.gun.sel.idle,Freie Drucker
+example.gun.sel.output,Ausgabeschächte
+example.gun.sel.plastic,Zwei Filamentspulen
+example.gun.sel.plastic_in,Filament im Eingangsschacht
+example.gun.sel.printer,Drucker
+example.gun.store,Büchsenmacher-Lager
+example.hydro.rule.add_nutrient,Nährstoffe hinzufügen
+example.hydro.rule.fill_water,Wasser nachfüllen
+example.hydro.rule.harvest,Ernten
+example.hydro.rule.plant,Samen pflanzen
+example.hydro.rule.swap_water,Wasser tauschen
+example.hydro.sel.crop,Ernteertrag
+example.hydro.sel.dry,Flaschen mit wenig Wasser in Modulen
+example.hydro.sel.empty,Nicht volle Wasserflaschen
+example.hydro.sel.full,Volle Wasserflaschen
+example.hydro.sel.hydro,Hydrokultur-Einheiten
+example.hydro.sel.lean,Nährstoffarme Flaschen
+example.hydro.sel.planted,Samen im Saatgutschacht
+example.hydro.sel.ready,Freie Hydrokultur-Einheiten
+example.hydro.sel.seed,Ein Samen
+example.hydro.sel.tablets,Nährstofftabletten
+example.hydro.store,Hydrokultur-Lager
+example.ranch.rule.auto_blend,Automatisches Mischen aktivieren
+example.ranch.rule.butcher_dead,Tote Ratten zerlegen
+example.ranch.rule.cull,Ratten schlachten
+example.ranch.rule.feed,Futter nachfüllen
+example.ranch.rule.store_meat,Rattenfleisch lagern
+example.ranch.rule.store_poop,Kot säubern
+example.ranch.sel.breeders,Zuchtratten
+example.ranch.sel.cage,Tierkäfige
+example.ranch.sel.dead,Tote Ratten
+example.ranch.sel.dispenser,Futterspender in Käfigen
+example.ranch.sel.fat,Schlachtreife Ratten
+example.ranch.sel.food,Pflanzliches Futter
+example.ranch.sel.knives,Messer
+example.ranch.sel.low_feed,Futterspender mit wenig Futter
+example.ranch.sel.meat,Fleisch in Käfigen
+example.ranch.sel.poop,Kot
+example.ranch.sel.sire_f,Zuchtweibchen
+example.ranch.sel.sire_m,Zuchtmännchen
+example.ranch.sel.unblended,Futterspender ohne automatisches Mischen
+example.ranch.store,Farm-Lager
+example.sel.any_storage,Lager mit freiem Platz
+example.sel.store_or_any,{0} oder anderes Lager
+example.spec.aqua.name,Aquakultur
+example.spec.aqua.note,"Wasserbecken nachfüllen, hungrige Fische füttern, tote entfernen, Zuchtpaar behalten und Rest schlachten"
+example.spec.gun.name,3D-Druck Waffen
+example.spec.gun.note,"Chips einsetzen, Filament nachfüllen und fertige Schusswaffen entnehmen"
+example.spec.hydro.name,Hydrokultur
+example.spec.hydro.note,"Ernten, Samen säen, Flaschen tauschen, Wasser nachfüllen und Nährstofftabletten hinzufügen"
+example.spec.ranch.name,Rattenzucht
+example.spec.ranch.note,"Automatisches Mischen aktivieren, Futterspender nachfüllen, Zuchttiere behalten (1M/2W), reife Ratten schlachten und Kot säubern"
+example.spec.tidy.name,Aufräumen
+example.spec.tidy.note,Lose Medizin und Essen in [Medizinlager] und [Essenslager] sortieren (mehrere Fächer können denselben Namen tragen)
+example.spec.water.name,Wasserverkauf
+example.spec.water.note,"Flaschen drucken, Wasser schöpfen, zu Basiswasser reinigen, abfüllen und einräumen, Erlöse abholen"
+example.tidy.rule.food,Essen sortieren
+example.tidy.rule.medical,Medizin sortieren
+example.tidy.sel.loose_food,Zu sortierendes Essen
+example.tidy.sel.loose_medical,Zu sortierende Medizin
+example.tidy.store.food,Essenslager
+example.tidy.store.medical,Medizinlager
+example.water.rule.bottle,Wasser abfüllen
+example.water.rule.cash,Erlöse einsammeln
+example.water.rule.fill_empty,Leere Krüge füllen
+example.water.rule.fountain_jug,Krug in Spender einsetzen
+example.water.rule.fountain_refill,Spender nachfüllen
+example.water.rule.print_bottle,Flaschen drucken
+example.water.rule.purify,Rohwasser reinigen
+example.water.rule.take_bottle,Flaschen entnehmen
+example.water.rule.take_purified,Gereinigte Krüge entnehmen
+example.water.sel.cash,Spender mit Bargeld
+example.water.sel.empty_bottles,Leere Wasserflaschen
+example.water.sel.empty_jugs,Leere Wasserkrüge
+example.water.sel.f_base,Spender-Tanks mit Basiswasser
+example.water.sel.f_low,Spender-Tanks mit wenig Wasser
+example.water.sel.fountain,Wasserspender
+example.water.sel.full_bottles,Gefüllte Wasserflaschen
+example.water.sel.one_pure,Ein Krug sauberes Wasser
+example.water.sel.printed,Gedruckte Flaschen
+example.water.sel.printer,Flaschendrucker
+example.water.sel.pur_box,Krüge im Reiniger
+example.water.sel.pur_done,Gereinigte Krüge
+example.water.sel.pure_jugs,Krüge mit sauberem Wasser
+example.water.sel.purifier,Wasserreiniger
+example.water.sel.raw_jug,Ein Krug Rohwasser
+example.water.store,Wasserlager
+# ==============================================================================
+# Other Localization Keys
+# Remaining rule templates and misc labels.
+# Placeholders: {0} = condition, {1} = action.
+# ==============================================================================
+rule.no_actions,(keine Aktion festgelegt)
+rule.when_arrow,Wenn {0} → {1}
+cond.equal,Gleich
+cond.not_equal,Ungleich
+cond.text_input,Text
+layout.btn_more_width,82
+layout.editor.when_dropdown_width,190
+layout.new_schedule.btn_width,225
+layout.sim.start_width,90
+conj.and,und
+conj.or,oder
+
+# ==============================================================================
+# Lehrlings-Tagesbericht (nach der Frühschicht ausgegebene Zeitung)
+# ==============================================================================
+daily.all_fine,Alles in Ordnung
+daily.cannot_open,Der Lehrlings-Tagesbericht kann derzeit nicht geöffnet werden.
+daily.col.ap,AP
+daily.col.morning,Früh
+daily.col.night,Spät
+daily.dateline,Tag {0} · Gestern Spätschicht + Heute Frühschicht
+daily.dateline_morning,Tag {0} · Heute Frühschicht
+daily.deferred,1 Gegenstand mangels AP aufgeschoben|{0} Gegenstände mangels AP aufgeschoben
+daily.flow_problems,1 Problem|{0} Probleme
+daily.flows_more,Weitere {0} Routinen…
+daily.footer,Details siehe Tab „Berichte“ des Funkgeräts
+daily.log_issued,Ein neuer Lehrlings-Tagesbericht wurde ausgegeben.
+daily.log_none,Heute hat kein Lehrling Frühschicht; kein Lehrlings-Tagesbericht.
+daily.log_replaced,Der alte Lehrlings-Tagesbericht wurde recycelt; ein neuer wurde ausgegeben.
+daily.problems_more,{0} weitere
+daily.section.apprentices,Lehrlinge
+daily.section.flows,Routinen
+daily.section.problems,Probleme
+daily.stat.ap,AP genutzt
+daily.stat.done,Erledigt
+daily.stat.problems,Probleme
+daily.stat.wage,Lohn
+daily.strike,Gestern Nacht streikte 1 Lehrling aus Geldmangel|Gestern Nacht streikten {0} Lehrlinge aus Geldmangel
+daily.publisher,Mod Probably Automated
+daily.title,Lehrlings-Tagesbericht
+item.daily.desc,"Zusammenfassung der Lehrlingsarbeit der gestrigen Spätschicht und heutigen Frühschicht, ausgegeben von der Mod Probably Automated. Doppelklick zum Lesen."
+item.daily.name,Lehrlings-Tagesbericht

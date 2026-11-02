@@ -1,0 +1,1410 @@
+# Probably Automated Localization Table: English (en)
+# Primary source and fallback for all localization strings.
+# ==============================================================================
+# Domain & Rules: Vocabulary & Operators
+# Vocabulary, aggregation functions, and system variables.
+# Placeholders: none.
+# ==============================================================================
+vocab.agg.avg,Среднее
+vocab.agg.count,Количество
+vocab.agg.max,Максимум
+vocab.agg.min,Минимум
+vocab.agg.sum,Сумма
+vocab.sys.ap_left,Осталось AP в смене
+vocab.sys.day,Текущий день
+vocab.sys.shift,"Текущая смена (Утренняя=1, Ночная=2)"
+vocab.sys.shift.short,Текущая смена
+# ==============================================================================
+# Domain & Rules: Traits, Properties, Presets & Operations
+# Item traits, property definitions, preset conditions, and action verbs.
+# Placeholders: none.
+# ==============================================================================
+op.activate,Активировать
+op.mark,Добавить метку
+op.move,Переместить
+op.note,Записать
+op.press,Нажать
+op.swap,Обменять
+op.toggle,Включить/выключить
+op.unmark,Снять метку
+op.use,Использовать
+preset.adult,Взрослая особь
+preset.alive,Живой
+preset.dead,Мёртвый
+preset.female,Самка
+preset.hasroom,Есть место
+preset.male,Самец
+prop.age,Возраст
+prop.calories,Калории
+prop.cap,Вместимость
+prop.count,Хранимое количество
+prop.dead,Мёртвый
+prop.dead.not,Живой
+prop.durability,Прочность
+prop.durabilitypct,Прочность %
+prop.energy,Энергия
+prop.energymax,Макс. энергия
+prop.energypct,Энергия %
+prop.free,Свободных слотов
+prop.freeml,Свободный объём (мл)
+prop.gene.fertility,Ген: Плодовитость
+prop.gene.growth,Ген: Рост
+prop.gene.immunity,Ген: Иммунитет
+prop.gene.litter,Ген: Размер помёта
+prop.gene.longevity,Ген: Долголетие
+prop.gravid,С икрой
+prop.gravid.not,Без икры
+prop.growpct,Рост %
+prop.health,Здоровье
+prop.healthpct,Здоровье %
+prop.hungerpct,Сытость %
+prop.inbatteryslot,В батарейном отсеке
+prop.inbatteryslot.not,Не в батарейном отсеке
+prop.instorage,В хранилище
+prop.instorage.not,Не в хранилище
+prop.labelok,Правильная этикетка
+prop.labelok.not,Неправильная этикетка
+prop.matingcount,Спариваний
+prop.matingmax,Макс. спариваний
+prop.mature,Взрослый
+prop.mature.not,Невзрослый
+prop.neutered,Стерилизован
+prop.neutered.not,Не стерилизован
+prop.nutrientmax,Макс. питательных веществ
+prop.nutrientmin,Мин. питательных веществ
+prop.planthealth,Здоровье растения %
+prop.powered,С питанием
+prop.powered.not,Без питания
+prop.progresspct,Прогресс %
+prop.purity,Чистота воды
+prop.purity.grade_short,Чистота
+prop.repairable,Подлежит ремонту
+prop.repairable.not,Не подлежит ремонту
+prop.sex,Пол
+prop.volumeml,Объём воды (мл)
+prop.wateruse,Расход воды за ночь (мл)
+prop.weight,Вес
+prop.working,Работает
+prop.working.not,Простаивает
+trait.animal,Любое животное в клетке
+trait.battery,Любая батарея
+trait.blade,Любой клинок
+trait.cage,Клетка для животных
+trait.container,Любой контейнер
+trait.durable,Любой предмет с прочностью
+trait.filter,Любой фильтрующий картридж
+trait.filterholder,Кувшин с фильтром
+trait.fish,Любая рыба
+trait.food,Любая еда (с калориями)
+trait.gun,Любое огнестрельное оружие
+trait.liquid,Любой контейнер с жидкостью
+trait.livestock,Любое домашнее животное
+trait.machine,Устройство
+trait.meat,Любое мясо
+trait.seed,Любые семена
+trait.selfcharging,Любая самозаряжающаяся батарея
+trait.storage,Хранилище
+# ==============================================================================
+# Domain & Rules: Kinds & Game Items
+# Item kinds and categories used by catalog and filters.
+# Placeholders: {0} = kind/family name.
+# ==============================================================================
+kind.animal_cage,Клетка для животных
+kind.any,Все предметы
+kind.any_family,Любой {0}
+trait.family.contraband,Контрабанда
+trait.family.chem,Химикаты
+trait.family.organ,Органы
+trait.family.amenity,Предметы обихода
+trait.family.use_count,Предметы с ограниченным числом использований
+trait.family.permit,Разрешения
+trait.family.toolbox,Ящики с инструментами
+trait.family.salvagable,Разбираемые предметы
+trait.family.progress,Предметы с прогрессом
+trait.family.showcase_special,Особые предметы для витрины
+trait.family.endangerment,Опасные предметы
+kind.any_type,Любой {0}
+kind.bottle_printer,Бутылочный принтер
+kind.energy_credit,Батарея
+kind.feces_large,Экскременты животных (большая куча)
+kind.feces_medium,Помёт животных
+kind.feces_small,Экскременты животных (маленькая кучка)
+kind.fillerweed,Набей-трава
+kind.fillerweed_seed,Семена набей-травы
+kind.fish_scrap,Рыбные отходы
+kind.hydroponic,Гидропонная система
+kind.industrial_fish_feed,Корм промышленного производства для рыб
+kind.kitchen_cleaver,Кухонный топорик
+kind.labeler,Принтер этикеток
+kind.large_bottled_water,Бутылка воды (большая)
+kind.livestock_feed_dispenser,Кормушка для скота
+kind.morsel,Кусочек
+kind.nutrient_tablet,Таблетка удобрения для гидропоники
+kind.nutrifruit,Нутрифрукты
+kind.nutrifruit_seed,Семена нутрифруктов
+kind.printer,3D-принтер
+kind.printer_chip_pistol,Чип для 3D-принтера (пистолет калибра .22)
+kind.printer_plastic,Нить для 3D-принтера
+kind.ras,СЗЦ
+kind.ras_water_tank,Бак для СЗЦ
+kind.rat,Крыса
+kind.raw_meat,Сырое мясо
+kind.recharger,Зарядник
+kind.self,Сам контейнер
+kind.small_bottled_water,Бутылка воды (малая)
+kind.small_morsel,Маленький кусочек
+kind.small_raw_meat,Маленький кусочек сырого мяса
+kind.tilapia,Тиляпия
+kind.vending_fountain,Автомат по продаже воды
+kind.water_filter,Фильтр для воды
+kind.water_filter_adv,Продвинутый фильтр для воды
+kind.water_jug,Канистра воды
+kind.water_purifier,Очиститель воды
+kind.wire_cutter,Кусачки для проводов
+# ==============================================================================
+# Domain & Rules: Machine Slots & Evaluation
+# Container slot names and source expansion evaluation strings.
+# Placeholders: {0} = container/slot name, {1} = slot name.
+# ==============================================================================
+eval.empty_no_items,«[{0}]» сейчас пусто
+eval.empty_not_matching,"«[{1}]» сейчас пусто (в источнике 1 предм., ни один не подходит)|«[{1}]» сейчас пусто (в источнике {0} предм., ни один не подходит)|«[{1}]» сейчас пусто (в источнике {0} предм., ни один не подходит)"
+eval.expand.contents,содержимое
+eval.expand.self,сам объект
+eval.expand.slot,{0}
+eval.from.contents,Содержимое {0}
+eval.from.self,Сам {0}
+eval.from.slot,{1} объекта {0}
+eval.no_named,В магазине нет [{0}]
+eval.slot.battery,Батарейные отсеки
+eval.slot.filter,Слоты фильтра
+slot.backpack,Рюкзак
+slot.base_water,Исходная вода
+slot.batteries,Батареи
+slot.battery,Отсек аккумулятора
+slot.butcher,Бойня
+slot.chip,Чип
+slot.clean_water,Чистая вода
+slot.container,Контейнер
+slot.core,Ядро
+slot.dispenser,Дозатор
+slot.distillate,Дистиллят
+slot.filter,Отсек фильтра
+slot.filters,Фильтры
+slot.frame,Рама
+slot.input,Вход
+slot.module,Модуль
+slot.note,Примечание
+slot.nutrient,Питательные вещества
+slot.output,Выход
+slot.power,Питание
+slot.recipe,Рецепт
+slot.seed,Семена
+slot.storage,Хранилище
+slot.tank,Бак
+slot.trap,Ловушка
+slot.water,Вода
+slot.wine,Вино
+# ==============================================================================
+# Domain & Rules: Rule Cards & Action Templates
+# Rule card sentence templates, slots, and condition clauses.
+# Placeholders: {list} = items, {to} = target, {tool} = tool, {op} = action.
+# ==============================================================================
+card.cond.empty,пусто
+card.cond.every_shift,Каждую смену
+card.cond.every_shift_run,Выполнять каждую смену
+card.cond.gt,больше 1 предмета|больше {0} предметов|больше {0} предметов
+card.cond.lt,меньше 1 предмета|меньше {0} предметов|меньше {0} предметов
+card.cond.not_empty,не пусто
+card.cond.when,Когда {0}
+card.op.apply,Применить
+card.op.press,Нажать
+card.param.button,Кнопка
+card.param.list,Объект
+card.param.pre,Объект
+card.param.to,Цель
+card.param.tool,Инструмент
+card.select_button,(выберите кнопку)
+card.select_param,(выберите {0})
+card.times,(по 1 разу)| (по {0} раза)| (по {0} раз)
+card.tpl.apply,{op} {tool} на {list}
+card.tpl.complex_colon,{complex}:
+card.tpl.cond_colon,{cond}:
+card.tpl.mark,{op} [{text}] на {list}
+card.tpl.place,{op} {list} в {to}
+card.tpl.press,{op} {button} на {list}
+card.tpl.swap,{op} {list} с {to}
+card.tpl.trigger,{op} {list}
+card.tpl.unmark,{op} [{text}] с {list}
+card.tpl.when,Когда {list} {cond}:
+# ==============================================================================
+# Domain & Rules: Text Formatting & Outcomes
+# Sentence generators, action text, preconditions, grades, and execution run summary.
+# Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
+# ==============================================================================
+action.activate,Активировать {0}
+action.mark,Пометить {0} меткой [{1}]
+action.move,Переместить {0} в {1}
+action.note.add,Прибавить {0} к {1}
+action.note.set,Записать {0} в {1}
+action.press,Нажать [{1}] на {0}
+action.swap,Поменять {0} местами с {1}
+action.times,", по 1 разу|, по {0} раза|, по {0} раз"
+action.toggle,Переключить {0}
+action.unmark,Снять метку [{1}] с {0}
+action.use,Применить {0} на {1}
+grade.at_least,не менее
+grade.at_most,не более
+grade.better_than,лучше чем
+grade.is,является
+grade.is_not,не является
+grade.worse_than,хуже чем
+pre.cmp,кол-во {0} {1} {2}
+pre.empty,{0} пусто
+pre.gt,{0} больше {1} предм.
+pre.lt,{0} меньше {1} предм.
+pre.not_empty,{0} не пусто
+pre.where.cmp,кол-во {1} с {0} {2} {3}
+pre.where.empty,нет {1} с {0}
+pre.where.gt,больше {2} {1} с {0}
+pre.where.lt,меньше {2} {1} с {0}
+pre.where.not_empty,есть {1} с {0}
+prenot.no_less,{0} не меньше {1} предм.
+prenot.no_more,{0} не больше {1} предм.
+prenot.where_no_less,{1} с {0} не меньше {2} предм.
+prenot.where_no_more,{1} с {0} не больше {2} предм.
+runsummary.deferred,", 1 предмет отложен (не хватило AP)|, {0} предмета отложено (не хватило AP)|, {0} предметов отложено (не хватило AP)"
+runsummary.done,1 предмет выполнен|{0} предмета выполнено|{0} предметов выполнено
+runsummary.issues,", 1 задача не выполнена|, {0} задачи не выполнено|, {0} задач не выполнено"
+runsummary.levelup,; {0} повысил(а) уровень
+runsummary.no_apprentices,Нет учеников на дежурстве.
+text.ap,Использовано {0} / {1} AP
+text.bracket,[{0}]
+text.pair,{0}: {1}
+text.pair_after,"{0}: "
+text.deleted,(удалено)
+text.dot_sep,·
+text.members.all,{0} (всего {1})
+text.members.more,{0} и др. (всего {1})
+text.object_def,Параметр = {0}{1}
+text.paren," ({0})"
+text.period,.
+text.prop_def,Формула = {0}
+text.selector.conds,Условия: {0}
+text.selector.minus,Исключить: {0}
+text.selector.scope,Область: {0}
+text.selector.stat_count,Подсчёт: {0}
+text.selector.stat_other,Статистика {0}: {1}
+text.selector.take,Выбрать: {0}
+text.selector.type,Тип: {0}
+text.selector.unset_from,(источник не выбран)
+text.short.minus,искл. {0}
+text.slot.battery,(батарейный отсек)
+text.slot.filter,(слот фильтра)
+text.unset,(не выбрано)
+# ==============================================================================
+# Domain & Rules: Static Checks & Scope Rules
+# Rule validator error messages, warnings, and scoping conflict rules.
+# Placeholders: {0} = item/definition name, {1} = details.
+# ==============================================================================
+check.err.def_missing,Указанное определение не существует
+check.err.expr_const_missing,Параметр в выражении не существует или не выбран
+check.err.expr_empty,Выражение содержит пустые элементы
+check.err.expr_note_missing,Счётчик в выражении не существует или не выбран
+check.err.expr_note_scope,Счётчик нельзя использовать здесь
+check.err.expr_own_scope,Собственное свойство нельзя использовать здесь
+check.err.expr_sel_custom_prop,Формула пользовательского свойства не может ссылаться на фильтр
+check.err.expr_sel_missing,Фильтр в выражении не существует или не выбран
+check.err.expr_sys_missing,Выражение содержит пустые элементы
+check.err.expr_sys_scope,Системную переменную нельзя использовать здесь
+check.err.pre_note_missing,Счётчик условия не существует
+check.err.pre_sel_missing,Фильтр условия не существует
+check.err.pre_stat_where,Агрегационный фильтр не поддерживает проверку количества по условию
+check.err.pre_sys_missing,Неизвестная системная переменная «{0}»
+check.err.prop_cycle,Пользовательское свойство не может ссылаться на другое пользовательское свойство
+check.err.prop_prefix,Свойство «{0}»: {1}
+check.err.rule_mark_empty,Имя метки не указано
+check.err.rule_move_no_to,В «Переместить» не выбрана цель
+check.err.rule_move_not_box,Цель перемещения должна быть контейнером: «{0}» не контейнер
+check.err.rule_no_actions,Действия не настроены
+check.err.rule_note_missing,В «Записать» не выбран счётчик
+check.err.rule_press_no_button,В «Нажать кнопку» не выбрана кнопка
+check.err.rule_swap_no_to,В «Обменять» не выбрана другая группа предметов
+check.err.rule_target_missing,В «{0}» не выбран предмет
+check.err.rule_times_invalid,Количество для «{0}» не может быть меньше 1
+check.err.rule_unknown_verb,Неизвестное действие «{0}» (выберите повторно)
+check.err.rule_use_no_tool,В «Применить» не выбран инструмент
+check.err.rule_use_times_invalid,Количество для «Применить» не может быть меньше 1
+check.err.rule_use_tool_kind,"Инструмент для «Применить» должен быть именем устройства, фильтром или приспособлением"
+check.err.sel_agg_prop_empty,Статистическое свойство не выбрано
+check.err.sel_cycle,Фильтр содержит циклическую ссылку
+check.err.sel_from_empty,Источник не выбран
+check.err.sel_from_missing,Источник фильтра не существует или не выбран
+check.err.sel_from_number,Источник не может быть числом
+check.err.sel_from_param,Источник является параметром (константой); должен быть контейнером или «Всем магазином»
+check.err.sel_minus_missing,Исключённый фильтр не существует
+check.err.sel_prefix,Фильтр «{0}»: {1}
+check.err.sel_preset_missing,Предустановленное условие не существует
+check.err.sel_prop_empty,Свойство не выбрано
+check.ref.prop,Свойство {0}
+check.ref.selector,Фильтр {0}
+check.warn.sel_all_shop,«[{0}]» охватывает все предметы в магазине; будут обработаны все предметы (включая батареи в машинах)
+check.warn.sel_itself,"«[{0}]» указывает на сам контейнер; чтобы обработать содержимое, используйте фильтр с источником [{0}]"
+check.warn.tool_is_box,Инструмент «[{0}]» является контейнером: будет использован первый доступный предмет внутри
+scope.err.already_global,Уже является глобальным определением
+scope.err.conflict,"«{0}» {1}, пожалуйста, сначала переименуйте"
+scope.err.cross_ref_local,Перекрёстная ссылка на локальное определение «{0}» (можно использовать только глобальные или локальные внутри процесса)
+scope.err.dup_global_param,Конфликтует с глобальным параметром «{0}»
+scope.err.dup_global_selector,Конфликтует с глобальным фильтром «{0}»
+scope.err.dup_local_param,Конфликтует с локальным параметром «{1}» в процессе «{0}»
+scope.err.dup_local_selector,Конфликтует с локальным фильтром «{1}» в процессе «{0}»
+scope.err.global_ref_local,Глобальное определение не может ссылаться на локальное определение «{0}»
+scope.shop,Весь магазин
+# ==============================================================================
+# Domain & Simulation: Simulator Catalog & Items
+# Items, containers, and mock objects in Simulator.
+# Placeholders: none.
+# ==============================================================================
+sim.item.animal_cage,Клетка для животных
+sim.item.battery_empty,Батарея (пустая)
+sim.item.battery_full,Батарея (полная)
+sim.item.battery_self,Самозаряжающаяся батарея
+sim.item.filter,Фильтр для воды
+sim.item.filter_adv,Продвинутый фильтр для воды
+sim.item.jug_dirty,Канистра с водой (грязная 3 л)
+sim.item.jug_empty,Пустая канистра
+sim.item.knife,Топорик для мяса
+sim.item.labeler,Принтер этикеток
+sim.item.machine,Устройство с питанием
+sim.item.meat,Сырое мясо
+sim.item.moisture_farm,Сборщик влаги
+sim.item.other,Прочий предмет
+sim.item.projector,Мираж-проектор
+sim.item.rat_baby,Детёныш крысы
+sim.item.rat_f,Самка крысы (взрослая)
+sim.item.rat_fat,Упитанная крыса (готова)
+sim.item.rat_m,Самец крысы (взрослый)
+sim.item.recharger,Зарядник
+sim.item.storage,Шкаф
+sim.item.toolbox,Ящик для инструментов
+sim.item.water_pitcher,Кувшин с фильтром
+sim.item.water_purifier,Очиститель воды
+sim.item.wire_cutter,Кусачки для проводов
+# ==============================================================================
+# Domain & Simulation: Simulator Engine & UI
+# Simulator configuration, step execution, and outcome display.
+# Placeholders: {0} = item name/shift, {1} = parameter/quantity.
+# ==============================================================================
+sim.add_to_title,Поместить в «{0}»
+sim.app_line,{0} · {1} · Ур.{2} · {3} AP/день · Мастерство {4}
+sim.apprentices,Ученики
+sim.battery_summary,Батарея {0}
+sim.btn_add_items,+ Предметы
+sim.btn_add_vapp,+ Вирт. ученик
+sim.btn_edit_schedule,Редактировать процесс
+sim.btn_start,Начать симуляцию
+sim.cannot_create_item,Не удалось создать {0}
+sim.copy_failed,Не удалось скопировать магазин: {0}
+sim.count_label,Количество
+sim.daily_ap,Ежедневные AP
+sim.day_shift_head,День {0} · {1}
+sim.deferred_items_warn,{0} отложено из-за нехватки AP
+sim.desc.battery,{0} #{1} ({2}%)
+sim.desc.dead,", мёртв"
+sim.desc.liquid,"{0} #{1} ({2} мл, чистота {3}%)"
+sim.desc.neutered,", стерилизован"
+sim.desc.rat,"{0} крыса #{1} ({2} г, {3} дн.{4}{5})"
+sim.duration,Длит.
+sim.empty,Пусто
+sim.fail.dest_full,{0} заполнено
+sim.fail.no_effect,Без изменений
+sim.fail.simulated,Уже обработано в предпросмотре (эффект неизвестен)
+sim.group_stats,{0} / {1} AP · ×{2}
+sim.in_shop_count,В магазине: {0}
+sim.level,Уровень
+sim.lvl_up,Повышение уровня: {0}
+sim.memo_tag,Счётчики: {0}
+sim.more_items_count,ещё {0}
+sim.more_kinds_search,Ещё {0} видов; введите ключевое слово для поиска.
+sim.no_apps_tip,Нет учеников: добавьте виртуального ученика для запуска
+sim.no_matching_items,Нет подходящих предметов.
+sim.no_pending_items,Нет предметов для обработки
+sim.no_schedules,Нет процессов.
+sim.no_workers_this_shift,В этой смене нет работников
+sim.none_in_shop,В магазине нет
+sim.op_done_count,{1} 1 предмет|{1} {0} предмета|{1} {0} предметов
+sim.pct_unchanged,Без изменений
+sim.place_in_battery_slot,В батарейный отсек
+sim.place_in_container,В контейнер
+sim.place_into,Поместить в
+sim.prof_label,Мастерство
+sim.ran_shifts_notice,"Выполнена 1 смена, продолжается выполнение|Выполнено {0} смены, продолжается выполнение|Выполнено {0} смен, продолжается выполнение"
+sim.rat_dead_count,Погибло: {0}
+sim.rats_summary,Самцов {0} · Самок {1}
+sim.rule_deferred_warn,Недостаточно AP: 1 предмет отложен в этой смене|    Недостаточно AP: {0} предмета отложено в этой смене|    Недостаточно AP: {0} предметов отложено в этой смене
+sim.run_1_day,1 день
+sim.run_1_shift,1 смена
+sim.run_3_days,3 дня
+sim.run_7_days,7 дней
+sim.schedule,Процесс
+sim.search_placeholder,Имя или ID
+sim.sex.female,Самка
+sim.sex.male,Самец
+sim.shift_label,Смена
+sim.shop_copy,Копия магазина
+sim.slot_summary,Батарейный отсек: {0}
+sim.start_shift,Старт
+sim.start_morning,Утро
+sim.start_night,Вечер
+sim.step.add_mark,Добавить метку [{0}]
+sim.step.moved_to,Перемещено в {0}
+sim.step.remove_mark,Снять метку [{0}]
+sim.step.swapped,Поменялись местами с {0}
+sim.step.trigger_unknown,{0} (эффект известен только при выполнении)
+sim.step.unknown,{0} → {1} (эффект известен только при выполнении)
+sim.step.water_change,{0} вода {1} → {2} мл
+sim.sub_summary,{0} ×{1} ({2})
+sim.tip,"Работает на копии магазина, не затрагивая реальный магазин.\nНочь рассчитывается по правилам игры: батареи, сборщики, очистители, крысы, рыбы, гидропоника и машины с прогрессом (только прогресс, без выхода продукции).\nСбор, перелив и слив воды рассчитываются точно; действия «применить», «активировать», «переключить» и «нажать кнопку» только считают AP, фактический эффект зависит от реального выполнения."
+sim.tip_prof,Мастерство: {0}
+sim.title,Симулятор
+sim.trigger.activate,Активировать
+sim.trigger.press,Нажать [{0}]
+sim.trigger.toggle,Включить/выключить
+sim.vapp_default_name,Виртуальный ученик
+sim.vapp_title,Виртуальный ученик
+sim.water_summary,Вода {0} мл (чистота {1}%)
+sim.welcome_tip,"Запустите на копии, используя текущие предметы в магазине и назначенных учеников (или виртуальных учеников)."
+# ==============================================================================
+# Domain & Reports: Failure Codes & Shift Reports
+# Execution failure codes, morning/night shift reports, and issue details.
+# Placeholders: {0} = apprentice/count, {1} = rule/reason.
+# ==============================================================================
+failcode.dest_full,Заполнено
+failcode.destfull,Цель заполнена
+failcode.error,Ошибка
+failcode.many,Много предметов
+failcode.needs_player,Требуется действие игрока
+failcode.needsplayer,Требуется действие игрока
+failcode.no_ap,Недостаточно AP
+failcode.no_effect,Нет эффекта
+failcode.no_members,Нет контейнера
+failcode.no_source,Нет ресурсов
+failcode.no_tool,Нет инструмента
+failcode.noap,Мало AP
+failcode.noeffect,Нет эффекта
+failcode.nomembers,Нет контейнера
+failcode.not_allowed,Запрещено игрой
+failcode.notallowed,Заблокировано правилом игры
+failcode.notool,Нет инструмента
+failcode.other,Другое
+failcode.simulated,Смоделировано
+report.apprentice,Ученик
+report.cash_delta,Деньги {0}
+report.consume_item,Израсходовано «{0}»
+report.count_items,{0} предмет|{0} предмета|{0} предметов
+report.detail.day,День {0}
+report.detail.deferred,Отложено 1 предмет|Отложено {0} предмета|Отложено {0} предметов
+report.detail.done,Выполнен 1 предмет|Выполнено {0} предмета|Выполнено {0} предметов
+report.detail.group_line,"  {0} ({1}): {2}"
+report.detail.dry_run,Пробный запуск
+report.detail.failed,Не выполнена 1 задача|Не выполнено {0} задачи|Не выполнено {0} задач
+report.detail.levelup,", повысил(а) уровень!"
+report.detail.run,Запуск
+report.details.record,Запись в блокнот
+report.details.walk_cost,(стартовые затраты {0} AP)
+report.error.broken,Ошибка
+report.fail.dest_full,Цель заполнена
+report.fail.no_tool,Нет инструмента
+report.fail.unknown_action,Неизвестное действие
+report.growth.learned,{0} навык {1} → {2}
+report.growth.levelup,"{0} (Ур.{1}, {2} AP в день)"
+report.growth.prefix,Повышение уровня {0}
+report.idle.all_in_dest,Уже находится в целевом контейнере
+report.idle.all_marked,У всех предметов уже есть эта метка
+report.idle.no_items,Подходящие предметы не найдены
+report.idle.none_marked,Ни у одного предмета нет этой метки
+report.idle.same_place,"Уже в одном контейнере, обмен не требуется"
+report.issue.dest_full,"Цель заполнена: {1}, не помещено {2} предм.|Цель заполнена: {1}, не помещено {2} предм.|Цель заполнена: {1}, не помещено {2} предм."
+report.issue.many,"Многократные попытки без результата, задача остановлена"
+report.issue.no_effect,"Нет изменений после {1}, пропущено {2} предм.|Нет изменений после {1}, пропущено {2} предм.|Нет изменений после {1}, пропущено {2} предм."
+report.issue.no_tool,"Нет инструмента: нет {1} в магазине, не удалось обработать {2} предм. ({3})|Нет инструмента: нет {1} в магазине, не удалось обработать {2} предм. ({3})|Нет инструмента: нет {1} в магазине, не удалось обработать {2} предм. ({3})"
+report.issue.not_allowed,"Игра запрещает {1}, пропущено {2} предм.|Игра запрещает {1}, пропущено {2} предм.|Игра запрещает {1}, пропущено {2} предм."
+report.issue.op_failed,{0}: {1}
+report.no_change,Без изменений
+report.note.no_apprentices,Нет учеников на смене
+report.pre.broken,Неверная структура
+report.pre.disabled,Отключено
+report.pre.fail,Условие не выполнено
+report.pre.notrun,Не выполнено
+report.pre.pass,Выполнено
+report.product_group,{0} ×{1}
+report.product_output,Продукция: {0}
+report.product_unplaced,({0} предмет не помещён)| ({0} предмета не помещено)| ({0} предметов не помещено)
+report.reason.no_ap,"Закончились AP, 1 предм. не обработан|Закончились AP, {0} предм. не обработано|Закончились AP, {0} предм. не обработано"
+report.reason.notrun,"Не выполнено ({1}), 1 предм. не обработан|Не выполнено ({1}), {0} предм. не обработано|Не выполнено ({1}), {0} предм. не обработано"
+report.shift_deferred,", отложен 1 предмет (не хватило AP)|, отложено {0} предмета (не хватило AP)|, отложено {0} предметов (не хватило AP)"
+report.shift_done,{0} ({1}): Выполнено задач: {2} ({3})
+report.shift_empty,{0} ({1}): Задач нет.
+report.shift_failed,", не выполнена 1 задача|, не выполнено {0} задачи|, не выполнено {0} задач"
+report.shift_levelup,; {0} повысил(а) уровень
+report.shift_note,Ученик {0}: {1}
+report.shift_waiting,", некоторые операции заблокированы (правило игры; возобновится при готовности)"
+report.step.moved_to,Перемещено в {0}
+report.summary_override,Ученик {0}: {1}
+report.text.no_ap,Закончились AP
+report.why.no_ap,Мало AP (предыдущие задачи использовали {0} / {1} AP)
+report.window.deferred,Отложен 1 предмет (не хватило AP)|Отложено {0} предмета (не хватило AP)|Отложено {0} предметов (не хватило AP)
+report.window.done,Выполнен 1 предмет|Выполнено {0} предмета|Выполнено {0} предметов
+report.window.dry_run,(Симуляция)
+report.window.empty,Нет предметов для обработки
+report.window.group_stats,1 предмет · {1} AP|{0} предмета · {1} AP|{0} предметов · {1} AP
+report.window.problems,Не выполнена 1 задача|Не выполнено {0} задачи|Не выполнено {0} задач
+report.window.tab,Отчёт
+report.window.title_full,Отчёт {0}
+report.window.title,День {0} · {1}
+# ==============================================================================
+# Domain & Workforce: Apprentices, Skills & Shifts
+# Apprentice name pool, shift schedules, and skill groups.
+# Placeholders: none.
+# ==============================================================================
+names.apprentice,Саша;Даша;Иван;Миша;Аня;Дима;Лена;Коля;Оля;Катя;Макс;Артём;Соня;Полина;Никита;Рома;Денис;Вера;Маша;Илья
+shift.morning,Утренняя смена
+shift.night,Ночная смена
+shift.off,Отдых
+shift.short.morning,Утро
+shift.short.night,Вечер
+shift.short.off,Отдых
+skill.husbandry,Животноводство
+skill.maintenance,Обслуживание
+skill.misc,Разное
+skill.power,Энергетика
+skill.water,Водоснабжение
+# ==============================================================================
+# UI: Apprentice Intercom & Staffing Agency
+# Apprentice intercom window and Staffing Agency hiring/training.
+# Placeholders: {0} = apprentice name/credits, {1} = level/proficiency.
+# ==============================================================================
+agency.btn_buy_train,Купить · {0}
+agency.btn_expand,Расширить · {0}
+agency.btn_hire,Нанять ученика · {0}
+agency.btn_return,Назад
+agency.cash_insufficient,Недостаточно денег ({0})
+agency.fee_expand,Плата агентству за расширение
+agency.fee_hire,Плата агентству за найм
+agency.fee_train_item,Учебные материалы ({0})
+agency.header_stats,Деньги {0} · Места {1}/{2}
+agency.hired_msg,{0} принят(а). Выберите рабочий процесс на странице учеников.
+agency.level_up_info,Каждый уровень даёт +{0} ОД в день и +{1} к дневной ставке.
+agency.materials,Плата за материалы
+agency.new_apprentice_info,"Новый ученик: Ур.{0}, {1} ОД ежедневно, дневная ставка {2}, гарантия навыка {3}."
+agency.slots_expand,Места: {0} → {1}
+agency.slots_full,Все места заняты
+agency.slots_maxed,Достигнут максимум мест: {0}
+agency.tip_hire,После найма выберите рабочие процессы на странице учеников
+agency.title,Агентство
+agency.train_cash,Деньги {0}
+agency.train_desc,"+{0} опыта. Читается в начале первой смены дня, расходует {1} ОД."
+agency.train_max_level,Обучение доступно только до Ур.{0}.
+agency.train_no_cash_body,"Учебные материалы {0}, деньги {1}."
+agency.train_no_cash_title,Недостаточно денег
+agency.train_pending_read,Учебные материалы ещё не прочитаны.
+agency.train_title,Обучение · {0}
+agency.training,Обучение: мастерство {0} +{1} ({2})
+agency.training_result,"[{0}] прошёл обучение «{1}», мастерство {2} выросло до {3} (+{4})."
+intercom.ap_tip,Ежедневные ОД: общие для ночной смены и утра следующего дня
+intercom.btn_add_duty,＋ Добавить процесс
+intercom.btn_details,Детали
+intercom.btn_fire,Уволить
+intercom.btn_rest,Выходной
+intercom.btn_retry_player,Разрешить повтор ученику
+intercom.btn_train,Обучение…
+intercom.btn_work,На работу
+intercom.call_agency,Вызвать агентство
+intercom.col_ap,AP
+intercom.col_apprentice,Ученик
+intercom.col_done,Выполнено
+intercom.col_level,Ур.
+intercom.col_schedules,Процессы
+intercom.col_wage,Ставка
+intercom.col_report_wage,Зарплата
+intercom.confirm_fire_note,Купленные учебные материалы возврату не подлежат.
+intercom.confirm_fire_title,Уволить {0}?
+intercom.done_items,1 предмет|{0} предмета|{0} предметов
+intercom.duty_item,{0} · {1}
+intercom.duty_item_tip,"Нажмите, чтобы удалить процесс"
+intercom.duty_shift_tip,"Утро: после пробуждения до открытия; Ночь: перед сном. ОД считаются с ночи, остаток идёт на утро"
+intercom.duty_tip,"Выполняются по порядку: сначала ночная смена, затем утро. Настройка в Деталях"
+intercom.handbook,Справочник
+intercom.header_stats,Места {0}/{1} · {2} AP в день · Зарплата сегодня {3}
+intercom.needs_player_warning,{0} действий требуют участия игрока; ученик прекратил попытки
+intercom.no_apprentices,Нет учеников. Наймите в агентстве.
+intercom.no_reports,Отчётов по сменам пока нет.
+intercom.no_schedules_hint,(процесс не назначен)
+intercom.no_schedules_toast,Нет процессов. Сначала создайте процесс на странице «Процессы».
+intercom.none,(нет)
+intercom.payroll_summary,Выплачена общая зарплата {0}G ({1} учеников)
+intercom.payroll_title,Выплата зарплаты
+intercom.pick_schedule,Выбрать процесс
+intercom.pick_schedule_tip,Выберите процесс для назначения ученику
+intercom.prof_empty,Навык —
+intercom.prof_score,Навык {0}
+intercom.prof_tip,"Гарантия уровня {0}, расчёт по {1}, затраты ОД ×{2}"
+intercom.select_schedule,(Выбрать процесс)
+intercom.shift_order_tip,Ученики выше в списке действуют первыми и получают оплату первыми при нехватке денег
+intercom.status_deferred,{0} отложено (мало AP)
+intercom.status_done,Завершено
+intercom.status_issues,{0} задач не завершено
+intercom.status_rest,Отдыхает
+intercom.status_strike,Бастует
+intercom.status_unassigned_paid,Не назначен (оплачивается)
+intercom.status_work,Работает
+intercom.streak_days,({0} дн. подряд)
+intercom.strikers,· бастует: {0}
+intercom.tab_apprentices,Ученики
+intercom.tab_reports,Отчёты
+intercom.tab_schedules,Процессы
+intercom.tip_add_duty,"Ученик может выполнять несколько процессов последовательно, разделяя ежедневные AP"
+intercom.tip_rest,"Отдых: не участвует в сменах, зарплата не выплачивается"
+intercom.tip_work,"Работа: участвует в сменах следующего дня, зарплата выплачивается перед сном"
+intercom.title,Рация ученика
+intercom.training_pending,Обучающие материалы ожидают прочтения
+intercom.training_pending_tip,"Читается в начале первого смены дня, расходует {0} AP"
+intercom.unassigned_warning,Внимание: следующим ученикам не назначены процессы:
+intercom.wages_last_7_days,Зарплата за последние 7 дней {0}
+intercom.xp_stat,Опыт {0}/{1}
+intercom.xp_tip,Опыт {0}/{1}
+payroll.log_strike,Забастовка учеников: {0} (недостаточно средств для выплаты зарплаты).
+payroll.log_wages,Зарплата учеников: {0} кредитов ({1}).
+# ==============================================================================
+# UI: Routines & Schedules Overview
+# Routines management tab, routine list, statistics, and device linking.
+# Placeholders: {0} = routine name/count, {1} = shift/AP.
+# ==============================================================================
+schedule.btn_add_device,Добавить...
+schedule.btn_edit,Изменить
+schedule.btn_edit_selector,Изменить «{0}»...
+schedule.btn_export,Экспорт
+schedule.btn_move_down,Вниз
+schedule.btn_move_up,Вверх
+schedule.btn_name_device,Назвать...
+schedule.btn_new,+ Новый процесс
+schedule.btn_open_in_editor,Открыть в редакторе
+schedule.btn_simulator,Симулятор стратегии…
+schedule.btn_stats,Статистика
+schedule.col_ap,AP
+schedule.col_device_header,Устр.
+schedule.col_done,Готово
+schedule.col_rule,Задача
+schedule.col_rule_header,Задача
+schedule.col_top_issue,Частые проблемы
+schedule.cond_advanced,Дополнительно...
+schedule.cond_all,Все условия
+schedule.cond_always,Каждую смену
+schedule.cond_any,Любое условие
+schedule.cond_count_gt,… если больше N предметов …
+schedule.cond_count_lt,… если меньше N предметов …
+schedule.cond_empty,...когда пусто
+schedule.cond_not_empty,...когда не пусто
+schedule.copied_to_clipboard,«{0}» скопировано в буфер обмена.
+schedule.copy_name,{0} (Копия)
+schedule.count_gt_prompt,Больше скольких предметов
+schedule.count_items,1 предмет|{0} предмета|{0} предметов
+schedule.count_units,1 единица|{0} единицы|{0} единиц
+schedule.count_tasks,1 задача|{0} задачи|{0} задач
+schedule.count_devices,1 устр.|{0} устр.
+schedule.count_lt_prompt,Меньше скольких предметов
+schedule.current_tag,(Текущий)
+schedule.day_shift,День {0} · {1}
+schedule.default_name_seq,Процесс {0}
+schedule.del_confirm_title,Удалить процесс «{0}»?
+schedule.del_own_note,Привязанные параметры и фильтры ({0}) также будут удалены.
+schedule.del_runners_note,{0} больше не будет выполнять этот процесс.
+schedule.device_label,Устройство: {0}
+schedule.device_none,Нет в магазине
+schedule.device_tip,После именования предмета задачи начнут использовать его автоматически
+schedule.empty,Нет процессов.
+schedule.err_cannot_run,Эта задача не может быть выполнена:
+schedule.import_clipboard,Импорт из буфера обмена
+schedule.import_clipboard_tip,"Импортировать процесс, скопированный через «Экспорт»"
+schedule.new_blank,Создать пустой процесс
+schedule.new_blank_tip,Не содержит задач
+schedule.new_title,Новый процесс
+schedule.no_buttons,У выбранного станка нет кнопок
+schedule.param_shared,Используется несколькими процессами
+schedule.pick_action,Выбрать действие
+schedule.pick_button,Выбрать кнопку
+schedule.pick_condition,Условие выполнения
+schedule.pick_device_or_selector,Выберите имя оборудования или фильтр
+schedule.pick_param,Выбрать параметр
+schedule.rule_disabled,(Отключено)
+schedule.section_devices,Имена устройств
+schedule.section_params,Параметры
+schedule.section_rules,Список задач
+schedule.selector_suffix,(фильтр)
+schedule.stats_done_items,Обработан 1 предмет|Обработано {0} предмета|Обработано {0} предметов
+schedule.stats_empty,Нет записей: этот процесс ещё не выполнялся.
+schedule.stats_issue_count,{1} 1 раз|{1} {0} раза|{1} {0} раз
+schedule.stats_range,Последние {0} смен ({1} — {2})
+schedule.stats_summary,Выполнено {0} предм. · В среднем {1} ОД за смену · Проблем: {2}
+schedule.stats_title,Статистика · {0}
+schedule.status_errors,1 задача с ошибкой|{0} задачи с ошибками|{0} задач с ошибками
+schedule.status_notes,{1} и ещё 1 примечание|{1} и ещё {0} примечания|{1} и ещё {0} примечаний
+schedule.status_ready,Готово
+schedule.tip_edit_in_editor,Изменить в редакторе
+schedule.tip_export,Скопировать в буфер обмена для импорта в других сохранениях
+schedule.tip_stats,"Последние смены: сделано предметов, ОД, проблемы"
+schedule.token_named_item,Предметы с этим именем
+# ==============================================================================
+# UI: Routine Editor
+# Routine editor window, task reordering, actions, and preconditions.
+# Placeholders: {0} = task name/count, {1} = reference.
+# ==============================================================================
+editor.action_apply_to,Применить к
+editor.action_button,Кнопка
+editor.action_mark,Метка
+editor.action_swap_with,С
+editor.action_target,Цель
+editor.action_value,Значение
+editor.add_cond_tip,"Учитывать только предметы, удовлетворяющие условию"
+editor.add_cond_title,Добавить условие
+editor.advanced_stats,Пользовательские свойства: {0} · Счётчики: {1}
+editor.btn_add_action,+ Действие
+editor.btn_add_cond,+ Условие
+editor.btn_add_filter,＋ Фильтр
+editor.btn_add_param,＋ Параметр
+editor.btn_disable,Отключить
+editor.btn_edit,Изменить
+editor.btn_enable,Включить
+editor.btn_name_device,＋ Назвать…
+editor.btn_new,+ Создать
+editor.btn_new_rule,＋ Новая задача
+editor.btn_only_refs,Только для этой задачи
+editor.btn_return,Назад
+editor.btn_show_all,Показать всё
+editor.btn_simple_when,Простой режим
+editor.cmp_by_prop,Сравнить по свойству...
+editor.confirm_delete_rule,Удалить задачу «{0}»?
+editor.counter_tag,Счётчик: {0}
+editor.default_rule_name,Новая задача
+editor.deferred_ap,Недостаточно AP: 1 предм. отложен|Недостаточно AP: {0} предм. отложено|Недостаточно AP: {0} предм. отложено
+editor.device_none_named,Предметов с таким названием сейчас нет в магазине
+editor.device_none_short,Нет
+editor.done_items,Выполнен 1 предмет|Выполнено {0} предмета|Выполнено {0} предметов
+editor.empty_none,(Нет)
+editor.entry_no_refs,\nНе используется
+editor.entry_refs,\nИспользуется в 1 месте|\nИспользуется в {0} местах|\nИспользуется в {0} местах
+editor.global_used,{0} / {1}
+editor.group_global,Глобальные
+editor.group_local,Этот процесс
+editor.input_mark_name,Название метки
+editor.input_name,Название процесса
+editor.input_rule_name,Имя задачи
+editor.label_counters,Счётчики
+editor.label_custom_props,Пользовательские свойства
+editor.local_in_tasks,Ещё {0} фильтров используются только в отдельных задачах
+editor.menu_device_reuse,Присвоить это имя другим предметам…
+editor.menu_device_to_filter,Преобразовать в фильтр…
+editor.no_actions,Действий пока нет
+editor.no_devices,"Пока нет. Назовите предметы в магазине, чтобы выбирать их в фильтрах и действиях."
+editor.no_rules,"Задач нет. Нажмите кнопку выше, чтобы добавить."
+editor.note_add,Прибавить к
+editor.note_default_name,Счётчик
+editor.note_desc,"Начальное значение {0}, сбрасывается в начале смены"
+editor.note_init_val,Начальное значение
+editor.note_set,Записать
+editor.note_still_used,На этот счётчик всё ещё ссылаются задачи.
+editor.note_title,Счётчик
+editor.note_title_new,Новый счётчик
+editor.num_tag,(Число)
+editor.pick_btn_placeholder,(выберите кнопку)
+editor.pick_counter_placeholder,(выберите счётчик)
+editor.pick_dest_placeholder,(выберите цель)
+editor.pick_target_placeholder,(выберите объект)
+editor.pick_tool_placeholder,(выберите инструмент)
+editor.picker_placeholder,(выберите)
+editor.pre_fail,Условие не выполнено: {0}
+editor.preset_satisfied,Подходит под {0}
+editor.satisfy_prefix,Подходит
+editor.sec_actions,Действия
+editor.sec_advanced,Расширенные
+editor.sec_defs,Параметры и фильтры
+editor.sec_devices,Имена устройств
+editor.sec_rules,Задачи
+editor.sec_when,Условие запуска
+editor.selector_backref,«{0}» ссылается на «{1}»; указанные фильтры должны быть выше.
+editor.test_count_gt,Количество >
+editor.test_count_lt,Количество <
+editor.test_empty,Пусто
+editor.test_not_empty,Не пусто
+editor.times_each,Повторений на предмет:
+editor.times_unit,
+editor.tip_action_apply,"Для каждого целевого предмета пробовать инструменты по порядку; применяется первый подходящий.\nНаправление определяется игрой: например, кран к пустому ведру наполняет ведро водой."
+editor.tip_action_swap,"Попарно поменять местами две группы предметов. Если количества не совпадают, лишние остаются на месте."
+editor.tip_action_target,"Поместить каждый предмет в первое подходящее место. Если целей несколько, пробовать по порядку."
+editor.tip_add_pre_cond,"Учитывать только предметы с условием, напр. «[A] Вода > 1000 мл»"
+editor.tip_advanced_when,"Объединить несколько условий, счётчиков или системных переменных"
+editor.tip_cannot_run,Эта задача не может быть выполнена:
+editor.tip_collapse_global,Свернуть: показывать только используемые глобальные
+editor.tip_device_to_filter,Преобразовать в фильтр: использование [{0}] в процессе заменится на новый фильтр с условиями
+editor.tip_disable,"Задача не будет выполняться, настройки сохраняются"
+editor.tip_enable,Возобновить выполнение задачи
+editor.tip_expand_global,Развернуть: показать все глобальные параметры и фильтры
+editor.tip_last_result,Результат прошлого выполнения
+editor.tip_name_device,"Двойной клик на контейнер или станок в магазине, чтобы назвать; прочее — синим принтером"
+editor.tip_new_filter,Создать здесь новый фильтр
+editor.tip_only_refs,В левой колонке только параметры и фильтры развёрнутых задач
+editor.tip_rule_reorder,"Нажмите, чтобы развернуть/свернуть; перетащите для изменения порядка"
+editor.tip_show_all,Показать все параметры и фильтры этого процесса
+editor.tip_warn,Напоминание:
+editor.tip_when,Определяет только факт запуска. Для фильтрации используйте условия в фильтре.
+editor.tip_when_sub,Определяет только факт запуска. Для фильтрации используйте условия в фильтре.
+editor.unprocessed,Не обработано: {0}
+editor.warn_prefix,Внимание: {0}
+editor.when_gt_n,...больше N предметов
+editor.when_lt_n,...меньше N предметов
+editor.window_title,Процесс · {0}
+# ==============================================================================
+# UI: Filter & Condition Editors, Object Dialogs
+# Filter configuration, conditions, pick ordering, and parameter dialogs.
+# Placeholders: {0} = filter name/property, {1} = value/count.
+# ==============================================================================
+cond.at_least,как минимум
+cond.at_most,как максимум
+cond.group.base,Основные
+cond.group.ingredient,Состав
+cond.group.quality,Качество
+cond.group.ratio,Макс. %
+cond.group.tag,Теги игры
+cond.group.type,Тип
+cond.is,равно
+cond.is_not,не равно
+cond.type_is,равно {0}
+cond.type_is_not,не равно {0}
+expr.count,{0}.количество
+expr.empty,(пусто)
+expr.own,своё.{0}
+expr.select_placeholder,(Выбрать)
+expr.term.const,Параметр
+expr.term.note,Счётчик
+expr.term.num,Число
+expr.term.own,Собственное свойство
+expr.term.stat,Статистика
+expr.term.sys,Системная переменная
+expr.tip_add,Добавить элемент для арифметических операций с предыдущими
+expr.tip_remove,Удалить последний элемент
+filter.auto_name.agg_count,Количество {1} в {0}
+filter.auto_name.agg_prop,{2} {3} {1} в {0}
+filter.auto_name.default,Новый фильтр
+filter.auto_name.items,Предметы
+filter.auto_name.items_in,{1} в {0}
+filter.auto_name.self,{0}
+filter.auto_name.shop,Весь магазин
+filter.auto_name.target,{0} {1}
+object_dlg.btn_confirm_promote,Сделать глобальным
+object_dlg.btn_promote,Сделать глобальным параметром...
+object_dlg.default_name,Новый параметр
+object_dlg.default_name_seq,Новый параметр ({0})
+object_dlg.delete_still_used,Следующие задачи всё ещё ссылаются на это: {0}.
+object_dlg.hint_placeholder,Отображается при наведении на имя
+object_dlg.name_empty,Имя не может быть пустым.
+object_dlg.name_exists,Имя уже существует.
+object_dlg.promote_note,Следующие параметры и фильтры станут доступны во всех процессах:
+object_dlg.promote_title,Сделать глобальным?
+object_dlg.prop_formula,Формула
+object_dlg.prop_tip,Определить динамически вычисляемые значения свойств для предметов
+object_dlg.scope_global,Глобальный: доступен во всех процессах
+object_dlg.scope_owner,Только для «{0}»
+object_dlg.title_custom_prop,Пользовательское свойство
+object_dlg.title_edit,Параметр · {0}
+object_dlg.title_new,Новый параметр
+object_dlg.unit,Единица
+object_dlg.unit_placeholder,"напр. г, шт, дн"
+object_dlg.used_by_rules,Используется в 1 задаче|Используется в {0} задачах|Используется в {0} задачах
+object_dlg.value_nan,Значение должно быть числом.
+prop_dlg.default_name,Новое свойство
+prop_dlg.delete_still_used,Невозможно удалить; всё ещё используется в: {0}
+prop_dlg.formula,Формула
+prop_dlg.formula_display,Формула: {0}
+prop_dlg.formula_error,Формула содержит ошибки
+prop_dlg.name_empty,"Пожалуйста, введите имя"
+prop_dlg.sample_calc,Пример вычисления: {0}
+prop_dlg.sample_empty,В магазине нет таких предметов
+prop_dlg.sample_none,В магазине нет таких предметов
+prop_dlg.target_kind,Применимый тип
+prop_dlg.title_edit,Пользовательское свойство: {0}
+prop_dlg.title_new,Новое пользовательское свойство
+property_dlg.no_properties,Подходящих свойств не найдено.
+property_dlg.search_placeholder,Поиск по имени свойства или ID
+property_dlg.title,Выбор свойства
+selector.btn_add_cond,+ Условие
+selector.btn_add_cond_group,＋ Группа условий (хотя бы одно)
+selector.btn_add_scope,＋ Добавить область
+selector.btn_collapse,Свернуть
+selector.btn_del_group,Удалить эту группу
+selector.btn_hide_tags,Скрыть внутренние теги
+selector.btn_more,Ещё...
+selector.btn_promote,Сделать глобальным фильтром…
+selector.btn_show_tags,Показать внутренние теги
+selector.common_presets,Общие пресеты
+selector.cond_all,Все условия
+selector.cond_any,Любое условие
+selector.copy_name,{0} (Копия)
+selector.copy_name_seq,{0} (Копия {1})
+selector.delete_still_used,Следующие задачи всё ещё ссылаются на этот фильтр: {0}.
+selector.group_prefix,Группа
+selector.items_unit,шт.
+selector.kind_self_tip,"Тип не требуется выбирать, если область — «Сам предмет»"
+selector.label_minus,Исключить
+selector.label_prop,Свойство
+selector.label_sort,Сортировка
+selector.label_stat,Агрегация
+selector.minus_none,(Без исключений)
+selector.more_suffix," и т.д."
+selector.pick_all,Выбрать все
+selector.pick_exclude_first_n,Исключить первые N
+selector.pick_first_n,Выбрать первые N
+selector.pick_number,Подсчитать значение
+selector.prefix_container,Контейнер: {0}
+selector.prefix_family,Семейство предметов:
+selector.prefix_item_type,Тип товара:
+selector.save_no_scope,"Пожалуйста, выберите область."
+selector.scope_all_inside,Все предметы внутри
+selector.scope_and,И
+selector.scope_count,Сейчас {0}{1} предм.
+selector.scope_empty,Сейчас пусто
+selector.scope_from,Из
+selector.scope_items_inside,Предметы внутри
+selector.scope_same_as_above,"(Так же, как выше)"
+selector.scope_self,Само
+selector.section_cond,Условия
+selector.section_kind,Тип предмета
+selector.section_pick,Выборка
+selector.section_scope,Область
+selector.sort_asc,По возрастанию
+selector.sort_desc,По убыванию
+selector.sort_unspecified,Не указано
+selector.stat_tip,Статистику можно использовать для условий выполнения и значений
+selector.take_count,Количество предметов:
+selector.take_exclude_first,Исключить первые
+selector.take_first,Выбрать первые
+selector.take_start_from,Начальный индекс:
+selector.tip_add_scope,Предметы из нескольких областей объединяются; ранние области имеют приоритет
+selector.tip_minus,Исключить предметы из другого фильтра
+selector.tip_more,"Группы условий (любое выполнено), исключение другого фильтра"
+selector.tip_sort,При обмене обе стороны сопоставляются по своей сортировке
+selector.tip_tags,Показывать внутренние теги игры в списке свойств
+selector.title_edit,Фильтр · {0}
+selector.title_new,Новый фильтр
+selector.used_in_rules,Используется в: {0}{1}
+sort.asc,{0} от низкого к высокому
+sort.desc,{0} от высокого к низкому
+take.by_sort,по {0}
+take.exclude_first,исключить первые {0} предметов
+take.first,первые {0} предметов
+take.sorted_take,{0} {1}
+# ==============================================================================
+# UI: Container Side Panel & Storage Bay
+# Placeholders: {0} = count/device name.
+# ==============================================================================
+device_dialog.clear,Очистить имя
+device_dialog.name,Имя
+device_dialog.tip,После присвоения имени на это устройство можно ссылаться по имени в фильтрах и целях.
+device_dialog.title,Именование устройства
+store.naming.cannot_open,В данный момент невозможно открыть окно именования.
+store.naming.prompt,"Двойной клик на предмет, чтобы назвать его «{0}»"
+store.naming.prompt_any,"Двойной клик на предмет, чтобы назвать его"
+# ==============================================================================
+# UI: Apprentice Handbook
+# Apprentice handbook pages (p1 to p7) and diagram annotations.
+# Placeholders: none (full self-contained prose).
+# ==============================================================================
+handbook.cannot_open,Не удалось открыть справочник
+handbook.diagram.arrow_charge,② Пустые — на зарядку
+handbook.diagram.arrow_empty,① Пустые — наружу
+handbook.diagram.arrow_full,① Полные — внутрь
+handbook.diagram.machines,Машины
+handbook.diagram.machines_note,Разряжаются ночью
+handbook.diagram.recharger,Зарядник
+handbook.diagram.recharger_note,Заряжает ночью
+handbook.diagram.storage,Склад
+handbook.diagram.storage_note,Свободные батареи
+handbook.p1.banner_apprentices,Ученики
+handbook.p1.banner_quickstart,Быстрый старт
+handbook.p1.steps_quickstart,"1. Откройте Рацию ученика двойным кликом, свяжитесь с агентством и наймите ученика.\n2. Во вкладке Процессы создайте процесс (набор упорядоченных задач); примеры процессов работают без настройки.\n3. Вернитесь во вкладку Ученики и назначьте процессы. В окне Детали можно задать несколько процессов (на утро или ночь). Новые ученики работают сразу; для паузы выберите Выходной.\n4. Утренняя смена работает после пробуждения до открытия; ночная смена — пока вы спите."
+handbook.p1.text_ap,"Дневной объём работы ученика. Восстанавливается во сне после выплаты зарплаты; сначала тратится в ночную смену, остаток переходит на утро. Действия расходуют AP; мастерство снижает затраты. При истощении AP оставшаяся работа откладывается на следующую смену начиная с задачи 1."
+handbook.p1.text_multi_sched,"Ученик может выполнять несколько процессов подряд, деля между ними дневные AP. Если один процесс назначен нескольким ученикам, они выполняют его по очереди из вкладки Ученики, доделывая оставшиеся предметы."
+handbook.p1.tip_payroll,Зарплата начисляется каждую ночь во время сна. При нехватке денег ученики внизу списка бастуют первыми; ученики без процессов бастуют раньше всех!
+handbook.p1.title_ap,AP:
+handbook.p1.title_multi_sched,Несколько процессов:
+handbook.p2.banner,Мастерство и уровень
+handbook.p2.text_level,"Каждый уровень даёт 5 AP в день, 10 к дневной ставке и поднимает нижний порог мастерства на 4 (уровень 1 — 54), чтобы новые процессы шли без сильных задержек. Изучение обучающих материалов даёт опыт."
+handbook.p2.text_prof,"Ученики имеют индивидуальное мастерство (0-100) для каждого процесса, его видно в деталях. Высокое мастерство снижает расход AP: при 100 оно составляет 0.75x базовой стоимости, а новички начинают примерно с 1.4x. Непрерывное выполнение одного процесса позволяет достичь 85+ примерно за две недели."
+handbook.p2.text_switch,"Мастерство зависит от сходства между прошлыми задачами и текущим процессом. Переключение на похожие действия и предметы сохраняет большую часть мастерства; переход к совсем другим начинается с меньших значений. Ведение разрозненных процессов даёт меньший прирост, чем специализация."
+handbook.p2.tip,"Мастерство влияет только на расход AP, а не на дневную ставку; ставка зависит исключительно от уровня!"
+handbook.p2.title_level,Уровень:
+handbook.p2.title_prof,Мастерство:
+handbook.p2.title_switch,Смена процессов:
+handbook.p3.banner,Структура процесса
+handbook.p3.steps_conds,"Частые шаблоны (живой, мёртвый, есть слот и т. д.) можно добавлять сразу; числовые значения вроде заряда или объёма задаются через Условия."
+handbook.p3.steps_pick,"Выбор: Все, Первые N (например, минимальный заряд первые 1 шт.), Исключить первые N (например, самые молодые исключить первые 2 шт.) или агрегация числом (количество, сумма и т. д.)."
+handbook.p3.text_filter,"Выбирает предметы для обработки, задавая область, тип предмета, условия и способ выборки. Может создаваться прямо внутри задач. Может быть повышен до глобального фильтра для использования в разных процессах."
+handbook.p3.text_param,"Именованные числовые значения, например «Порог замены батарей 30». Могут использоваться в нескольких условиях и меняться прямо в процессах."
+handbook.p3.text_range,"Весь магазин, имя устройства или другой фильтр; можно добавить несколько. «Содержимое» указывает на предметы внутри; «Само» — на сам контейнер или машину (например, [Гидропоника] сама с условием «есть слот» выбирает свободную гидропонику)."
+handbook.p3.text_scope,"По умолчанию фильтры ищут по всему магазину (ваши предметы, кроме товаров на продажу). Чтобы указать конкретные склады, машины или контейнеры, назовите их с помощью синего маркиратора (например, «Склад гидропоники») или через «＋ Назвать…» в редакторе процесса. Несколько объектов могут иметь одинаковое имя."
+handbook.p3.tip_name,Пользовательские имена ([Имя]) можно сразу выбирать как цель фильтра без создания отдельного фильтра!
+handbook.p3.title_filter,Фильтры:
+handbook.p3.title_param,Параметры:
+handbook.p3.title_range,Область:
+handbook.p3.title_scope,Весь магазин и имена устройств:
+handbook.p4.banner,Задачи
+handbook.p4.text_move,"Перемещает предметы в контейнер, склад или машину (например, незаряженные батареи в зарядник). Цель обязательно должна быть контейнером."
+handbook.p4.text_pre,"По умолчанию выполняется каждую смену. Можно выбрать «...когда [A] не пусто» или «...когда [A] меньше N»; пропущенные задачи не тратят AP. Более сложные условия настраиваются в «Дополнительно...», например «[A] Вода > 1000 мл»."
+handbook.p4.text_press,"Нажимает кнопки в интерфейсах машин (старт, печать, переместить всё), распаковывает посылки или переключает тумблеры без открытия окон."
+handbook.p4.text_swap,"Связывает две группы предметов по порядку и меняет их местами. Если количество различается, лишние предметы остаются на месте."
+handbook.p4.text_use,"Применяет инструмент к объекту, например нож к крысе, кувшин с водой к пустой бутылке. Направление определяет игра: кран на пустое ведро наполнит ведро водой."
+handbook.p4.tip,"Какие предметы, в каком порядке и сколько — всё это задаётся в фильтрах; само действие определяет лишь то, что нужно сделать!"
+handbook.p4.title_move,Положить:
+handbook.p4.title_pre,Условие запуска:
+handbook.p4.title_press,"Нажатие кнопки, активация, переключение:"
+handbook.p4.title_swap,Обменять:
+handbook.p4.title_use,Использовать:
+handbook.p5.banner_order,Порядок выполнения
+handbook.p5.banner_swap,Автозамена батарей
+handbook.p5.steps_swap,"① Обменяйте разряженные батареи (по возрастанию заряда) на полные (по убыванию): самая слабая меняется на самую полную, а снятая остаётся в заряднике.\n② Положите незаряженные батареи со склада в свободные слоты зарядников."
+handbook.p5.text_seq,"Каждая смена выполняется по порядку из вкладки Ученики: каждый ученик запускает свои процессы последовательно, а задачи идут сверху вниз. Задачи повторно оценивают состояние магазина, поэтому обработанные предметы не дублируются. Порядок меняется кнопками ↑↓."
+handbook.p5.title_seq,Последовательное выполнение:
+handbook.p6.banner,Примеры процессов
+handbook.p6.text_battery,Меняет севшие батареи на полные и отправляет незаряженные свободные батареи в зарядники. Работает сразу без настройки.
+handbook.p6.text_hydro,"Собирает урожай, сажает семена, меняет воду (подобно замене батарей) и добавляет питательные таблетки."
+handbook.p6.text_organize,Раскладывает медикаменты и еду по складам [Склад медикаментов] и [Склад еды]; несколько складов могут иметь одинаковое имя.
+handbook.p6.text_print,"Устанавливает чипы, пополняет филамент и материалы, затем забирает готовую продукцию."
+handbook.p6.text_ras,"Доливает чистую воду в баки, кормит голодную рыбу, удаляет мёртвую, сохраняет по одной взрослой особи разного пола для разведения и забивает остальных."
+handbook.p6.text_rat,"Включает автосмешивание в кормушке, пополняет корм, оставляет племенных крыс (1 самец, 2 самки), забивает взрослых особей и убирает помёт."
+handbook.p6.text_vending,"Печатает бутылки, набирает воду, очищает до базовой воды, выставляет на полки и забирает выручку."
+handbook.p6.tip,"Примеры процессов не требуют настройки. Чтобы сохранять предметы на конкретный склад, назовите его в точности как в примере (например, «Склад гидропоники»)!"
+handbook.p6.title_battery,Автозамена батарей:
+handbook.p6.title_hydro,Гидропоника:
+handbook.p6.title_organize,Уборка:
+handbook.p6.title_print,3D-печать оружия:
+handbook.p6.title_ras,Аквакультура:
+handbook.p6.title_rat,Разведение крыс:
+handbook.p6.title_vending,Продажа воды:
+handbook.p7.banner,Симулятор и отчёты
+handbook.p7.text_report,"После утренней смены выдаётся дневной отчёт ученика (на прилавок или в мусорку, если включена опция Отправлять газету в мусорку); двойной клик для чтения; газета объединяет прошлую ночную и утреннюю смены. Вкладка Отчёты показывает историю смен и выплаты."
+handbook.p7.text_sim,"Запускается на копии магазина на срок от 1 смены до 7 дней, позволяя оценить выполнение задач и расход AP без влияния на реальный магазин."
+handbook.p7.tip,"Действия, требующие ручного управления игрока, не могут быть выполнены учениками и пропускаются; выберите «Повторить» во вкладке Отчёты для повтора."
+handbook.p7.title_report,Отчёты:
+handbook.p7.title_sim,Симулятор:
+handbook.title,Справочник ученика
+# ==============================================================================
+# UI: General Common UI, Tables & Dialogs
+# Common UI buttons, settings window, session status, and mod transfer.
+# Placeholders: {0} = status/number, {1} = details.
+# ==============================================================================
+btn.mech_bottle_printer_btn_print_small,Напечатать маленькую бутылку
+btn.mech_bottle_printer_btn_print_large,Напечатать большую бутылку
+btn.mech_vending_btn_transfer,Переместить ВСЁ
+gamedialog.no_text,(Нет текста)
+picker.number,Значение
+picker.pick_in_shop,Выбрать в магазине
+session.container_missing,(Больше не существует #{0})
+session.no_device,В магазине нет [{0}]
+session.no_selector_items,В магазине отсутствует: {0}
+session.prof_floor,(Гарантия уровня {0})
+session.prof_text,{0} Навык {1}/100{2} · ОД ×{3}
+session.unassigned_schedule,Неназначенные процессы
+settings.automation_enabled,Включить автоматизацию учеников (выполнение смен)
+settings.show_all_tags,"Отображать все теги игры в условиях (включая категории, ID и др.)"
+settings.ui_scale,Множитель масштаба интерфейса
+settings.ui_scale_desc,"Дополнительное масштабирование поверх автоподгонки под высоту экрана, например 0.8 или 1.2"
+style.credits,{0} Кр.
+table.ap,AP
+table.result,Результат
+table.rule,Задача
+table.btn_details,Детали
+transfer.dup_suffix,{0} ({1})
+layout.handbook.gap,6
+layout.handbook.body_size,13
+layout.handbook.p5_label_x,156
+layout.handbook.p5_full_y,6
+layout.handbook.p5_empty_y,56
+layout.handbook.diagram.arrow_full_x,156
+layout.handbook.diagram.arrow_full_y,6
+layout.handbook.diagram.arrow_full_w,160
+layout.handbook.diagram.arrow_empty_x,156
+layout.handbook.diagram.arrow_empty_y,56
+layout.handbook.diagram.arrow_empty_w,160
+layout.handbook.diagram.arrow_charge_x,84
+layout.handbook.diagram.arrow_charge_y,151
+layout.handbook.diagram.arrow_charge_w,230
+layout.handbook.diagram.machines_x,320
+layout.handbook.diagram.machines_w,150
+layout.handbook.diagram.recharger_w,150
+layout.handbook.diagram.storage_w,150
+layout.intercom.shift_width,80
+layout.intercom.prof_width,85
+layout.intercom.col_done_width,95
+layout.intercom.status_width,160
+layout.cond.value_width,160
+layout.selector.scope_label_width,50
+transfer.err.clipboard_empty,Буфер обмена пуст
+transfer.err.newer_version,Этот процесс создан в более новой версии Probably Automated и не поддерживается
+transfer.err.not_a_routine,В буфере обмена нет процесса Probably Automated
+transfer.err.older_version,Старый формат процессов не поддерживается
+transfer.marker,[ProbablyAutomatedRoutine]
+ui.add,Добавить
+ui.cancel,Отмена
+ui.clear,Очистить
+ui.close,Закрыть
+ui.collapse,Свернуть
+ui.confirm,Подтвердить
+ui.copy,Копировать
+ui.delete,Удалить
+ui.expand,Развернуть
+ui.hint,Описание
+ui.move_down,Вниз
+ui.move_up,Вверх
+ui.name,Имя
+ui.ok,ОК
+ui.reset,Сбросить
+ui.save,Сохранить
+ui.search,Поиск
+ui.value,Значение
+unlock.desc,"Агентство Уайлда наймёт учеников для помощи в магазине до открытия и после закрытия. В комплекте рация, руководство и синий этикеточный принтер для присвоения имён оборудованию."
+unlock.title,Отправка учеников
+# ==============================================================================
+# Adapter & Game Integration: Names & Labels
+# Game entity names, battery status, fish species, and hardware fixtures.
+# Placeholders: {0} = item name/percentage, {1} = target.
+# ==============================================================================
+battery.desc,{0} ({1}%)
+fish.dead,", мёртв"
+fish.desc,"{0} ({1}{2} г, {3} дн.{4})"
+fish.female,"Самка, "
+fish.male,"Самец, "
+fixture.drain,Слив
+fixture.faucet,Водопроводный кран
+fmt.arrow_prop,{0} {1} → {2}
+fmt.colon,{0}: {1}
+fmt.copy_suffix,{0} (копия)
+fmt.end_dot,.
+gameworld.action_error,Ошибка {0}: {1}
+gameworld.action_needs_player,{1} на {0} требует действий игрока; ученик не может выполнить это
+gameworld.add_mark,Добавить метку [{0}]
+gameworld.box_cannot_accept,Не удается поместить в {0}
+gameworld.box_full,{0} полон
+gameworld.box_no_slot,{0} не имеет {1}
+gameworld.button_needs_player,[{1}] на {0} требует действий игрока; ученик не может выполнить это
+gameworld.confirm_needs_player,Требуется подтверждение «{0}»; ученик не может выполнить
+gameworld.game_tip,Подсказка игры:
+gameworld.move_error,Ошибка перемещения: {0}
+gameworld.move_to,Переместить в {0}
+gameworld.need_player_ui,{0} требует действий игрока; ученик не может выполнить это
+gameworld.no_button,{0} не имеет кнопки [{1}]
+gameworld.press_button,Нажать [{0}]
+gameworld.remove_mark,Удалить метку [{0}]
+gameworld.swap_error,Ошибка обмена: {0}
+gameworld.swap_not_allowed,Игра не разрешает обмен
+gameworld.swap_with,Поменять местами с {0}
+item.handbook.desc,"Полезное руководство с инструкциями по ученикам, процессам и задачам. Двойной клик для чтения."
+item.handbook.name,Руководство ученика
+item.intercom.desc,"Рация от агентства Уайлда для найма учеников, настройки процессов и просмотра отчётов по сменам. Двойной клик для использования."
+item.intercom.name,Рация ученика
+liquid.desc,"{0} ({1} мл, чистота {2}%)"
+names.kind.combat_knife,Боевой нож
+names.kind.hatchet,Топорик
+names.kind.kitchen_cleaver,Топорик для мяса
+names.kind.labeler,Принтер этикеток
+names.kind.rat,Крыса
+names.kind.raw_meat,Сырое мясо
+names.kind.water_filter,Фильтр для воды
+names.kind.water_filter_adv,Продвинутый фильтр для воды
+names.kind.water_jug,Канистра воды
+names.kind.wire_cutter,Кусачки для проводов
+names.prop.has,{0} (Наличие)
+names.prop.liq,Содержит {0} (мл)
+names.prop.mark,Метка [{0}]
+names.prop.pct,{0} %
+names.prop.str,{0} (Текст)
+names.prop.unselected,(Не выбрано)
+propbindings.none,(Нет)
+quality.prop.grade,Класс {0}
+quality.prop.grade_name,Имя класса {0}
+quality.prop.label_grade,Класс на этикетке {0}
+quality.prop.label_ok,Этикетка {0} верна
+quality.prop.verified,{0} проверено
+quality.cat.category_wine_quality,Качество вина
+# ==============================================================================
+# Examples: Routine & Preset Examples
+# Pre-packaged routine examples: water, ranching, battery, hydro, etc.
+# Placeholders: {0} = container/target name.
+# ==============================================================================
+example.aqua.rule.clear_dead,Убрать мёртвую рыбу
+example.aqua.rule.feed,Покормить рыбу
+example.aqua.rule.fill_jug,Набрать воду в канистры
+example.aqua.rule.fill_tank,Долить воду в бак
+example.aqua.rule.harvest,Собрать взрослую рыбу
+example.aqua.rule.store_meat,Сложить рыбу на склад
+example.aqua.sel.adult_f,Взрослые самки на убой
+example.aqua.sel.adult_m,Взрослые самцы на убой
+example.aqua.sel.dead_fish,Мёртвая рыба
+example.aqua.sel.feed,Порция корма для рыб
+example.aqua.sel.feed_in,Корм в баке
+example.aqua.sel.hungry_fish,Голодная рыба
+example.aqua.sel.jugs,Свободные канистры
+example.aqua.sel.knives,Ножи
+example.aqua.sel.low_water,Баки с низким уровнем воды
+example.aqua.sel.meat,Рыбное мясо в системе
+example.aqua.sel.ras,Системы аквакультуры
+example.aqua.sel.tank,Баки для воды
+example.aqua.store,Склад аквакультуры
+example.battery.name,Автозамена батарей
+example.battery.param.full,Критерий полного заряда
+example.battery.param.full.hint,Батарея считается заряженной при достижении этого процента
+example.battery.param.low,Порог замены батареи
+example.battery.param.low.hint,Заменять батарею в машине при снижении заряда ниже этого значения
+example.battery.rule.charge,Зарядить
+example.battery.rule.swap,Заменить батареи
+example.battery.sel.free_recharger,Зарядники со свободными местами
+example.battery.sel.full_battery,Заряженные батареи
+example.battery.sel.idle_battery,Незаряженные свободные батареи
+example.battery.sel.low_battery,Разряженные батареи
+example.battery.sel.machines,Машины
+example.gun.rule.chip,Вставить чип
+example.gun.rule.collect,Забрать готовое оружие
+example.gun.rule.feed,Добавить полимер
+example.gun.sel.chip,Один чип для печати
+example.gun.sel.chip_in,Слоты для чипов
+example.gun.sel.idle,Свободные принтеры
+example.gun.sel.output,Выходные слоты
+example.gun.sel.plastic,Две катушки полимера
+example.gun.sel.plastic_in,Полимер во входном слоте
+example.gun.sel.printer,Принтеры
+example.gun.store,Склад оружейника
+example.hydro.rule.add_nutrient,Добавить питательные таблетки
+example.hydro.rule.fill_water,Набрать воду
+example.hydro.rule.harvest,Собрать урожай
+example.hydro.rule.plant,Посадить семена
+example.hydro.rule.swap_water,Заменить воду
+example.hydro.sel.crop,Собранный урожай
+example.hydro.sel.dry,Бутылки с малым остатком воды в модулях
+example.hydro.sel.empty,Неполные бутылки для воды
+example.hydro.sel.full,Полные бутылки с водой
+example.hydro.sel.hydro,Гидропонные модули
+example.hydro.sel.lean,Бутылки с нехваткой питательных веществ
+example.hydro.sel.planted,Семена в слоте для семян
+example.hydro.sel.ready,Свободные гидропонные модули
+example.hydro.sel.seed,Одно семя
+example.hydro.sel.tablets,Питательные таблетки
+example.hydro.store,Склад гидропоники
+example.ranch.rule.auto_blend,Включить автосмешивание
+example.ranch.rule.butcher_dead,Разделать мёртвых крыс
+example.ranch.rule.cull,Забить крыс
+example.ranch.rule.feed,Пополнить корм
+example.ranch.rule.store_meat,Сложить мясо крыс
+example.ranch.rule.store_poop,Убрать помёт
+example.ranch.sel.breeders,Племенные крысы
+example.ranch.sel.cage,Клетки для животных
+example.ranch.sel.dead,Мёртвые крысы
+example.ranch.sel.dispenser,Кормушки в клетках
+example.ranch.sel.fat,Крысы на убой
+example.ranch.sel.food,Растительный корм
+example.ranch.sel.knives,Ножи
+example.ranch.sel.low_feed,Кормушки с малым запасом
+example.ranch.sel.meat,Мясо в клетках
+example.ranch.sel.poop,Помёт
+example.ranch.sel.sire_f,Племенные самки
+example.ranch.sel.sire_m,Племенные самцы
+example.ranch.sel.unblended,Кормушки без автосмешивания
+example.ranch.store,Склад фермы
+example.sel.any_storage,Склады со свободным местом
+example.sel.store_or_any,{0} или другой склад
+example.spec.aqua.name,Аквакультура
+example.spec.aqua.note,"Наполнять баки водой, кормить голодную рыбу, убирать мёртвую, оставлять пару для развода и забивать остальную"
+example.spec.gun.name,3D-печать оружия
+example.spec.gun.note,"Вставлять чипы, пополнять полимер и забирать готовое оружие"
+example.spec.hydro.name,Гидропоника
+example.spec.hydro.note,"Собирать урожай, сажать семена, менять бутылки с водой, доливать воду и добавлять питательные таблетки"
+example.spec.ranch.name,Разведение крыс
+example.spec.ranch.note,"Включать автосмешивание, пополнять кормушки, оставлять племя (1 самец, 2 самки), забивать выросших крыс и чистить помёт"
+example.spec.tidy.name,Уборка
+example.spec.tidy.note,Раскладывать медикаменты и еду по складам [Склад лекарств] и [Склад еды] (несколько полок могут иметь общее имя)
+example.spec.water.name,Продажа воды
+example.spec.water.note,"Печатать бутылки, набирать воду, очищать до базовой, разливать и выставлять на продажу, забирать выручку"
+example.tidy.rule.food,Разложить еду
+example.tidy.rule.medical,Разложить медикаменты
+example.tidy.sel.loose_food,Неразложенная еда
+example.tidy.sel.loose_medical,Неразложенные медикаменты
+example.tidy.store.food,Склад еды
+example.tidy.store.medical,Склад лекарств
+example.water.rule.bottle,Разлить воду по бутылкам
+example.water.rule.cash,Собрать выручку
+example.water.rule.fill_empty,Набрать пустые канистры
+example.water.rule.fountain_jug,Установить канистру в автомат
+example.water.rule.fountain_refill,Пополнить автомат водой
+example.water.rule.print_bottle,Напечатать бутылки
+example.water.rule.purify,Очистить сырую воду
+example.water.rule.take_bottle,Забрать бутылки
+example.water.rule.take_purified,Забрать очищенные канистры
+example.water.sel.cash,Автоматы с выручкой
+example.water.sel.empty_bottles,Пустые бутылки
+example.water.sel.empty_jugs,Пустые канистры
+example.water.sel.f_base,Баки автоматов с базовой водой
+example.water.sel.f_low,Автоматы с нехваткой воды
+example.water.sel.fountain,Автоматы по продаже воды
+example.water.sel.full_bottles,Наполненные бутылки с водой
+example.water.sel.one_pure,Одна канистра чистой воды
+example.water.sel.printed,Напечатанные бутылки
+example.water.sel.printer,Принтеры бутылок
+example.water.sel.pur_box,Канистры в очистителе
+example.water.sel.pur_done,Очищенные канистры
+example.water.sel.pure_jugs,Канистры с чистой водой
+example.water.sel.purifier,Очистители воды
+example.water.sel.raw_jug,Одна канистра сырой воды
+example.water.store,Склад воды
+# ==============================================================================
+# Other Localization Keys
+# Remaining rule templates and misc labels.
+# Placeholders: {0} = condition, {1} = action.
+# ==============================================================================
+rule.no_actions,(действия не настроены)
+rule.when_arrow,Когда {0} → {1}
+cond.equal,Равно
+cond.not_equal,Не равно
+cond.text_input,Текст
+layout.btn_more_width,78
+layout.editor.when_dropdown_width,190
+layout.new_schedule.btn_width,180
+layout.sim.start_width,90
+conj.and,и
+conj.or,или
+
+# ==============================================================================
+# Дневной отчёт ученика (газета, выдаваемая после утренней смены)
+# ==============================================================================
+daily.all_fine,Всё в порядке
+daily.cannot_open,В данный момент невозможно открыть дневной отчёт ученика.
+daily.col.ap,AP
+daily.col.morning,Утро
+daily.col.night,Ночь
+daily.dateline,День {0} · Прошлая ночь + Это утро
+daily.dateline_morning,День {0} · Это утро
+daily.deferred,1 предмет отложен из-за нехватки AP|{0} предмета отложено из-за нехватки AP|{0} предметов отложено из-за нехватки AP
+daily.flow_problems,1 проблема|{0} проблемы|{0} проблем
+daily.flows_more,Ещё {0} процессов…
+daily.footer,Подробности на вкладке «Отчёты» рации
+daily.log_issued,Выдан новый дневной отчёт ученика.
+daily.log_none,Сегодня на утренней смене нет учеников; дневного отчёта нет.
+daily.log_replaced,Старый дневной отчёт ученика утилизирован; выдан новый.
+daily.problems_more,Ещё {0}
+daily.section.apprentices,Ученики
+daily.section.flows,Процессы
+daily.section.problems,Проблемы
+daily.stat.ap,Расход AP
+daily.stat.done,Выполнено
+daily.stat.problems,Проблемы
+daily.stat.wage,Зарплата
+daily.strike,Прошлой ночью 1 ученик бастовал из-за нехватки средств|Прошлой ночью {0} ученика бастовали из-за нехватки средств|Прошлой ночью {0} учеников бастовали из-за нехватки средств
+daily.publisher,Мод Probably Automated
+daily.title,Дневной отчёт ученика
+item.daily.desc,Сводка работы учеников за прошлую ночную и сегодняшнюю утреннюю смены от мода Probably Automated. Двойной клик для чтения.
+item.daily.name,Дневной отчёт ученика

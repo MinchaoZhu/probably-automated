@@ -1,0 +1,1410 @@
+# Probably Automated Localization Table: English (en)
+# Primary source and fallback for all localization strings.
+# ==============================================================================
+# Domain & Rules: Vocabulary & Operators
+# Vocabulary, aggregation functions, and system variables.
+# Placeholders: none.
+# ==============================================================================
+vocab.agg.avg,Średnia
+vocab.agg.count,Liczba
+vocab.agg.max,Maksimum
+vocab.agg.min,Minimum
+vocab.agg.sum,Suma
+vocab.sys.ap_left,Pozostałe AP tej zmiany
+vocab.sys.day,Bieżący dzień
+vocab.sys.shift,"Bieżąca zmiana (Poranna=1, Nocna=2)"
+vocab.sys.shift.short,Bieżąca zmiana
+# ==============================================================================
+# Domain & Rules: Traits, Properties, Presets & Operations
+# Item traits, property definitions, preset conditions, and action verbs.
+# Placeholders: none.
+# ==============================================================================
+op.activate,Aktywuj
+op.mark,Dodaj znacznik
+op.move,Przenieś
+op.note,Zapisz
+op.press,Naciśnij
+op.swap,Zamień
+op.toggle,Przełącz
+op.unmark,Usuń znacznik
+op.use,Użyj
+preset.adult,Dorosły
+preset.alive,Żywy
+preset.dead,Martwy
+preset.female,Samica
+preset.hasroom,Ma miejsce
+preset.male,Samiec
+prop.age,Wiek
+prop.calories,Kalorie
+prop.cap,Pojemność
+prop.count,Zmagazynowana liczba
+prop.dead,Martwy
+prop.dead.not,Żywy
+prop.durability,Trwałość
+prop.durabilitypct,Trwałość %
+prop.energy,Energia
+prop.energymax,Maks. energia
+prop.energypct,Energia %
+prop.free,Wolne miejsca
+prop.freeml,Wolna objętość (ml)
+prop.gene.fertility,Gen: Płodność
+prop.gene.growth,Gen: Wzrost
+prop.gene.immunity,Gen: Odporność
+prop.gene.litter,Gen: Wielkość miotu
+prop.gene.longevity,Gen: Długowieczność
+prop.gravid,Złożone jaja
+prop.gravid.not,Bez jaj
+prop.growpct,Wzrost %
+prop.health,Zdrowie
+prop.healthpct,Zdrowie %
+prop.hungerpct,Nasycenie %
+prop.inbatteryslot,W komorze baterii
+prop.inbatteryslot.not,Poza komorą baterii
+prop.instorage,W składziku
+prop.instorage.not,Poza składzikiem
+prop.labelok,Prawidłowo zaetykietowane
+prop.labelok.not,Nieprawidłowo zaetykietowane
+prop.matingcount,Krycia
+prop.matingmax,Maks. kryć
+prop.mature,Dorosły
+prop.mature.not,Niedorosły
+prop.neutered,Wysterylizowany
+prop.neutered.not,Niewysterylizowany
+prop.nutrientmax,Maks. zapotrzebowanie na składniki
+prop.nutrientmin,Min. zapotrzebowanie na składniki
+prop.planthealth,Zdrowie rośliny %
+prop.powered,Zasilane
+prop.powered.not,Brak zasilania
+prop.progresspct,Postęp %
+prop.purity,Czystość wody
+prop.purity.grade_short,Czystość
+prop.repairable,Naprawialne
+prop.repairable.not,Nienaprawialne
+prop.sex,Płeć
+prop.volumeml,Objętość wody (ml)
+prop.wateruse,Zużycie wody nocą (ml)
+prop.weight,Waga
+prop.working,Pracuje
+prop.working.not,Bezczynne
+trait.animal,Dowolne zwierzę w klatce
+trait.battery,Dowolna bateria
+trait.blade,Dowolne ostrze
+trait.cage,Klatka dla zwierząt
+trait.container,Dowolny pojemnik
+trait.durable,Dowolny przedmiot z trwałością
+trait.filter,Dowolny wkład filtra
+trait.filterholder,Dzbanek filtrujący
+trait.fish,Dowolna ryba
+trait.food,Dowolne jedzenie (z kaloriami)
+trait.gun,Dowolna broń palna
+trait.liquid,Dowolny pojemnik na płyn
+trait.livestock,Dowolne zwierzę hodowlane
+trait.machine,Maszyna
+trait.meat,Dowolne mięso
+trait.seed,Dowolne nasiono
+trait.selfcharging,Dowolna bateria samoładująca
+trait.storage,Skład
+# ==============================================================================
+# Domain & Rules: Kinds & Game Items
+# Item kinds and categories used by catalog and filters.
+# Placeholders: {0} = kind/family name.
+# ==============================================================================
+kind.animal_cage,Klatka dla zwierząt
+kind.any,Wszystkie przedmioty
+kind.any_family,Dowolny {0}
+trait.family.contraband,Kontrabanda
+trait.family.chem,Chemikalia
+trait.family.organ,Narządy
+trait.family.amenity,Artykuły codziennego użytku
+trait.family.use_count,Przedmioty o ograniczonej liczbie użyć
+trait.family.permit,Zezwolenia
+trait.family.toolbox,Skrzynki z narzędziami
+trait.family.salvagable,Przedmioty do odzysku
+trait.family.progress,Przedmioty w toku
+trait.family.showcase_special,Przedmioty specjalne gabloty
+trait.family.endangerment,Przedmioty niebezpieczne
+kind.any_type,Dowolny {0}
+kind.bottle_printer,Drukarka butelek
+kind.energy_credit,Bateria
+kind.feces_large,Odchody zwierzęce (duże)
+kind.feces_medium,Odchody zwierzęce
+kind.feces_small,Odchody zwierzęce (małe)
+kind.fillerweed,Zapchwast
+kind.fillerweed_seed,Nasiono zapchwasta
+kind.fish_scrap,Odpady rybne
+kind.hydroponic,System hydroponiczny
+kind.industrial_fish_feed,Przemysłowa karma dla ryb
+kind.kitchen_cleaver,Tasak kuchenny
+kind.labeler,Etykieciarka
+kind.large_bottled_water,Butelka wody (duża)
+kind.livestock_feed_dispenser,Podajnik paszy dla zwierząt
+kind.morsel,Kawałek
+kind.nutrient_tablet,Hydroponiczna tabletka odżywcza
+kind.nutrifruit,Pożywnowoc
+kind.nutrifruit_seed,Nasiono Pożywnowocu
+kind.printer,Drukarka 3D
+kind.printer_chip_pistol,Chip drukarki 3D pistoletu .22
+kind.printer_plastic,Filament do druku 3D
+kind.ras,RAS
+kind.ras_water_tank,Zbiornik na wodę RAS
+kind.rat,Szczur
+kind.raw_meat,Surowe mięso
+kind.recharger,Ładowarka
+kind.self,Sam pojemnik
+kind.small_bottled_water,Butelka wody (mała)
+kind.small_morsel,Mały kawałek
+kind.small_raw_meat,Surowe mięso (małe)
+kind.tilapia,Tilapia
+kind.vending_fountain,Automat do sprzedaży wody
+kind.water_filter,Filtr wody
+kind.water_filter_adv,Zaawansowany filtr wody
+kind.water_jug,Dzbanek wody
+kind.water_purifier,Oczyszczacz wody
+kind.wire_cutter,Obcinaki do drutu
+# ==============================================================================
+# Domain & Rules: Machine Slots & Evaluation
+# Container slot names and source expansion evaluation strings.
+# Placeholders: {0} = container/slot name, {1} = slot name.
+# ==============================================================================
+eval.empty_no_items,„[{0}]” jest obecnie pusty
+eval.empty_not_matching,"„[{1}]” jest obecnie pusty (1 przedm. w źródle, żaden nie spełnia warunków)|„[{1}]” jest obecnie pusty ({0} przedm. w źródle, żaden nie spełnia warunków)|„[{1}]” jest obecnie pusty ({0} przedm. w źródle, żaden nie spełnia warunków)"
+eval.expand.contents,zawartość
+eval.expand.self,sam w sobie
+eval.expand.slot,{0}
+eval.from.contents,Zawartość {0}
+eval.from.self,{0} sam w sobie
+eval.from.slot,{1} z {0}
+eval.no_named,Brak [{0}] w sklepie
+eval.slot.battery,Komory baterii
+eval.slot.filter,Gniazda filtrów
+slot.backpack,Plecak
+slot.base_water,Woda bazowa
+slot.batteries,Baterie
+slot.battery,Kieszeń baterii
+slot.butcher,Rzeźnia
+slot.chip,Chip
+slot.clean_water,Czysta woda
+slot.container,Pojemnik
+slot.core,Rdzeń
+slot.dispenser,Dozownik
+slot.distillate,Destylat
+slot.filter,Gniazdo filtra
+slot.filters,Filtry
+slot.frame,Rama
+slot.input,Wejście
+slot.module,Moduł
+slot.note,Notatka
+slot.nutrient,Składnik odżywczy
+slot.output,Wyjście
+slot.power,Zasilanie
+slot.recipe,Przepis
+slot.seed,Nasiono
+slot.storage,Magazyn
+slot.tank,Zbiornik
+slot.trap,Pułapka
+slot.water,Woda
+slot.wine,Wino
+# ==============================================================================
+# Domain & Rules: Rule Cards & Action Templates
+# Rule card sentence templates, slots, and condition clauses.
+# Placeholders: {list} = items, {to} = target, {tool} = tool, {op} = action.
+# ==============================================================================
+card.cond.empty,jest pusty
+card.cond.every_shift,Każda zmiana
+card.cond.every_shift_run,Uruchamiaj co zmianę
+card.cond.gt,ma więcej niż 1 przedmiot|ma więcej niż {0} przedmioty|ma więcej niż {0} przedmiotów
+card.cond.lt,ma mniej niż 1 przedmiot|ma mniej niż {0} przedmioty|ma mniej niż {0} przedmiotów
+card.cond.not_empty,nie jest pusty
+card.cond.when,Gdy {0}
+card.op.apply,Zastosuj
+card.op.press,Naciśnij
+card.param.button,Przycisk
+card.param.list,Obiekt
+card.param.pre,Obiekt
+card.param.to,Cel
+card.param.tool,Narzędzie
+card.select_button,(wybierz przycisk)
+card.select_param,(wybierz {0})
+card.times,(po 1 razie)| (po {0} razy)| (po {0} razy)
+card.tpl.apply,{op} {tool} na {list}
+card.tpl.complex_colon,{complex}:
+card.tpl.cond_colon,{cond}:
+card.tpl.mark,{op} [{text}] na {list}
+card.tpl.place,{op} {list} do {to}
+card.tpl.press,{op} {button} na {list}
+card.tpl.swap,{op} {list} z {to}
+card.tpl.trigger,{op} {list}
+card.tpl.unmark,{op} [{text}] z {list}
+card.tpl.when,Gdy {list} {cond}:
+# ==============================================================================
+# Domain & Rules: Text Formatting & Outcomes
+# Sentence generators, action text, preconditions, grades, and execution run summary.
+# Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
+# ==============================================================================
+action.activate,Aktywuj {0}
+action.mark,Dodaj znacznik [{1}] do {0}
+action.move,Przenieś {0} do {1}
+action.note.add,Dodaj {0} do {1}
+action.note.set,Zapisz {0} w {1}
+action.press,Naciśnij [{1}] na {0}
+action.swap,Zamień {0} z {1}
+action.times,", po 1 razie|, po {0} razy|, po {0} razy"
+action.toggle,Przełącz {0}
+action.unmark,Usuń znacznik [{1}] z {0}
+action.use,Użyj {0} na {1}
+grade.at_least,przynajmniej
+grade.at_most,najwyżej
+grade.better_than,lepsze niż
+grade.is,jest
+grade.is_not,nie jest
+grade.worse_than,gorsze niż
+pre.cmp,liczba {0} {1} {2}
+pre.empty,{0} jest pusty
+pre.gt,{0} ma więcej niż {1} przedm.
+pre.lt,{0} ma mniej niż {1} przedm.
+pre.not_empty,{0} nie jest pusty
+pre.where.cmp,liczba {1} z {0} {2} {3}
+pre.where.empty,brak {1} z {0}
+pre.where.gt,więcej niż {2} {1} z {0}
+pre.where.lt,mniej niż {2} {1} z {0}
+pre.where.not_empty,są {1} z {0}
+prenot.no_less,{0} nie mniej niż {1} przedm.
+prenot.no_more,{0} nie więcej niż {1} przedm.
+prenot.where_no_less,{1} z {0} nie mniej niż {2} przedm.
+prenot.where_no_more,{1} z {0} nie więcej niż {2} przedm.
+runsummary.deferred,", 1 przedmiot pominięty (brak AP)|, {0} przedmioty pominięte (brak AP)|, {0} przedmiotów pominiętych (brak AP)"
+runsummary.done,1 przedmiot ukończony|{0} przedmioty ukończone|{0} przedmiotów ukończonych
+runsummary.issues,", 1 zadanie nieudane|, {0} zadania nieudane|, {0} zadań nieudanych"
+runsummary.levelup,; {0} awansował(a)
+runsummary.no_apprentices,Brak praktykantów na zmianie.
+text.ap,Zużyto {0} / {1} AP
+text.bracket,[{0}]
+text.pair,{0}: {1}
+text.pair_after,"{0}: "
+text.deleted,(usunięto)
+text.dot_sep,·
+text.members.all,{0} (łącznie {1})
+text.members.more,{0} i więcej (łącznie {1})
+text.object_def,Parametr = {0}{1}
+text.paren," ({0})"
+text.period,.
+text.prop_def,Formuła = {0}
+text.selector.conds,Warunki: {0}
+text.selector.minus,Wyklucz: {0}
+text.selector.scope,Zakres: {0}
+text.selector.stat_count,Liczba: {0}
+text.selector.stat_other,Statystyka {0}: {1}
+text.selector.take,Wybierz: {0}
+text.selector.type,Typ: {0}
+text.selector.unset_from,(nie wybrano źródła)
+text.short.minus,oprócz {0}
+text.slot.battery,(komora baterii)
+text.slot.filter,(gniazdo filtra)
+text.unset,(nie wybrano)
+# ==============================================================================
+# Domain & Rules: Static Checks & Scope Rules
+# Rule validator error messages, warnings, and scoping conflict rules.
+# Placeholders: {0} = item/definition name, {1} = details.
+# ==============================================================================
+check.err.def_missing,Wskazana definicja nie istnieje
+check.err.expr_const_missing,Parametr w wyrażeniu nie istnieje lub nie został wybrany
+check.err.expr_empty,Wyrażenie zawiera puste elementy
+check.err.expr_note_missing,Licznik w wyrażeniu nie istnieje lub nie został wybrany
+check.err.expr_note_scope,Nie można tutaj użyć licznika
+check.err.expr_own_scope,Własna właściwość nie może być tutaj użyta
+check.err.expr_sel_custom_prop,Formuła właściwości niestandardowej nie może odwoływać się do filtra
+check.err.expr_sel_missing,Filtr w wyrażeniu nie istnieje lub nie został wybrany
+check.err.expr_sys_missing,Wyrażenie zawiera puste elementy
+check.err.expr_sys_scope,Zmienna systemowa nie może być tutaj użyta
+check.err.pre_note_missing,Licznik warunku nie istnieje
+check.err.pre_sel_missing,Filtr warunku nie istnieje
+check.err.pre_stat_where,Filtr agregacji nie obsługuje sprawdzania liczby warunkowej
+check.err.pre_sys_missing,Nieznana zmienna systemowa „{0}”
+check.err.prop_cycle,Właściwość niestandardowa nie może odwoływać się do innej właściwości niestandardowej
+check.err.prop_prefix,Właściwość „{0}”: {1}
+check.err.rule_mark_empty,Nie określono nazwy znacznika
+check.err.rule_move_no_to,Dla „Przenieś” nie wybrano celu
+check.err.rule_move_not_box,Cel przeniesienia musi być pojemnikiem: „{0}” nie jest pojemnikiem
+check.err.rule_no_actions,Nie ustawiono żadnych akcji
+check.err.rule_note_missing,Dla „Zapisz” nie wybrano licznika
+check.err.rule_press_no_button,Dla „Naciśnij przycisk” nie wybrano przycisku
+check.err.rule_swap_no_to,Dla „Zamień” nie wybrano innej grupy przedmiotów
+check.err.rule_target_missing,Dla „{0}” nie wybrano przedmiotu
+check.err.rule_times_invalid,Liczba dla „{0}” nie może być mniejsza niż 1
+check.err.rule_unknown_verb,Nieznana akcja „{0}” (wybierz ponownie)
+check.err.rule_use_no_tool,Dla „Użyj” nie wybrano narzędzia
+check.err.rule_use_times_invalid,Liczba dla „Użyj” nie może być mniejsza niż 1
+check.err.rule_use_tool_kind,"Narzędzie dla „Użyj” musi być nazwą urządzenia, filtrem lub wyposażeniem"
+check.err.sel_agg_prop_empty,Właściwość statystyczna nie została wybrana
+check.err.sel_cycle,Filtr zawiera odwołanie cykliczne
+check.err.sel_from_empty,Nie wybrano źródła
+check.err.sel_from_missing,Źródło filtra nie istnieje lub nie zostało wybrane
+check.err.sel_from_number,Źródło nie może być liczbą
+check.err.sel_from_param,Źródło jest parametrem (stałą); musi być pojemnikiem lub „Całym sklepem”
+check.err.sel_minus_missing,Wykluczony filtr nie istnieje
+check.err.sel_prefix,Filtr „{0}”: {1}
+check.err.sel_preset_missing,Warunek wstępny nie istnieje
+check.err.sel_prop_empty,Właściwość nie została wybrana
+check.ref.prop,Właściwość {0}
+check.ref.selector,Filtr {0}
+check.warn.sel_all_shop,„[{0}]” obejmuje wszystkie przedmioty w sklepie; przetworzy wszystko (w tym baterie w maszynach)
+check.warn.sel_itself,"„[{0}]” odnosi się do samego pojemnika; aby przetworzyć jego zawartość, użyj filtra ze źródłem [{0}]"
+check.warn.tool_is_box,Narzędzie „[{0}]” jest pojemnikiem: użyje pierwszego dostępnego przedmiotu w środku
+scope.err.already_global,Już jest definicją globalną
+scope.err.conflict,"„{0}” {1}, najpierw zmień nazwę"
+scope.err.cross_ref_local,Odwołanie między procedurami do lokalnej definicji „{0}” (można używać tylko definicji globalnych lub lokalnych w procedurze)
+scope.err.dup_global_param,Konflikt z globalnym parametrem „{0}”
+scope.err.dup_global_selector,Konflikt z globalnym filtrem „{0}”
+scope.err.dup_local_param,Konflikt z lokalnym parametrem „{1}” w procedurze „{0}”
+scope.err.dup_local_selector,Konflikt z lokalnym filtrem „{1}” w procedurze „{0}”
+scope.err.global_ref_local,Definicja globalna nie może odwoływać się do lokalnej definicji „{0}”
+scope.shop,Cały sklep
+# ==============================================================================
+# Domain & Simulation: Simulator Catalog & Items
+# Items, containers, and mock objects in Simulator.
+# Placeholders: none.
+# ==============================================================================
+sim.item.animal_cage,Klatka dla zwierząt
+sim.item.battery_empty,Bateria (pusta)
+sim.item.battery_full,Bateria (pełna)
+sim.item.battery_self,Bateria samoładująca
+sim.item.filter,Filtr wody
+sim.item.filter_adv,Zaawansowany filtr wody
+sim.item.jug_dirty,Dzbanek wody (brudna 3L)
+sim.item.jug_empty,Pusty dzbanek wody
+sim.item.knife,Nóż rzeźnicki
+sim.item.labeler,Etykieciarka
+sim.item.machine,Maszyna zasilana
+sim.item.meat,Surowe mięso
+sim.item.moisture_farm,Kolektor wilgoci
+sim.item.other,Inny przedmiot
+sim.item.projector,Projektor miraży
+sim.item.rat_baby,Młody szczur
+sim.item.rat_f,Samica szczura (dorosła)
+sim.item.rat_fat,Tłusty szczur (gotowy)
+sim.item.rat_m,Samiec szczura (dorosły)
+sim.item.recharger,Ładowarka
+sim.item.storage,Składzik
+sim.item.toolbox,Skrzynka z narzędziami
+sim.item.water_pitcher,Dzbanek filtrujący
+sim.item.water_purifier,Oczyszczacz wody
+sim.item.wire_cutter,Obcinaki do drutu
+# ==============================================================================
+# Domain & Simulation: Simulator Engine & UI
+# Simulator configuration, step execution, and outcome display.
+# Placeholders: {0} = item name/shift, {1} = parameter/quantity.
+# ==============================================================================
+sim.add_to_title,Umieść w „{0}”
+sim.app_line,{0} · {1} · Poz.{2} · {3} AP/dzień · Biegłość {4}
+sim.apprentices,Praktykanci
+sim.battery_summary,Bateria {0}
+sim.btn_add_items,+ Przedmioty
+sim.btn_add_vapp,+ Wirt. praktykant
+sim.btn_edit_schedule,Edytuj procedurę
+sim.btn_start,Rozpocznij symulację
+sim.cannot_create_item,Nie można utworzyć {0}
+sim.copy_failed,Nie udało się skopiować sklepu: {0}
+sim.count_label,Liczba
+sim.daily_ap,Dzienne AP
+sim.day_shift_head,Dzień {0} · {1}
+sim.deferred_items_warn,{0} odłożonych z powodu braku AP
+sim.desc.battery,{0} #{1} ({2}%)
+sim.desc.dead,", martwy"
+sim.desc.liquid,"{0} #{1} ({2} ml, czystość {3}%)"
+sim.desc.neutered,", wysterylizowany"
+sim.desc.rat,"Szczur {0} #{1} ({2} g, {3} dni{4}{5})"
+sim.duration,Czas
+sim.empty,Pusty
+sim.fail.dest_full,{0} jest pełny
+sim.fail.no_effect,Bez zmian
+sim.fail.simulated,Przetworzono w podglądzie (efekt nieznany)
+sim.group_stats,{0} / {1} AP · ×{2}
+sim.in_shop_count,W sklepie: {0}
+sim.level,Poziom
+sim.lvl_up,Awans: {0}
+sim.memo_tag,Liczniki: {0}
+sim.more_items_count,jeszcze {0}
+sim.more_kinds_search,Jeszcze {0} rodzajów; wpisz słowo kluczowe.
+sim.no_apps_tip,Brak praktykantów: dodaj wirtualnego praktykanta
+sim.no_matching_items,Brak pasujących przedmiotów.
+sim.no_pending_items,Brak oczekujących przedmiotów
+sim.no_schedules,Brak procedur.
+sim.no_workers_this_shift,Brak pracowników na tej zmianie
+sim.none_in_shop,Brak w sklepie
+sim.op_done_count,{1} 1 przedmiot|{1} {0} przedmioty|{1} {0} przedmiotów
+sim.pct_unchanged,Bez zmian
+sim.place_in_battery_slot,Do komory baterii
+sim.place_in_container,Do pojemnika
+sim.place_into,Umieść w
+sim.prof_label,Biegłość
+sim.ran_shifts_notice,"Wykonano 1 zmianę, kontynuacja pracy|Wykonano {0} zmiany, kontynuacja pracy|Wykonano {0} zmian, kontynuacja pracy"
+sim.rat_dead_count,Martwych: {0}
+sim.rats_summary,Samce {0} · Samice {1}
+sim.rule_deferred_warn,Niewystarczające AP: 1 przedmiot odłożony w tej zmianie|    Niewystarczające AP: {0} przedmioty odłożone w tej zmianie|    Niewystarczające AP: {0} przedmiotów odłożonych w tej zmianie
+sim.run_1_day,1 dzień
+sim.run_1_shift,1 zmiana
+sim.run_3_days,3 dni
+sim.run_7_days,7 dni
+sim.schedule,Procedura
+sim.search_placeholder,Nazwa lub ID
+sim.sex.female,Samica
+sim.sex.male,Samiec
+sim.shift_label,Zmiana
+sim.shop_copy,Kopia sklepu
+sim.slot_summary,Komora baterii: {0}
+sim.start_shift,Start
+sim.start_morning,Rano
+sim.start_night,Wieczór
+sim.step.add_mark,Dodaj znacznik [{0}]
+sim.step.moved_to,Przeniesiono do {0}
+sim.step.remove_mark,Usuń znacznik [{0}]
+sim.step.swapped,Zamieniono pozycję z {0}
+sim.step.trigger_unknown,{0} (efekt znany dopiero przy wykonaniu)
+sim.step.unknown,{0} → {1} (efekt znany dopiero przy wykonaniu)
+sim.step.water_change,{0} woda {1} → {2} ml
+sim.sub_summary,{0} ×{1} ({2})
+sim.tip,"Działa na kopii sklepu bez wpływu na właściwy sklep.\nNoc przebiega według zasad gry: baterie, kolektory, oczyszczacze, szczury, ryby, hydroponika i maszyny z postępem (tylko postęp, bez produktów).\nZbieranie, przelewanie i usuwanie wody są obliczane dokładnie; inne akcje („użyj”, „aktywuj”, „przełącz”, „przycisk”) liczą tylko AP, a rzeczywiste efekty zależą od prawdziwego wykonania."
+sim.tip_prof,Biegłość: {0}
+sim.title,Symulator
+sim.trigger.activate,Aktywuj
+sim.trigger.press,Naciśnij [{0}]
+sim.trigger.toggle,Przełącz
+sim.vapp_default_name,Wirtualny praktykant
+sim.vapp_title,Wirtualny praktykant
+sim.water_summary,Woda {0} ml (czystość {1}%)
+sim.welcome_tip,Uruchom na kopii z bieżącymi przedmiotami ze sklepu i przypisanymi praktykantami (lub wirtualnymi).
+# ==============================================================================
+# Domain & Reports: Failure Codes & Shift Reports
+# Execution failure codes, morning/night shift reports, and issue details.
+# Placeholders: {0} = apprentice/count, {1} = rule/reason.
+# ==============================================================================
+failcode.dest_full,Pełny
+failcode.destfull,Cel pełny
+failcode.error,Błąd
+failcode.many,Wiele przedmiotów
+failcode.needs_player,Wymagana akcja gracza
+failcode.needsplayer,Wymagana akcja gracza
+failcode.no_ap,Niewystarczające AP
+failcode.no_effect,Brak efektu
+failcode.no_members,Brak pojemnika
+failcode.no_source,Brak zapasów
+failcode.no_tool,Brak narzędzia
+failcode.noap,Mało AP
+failcode.noeffect,Brak efektu
+failcode.nomembers,Brak pojemnika
+failcode.not_allowed,Niedozwolone przez grę
+failcode.notallowed,Zablokowane przez reguły gry
+failcode.notool,Brak narzędzia
+failcode.other,Inne
+failcode.simulated,Zasymulowano
+report.apprentice,Praktykant
+report.cash_delta,Gotówka {0}
+report.consume_item,Zużyto „{0}”
+report.count_items,1 przedmiot|{0} przedmioty|{0} przedmiotów
+report.detail.day,Dzień {0}
+report.detail.deferred,Odłożono 1 przedmiot|Odłożono {0} przedmioty|Odłożono {0} przedmiotów
+report.detail.done,Ukończono 1 przedmiot|Ukończono {0} przedmioty|Ukończono {0} przedmiotów
+report.detail.group_line,"  {0} ({1}): {2}"
+report.detail.dry_run,Próba
+report.detail.failed,Nie powiodło się 1 zadanie|Nie powiodły się {0} zadania|Nie powiodło się {0} zadań
+report.detail.levelup,", awans!"
+report.detail.run,Wykonanie
+report.details.record,Zapisz w notatniku
+report.details.walk_cost,(koszt startowy {0} AP)
+report.error.broken,Błąd
+report.fail.dest_full,Cel pełny
+report.fail.no_tool,Brak narzędzia
+report.fail.unknown_action,Nieznana akcja
+report.growth.learned,{0} biegłość {1} → {2}
+report.growth.levelup,"{0} (Poz.{1}, {2} AP dziennie)"
+report.growth.prefix,Awans {0}
+report.idle.all_in_dest,Już w pojemniku docelowym
+report.idle.all_marked,Wszystkie przedmioty mają już ten znacznik
+report.idle.no_items,Nie znaleziono pasujących przedmiotów
+report.idle.none_marked,Żaden przedmiot nie ma tego znacznika
+report.idle.same_place,"Już w tym samym pojemniku, wymiana zbędna"
+report.issue.dest_full,"Cel pełny: {1}, nie umieszczono {2} przedm.|Cel pełny: {1}, nie umieszczono {2} przedm.|Cel pełny: {1}, nie umieszczono {2} przedm."
+report.issue.many,"Wielokrotne próby bez efektu, zadanie przerwane"
+report.issue.no_effect,"Brak zmian po {1}, pominięto {2} przedm.|Brak zmian po {1}, pominięto {2} przedm.|Brak zmian po {1}, pominięto {2} przedm."
+report.issue.no_tool,"Brak narzędzia: brak {1} w sklepie, nie udało się przetworzyć {2} przedm. ({3})|Brak narzędzia: brak {1} w sklepie, nie udało się przetworzyć {2} przedm. ({3})|Brak narzędzia: brak {1} w sklepie, nie udało się przetworzyć {2} przedm. ({3})"
+report.issue.not_allowed,"Gra nie pozwala na {1}, pominięto {2} przedm.|Gra nie pozwala na {1}, pominięto {2} przedm.|Gra nie pozwala na {1}, pominięto {2} przedm."
+report.issue.op_failed,{0}: {1}
+report.no_change,Bez zmian
+report.note.no_apprentices,Brak praktykantów na zmianie
+report.pre.broken,Nieprawidłowa struktura
+report.pre.disabled,Wyłączone
+report.pre.fail,Warunek niespełniony
+report.pre.notrun,Nie uruchomiono
+report.pre.pass,Spełniony
+report.product_group,{0} ×{1}
+report.product_output,Produkty: {0}
+report.product_unplaced,({0} przedmiot nieumieszczony)| ({0} przedmioty nieumieszczone)| ({0} przedmiotów nieumieszczonych)
+report.reason.no_ap,"Brak AP, 1 przedm. nieprzetworzony|Brak AP, {0} przedm. nieprzetworzone|Brak AP, {0} przedm. nieprzetworzonych"
+report.reason.notrun,"Nie wykonano ({1}), 1 przedm. nieprzetworzony|Nie wykonano ({1}), {0} przedm. nieprzetworzone|Nie wykonano ({1}), {0} przedm. nieprzetworzonych"
+report.shift_deferred,", 1 przedmiot pominięty (brak AP)|, {0} przedmioty pominięte (brak AP)|, {0} przedmiotów pominiętych (brak AP)"
+report.shift_done,{0} ({1}): Ukończono {2} zadań ({3})
+report.shift_empty,{0} ({1}): Brak zadań.
+report.shift_failed,", 1 zadanie nieudane|, {0} zadania nieudane|, {0} zadań nieudanych"
+report.shift_levelup,; {0} awansował(a)
+report.shift_note,Praktykant {0}: {1}
+report.shift_waiting,", niektóre operacje zablokowane (reguła gry; wznowienie po gotowości)"
+report.step.moved_to,Przeniesiono do {0}
+report.summary_override,Praktykant {0}: {1}
+report.text.no_ap,Brak AP
+report.why.no_ap,Za mało AP (poprzednie zadania zużyły {0} / {1} AP)
+report.window.deferred,1 przedmiot pominięty (brak AP)|{0} przedmioty pominięte (brak AP)|{0} przedmiotów pominiętych (brak AP)
+report.window.done,1 przedmiot wykonany|{0} przedmioty wykonane|{0} przedmiotów wykonanych
+report.window.dry_run,(Symulacja)
+report.window.empty,Brak oczekujących przedmiotów
+report.window.group_stats,1 przedmiot · {1} AP|{0} przedmioty · {1} AP|{0} przedmiotów · {1} AP
+report.window.problems,1 zadanie nieudane|{0} zadania nieudane|{0} zadań nieudanych
+report.window.tab,Raport
+report.window.title_full,Raport {0}
+report.window.title,Dzień {0} · {1}
+# ==============================================================================
+# Domain & Workforce: Apprentices, Skills & Shifts
+# Apprentice name pool, shift schedules, and skill groups.
+# Placeholders: none.
+# ==============================================================================
+names.apprentice,Antoni;Jakub;Jan;Szymon;Franciszek;Filip;Aleksander;Mikołaj;Wojciech;Kacper;Zuzanna;Julia;Maja;Zofia;Hanna;Lena;Alicja;Maria;Oliwia;Amelia
+shift.morning,Poranna zmiana
+shift.night,Nocna zmiana
+shift.off,Wolne
+shift.short.morning,Rano
+shift.short.night,Wieczór
+shift.short.off,Wolne
+skill.husbandry,Hodowla
+skill.maintenance,Konserwacja
+skill.misc,Różne
+skill.power,Energetyka
+skill.water,Gospodarka wodna
+# ==============================================================================
+# UI: Apprentice Intercom & Staffing Agency
+# Apprentice intercom window and Staffing Agency hiring/training.
+# Placeholders: {0} = apprentice name/credits, {1} = level/proficiency.
+# ==============================================================================
+agency.btn_buy_train,Kup · {0}
+agency.btn_expand,Rozszerz · {0}
+agency.btn_hire,Zatrudnij praktykanta · {0}
+agency.btn_return,Wstecz
+agency.cash_insufficient,Niewystarczające środki ({0})
+agency.fee_expand,Opłata za rozszerzenie agencji
+agency.fee_hire,Opłata rekrutacyjna agencji
+agency.fee_train_item,Materiały szkoleniowe ({0})
+agency.header_stats,Gotówka {0} · Miejsca {1}/{2}
+agency.hired_msg,{0} dołącza do zespołu. Wybierz procedurę na karcie praktykantów.
+agency.level_up_info,Każdy poziom zwiększa dzienne AP o {0} i stawkę dzienną o {1}.
+agency.materials,Koszt materiałów
+agency.new_apprentice_info,"Nowy praktykant: Poz.{0}, {1} AP dziennie, stawka dzienna {2}, gwarancja biegłości {3}."
+agency.slots_expand,Miejsca: {0} → {1}
+agency.slots_full,Brak miejsc
+agency.slots_maxed,Osiągnięto limit {0} miejsc
+agency.tip_hire,Po zatrudnieniu wybierz procedury na karcie praktykantów
+agency.title,Agencja
+agency.train_cash,Gotówka {0}
+agency.train_desc,"+{0} PD. Czytane na początku pierwszej zmiany dnia, kosztuje {1} AP."
+agency.train_max_level,Szkolenie jest dostępne do Poz.{0}.
+agency.train_no_cash_body,"Materiały szkoleniowe {0}, gotówka {1}."
+agency.train_no_cash_title,Niewystarczające środki
+agency.train_pending_read,Materiały szkoleniowe nie zostały jeszcze przeczytane.
+agency.train_title,Szkolenie · {0}
+agency.training,Szkolenie: biegłość {0} +{1} ({2})
+agency.training_result,"[{0}] odbył szkolenie „{1}”, biegłość {2} wzrosła do {3} (+{4})."
+intercom.ap_tip,Dzienne AP: dzielone między zmianę nocną i poranną
+intercom.btn_add_duty,＋ Dodaj procedurę
+intercom.btn_details,Szczegóły
+intercom.btn_fire,Zwolnij
+intercom.btn_rest,Dzień wolny
+intercom.btn_retry_player,Zezwól praktykantowi na ponowienie
+intercom.btn_train,Szkolenie…
+intercom.btn_work,Do pracy
+intercom.call_agency,Zadzwoń do agencji
+intercom.col_ap,AP
+intercom.col_apprentice,Praktykant
+intercom.col_done,Ukończono
+intercom.col_level,Poz.
+intercom.col_schedules,Procedury
+intercom.col_wage,Dniówka
+intercom.col_report_wage,Płaca
+intercom.confirm_fire_note,Zakupione materiały szkoleniowe nie podlegają zwrotowi.
+intercom.confirm_fire_title,Zwolnić {0}?
+intercom.done_items,1 przedmiot|{0} przedm.
+intercom.duty_item,{0} · {1}
+intercom.duty_item_tip,"Kliknij, aby usunąć procedurę"
+intercom.duty_shift_tip,"Rano: po przebudzeniu przed otwarciem; Noc: przed snem. AP liczone od nocy, reszta na rano"
+intercom.duty_tip,"Wykonywane w kolejności; najpierw zmiana nocna, potem poranna. Ustaw w Szczegółach"
+intercom.handbook,Poradnik
+intercom.header_stats,Miejsca {0}/{1} · {2} AP dziennie · Dzisiejsza płaca {3}
+intercom.needs_player_warning,{0} czynności wymaga interakcji gracza; praktykant wstrzymał próby
+intercom.no_apprentices,Brak praktykantów. Zatrudnij w agencji.
+intercom.no_reports,Brak raportów zmianowych.
+intercom.no_schedules_hint,(nie przypisano procedury)
+intercom.no_schedules_toast,Brak procedur. Utwórz procedurę na karcie „Procedury”.
+intercom.none,(brak)
+intercom.payroll_summary,Wypłacono łączne wynagrodzenie {0}G ({1} praktykantów)
+intercom.payroll_title,Rozliczenie płac
+intercom.pick_schedule,Wybierz procedurę
+intercom.pick_schedule_tip,Wybierz procedurę do przypisania praktykantowi
+intercom.prof_empty,Biegł. —
+intercom.prof_score,Biegł. {0}
+intercom.prof_tip,"Minimum poziomu {0}, liczone jako {1}, koszt AP ×{2}"
+intercom.select_schedule,(Wybierz procedurę)
+intercom.shift_order_tip,Wcześniejsi praktykanci wykonują zadania i otrzymują wypłatę w pierwszej kolejności
+intercom.status_deferred,{0} pominiętych (AP)
+intercom.status_done,Ukończono
+intercom.status_issues,{0} zadań nieukończ.
+intercom.status_rest,Odpoczywa
+intercom.status_strike,Strajkuje
+intercom.status_unassigned_paid,Nieprzypisany (płatny)
+intercom.status_work,W pracy
+intercom.streak_days,({0} dni z rzędu)
+intercom.strikers,· {0} strajkuje
+intercom.tab_apprentices,Praktykanci
+intercom.tab_reports,Raporty
+intercom.tab_schedules,Procedury
+intercom.tip_add_duty,"Praktykant może wykonywać wiele procedur sekwencyjnie, dzieląc dzienne AP"
+intercom.tip_rest,"Odpoczynek: nie bierze udziału w zmianach, nie otrzymuje wynagrodzenia"
+intercom.tip_work,"Praca: bierze udział w zmianach następnego dnia, wynagrodzenie przed snem"
+intercom.title,Krótkofalówka praktykanta
+intercom.training_pending,Materiały szkoleniowe oczekują na przeczytanie
+intercom.training_pending_tip,"Czytane na początku pierwszej zmiany dnia, zużywa {0} AP"
+intercom.unassigned_warning,Uwaga: następujący praktykanci nie mają przypisanych procedur:
+intercom.wages_last_7_days,Płace z ostatnich 7 dni {0}
+intercom.xp_stat,PD {0}/{1}
+intercom.xp_tip,PD {0}/{1}
+payroll.log_strike,Strajk praktykantów: {0} (brak funduszy na wypłatę wynagrodzeń).
+payroll.log_wages,Płace praktykantów: {0} kredytów ({1}).
+# ==============================================================================
+# UI: Routines & Schedules Overview
+# Routines management tab, routine list, statistics, and device linking.
+# Placeholders: {0} = routine name/count, {1} = shift/AP.
+# ==============================================================================
+schedule.btn_add_device,Dodaj...
+schedule.btn_edit,Edytuj
+schedule.btn_edit_selector,Edytuj „{0}”...
+schedule.btn_export,Eksportuj
+schedule.btn_move_down,W dół
+schedule.btn_move_up,W górę
+schedule.btn_name_device,Nazwij...
+schedule.btn_new,+ Nowa procedura
+schedule.btn_open_in_editor,Otwórz w edytorze
+schedule.btn_simulator,Symulator strategii…
+schedule.btn_stats,Statystyki
+schedule.col_ap,AP
+schedule.col_device_header,Urządz.
+schedule.col_done,Gotowe
+schedule.col_rule,Zadanie
+schedule.col_rule_header,Zadanie
+schedule.col_top_issue,Najczęstsze problemy
+schedule.cond_advanced,Zaawansowane...
+schedule.cond_all,Spełnij wszystkie
+schedule.cond_always,Uruchamiaj co zmianę
+schedule.cond_any,Spełnij dowolny
+schedule.cond_count_gt,… gdy więcej niż N przedm. …
+schedule.cond_count_lt,… gdy mniej niż N przedm. …
+schedule.cond_empty,...gdy pusty
+schedule.cond_not_empty,...gdy niepusty
+schedule.copied_to_clipboard,Skopiowano „{0}” do schowka.
+schedule.copy_name,{0} (Kopia)
+schedule.count_gt_prompt,Więcej niż ile przedmiotów
+schedule.count_items,1 przedmiot|{0} przedmioty|{0} przedmiotów
+schedule.count_units,1 jednostka|{0} jednostki|{0} jednostek
+schedule.count_tasks,1 zadanie|{0} zadania|{0} zadań
+schedule.count_devices,1 urządz.|{0} urządz.
+schedule.count_lt_prompt,Mniej niż ile przedmiotów
+schedule.current_tag,(Bieżący)
+schedule.day_shift,Dzień {0} · {1}
+schedule.default_name_seq,Procedura {0}
+schedule.del_confirm_title,Usunąć procedurę „{0}”?
+schedule.del_own_note,Przypisane {0} parametry i filtry również zostaną usunięte.
+schedule.del_runners_note,{0} nie będzie już wykonywać tej procedury.
+schedule.device_label,Urządzenie: {0}
+schedule.device_none,Brak w sklepie
+schedule.device_tip,Po nazwaniu przedmiotu zadania użyją go automatycznie
+schedule.empty,Brak procedur.
+schedule.err_cannot_run,Nie można wykonać tego zadania:
+schedule.import_clipboard,Importuj ze schowka
+schedule.import_clipboard_tip,Zaimportuj procedurę skopiowaną przez „Eksportuj”
+schedule.new_blank,Utwórz pustą procedurę
+schedule.new_blank_tip,Nie zawiera żadnych zadań
+schedule.new_title,Nowa procedura
+schedule.no_buttons,Wybrana maszyna nie ma przycisków
+schedule.param_shared,Współdzielony przez wiele procedur
+schedule.pick_action,Wybierz akcję
+schedule.pick_button,Wybierz przycisk
+schedule.pick_condition,Warunek wykonania
+schedule.pick_device_or_selector,Wybierz nazwę urządzenia lub filtr
+schedule.pick_param,Wybierz parametr
+schedule.rule_disabled,(Wyłączone)
+schedule.section_devices,Nazwy urządzeń
+schedule.section_params,Parametry
+schedule.section_rules,Lista zadań
+schedule.selector_suffix,(Filtr)
+schedule.stats_done_items,Przetworzono 1 przedmiot|Przetworzono {0} przedmioty|Przetworzono {0} przedmiotów
+schedule.stats_empty,Brak zapisów: ta procedura jeszcze się nie wykonała.
+schedule.stats_issue_count,{1} 1 raz|{1} {0} razy|{1} {0} razy
+schedule.stats_range,Ostatnie {0} zmian ({1} do {2})
+schedule.stats_summary,Ukończono {0} przedm. · Śr. {1} AP/zmianę · Problemy: {2}
+schedule.stats_title,Statystyki · {0}
+schedule.status_errors,1 zadanie ma błędy|{0} zadania mają błędy|{0} zadań ma błędy
+schedule.status_notes,{1} i jeszcze 1 uwaga|{1} i jeszcze {0} uwagi|{1} i jeszcze {0} uwag
+schedule.status_ready,Gotowy
+schedule.tip_edit_in_editor,Zmień w edytorze
+schedule.tip_export,Skopiuj do schowka; można zaimportować w innych zapisach
+schedule.tip_stats,"Ostatnie zmiany: wykonane przedmioty, AP, problemy"
+schedule.token_named_item,Przedmioty o tej nazwie
+# ==============================================================================
+# UI: Routine Editor
+# Routine editor window, task reordering, actions, and preconditions.
+# Placeholders: {0} = task name/count, {1} = reference.
+# ==============================================================================
+editor.action_apply_to,Zastosuj do
+editor.action_button,Przycisk
+editor.action_mark,Oznaczenie
+editor.action_swap_with,Z
+editor.action_target,Cel
+editor.action_value,Wartość
+editor.add_cond_tip,Licz tylko przedmioty spełniające warunek
+editor.add_cond_title,Dodaj warunek
+editor.advanced_stats,Własne właściwości {0} · Liczniki {1}
+editor.btn_add_action,+ Akcja
+editor.btn_add_cond,+ Warunek
+editor.btn_add_filter,＋ Filtr
+editor.btn_add_param,＋ Parametr
+editor.btn_disable,Wyłącz
+editor.btn_edit,Edytuj
+editor.btn_enable,Włącz
+editor.btn_name_device,＋ Nazwij…
+editor.btn_new,+ Nowy
+editor.btn_new_rule,＋ Nowe zadanie
+editor.btn_only_refs,Tylko używane przez to zadanie
+editor.btn_return,Wstecz
+editor.btn_show_all,Pokaż wszystko
+editor.btn_simple_when,Tryb prosty
+editor.cmp_by_prop,Porównaj według właściwości...
+editor.confirm_delete_rule,Usunąć zadanie „{0}”?
+editor.counter_tag,Licznik: {0}
+editor.default_rule_name,Nowe zadanie
+editor.deferred_ap,Za mało AP: 1 przedm. odłożony|Za mało AP: {0} przedm. odłożone|Za mało AP: {0} przedm. odłożonych
+editor.device_none_named,Obecnie brak w sklepie przedmiotu o tej nazwie
+editor.device_none_short,Brak
+editor.done_items,Ukończono 1 przedmiot|Ukończono {0} przedmioty|Ukończono {0} przedmiotów
+editor.empty_none,(Brak)
+editor.entry_no_refs,\nBrak odwołań
+editor.entry_refs,\nUżyte w 1 miejscu|\nW {0} miejscach|\nW {0} miejscach
+editor.global_used,Używane {0} / {1}
+editor.group_global,Globalne
+editor.group_local,Ta procedura
+editor.input_mark_name,Nazwa oznaczenia
+editor.input_name,Nazwa procedury
+editor.input_rule_name,Nazwa zadania
+editor.label_counters,Liczniki
+editor.label_custom_props,Własne właściwości
+editor.local_in_tasks,Inne {0} filtry są używane tylko w pojedynczych zadaniach
+editor.menu_device_reuse,Użyj tej nazwy dla innych przedmiotów…
+editor.menu_device_to_filter,Przekształć w filtr…
+editor.no_actions,Brak akcji
+editor.no_devices,"Brak. Nazwij przedmioty, aby wybierać je bezpośrednio w selektorach i akcjach."
+editor.no_rules,"Brak zadań. Kliknij przycisk powyżej, aby dodać."
+editor.note_add,Dodaj do
+editor.note_default_name,Licznik
+editor.note_desc,"Wartość początkowa {0}, resetowana na początku każdej zmiany"
+editor.note_init_val,Wartość początkowa
+editor.note_set,Ustaw na
+editor.note_still_used,Ten licznik jest nadal używany przez zadania.
+editor.note_title,Licznik
+editor.note_title_new,Nowy licznik
+editor.num_tag,(Liczba)
+editor.pick_btn_placeholder,(wybierz przycisk)
+editor.pick_counter_placeholder,(wybierz licznik)
+editor.pick_dest_placeholder,(wybierz cel)
+editor.pick_target_placeholder,(wybierz obiekt)
+editor.pick_tool_placeholder,(wybierz narzędzie)
+editor.picker_placeholder,(wybierz)
+editor.pre_fail,Warunek niespełniony: {0}
+editor.preset_satisfied,Spełnia {0}
+editor.satisfy_prefix,Spełnia
+editor.sec_actions,Akcje
+editor.sec_advanced,Zaawansowane
+editor.sec_defs,Parametry i filtry
+editor.sec_devices,Nazwy urządzeń
+editor.sec_rules,Zadania
+editor.sec_when,Warunek uruchomienia
+editor.selector_backref,„{0}” odwołuje się do „{1}”; użyte filtry muszą znajdować się wyżej.
+editor.test_count_gt,Liczba >
+editor.test_count_lt,Liczba <
+editor.test_empty,Pusty
+editor.test_not_empty,Niepusty
+editor.times_each,Razy na przedmiot:
+editor.times_unit,
+editor.tip_action_apply,Dla każdego obiektu docelowego sprawdzaj narzędzia po kolei; pierwsze skuteczne zostanie użyte.\nKierunek ustala gra: np. użycie kranu na pustym wiadrze napełnia je wodą.
+editor.tip_action_swap,Połącz dwie grupy przedmiotów w pary i zamień ich pozycje. W przypadku różnej liczby nadmiarowe przedmioty zostają.
+editor.tip_action_target,"Umieść każdy przedmiot w pierwszym pasującym celu. Jeśli jest kilka celów, próbuj po kolei."
+editor.tip_add_pre_cond,"Licz tylko przedmioty spełniające warunek, np. „[A] Woda > 1000 ml”"
+editor.tip_advanced_when,"Połącz kilka warunków, liczników lub zmiennych systemowych"
+editor.tip_cannot_run,Nie można wykonać tego zadania:
+editor.tip_collapse_global,Zwiń: pokaż tylko globalne używane w tej procedurze
+editor.tip_device_to_filter,Przekształć w filtr: wystąpienia [{0}] w tej procedurze zastąpi nowy filtr z warunkami
+editor.tip_disable,"To zadanie nie zostanie uruchomione, ustawienia zachowane"
+editor.tip_enable,Wznów wykonywanie tego zadania
+editor.tip_expand_global,Rozwiń: pokaż wszystkie globalne parametry i filtry
+editor.tip_last_result,Ostatni wynik wykonania
+editor.tip_name_device,"Kliknij dwukrotnie pojemnik lub maszynę w sklepie, aby nazwać; inne przedmioty niebieską drukarką"
+editor.tip_new_filter,Utwórz tutaj nowy filtr
+editor.tip_only_refs,Pokaż tylko parametry i filtry używane przez zadania tej procedury
+editor.tip_rule_reorder,"Kliknij, aby rozwinąć lub zwinąć; przeciągnij, aby zmienić kolejność"
+editor.tip_show_all,Pokaż wszystkie parametry i filtry tej procedury
+editor.tip_warn,Uwaga:
+editor.tip_when,"Decyduje tylko o uruchomieniu. Aby filtrować obiekty, dodaj warunki w filtrze."
+editor.tip_when_sub,"    Decyduje tylko o uruchomieniu. Aby filtrować obiekty, dodaj warunki w filtrze."
+editor.unprocessed,Nieprzetworzone: {0}
+editor.warn_prefix,Uwaga: {0}
+editor.when_gt_n,...więcej niż N przedmiotów
+editor.when_lt_n,...mniej niż N przedmiotów
+editor.window_title,Procedura · {0}
+# ==============================================================================
+# UI: Filter & Condition Editors, Object Dialogs
+# Filter configuration, conditions, pick ordering, and parameter dialogs.
+# Placeholders: {0} = filter name/property, {1} = value/count.
+# ==============================================================================
+cond.at_least,przynajmniej
+cond.at_most,najwyżej
+cond.group.base,Podstawowe
+cond.group.ingredient,Składniki
+cond.group.quality,Jakość
+cond.group.ratio,Maks. wzgl. %
+cond.group.tag,Tagi gry
+cond.group.type,Typ
+cond.is,jest
+cond.is_not,nie jest
+cond.type_is,jest {0}
+cond.type_is_not,nie jest {0}
+expr.count,{0}.liczba
+expr.empty,(puste)
+expr.own,własne.{0}
+expr.select_placeholder,(Wybierz)
+expr.term.const,Parametr
+expr.term.note,Licznik
+expr.term.num,Liczba
+expr.term.own,Własna właściwość
+expr.term.stat,Statystyka
+expr.term.sys,Zmienna systemowa
+expr.tip_add,Dodaj składnik do wykonania działań z poprzednimi
+expr.tip_remove,Usuń ostatni składnik
+filter.auto_name.agg_count,Liczba {1} w {0}
+filter.auto_name.agg_prop,{2} {3} {1} w {0}
+filter.auto_name.default,Nowy filtr
+filter.auto_name.items,Przedmioty
+filter.auto_name.items_in,{1} w {0}
+filter.auto_name.self,{0}
+filter.auto_name.shop,Cały sklep
+filter.auto_name.target,{0} {1}
+object_dlg.btn_confirm_promote,Ustaw jako globalny
+object_dlg.btn_promote,Ustaw jako parametr globalny...
+object_dlg.default_name,Nowy parametr
+object_dlg.default_name_seq,Nowy parametr ({0})
+object_dlg.delete_still_used,Następujące zadania nadal się do tego odwołują: {0}.
+object_dlg.hint_placeholder,Wyświetlane po najechaniu na nazwę
+object_dlg.name_empty,Nazwa nie może być pusta.
+object_dlg.name_exists,Nazwa już istnieje.
+object_dlg.promote_note,Następujące parametry i filtry staną się dostępne dla wszystkich procedur:
+object_dlg.promote_title,Ustawić jako globalny?
+object_dlg.prop_formula,Formuła
+object_dlg.prop_tip,Zdefiniuj dynamicznie obliczane wartości właściwości przedmiotów
+object_dlg.scope_global,Globalny: Dostępny dla wszystkich procedur
+object_dlg.scope_owner,Tylko dla „{0}”
+object_dlg.title_custom_prop,Własna właściwość
+object_dlg.title_edit,Parametr · {0}
+object_dlg.title_new,Nowy parametr
+object_dlg.unit,Jednostka
+object_dlg.unit_placeholder,"np. g, szt., dni"
+object_dlg.used_by_rules,Używane w 1 zadaniu|Używane w {0} zadaniach|Używane w {0} zadaniach
+object_dlg.value_nan,Wartość musi być liczbą.
+prop_dlg.default_name,Nowa właściwość
+prop_dlg.delete_still_used,Nie można usunąć; nadal używane przez: {0}
+prop_dlg.formula,Formuła
+prop_dlg.formula_display,Formuła: {0}
+prop_dlg.formula_error,Formuła zawiera błędy
+prop_dlg.name_empty,Wprowadź nazwę
+prop_dlg.sample_calc,Przykładowe obliczenie: {0}
+prop_dlg.sample_empty,Brak takich przedmiotów w sklepie
+prop_dlg.sample_none,Brak takich przedmiotów w sklepie
+prop_dlg.target_kind,Odpowiedni typ
+prop_dlg.title_edit,Własna właściwość: {0}
+prop_dlg.title_new,Nowa własna właściwość
+property_dlg.no_properties,Nie znaleziono pasujących właściwości.
+property_dlg.search_placeholder,Szukaj nazwy właściwości lub ID
+property_dlg.title,Wybierz właściwość
+selector.btn_add_cond,+ Warunek
+selector.btn_add_cond_group,＋ Grupa warunków (dowolny)
+selector.btn_add_scope,＋ Dodaj zakres
+selector.btn_collapse,Zwiń
+selector.btn_del_group,Usuń tę grupę
+selector.btn_hide_tags,Ukryj wewnętrzne tagi
+selector.btn_more,Więcej...
+selector.btn_promote,Ustaw jako filtr globalny…
+selector.btn_show_tags,Pokaż wewnętrzne tagi
+selector.common_presets,Typowe zestawy
+selector.cond_all,Spełnij wszystkie
+selector.cond_any,Spełnij dowolny
+selector.copy_name,{0} (Kopia)
+selector.copy_name_seq,{0} (Kopia {1})
+selector.delete_still_used,Następujące zadania nadal odwołują się do tego selektora: {0}.
+selector.group_prefix,Grupa
+selector.items_unit,szt.
+selector.kind_self_tip,"Wybór typu jest zbędny, gdy zakresem jest „Sam obiekt”"
+selector.label_minus,Wyklucz
+selector.label_prop,Właściwość
+selector.label_sort,Sortowanie
+selector.label_stat,Agregacja
+selector.minus_none,(Bez wykluczenia)
+selector.more_suffix," itp."
+selector.pick_all,Wybierz wszystkie
+selector.pick_exclude_first_n,Wyklucz pierwsze N
+selector.pick_first_n,Wybierz pierwsze N
+selector.pick_number,Oblicz wartość
+selector.prefix_container,Pojemnik: {0}
+selector.prefix_family,Rodzina obiektów:
+selector.prefix_item_type,Typ towaru:
+selector.save_no_scope,Wybierz zakres.
+selector.scope_all_inside,Wszystko wewnątrz
+selector.scope_and,I
+selector.scope_count,Obecnie {0}{1} przedm.
+selector.scope_empty,Obecnie puste
+selector.scope_from,Z
+selector.scope_items_inside,Przedmioty wewnątrz
+selector.scope_same_as_above,(Tak jak wyżej)
+selector.scope_self,Samo
+selector.section_cond,Warunki
+selector.section_kind,Typ przedmiotu
+selector.section_pick,Wybór
+selector.section_scope,Zakres
+selector.sort_asc,Rosnąco
+selector.sort_desc,Malejąco
+selector.sort_unspecified,Nieokreślone
+selector.stat_tip,Statystyki mogą być używane w warunkach wykonania i wartościach
+selector.take_count,Liczba sztuk:
+selector.take_exclude_first,Wyklucz pierwsze
+selector.take_first,Wybierz pierwsze
+selector.take_start_from,Indeks początkowy:
+selector.tip_add_scope,Przedmioty z wielu zakresów są łączone; wcześniejsze zakresy mają pierwszeństwo
+selector.tip_minus,Wyklucz przedmioty wybrane przez inny filtr
+selector.tip_more,"Grupy warunków (dowolny spełniony), wykluczanie innego selektora"
+selector.tip_sort,Podczas wymiany obie strony są parowane według swoich sortowań
+selector.tip_tags,Pokaż wewnętrzne tagi gry na liście właściwości
+selector.title_edit,Filtr · {0}
+selector.title_new,Nowy filtr
+selector.used_in_rules,Używane w: {0}{1}
+sort.asc,{0} od najniższego
+sort.desc,{0} od najwyższego
+take.by_sort,według {0}
+take.exclude_first,wyklucz pierwsze {0} przedmiotów
+take.first,pierwsze {0} przedmiotów
+take.sorted_take,{0} {1}
+# ==============================================================================
+# UI: Container Side Panel & Storage Bay
+# Placeholders: {0} = count/device name.
+# ==============================================================================
+device_dialog.clear,Wyczyść nazwę
+device_dialog.name,Nazwa
+device_dialog.tip,Po nazwaniu to urządzenie może być bezpośrednio przywoływane po nazwie w filtrach i celach.
+device_dialog.title,Nazewnictwo urządzenia
+store.naming.cannot_open,Obecnie nie można otworzyć okna zmiany nazwy.
+store.naming.prompt,"Kliknij dwukrotnie obiekt, aby nazwać go „{0}”"
+store.naming.prompt_any,"Kliknij dwukrotnie obiekt, aby go nazwać"
+# ==============================================================================
+# UI: Apprentice Handbook
+# Apprentice handbook pages (p1 to p7) and diagram annotations.
+# Placeholders: none (full self-contained prose).
+# ==============================================================================
+handbook.cannot_open,Nie można otworzyć podręcznika
+handbook.diagram.arrow_charge,② Puste do ładowarki
+handbook.diagram.arrow_empty,① Wyjmij puste
+handbook.diagram.arrow_full,① Włóż naładowane
+handbook.diagram.machines,Maszyny
+handbook.diagram.machines_note,Rozładowuje nocą
+handbook.diagram.recharger,Ładowarka
+handbook.diagram.recharger_note,Ładuje nocą
+handbook.diagram.storage,Magazyn
+handbook.diagram.storage_note,Wolne baterie
+handbook.p1.banner_apprentices,Praktykanci
+handbook.p1.banner_quickstart,Szybki start
+handbook.p1.steps_quickstart,"1. Kliknij dwukrotnie Krótkofalówkę praktykanta, skontaktuj się z agencją i zatrudnij praktykanta.\n2. W Procedurach utwórz procedurę (uporządkowany zestaw zadań); przykładowe procedury działają od razu bez konfiguracji.\n3. Wróć do zakładki Praktykanci i przypisz procedury. W Szczegółach możesz przypisać wiele procedur (zmiana poranna lub nocna). Nowi praktykanci pracują domyślnie; użyj Dzień wolny, aby wstrzymać pracę.\n4. Zmiana poranna pracuje po przebudzeniu przed otwarciem sklepu; zmiana nocna pracuje podczas Twojego snu."
+handbook.p1.text_ap,"Dzienne obciążenie pracą praktykanta. Odnawia się podczas snu po wypłacie pensji; najpierw zużywane na nocną zmianę, a reszta przechodzi na poranną. Akcje zużywają AP; wyższa biegłość obniża koszty. Gdy AP się wyczerpią, pozostała praca przechodzi na następną zmianę, zaczynając od zadania 1."
+handbook.p1.text_multi_sched,"Praktykant może wykonywać wiele procedur po kolei według Szczegółów, dzieląc dzienne AP. Gdy kilku praktykantów wykonuje tę samą procedurę, działają w kolejności z zakładki Praktykanci, a kolejni przejmują pozostałe przedmioty."
+handbook.p1.tip_payroll,Wypłaty są rozliczane każdej nocy podczas snu. W razie braku środków praktykanci z dołu listy strajkują jako pierwsi; ci bez przypisanej procedury strajkują najwcześniej!
+handbook.p1.title_ap,AP:
+handbook.p1.title_multi_sched,Wiele procedur:
+handbook.p2.banner,Biegłość i poziom
+handbook.p2.text_level,"Każdy poziom dodaje 5 AP dziennie, 10 do dniówki i podnosi próg minimalnej biegłości o 4 (poziom 1 to 54), zapobiegając zbyt powolnej pracy przy nowych procedurach. Czytanie materiałów szkoleniowych daje PD."
+handbook.p2.text_prof,"Praktykanci mają osobną biegłość (0-100) dla każdej procedury, widoczną w Szczegółach. Wyższa biegłość obniża koszt AP: przy 100 wynosi 0.75x kosztu bazowego, a nowicjusze zaczynają od około 1.4x. Ciągłe wykonywanie tej samej procedury pozwala osiągnąć 85+ w około dwa tygodnie."
+handbook.p2.text_switch,Biegłość zależy od podobieństwa między dawną pracą a obecną procedurą. Przejście do procedur o podobnych akcjach i przedmiotach zachowuje większość biegłości; przejście do bardzo odmiennych zaczyna się od niższego poziomu. Wykonywanie wielu różnych procedur daje niższą biegłość niż specjalizacja.
+handbook.p2.tip,"Biegłość wpływa tylko na zużycie AP, nie na dniówkę; dniówka zależy wyłącznie od poziomu!"
+handbook.p2.title_level,Poziom:
+handbook.p2.title_prof,Biegłość:
+handbook.p2.title_switch,Zmiana procedury:
+handbook.p3.banner,Struktura procedury
+handbook.p3.steps_conds,"Częste szablony (żywy, martwy, ma wolne miejsce itp.) można dodawać bezpośrednio; wartości liczbowe, takie jak ładunek czy objętość, określa się przez Warunki."
+handbook.p3.steps_pick,"Wybór: Wszystkie, Pierwsze N (np. najniższy ładunek pierwszy 1 przedmiot), Wyklucz pierwsze N (np. najmłodsze wyklucz pierwsze 2) lub zliczanie wartości (liczba, suma itp.)."
+handbook.p3.text_filter,"Wybiera przedmioty do przetworzenia, określając zakres, typ przedmiotu, warunki i sposób wyboru. Może być tworzony bezpośrednio w zadaniach. Można go awansować do filtra globalnego do użycia w wielu procedurach."
+handbook.p3.text_param,"Nazwane wartości liczbowe, np. ""Próg wymiany baterii 30"". Mogą być współdzielone przez warunki i modyfikowane bezpośrednio w Procedurach."
+handbook.p3.text_range,"Cały sklep, nazwa urządzenia lub inny filtr; można dodać wiele. ""Zawartość"" oznacza przedmioty wewnątrz; ""Samo"" oznacza sam pojemnik lub maszynę (np. [Hydroponika] samo z warunkiem ""ma wolne miejsce"" wybiera wolną hydroponikę)."
+handbook.p3.text_scope,"Filtry domyślnie przeszukują cały sklep (twoje przedmioty, z wyłączeniem towarów na sprzedaż). Aby wskazać konkretne magazyny, maszyny lub pojemniki, nazwij je za pomocą niebieskiej etykieciarki (np. ""Magazyn hydro"") lub przycisku ""＋ Nazwij…"" w edytorze procedury. Wiele obiektów może dzielić tę samą nazwę."
+handbook.p3.tip_name,Możesz bezpośrednio wybrać własną nazwę ([Nazwa]) jako cel filtra bez tworzenia osobnego filtra!
+handbook.p3.title_filter,Filtry:
+handbook.p3.title_param,Parametry:
+handbook.p3.title_range,Zakres:
+handbook.p3.title_scope,Cały sklep i nazwy urządzeń:
+handbook.p4.banner,Zadania
+handbook.p4.text_move,"Przenosi przedmioty do pojemnika, magazynu lub maszyny (np. przeniesienie rozładowanych baterii do ładowarki). Cel musi być pojemnikiem."
+handbook.p4.text_pre,"Domyślnie wykonuje się na każdej zmianie. Można wybrać opcje takie jak ""...gdy [A] nie jest pusty"" lub ""...gdy [A] mniej niż N""; pominięte zadania nie zużywają AP. Bardziej złożone warunki konfiguruje się w ""Zaawansowane..."", np. ""[A] Woda > 1000 ml""."
+handbook.p4.text_press,"Naciska przyciski w oknach maszyn (start, drukuj, przenieś wszystko), rozpakowuje paczki lub przełącza przełączniki bez otwierania okien."
+handbook.p4.text_swap,Łączy w pary dwie grupy przedmiotów według kolejności i zamienia je miejscami. W przypadku różnej liczby nadmiarowe przedmioty pozostają na miejscu.
+handbook.p4.text_use,"Stosuje narzędzie do obiektu, np. nóż na szczurze, dzbanek z wodą na pustej butelce. Kierunek ustala gra: kran na pustym wiadrze napełnia wiadro."
+handbook.p4.tip,"Które przedmioty, w jakiej kolejności i ile — wszystko to określają filtry; sama akcja decyduje tylko o tym, co zrobić!"
+handbook.p4.title_move,Umieść:
+handbook.p4.title_pre,Warunek wykonania:
+handbook.p4.title_press,"Naciśnij przycisk, aktywuj, przełącz:"
+handbook.p4.title_swap,Zamień:
+handbook.p4.title_use,Użyj:
+handbook.p5.banner_order,Kolejność wykonywania
+handbook.p5.banner_swap,Automatyczna wymiana baterii
+handbook.p5.steps_swap,"① Wymień słabe baterie (rosnąco według ładunku) na pełne (malejąco): najsłabsza trafia na najpełniejszą, a wyjęta bateria zostaje w ładowarce.\n② Włóż niepełne baterie z magazynu do wolnych miejsc w ładowarce."
+handbook.p5.text_seq,"Każda zmiana wykonuje się według kolejności z zakładki Praktykanci: każdy praktykant wykonuje swoje procedury po kolei, a zadania biegną od góry do dołu. Zadania na nowo oceniają stan sklepu, więc przetworzone przedmioty nie są powtarzane. Zmień kolejność za pomocą ↑↓."
+handbook.p5.title_seq,Kolejne wykonywanie:
+handbook.p6.banner,Przykładowe procedury
+handbook.p6.text_battery,Wymienia słabe baterie na pełne i umieszcza rozładowane wolne baterie w ładowarkach. Gotowa do użycia bez konfiguracji.
+handbook.p6.text_hydro,"Zbiera plony, dosiewa nasiona, wymienia wodę (podobnie jak przy bateriach) i dodaje tabletki odżywcze."
+handbook.p6.text_organize,Przenosi luźne leki i żywność do [Magazyn leków] i [Magazyn żywności]; wiele stref może mieć tę samą nazwę.
+handbook.p6.text_print,"Wkłada czipy, uzupełnia filament i materiały oraz odbiera gotowe wyroby."
+handbook.p6.text_ras,"Dolewa czystą wodę do zbiorników, karmi głodne ryby, usuwa martwe, zachowuje po jednym dorosłym samcu i samicy do rozrodu, a resztę bije."
+handbook.p6.text_rat,"Włącza automatyczne mieszanie w dozowniku, uzupełnia karmę, zachowuje stado zarodowe (1 samiec, 2 samice), bije dorosłe szczury i sprząta odchody."
+handbook.p6.text_vending,"Drukuje butelki, pobiera wodę, oczyszcza do wody bazowej, wykłada na półki i odbiera utarg."
+handbook.p6.tip,"Przykładowe procedury nie wymagają konfiguracji. Aby składować produkty w konkretnych magazynach, nazwij je zgodnie z przykładami (np. ""Magazyn hydro"")!"
+handbook.p6.title_battery,Automatyczna wymiana baterii:
+handbook.p6.title_hydro,Hydroponika:
+handbook.p6.title_organize,Porządkowanie:
+handbook.p6.title_print,Druk 3D broni palnej:
+handbook.p6.title_ras,Akwakultura:
+handbook.p6.title_rat,Hodowla szczurów:
+handbook.p6.title_vending,Sprzedaż wody:
+handbook.p7.banner,Symulator i raporty
+handbook.p7.text_report,"Po porannej zmianie wydawany jest dzienny raport praktykanta (na ladę lub do kosza na śmieci, jeśli włączono opcję Gazeta do kosza na śmieci); kliknij dwukrotnie, aby przeczytać; gazeta podsumowuje wczorajszą nocną i dzisiejszą poranną zmianę. Zakładka Raporty wyświetla historię zmian i dzienne pensje."
+handbook.p7.text_sim,"Działa na kopii sklepu przez 1 zmianę do 7 dni, pozwalając sprawdzić wykonanie zadań i zużycie AP bez wpływu na rzeczywisty sklep."
+handbook.p7.tip,"Akcje wymagające ręcznej obsługi przez gracza nie mogą być wykonane przez praktykantów i są pomijane; wybierz ""Ponów"" w Raportach, aby spróbować ponownie."
+handbook.p7.title_report,Raporty:
+handbook.p7.title_sim,Symulator:
+handbook.title,Podręcznik praktykanta
+# ==============================================================================
+# UI: General Common UI, Tables & Dialogs
+# Common UI buttons, settings window, session status, and mod transfer.
+# Placeholders: {0} = status/number, {1} = details.
+# ==============================================================================
+btn.mech_bottle_printer_btn_print_small,Wydrukuj małą butelkę
+btn.mech_bottle_printer_btn_print_large,Wydrukuj dużą butelkę
+btn.mech_vending_btn_transfer,Przenieś WSZYSTKO
+gamedialog.no_text,(Brak tekstu)
+picker.number,Wartość
+picker.pick_in_shop,Wybierz w sklepie
+session.container_missing,(Już nie istnieje #{0})
+session.no_device,Sklep nie ma [{0}]
+session.no_selector_items,Brak w sklepie: {0}
+session.prof_floor,(Minimum poziomu {0})
+session.prof_text,{0} Biegłość {1}/100{2} · AP ×{3}
+session.unassigned_schedule,Nieprzypisane procedury
+settings.automation_enabled,Włącz automatyzację praktykantów (wykonywanie zmian)
+settings.show_all_tags,"Wyświetl wszystkie tagi gry w warunkach (w tym oznaczenia kategorii, identyfikatory itp.)"
+settings.ui_scale,Mnożnik skali interfejsu
+settings.ui_scale_desc,"Dodatkowa skala oprócz automatycznego dopasowania do wysokości ekranu, np. 0.8 lub 1.2"
+style.credits,{0} kredytów
+table.ap,AP
+table.result,Wynik
+table.rule,Zadanie
+table.btn_details,Szczegóły
+transfer.dup_suffix,{0} ({1})
+layout.handbook.gap,6
+layout.handbook.body_size,13
+layout.handbook.p5_label_x,156
+layout.handbook.p5_full_y,6
+layout.handbook.p5_empty_y,56
+layout.handbook.diagram.arrow_full_x,156
+layout.handbook.diagram.arrow_full_y,6
+layout.handbook.diagram.arrow_full_w,160
+layout.handbook.diagram.arrow_empty_x,156
+layout.handbook.diagram.arrow_empty_y,56
+layout.handbook.diagram.arrow_empty_w,160
+layout.handbook.diagram.arrow_charge_x,84
+layout.handbook.diagram.arrow_charge_y,151
+layout.handbook.diagram.arrow_charge_w,230
+layout.handbook.diagram.machines_x,320
+layout.handbook.diagram.machines_w,150
+layout.handbook.diagram.recharger_w,150
+layout.handbook.diagram.storage_w,150
+layout.intercom.shift_width,90
+layout.intercom.prof_width,85
+layout.intercom.col_done_width,90
+layout.intercom.status_width,165
+layout.cond.value_width,160
+layout.selector.scope_label_width,50
+transfer.err.clipboard_empty,Schowek jest pusty
+transfer.err.newer_version,Ta procedura została utworzona w nowszej wersji Probably Automated i nie jest obsługiwana
+transfer.err.not_a_routine,Zawartość schowka nie jest procedurą Probably Automated
+transfer.err.older_version,Starszy format procedury nie jest obsługiwany
+transfer.marker,[ProbablyAutomatedRoutine]
+ui.add,Dodaj
+ui.cancel,Anuluj
+ui.clear,Wyczyść
+ui.close,Zamknij
+ui.collapse,Zwiń
+ui.confirm,Potwierdź
+ui.copy,Kopiuj
+ui.delete,Usuń
+ui.expand,Rozwiń
+ui.hint,Opis
+ui.move_down,W dół
+ui.move_up,W górę
+ui.name,Nazwa
+ui.ok,OK
+ui.reset,Zresetuj
+ui.save,Zapisz
+ui.search,Szukaj
+ui.value,Wartość
+unlock.desc,"Agencja Wilde'a zrekrutuje praktykantów, którzy pomogą w prowadzeniu sklepu przed otwarciem i po zamknięciu. W zestawie krótkofalówka praktykanta, podręcznik praktykanta oraz niebieska drukarka etykiet do nazywania urządzeń."
+unlock.title,Pośrednictwo praktykantów
+# ==============================================================================
+# Adapter & Game Integration: Names & Labels
+# Game entity names, battery status, fish species, and hardware fixtures.
+# Placeholders: {0} = item name/percentage, {1} = target.
+# ==============================================================================
+battery.desc,{0} ({1}%)
+fish.dead,", martwy"
+fish.desc,"{0} ({1}{2} g, {3} dni{4})"
+fish.female,"Samica, "
+fish.male,"Samiec, "
+fixture.drain,Odpływ
+fixture.faucet,Kran
+fmt.arrow_prop,{0} {1} → {2}
+fmt.colon,{0}: {1}
+fmt.copy_suffix,{0} (kopia)
+fmt.end_dot,.
+gameworld.action_error,Błąd {0}: {1}
+gameworld.action_needs_player,{1} na {0} wymaga interakcji gracza; praktykant nie może tego wykonać
+gameworld.add_mark,Dodaj znacznik [{0}]
+gameworld.box_cannot_accept,Nie można umieścić w {0}
+gameworld.box_full,{0} jest pełny
+gameworld.box_no_slot,{0} nie ma {1}
+gameworld.button_needs_player,[{1}] na {0} wymaga interakcji gracza; praktykant nie może tego wykonać
+gameworld.confirm_needs_player,Wymaga potwierdzenia „{0}”; praktykant nie może wykonać
+gameworld.game_tip,Wskazówka gry:
+gameworld.move_error,Błąd przenoszenia: {0}
+gameworld.move_to,Przenieś do {0}
+gameworld.need_player_ui,{0} wymaga interakcji gracza; praktykant nie może tego wykonać
+gameworld.no_button,{0} nie ma przycisku [{1}]
+gameworld.press_button,Naciśnij [{0}]
+gameworld.remove_mark,Usuń znacznik [{0}]
+gameworld.swap_error,Błąd wymiany: {0}
+gameworld.swap_not_allowed,Gra nie zezwala na wymianę
+gameworld.swap_with,Zamień miejscami z {0}
+item.handbook.desc,"Przydatny podręcznik z instrukcjami dotyczącymi praktykantów, procedur i zadań. Kliknij dwukrotnie, aby przeczytać."
+item.handbook.name,Podręcznik praktykanta
+item.intercom.desc,"Krótkofalówka z agencji Wilda do zatrudniania praktykantów, tworzenia procedur i przeglądania raportów zmianowych. Kliknij dwukrotnie, aby użyć."
+item.intercom.name,Krótkofalówka praktykanta
+liquid.desc,"{0} ({1} ml, czystość {2}%)"
+names.kind.combat_knife,Nóż bojowy
+names.kind.hatchet,Toporek
+names.kind.kitchen_cleaver,Tasak
+names.kind.labeler,Drukarka etykiet
+names.kind.rat,Szczur
+names.kind.raw_meat,Surowe mięso
+names.kind.water_filter,Filtr do wody
+names.kind.water_filter_adv,Zaawansowany filtr do wody
+names.kind.water_jug,Dzbanek wody
+names.kind.wire_cutter,Szczypce do drutu
+names.prop.has,{0} (Obecność)
+names.prop.liq,Zawiera {0} (ml)
+names.prop.mark,Oznaczenie [{0}]
+names.prop.pct,{0} %
+names.prop.str,{0} (Tekst)
+names.prop.unselected,(Nie wybrano)
+propbindings.none,(Brak)
+quality.prop.grade,Klasa {0}
+quality.prop.grade_name,Nazwa klasy {0}
+quality.prop.label_grade,Oznaczona klasa {0}
+quality.prop.label_ok,Etykieta {0} poprawna
+quality.prop.verified,{0} zweryfikowano
+quality.cat.category_wine_quality,Jakość wina
+# ==============================================================================
+# Examples: Routine & Preset Examples
+# Pre-packaged routine examples: water, ranching, battery, hydro, etc.
+# Placeholders: {0} = container/target name.
+# ==============================================================================
+example.aqua.rule.clear_dead,Usuń martwe ryby
+example.aqua.rule.feed,Nakarmić ryby
+example.aqua.rule.fill_jug,Napełnij dzbanki wodą
+example.aqua.rule.fill_tank,Dolej wodę do zbiornika
+example.aqua.rule.harvest,Zbierz dorosłe ryby
+example.aqua.rule.store_meat,Zmagazynuj mięso ryb
+example.aqua.sel.adult_f,Dorosłe samice ryb do zbioru
+example.aqua.sel.adult_m,Dorosłe samce ryb do zbioru
+example.aqua.sel.dead_fish,Martwe ryby
+example.aqua.sel.feed,Jedna porcja karmy dla ryb
+example.aqua.sel.feed_in,Karma w zbiorniku
+example.aqua.sel.hungry_fish,Głodne ryby
+example.aqua.sel.jugs,Wolne dzbanki na wodę
+example.aqua.sel.knives,Noże
+example.aqua.sel.low_water,Zbiorniki z małą ilością wody
+example.aqua.sel.meat,Mięso ryb w systemie
+example.aqua.sel.ras,Systemy akwakultury
+example.aqua.sel.tank,Zbiorniki na wodę
+example.aqua.store,Magazyn akwakultury
+example.battery.name,Automatyczna wymiana baterii
+example.battery.param.full,Kryterium pełnej baterii
+example.battery.param.full.hint,Bateria uznana za naładowaną od tego poziomu
+example.battery.param.low,Próg wymiany baterii
+example.battery.param.low.hint,"Wymień baterię w maszynach, gdy spadnie poniżej tej wartości"
+example.battery.rule.charge,Ładuj
+example.battery.rule.swap,Wymień baterie
+example.battery.sel.free_recharger,Ładowarki z wolnymi miejscami
+example.battery.sel.full_battery,Pełne baterie
+example.battery.sel.idle_battery,Wolne nienaładowane baterie
+example.battery.sel.low_battery,Rozładowane baterie
+example.battery.sel.machines,Maszyny
+example.gun.rule.chip,Włóż chip
+example.gun.rule.collect,Odbierz gotową broń
+example.gun.rule.feed,Dodaj filament
+example.gun.sel.chip,Jeden chip do druku
+example.gun.sel.chip_in,Sloty na chipy
+example.gun.sel.idle,Wolne drukarki
+example.gun.sel.output,Sloty wyjściowe
+example.gun.sel.plastic,Dwie szpule filamentu
+example.gun.sel.plastic_in,Filament w slocie wejściowym
+example.gun.sel.printer,Drukarki
+example.gun.store,Magazyn rusznikarza
+example.hydro.rule.add_nutrient,Dodaj składniki odżywcze
+example.hydro.rule.fill_water,Dolej wody
+example.hydro.rule.harvest,Zbierz plony
+example.hydro.rule.plant,Zasiej nasiona
+example.hydro.rule.swap_water,Wymień wodę
+example.hydro.sel.crop,Plon
+example.hydro.sel.dry,Butelki z małą ilością wody w modułach
+example.hydro.sel.empty,Niepełne butelki na wodę
+example.hydro.sel.full,Pełne butelki z wodą
+example.hydro.sel.hydro,Jednostki hydroponiczne
+example.hydro.sel.lean,Butelki ubogie w składniki
+example.hydro.sel.planted,Nasiona w slocie na nasiona
+example.hydro.sel.ready,Wolne jednostki hydroponiczne
+example.hydro.sel.seed,Jedno nasiono
+example.hydro.sel.tablets,Tabletki odżywcze
+example.hydro.store,Magazyn hydroponiki
+example.ranch.rule.auto_blend,Włącz automatyczne mieszanie
+example.ranch.rule.butcher_dead,Opraw martwe szczury
+example.ranch.rule.cull,Ubij szczury
+example.ranch.rule.feed,Uzupełnij paszę
+example.ranch.rule.store_meat,Zmagazynuj mięso szczurów
+example.ranch.rule.store_poop,Usuń odchody
+example.ranch.sel.breeders,Szczury hodowlane
+example.ranch.sel.cage,Klatki dla zwierząt
+example.ranch.sel.dead,Martwe szczury
+example.ranch.sel.dispenser,Dozowniki w klatkach
+example.ranch.sel.fat,Szczury zdatne do uboju
+example.ranch.sel.food,Pasza roślinna
+example.ranch.sel.knives,Noże
+example.ranch.sel.low_feed,Dozowniki z małą ilością paszy
+example.ranch.sel.meat,Mięso w klatkach
+example.ranch.sel.poop,Odchody
+example.ranch.sel.sire_f,Samice hodowlane
+example.ranch.sel.sire_m,Samce hodowlane
+example.ranch.sel.unblended,Dozowniki bez automatycznego mieszania
+example.ranch.store,Magazyn fermy
+example.sel.any_storage,Magazyny z wolnym miejscem
+example.sel.store_or_any,{0} lub inny magazyn
+example.spec.aqua.name,Akwakultura
+example.spec.aqua.note,"Napełniaj zbiorniki, karm głodne ryby, usuwaj martwe, zostaw parę hodowlaną i ubijaj resztę"
+example.spec.gun.name,Druk 3D broni
+example.spec.gun.note,"Wkładaj chipy, uzupełniaj filament i odbieraj gotową broń"
+example.spec.hydro.name,Hydroponika
+example.spec.hydro.note,"Zbieraj plony, siej nasiona, wymieniaj butelki, dolewaj wodę i dodawaj tabletki odżywcze"
+example.spec.ranch.name,Hodowla szczurów
+example.spec.ranch.note,"Włączaj automatyczne mieszanie, uzupełniaj dozowniki, zostawiaj stado (1M/2F), ubijaj dorosłe szczury i usuwaj odchody"
+example.spec.tidy.name,Porządkowanie
+example.spec.tidy.note,Sortuj leki i żywność do [Magazyn leków] i [Magazyn żywności] (wiele miejsc może mieć tę samą nazwę)
+example.spec.water.name,Sprzedaż wody
+example.spec.water.note,"Drukuj butelki, nalewaj wodę, oczyszczaj do wody bazowej, butelkuj i wykładaj na półki, zbieraj gotówkę"
+example.tidy.rule.food,Uporządkuj żywność
+example.tidy.rule.medical,Uporządkuj leki
+example.tidy.sel.loose_food,Żywność do uporządkowania
+example.tidy.sel.loose_medical,Leki do uporządkowania
+example.tidy.store.food,Magazyn żywności
+example.tidy.store.medical,Magazyn leków
+example.water.rule.bottle,Butelkuj wodę
+example.water.rule.cash,Zbierz utarg
+example.water.rule.fill_empty,Napełnij puste dzbanki
+example.water.rule.fountain_jug,Włóż dzbanek do dystrybutora
+example.water.rule.fountain_refill,Uzupełnij dystrybutor
+example.water.rule.print_bottle,Drukuj butelki
+example.water.rule.purify,Oczyść surową wodę
+example.water.rule.take_bottle,Weź butelki
+example.water.rule.take_purified,Weź oczyszczone dzbanki
+example.water.sel.cash,Dystrybutory z utargiem
+example.water.sel.empty_bottles,Puste butelki na wodę
+example.water.sel.empty_jugs,Puste dzbanki na wodę
+example.water.sel.f_base,Zbiorniki dystrybutora z wodą bazową
+example.water.sel.f_low,Zbiorniki dystrybutora z małą ilością wody
+example.water.sel.fountain,Dystrybutory wody
+example.water.sel.full_bottles,Napełnione butelki z wodą
+example.water.sel.one_pure,Jeden dzbanek czystej wody
+example.water.sel.printed,Wydrukowane butelki
+example.water.sel.printer,Drukarki butelek
+example.water.sel.pur_box,Dzbanki w oczyszczaczu
+example.water.sel.pur_done,Oczyszczone dzbanki
+example.water.sel.pure_jugs,Dzbanki z czystą wodą
+example.water.sel.purifier,Oczyszczacze wody
+example.water.sel.raw_jug,Jeden dzbanek surowej wody
+example.water.store,Magazyn wody
+# ==============================================================================
+# Other Localization Keys
+# Remaining rule templates and misc labels.
+# Placeholders: {0} = condition, {1} = action.
+# ==============================================================================
+rule.no_actions,(brak ustawionej akcji)
+rule.when_arrow,Gdy {0} → {1}
+cond.equal,Równe
+cond.not_equal,Różne
+cond.text_input,Tekst
+layout.btn_more_width,84
+layout.editor.when_dropdown_width,190
+layout.new_schedule.btn_width,220
+layout.sim.start_width,105
+conj.and,i
+conj.or,lub
+
+# ==============================================================================
+# Dzienny raport praktykanta (gazeta wydawana po porannej zmianie)
+# ==============================================================================
+daily.all_fine,Wszystko w porządku
+daily.cannot_open,Obecnie nie można otworzyć dziennego raportu praktykanta.
+daily.col.ap,AP
+daily.col.morning,Rano
+daily.col.night,Noc
+daily.dateline,Dzień {0} · Wczorajsza noc + Dzisiejszy poranek
+daily.dateline_morning,Dzień {0} · Dzisiejszy poranek
+daily.deferred,1 przedmiot odłożony z powodu braku AP|{0} przedmioty odłożone z powodu braku AP|{0} przedmiotów odłożonych z powodu braku AP
+daily.flow_problems,1 problem|{0} problemy|{0} problemów
+daily.flows_more,Jeszcze {0} procedur…
+daily.footer,Szczegóły w zakładce „Raporty” krótkofalówki
+daily.log_issued,Wydano nowy dzienny raport praktykanta.
+daily.log_none,Dziś żaden praktykant nie ma porannej zmiany; brak dziennego raportu praktykanta.
+daily.log_replaced,Stary dzienny raport praktykanta został zutylizowany; wydano nowy.
+daily.problems_more,{0} więcej
+daily.section.apprentices,Praktykanci
+daily.section.flows,Procedury
+daily.section.problems,Problemy
+daily.stat.ap,Zużyte AP
+daily.stat.done,Ukończone
+daily.stat.problems,Problemy
+daily.stat.wage,Pensje
+daily.strike,Wczoraj w nocy 1 praktykant strajkował z powodu braku funduszy|Wczoraj w nocy {0} praktykantów strajkowało z powodu braku funduszy|Wczoraj w nocy {0} praktykantów strajkowało z powodu braku funduszy
+daily.publisher,Mod Probably Automated
+daily.title,Dzienny raport praktykanta
+item.daily.desc,"Podsumowanie pracy praktykantów z wczorajszej nocy i dzisiejszego poranka, wydane przez mod Probably Automated. Kliknij dwukrotnie, aby przeczytać."
+item.daily.name,Dzienny raport praktykanta

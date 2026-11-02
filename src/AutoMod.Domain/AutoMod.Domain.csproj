@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 纯领域：排班引擎、学徒、报告、模拟世界、存档数据。不引用 Unity / 游戏程序集。
+       目标 netstandard2.1：游戏是 Unity Mono。JSON 用游戏自带的 Newtonsoft.Json 13（编译时引用 NuGet 包，运行时用游戏的那份，不随 mod 发布）。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ProbablyAutomated.Domain</AssemblyName>
+    <RootNamespace>AutoMod.Domain</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+</Project>

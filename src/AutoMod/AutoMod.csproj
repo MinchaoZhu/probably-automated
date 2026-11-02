@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- 游戏自带 mod 系统（Probably Stolen 完整版，Unity Mono）的 mod：IMod 入口，不打 Harmony 补丁。
+       发布版（Release）不含任何开发诊断代码，不需要任何能力（游戏的 mod-scan 应为 declared none）。
+       开发诊断（可选）：-p:DevSourceDir=<目录> 把该目录下的 *.cs 一并编译进来并定义 DEV，入口处的 #if DEV 会启动其中的 Probe。 -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ProbablyAutomated</AssemblyName>
+    <RootNamespace>AutoMod</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- 游戏安装目录：默认是 Windows 上 Steam 的默认位置；其它位置用 dotnet build -p:GameDir=... 或环境变量 GameDir 指定 -->
+    <GameDir Condition="'$(GameDir)' == ''">C:/Program Files (x86)/Steam/steamapps/common/Probably Stolen</GameDir>
+    <ManagedDir>$(GameDir)/Probably Stolen_Data/Managed</ManagedDir>
+    <ModInstallDir>$(GameDir)/Mods/ProbablyAutomated</ModInstallDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(DevSourceDir)' != ''">
+    <DefineConstants>$(DefineConstants);DEV</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(DevSourceDir)' != ''">
+    <Compile Include="$(DevSourceDir)/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 游戏和 Unity 的程序集：只编译时引用，不复制 -->
+    <Reference Include="$(ManagedDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(ManagedDir)/UnityEngine*.dll" Private="false" />
+    <Reference Include="$(ManagedDir)/Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="$(ManagedDir)/Unity.Localization.dll" Private="false" />
+    <Reference Include="$(ManagedDir)/Newtonsoft.Json.dll" Private="false" />
+    <!-- 开发诊断代码（DevSourceDir）用 Harmony 拦截存档、追踪调用 -->
+    <Reference Include="$(ManagedDir)/0Harmony.dll" Private="false" Condition="'$(DevSourceDir)' != ''" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 纯领域（排班引擎、学徒、报告、模拟、存档数据），单独一个 DLL；Newtonsoft 用游戏的 -->
+    <ProjectReference Include="../AutoMod.Domain/AutoMod.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 随 mod 发布的文件：清单、贴图（Textures/Items 物品图，对讲机图由 art/intercom.py 生成） -->
+    <ModFile Include="ModFiles/**" />
+  </ItemGroup>
+
+  <!-- 编译后装进 <游戏>/Mods/ProbablyAutomated/。只在游戏关闭时编译；只想编译、不安装（比如 CI）加 -p:InstallMod=false。 -->
+  <Target Name="InstallMod" AfterTargets="Build" Condition="'$(InstallMod)' != 'false'">
+    <MakeDir Directories="$(ModInstallDir)" />
+    <Copy SourceFiles="$(TargetPath);$(TargetDir)ProbablyAutomated.Domain.dll" DestinationFolder="$(ModInstallDir)" />
+    <Copy SourceFiles="@(ModFile)" DestinationFiles="@(ModFile->'$(ModInstallDir)/%(RecursiveDir)%(Filename)%(Extension)')" />
+    <!-- 带开发诊断的构建会读写文件：只改已安装的清单，声明 files；发布清单（ModFiles/manifest.xml）仍然是 <Capabilities /> -->
+    <Exec Condition="'$(DevSourceDir)' != ''" Command="sed -i 's#&lt;Capabilities /&gt;#&lt;Capabilities&gt;&lt;Capability&gt;files&lt;/Capability&gt;&lt;/Capabilities&gt;#' &quot;$(ModInstallDir)/manifest.xml&quot;" />
+    <Message Importance="high" Text="Installed into $(ModInstallDir)" />
+  </Target>
+
+</Project>
