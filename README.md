@@ -54,9 +54,10 @@ the projects and C# namespaces still say `AutoMod`, the mod's former name.
 
 ## Reporting problems
 
-Please include the version of the mod and of the game, the list of other enabled mods, a description of what you did,
-and `Player.log` from `%USERPROFILE%\AppData\LocalLow\Questing Goose Studio\Probably Stolen\`
-(right after the problem, before restarting the game; the previous run is kept as `Player-prev.log`).
+Open an issue here, or use the feedback page at <https://mod.37373721.xyz> (no account; upload a description and the log, then
+quote the code you get). Please include what you did and `Player.log` from `%USERPROFILE%\AppData\LocalLow\Questing Goose Studio\Probably Stolen\`
+(right after the problem, before restarting the game; the previous run is kept as `Player-prev.log`). The log already lists the versions
+of the game and the mod and the other enabled mods.
 
 ## License
 
@@ -70,4 +71,4 @@ Probably Stolen 的 mod：雇学徒、写流程，让他们替你上早班、晚
 纯领域部分（流程引擎、学徒、报告、模拟、多语言核心）不依赖游戏，单独有单元测试；mod 本体用游戏自带的 mod 系统加载，发布版不需要任何能力、不打 Harmony 补丁。
 
 编译：装好 .NET 8 SDK 和 Steam 版游戏，关闭游戏后运行 `dotnet build src/AutoMod -c Release -p:GameDir="游戏目录"`，产物会装进 `<游戏>/Mods/ProbablyAutomated`。
-反馈问题时请附上 mod 和游戏的版本、启用的其它 mod、操作过程和 `Player.log`（位置见上）。
+反馈问题请在 GitHub 提 issue，或到 <https://mod.37373721.xyz> 上传描述和 `Player.log`（位置见上，日志里已有 mod 和游戏的版本和启用的其它 mod），把得到的编号告诉作者。
