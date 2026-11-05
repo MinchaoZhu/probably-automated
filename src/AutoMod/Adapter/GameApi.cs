@@ -70,7 +70,6 @@ public static class GameApi
     /// <summary>店里的全部物品（含嵌套）。</summary>
     public static List<GameItem> CollectAll()
     {
-        using var _p = Domain.Perf.Begin("scan");
         var seen = new HashSet<GameItem>();
         var result = new List<GameItem>();
         var store = Store;

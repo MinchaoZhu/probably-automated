@@ -180,8 +180,7 @@ public class Interpreter
         double startUsed = a.ApUsed;
         int Spent() => ApMath.Ceil(a.ApUsed) - ApMath.Ceil(startUsed);
         gr.ApTotal = a.ApLeft;
-        Dictionary<string, double> profile;
-        using (Perf.Begin("profile")) profile = Proficiency.ProfileOf(_d, s, _w);
+        var profile = Proficiency.ProfileOf(_d, s, _w);
         int effective = Proficiency.Effective(a, profile);
         gr.Proficiency[a.Name] = effective;
         gr.Mult = Proficiency.CostMult(effective);
@@ -199,8 +198,7 @@ public class Interpreter
             var rr = new RuleRunReport { RuleId = rule.Id, Name = rule.Name };
             gr.Rules.Add(rr);
             if (!rule.Enabled) { rr.Pre = PreResult.Disabled; continue; }
-            List<string> errs;
-            using (Perf.Begin("check")) errs = Errors?.Invoke(s, rule) ?? new List<string>();
+            var errs = Errors?.Invoke(s, rule) ?? new List<string>();
             if (errs.Count > 0)
             {
                 rr.Pre = PreResult.Broken;

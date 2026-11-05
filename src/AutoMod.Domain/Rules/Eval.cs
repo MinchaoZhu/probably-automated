@@ -169,7 +169,6 @@ public static class Eval
         if (id == null) return SelVal.Empty;
         if (c.SelCache.TryGetValue(id, out var cached)) return cached;
         var s = Sel(c, id);
-        using var _p = c.Evaluating.Count == 0 ? Perf.Begin("selector") : default; // 只计最外层：来源筛选器的用时已经含在里面
         if (s == null || !c.Evaluating.Add(id)) return SelVal.Empty; // 不存在，或意外的循环引用
         try
         {

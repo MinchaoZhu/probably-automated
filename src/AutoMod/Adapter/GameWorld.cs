@@ -104,7 +104,6 @@ public class GameWorld : IWorld
                 if (!Alive(_shop[i])) { _shop = null; break; }
         if (_shop == null)
         {
-            using var _p = Perf.Begin("shop");
             _shop = GameApi.ShopItems();
             _shopItems = _shop.ConvertAll(x => (object)x);
         }
@@ -288,7 +287,6 @@ public class GameWorld : IWorld
 
     public bool Fits(object box, object item, string slot = null)
     {
-        using var _p = Perf.Begin("fits");
         try { return Node((GameItem)box, slot) is { } node && GraphUtils.CanAccept(node, (GameItem)item); }
         catch { return false; }
     }
@@ -354,7 +352,6 @@ public class GameWorld : IWorld
 
     public StepResult Place(object item, object box, string slot = null)
     {
-        using var _p = Perf.Begin("place");
         var it = (GameItem)item;
         var b = (GameItem)box;
         try
@@ -545,7 +542,7 @@ public class GameWorld : IWorld
             var dialog = GameDialog.Snapshot();
 
             _stale = true; // 下面扫描完才知道店里现在有什么
-            using (Perf.Begin("act")) act();
+            act();
 
             // 游戏用通用对话框回话：单按钮是“做不了”的提示（缺配料、没水……），照游戏的话报原因，下次条件满足了照样做；
             // 双按钮是要玩家确认（例如清空），学徒不替玩家确认
