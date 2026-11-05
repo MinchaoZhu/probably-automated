@@ -57,6 +57,8 @@ public static class MainWindow
 
     /// <summary>学徒页里展开的学徒（显示熟练度、培训、解雇）。</summary>
     private static string _openApp;
+    /// <summary>正在改名的学徒（Id）。</summary>
+    private static string _renamingApp;
 
     private static void BuildApprentices(CustomUIBuilder b)
     {
@@ -78,7 +80,7 @@ public static class MainWindow
     private static void ApprenticeRow(CustomUIBuilder b, Apprentice app, int index)
     {
         var st = Automation.State;
-        bool open = _openApp == app.Name;
+        bool open = _openApp == app.Id;
         var duties = app.Duties.Where(d => st.Rules.Schedules.Any(x => x.Id == d.ScheduleId)).ToList();
         string status = app.Striking ? Table.Status(Domain.L.T("intercom.status_strike"), Tone.Bad)
             : !app.Paid ? Table.Status(Domain.L.T("intercom.status_rest"), Tone.Muted)
@@ -86,7 +88,18 @@ public static class MainWindow
         Table.BeginItem(b, index, open);
 
         b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
-        b.AddLabel(Tone.Bold(app.Name));
+        if (_renamingApp == app.Id)
+            b.AddInput(Domain.L.T("intercom.rename_placeholder"), app.Name, Ui.AS(v =>
+            {
+                string name = v?.Trim();
+                // 报告、日报按名字认学徒：不能和别的学徒重名（中介雇人时也保证不重名）
+                if (!string.IsNullOrEmpty(name) && Automation.State.Apprentices.Any(x => x != app && x.Name == name)) Toast.Show(Domain.L.T("intercom.rename_taken", name));
+                else if (!string.IsNullOrEmpty(name)) app.Name = name;
+                _renamingApp = null;
+                Session.Changed();
+                Show();
+            })).Width(140);
+        else b.AddButton(app.Name, Ui.A(() => { _renamingApp = app.Id; Show(); })).Tip(Domain.L.T("intercom.rename_tip"));
         if (app.Training != null) b.AddLabel(Tone.Small(Tone.Color(Domain.L.T("intercom.training_pending"), Tone.Warn))).Tip(Domain.L.T("intercom.training_pending_tip", Agency.TrainingAp));
         b.AddFlexibleSpace().AddLabel(status).End();
 
@@ -113,7 +126,7 @@ public static class MainWindow
         b.AddFlexibleSpace()
             .AddButton("↑", Ui.A(() => Move(app, -1))).Width(30).Tip(Domain.L.T("intercom.shift_order_tip"))
             .AddButton("↓", Ui.A(() => Move(app, +1))).Width(30);
-        Table.More(b, open, () => { _openApp = open ? null : app.Name; Show(); });
+        Table.More(b, open, () => { _openApp = open ? null : app.Id; Show(); });
         b.End();
 
         if (open)

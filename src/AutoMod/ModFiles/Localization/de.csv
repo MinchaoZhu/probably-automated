@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,Wähle eine Routine für diesen Lehrling
 intercom.prof_empty,Fert. —
 intercom.prof_score,Fert. {0}
 intercom.prof_tip,"Stufen-Mindestwert {0}, gerechnet als {1}, AP-Kosten ×{2}"
+intercom.rename_placeholder,Name
+intercom.rename_taken,Ein anderer Lehrling heißt bereits {0}
+intercom.rename_tip,Zum Umbenennen klicken
 intercom.select_schedule,(Routine auswählen)
 intercom.shift_order_tip,Früher gelistete Lehrlinge arbeiten zuerst und werden bei Geldmangel zuerst bezahlt
 intercom.status_deferred,{0} Gegenst. aufgeschoben

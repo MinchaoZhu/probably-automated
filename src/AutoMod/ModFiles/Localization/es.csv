@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,Selecciona la rutina para asignar al aprendiz
 intercom.prof_empty,Comp. —
 intercom.prof_score,Comp. {0}
 intercom.prof_tip,"Garantía de nivel {0}, calculada como {1}, coste de PA ×{2}"
+intercom.rename_placeholder,Nombre
+intercom.rename_taken,Otro aprendiz ya se llama {0}
+intercom.rename_tip,Haz clic para renombrar
 intercom.select_schedule,(Seleccionar rutina)
 intercom.shift_order_tip,Los aprendices anteriores actúan primero y cobran primero si falta efectivo
 intercom.status_deferred,{0} pospuestos por PA

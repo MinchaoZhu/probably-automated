@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,Wybierz procedurę do przypisania praktykantowi
 intercom.prof_empty,Biegł. —
 intercom.prof_score,Biegł. {0}
 intercom.prof_tip,"Minimum poziomu {0}, liczone jako {1}, koszt AP ×{2}"
+intercom.rename_placeholder,Nazwa
+intercom.rename_taken,Inny praktykant ma już imię {0}
+intercom.rename_tip,Kliknij, aby zmienić nazwę
 intercom.select_schedule,(Wybierz procedurę)
 intercom.shift_order_tip,Wcześniejsi praktykanci wykonują zadania i otrzymują wypłatę w pierwszej kolejności
 intercom.status_deferred,{0} pominiętych (AP)

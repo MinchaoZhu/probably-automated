@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,Выберите процесс для назначе
 intercom.prof_empty,Навык —
 intercom.prof_score,Навык {0}
 intercom.prof_tip,"Гарантия уровня {0}, расчёт по {1}, затраты ОД ×{2}"
+intercom.rename_placeholder,Имя
+intercom.rename_taken,Другого ученика уже зовут {0}
+intercom.rename_tip,Нажмите, чтобы переименовать
 intercom.select_schedule,(Выбрать процесс)
 intercom.shift_order_tip,Ученики выше в списке действуют первыми и получают оплату первыми при нехватке денег
 intercom.status_deferred,{0} отложено (мало AP)

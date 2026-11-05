@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,选择要指派给该学徒的流程
 intercom.prof_empty,熟练度 —
 intercom.prof_score,熟练度 {0}
 intercom.prof_tip,等级保底 {0}，按 {1} 计，AP 花费 ×{2}
+intercom.rename_placeholder,名字
+intercom.rename_taken,已有学徒叫 {0}
+intercom.rename_tip,点击改名
 intercom.select_schedule,（选择流程）
 intercom.shift_order_tip,排在前面的学徒先执行，资金不足时先发工资
 intercom.status_deferred,{0} 件因 AP 不足未做

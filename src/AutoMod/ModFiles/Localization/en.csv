@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,Select routine to assign to apprentice
 intercom.prof_empty,Prof. —
 intercom.prof_score,Prof. {0}
 intercom.prof_tip,"Level min {0}, calculated as {1}, AP cost ×{2}"
+intercom.rename_placeholder,Name
+intercom.rename_taken,Another apprentice is already named {0}
+intercom.rename_tip,Click to rename
 intercom.select_schedule,(Select routine)
 intercom.shift_order_tip,Apprentices listed earlier execute first and get paid first when cash is low
 intercom.status_deferred,{0} items skipped (low AP)

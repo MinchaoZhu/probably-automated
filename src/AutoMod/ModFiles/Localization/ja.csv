@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,見習いに割り当てるルーチンを選択
 intercom.prof_empty,熟練度 —
 intercom.prof_score,熟練度 {0}
 intercom.prof_tip,レベル保証 {0}、計算値 {1}、AP消費 ×{2}
+intercom.rename_placeholder,名前
+intercom.rename_taken,{0} という名前の見習いがすでにいます
+intercom.rename_tip,クリックで名前を変更
 intercom.select_schedule,（ルーチンを選択）
 intercom.shift_order_tip,上部にいる見習いから順に実行し、資金不足時は優先して給与が支払われます
 intercom.status_deferred,AP不足で{0}件未処理

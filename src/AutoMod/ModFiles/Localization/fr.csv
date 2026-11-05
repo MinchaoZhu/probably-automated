@@ -649,6 +649,9 @@ intercom.pick_schedule_tip,Sélectionnez la routine à assigner à l'apprenti
 intercom.prof_empty,Maît. —
 intercom.prof_score,Maît. {0}
 intercom.prof_tip,"Minimum niveau {0}, calculé comme {1}, coût en PA ×{2}"
+intercom.rename_placeholder,Nom
+intercom.rename_taken,Un autre apprenti s'appelle déjà {0}
+intercom.rename_tip,Cliquer pour renommer
 intercom.select_schedule,(Choisir une routine)
 intercom.shift_order_tip,Les apprentis en haut agissent d'abord et sont payés en priorité en cas de manque de fonds
 intercom.status_deferred,{0} objets ignorés (PA)
