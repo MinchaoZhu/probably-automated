@@ -60,11 +60,13 @@ public static class TraitBindings
             foreach (var (trait, test) in Bindings)
                 try { if (test(it)) set.Add(trait); } catch { }
             // 游戏的物品家族标记（X_ITEM_TAG）自动成类别 family:X；上面已经单独绑定的家族不重复
-            foreach (var kv in ItemFacts.Tags(it.state))
-            {
-                var m = kv.Key.EndsWith("_ITEM_TAG") && kv.Value.valueEnabled ? kv.Key[..^"_ITEM_TAG".Length] : null;
-                if (m != null && !BoundFamilies.Contains(m)) set.Add(Catalog.FamilyPrefix + m);
-            }
+            var tags = it.state?.dict;
+            if (tags != null)
+                foreach (var kv in tags)
+                {
+                    var m = kv.Key.EndsWith("_ITEM_TAG", StringComparison.Ordinal) && kv.Value.valueEnabled ? kv.Key[..^"_ITEM_TAG".Length] : null;
+                    if (m != null && !BoundFamilies.Contains(m)) set.Add(Catalog.FamilyPrefix + m);
+                }
             var types = it.itemTypes;
             for (int i = 0; types != null && i < types.Count; i++) set.Add(Catalog.ItemTypePrefix + types[i]);
             if (it.identifier != null) Profiles[it.identifier] = set;

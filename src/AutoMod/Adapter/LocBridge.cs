@@ -41,6 +41,7 @@ public static class LocBridge
         Dictionary<string, string> cur = null, en = null;
         t?.TryGetValue(code, out cur);
         t?.TryGetValue("en", out en);
+        if (code != L.Locale) Names.ClearCache(); // 记住的物品名是上一种语言的
         L.Use(code, cur, en);
     }
 

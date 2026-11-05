@@ -15,22 +15,41 @@ public class GameWorld : IWorld
 {
     private Dictionary<int, GameItem> _byUid;
 
+    /// <summary>上次扫描时店里的全部物品，和 _byUid 一起更新。</summary>
+    private HashSet<GameItem> _all;
+
+    /// <summary>上次扫描在哪一帧；_stale = 那之后店里的物品可能多了或少了而没有记进来。</summary>
+    private int _scanFrame = -1;
+    private bool _stale;
+
     public GameWorld()
     {
         Refresh();
     }
 
+    /// <summary>上次扫描时店里的物品数（含嵌套、待售的）。</summary>
+    public int ItemCount => _byUid.Count;
+
     /// <summary>重新收集物品（uid 索引）。动作会创建新物品（例：生肉），解析不到时自动刷新。</summary>
-    public void Refresh()
+    public void Refresh() => Adopt(GameApi.CollectAll());
+
+    /// <summary>用一次扫描的结果更新索引；跟着店里物品变的缓存一起作废。</summary>
+    private void Adopt(List<GameItem> items)
     {
-        _byUid = new Dictionary<int, GameItem>();
+        _byUid = new Dictionary<int, GameItem>(items.Count);
+        _all = new HashSet<GameItem>(items);
         _sameKind = null;
         _shop = null;
-        foreach (var it in GameApi.CollectAll())
+        _named = null;
+        _slots.Clear();
+        for (int i = 0; i < items.Count; i++)
         {
+            var it = items[i];
             Names.LearnKind(it);
             _byUid[it.uniqueId] = it;
         }
+        _scanFrame = UnityEngine.Time.frameCount;
+        _stale = false;
     }
 
     /// <summary>店里任意一件这种物品（按 uid 最小）；没有返回 null。</summary>
@@ -75,41 +94,95 @@ public class GameWorld : IWorld
     // ================= 读取 =================
 
     private List<GameItem> _shop;
+    private IReadOnlyList<object> _shopItems;
 
-    /// <summary>全店（GameApi.ShopItems），和 _byUid 一起刷新。</summary>
+    /// <summary>全店（GameApi.ShopItems），和 _byUid 一起刷新；其中有物品不在了也重新收集。</summary>
     public IReadOnlyList<object> Shop()
     {
-        if (_shop == null || _shop.Any(x => !Alive(x))) _shop = GameApi.ShopItems();
-        return _shop.Cast<object>().ToList();
+        if (_shop != null)
+            for (int i = 0; i < _shop.Count; i++)
+                if (!Alive(_shop[i])) { _shop = null; break; }
+        if (_shop == null)
+        {
+            using var _p = Perf.Begin("shop");
+            _shop = GameApi.ShopItems();
+            _shopItems = _shop.ConvertAll(x => (object)x);
+        }
+        return _shopItems;
     }
+
+    /// <summary>设备名 → 起了这个名字的东西（按 uid），和 _byUid 一起刷新。</summary>
+    private Dictionary<string, List<GameItem>> _named;
 
     public IReadOnlyList<object> Named(string name)
     {
         if (string.IsNullOrEmpty(name)) return Array.Empty<object>();
         if (_byUid == null) Refresh();
-        return _byUid.Values.Where(it => Alive(it) && GameApi.DeviceName(it) == name).OrderBy(it => it.uniqueId).Cast<object>().ToList();
+        if (_named == null)
+        {
+            _named = new Dictionary<string, List<GameItem>>();
+            foreach (var it in _byUid.Values)
+            {
+                if (GameApi.DeviceName(it) is not { } n) continue;
+                if (!_named.TryGetValue(n, out var l)) _named[n] = l = new List<GameItem>();
+                l.Add(it);
+            }
+            foreach (var l in _named.Values) l.Sort((a, b) => a.uniqueId.CompareTo(b.uniqueId));
+        }
+        if (!_named.TryGetValue(name, out var hit)) return Array.Empty<object>();
+        var list = new List<object>(hit.Count);
+        foreach (var it in hit)
+            if (Alive(it)) list.Add(it);
+        return list;
     }
 
     public string DeviceName(object item) => GameApi.DeviceName((GameItem)item);
 
+    /// <summary>机器窗口的格子，和 _byUid 一起刷新（读一次要翻机器窗口的全部界面节点）。</summary>
+    private readonly Dictionary<GameItem, List<MachineSlots.Slot>> _slots = new();
+
+    private List<MachineSlots.Slot> SlotsOf(GameItem box)
+    {
+        if (!_slots.TryGetValue(box, out var list)) _slots[box] = list = MachineSlots.Of(box);
+        return list;
+    }
+
+    private MachineSlots.Slot FindSlot(GameItem box, string role)
+    {
+        foreach (var s in SlotsOf(box))
+            if (s.Role == role) return s;
+        return null;
+    }
+
     public IReadOnlyList<object> Contents(object box, string role)
     {
         var b = (GameItem)box;
-        var kids = GameApi.DirectChildren(b);
+        var list = new List<object>();
         if (role == "battery")
         {
             var s = GameApi.BatterySlot(b);
-            if (s == null) return Array.Empty<object>();
-            return kids.Where(c => ReferenceEquals(c.parentInventory, s)).Cast<object>().ToList();
+            if (s == null) return list;
+            foreach (var c in GameApi.DirectChildren(b))
+                if (ReferenceEquals(c.parentInventory, s)) list.Add(c);
+            return list;
         }
-        if (role == "filter") return kids.Where(c => Catalog.Closure(TraitBindings.TraitsOf(c)).Contains("filter")).Cast<object>().ToList();
+        if (role == "filter")
+        {
+            foreach (var c in GameApi.DirectChildren(b))
+                if (Catalog.HasTrait(this, c, "filter")) list.Add(c);
+            return list;
+        }
         if (role != null && role.StartsWith(SlotNames.Prefix))
         {
-            var slot = MachineSlots.Find(b, role[SlotNames.Prefix.Length..]);
-            if (slot == null) return Array.Empty<object>();
-            return kids.Where(c => slot.Inventories.Any(inv => ReferenceEquals(c.parentInventory, inv))).Cast<object>().ToList();
+            var slot = FindSlot(b, role[SlotNames.Prefix.Length..]);
+            if (slot == null) return list;
+            foreach (var c in GameApi.DirectChildren(b))
+                foreach (var inv in slot.Inventories)
+                    if (ReferenceEquals(c.parentInventory, inv)) { list.Add(c); break; }
+            return list;
         }
-        return kids.Cast<object>().ToList();
+        foreach (var c in GameApi.DirectChildren(b)) list.Add(c);
+        return list;
     }
 
     public object Parent(object item) => GameApi.ParentContainer((GameItem)item);
@@ -215,15 +288,16 @@ public class GameWorld : IWorld
 
     public bool Fits(object box, object item, string slot = null)
     {
+        using var _p = Perf.Begin("fits");
         try { return Node((GameItem)box, slot) is { } node && GraphUtils.CanAccept(node, (GameItem)item); }
         catch { return false; }
     }
 
     /// <summary>放东西的位置：整个容器（游戏自己挑格子），或指定格子（机器窗口的面板）的第一个库存；格子不存在返回 null。</summary>
-    private static GraphNodeStorage Node(GameItem box, string slot)
+    private GraphNodeStorage Node(GameItem box, string slot)
     {
         if (string.IsNullOrEmpty(slot)) return box;
-        return MachineSlots.Find(box, slot.StartsWith(SlotNames.Prefix) ? slot[SlotNames.Prefix.Length..] : slot)?.Inventories.FirstOrDefault();
+        return FindSlot(box, slot.StartsWith(SlotNames.Prefix) ? slot[SlotNames.Prefix.Length..] : slot)?.Inventories.FirstOrDefault();
     }
 
     public string Describe(object item)
@@ -280,6 +354,7 @@ public class GameWorld : IWorld
 
     public StepResult Place(object item, object box, string slot = null)
     {
+        using var _p = Perf.Begin("place");
         var it = (GameItem)item;
         var b = (GameItem)box;
         try
@@ -288,12 +363,20 @@ public class GameWorld : IWorld
             var node = Node(b, slot);
             if (node == null) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_no_slot", BoxName(b), SlotNames.Name(slot, new[] { ((GameItem)b).identifier })) };
             if (!GraphUtils.CanAccept(node, it)) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_full", BoxName(b)) };
-            if (GraphUtils.TryAcceptAll(node, it, -1) != 0) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_cannot_accept", BoxName(b)) };
+            int rest = GraphUtils.TryAcceptAll(node, it, -1);
+            _slots.Clear(); // 放进机器的东西（例如模块）可能让它的窗口多出格子
+            // 只是换了地方时店里的物品还是那些；物品没了（游戏把它并进了别的物品）或只放进去一部分时，下次作用前重新扫描
+            if (rest != 0 || !Alive(it)) _stale = true;
+            if (rest != 0) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_cannot_accept", BoxName(b)) };
             var r = StepResult.Done(Domain.L.T("gameworld.move_to", BoxName(b)));
             r.Effects.Add(Moved(it, from, b));
             return r;
         }
-        catch (Exception ex) { return StepResult.Fail(Domain.L.T("gameworld.move_error", ex.Message), FailCode.Error); }
+        catch (Exception ex)
+        {
+            _stale = true;
+            return StepResult.Fail(Domain.L.T("gameworld.move_error", ex.Message), FailCode.Error);
+        }
     }
 
     public StepResult Swap(object a, object b)
@@ -304,12 +387,17 @@ public class GameWorld : IWorld
         {
             var (tp, rp) = (GameApi.ParentContainer(t), GameApi.ParentContainer(r));
             if (!GraphUtils.SwapItemsInPlace(t, r)) return StepResult.Fail(Domain.L.T("gameworld.swap_not_allowed"));
+            _slots.Clear();
             var res = StepResult.Done(Domain.L.T("gameworld.swap_with", Describe(r)));
             res.Effects.Add(Moved(r, rp, tp));
             res.Effects.Add(Moved(t, tp, rp));
             return res;
         }
-        catch (Exception ex) { return StepResult.Fail(Domain.L.T("gameworld.swap_error", ex.Message), FailCode.Error); }
+        catch (Exception ex)
+        {
+            _stale = true;
+            return StepResult.Fail(Domain.L.T("gameworld.swap_error", ex.Message), FailCode.Error);
+        }
     }
 
     // ================= 店里存放着的物品、作用 =================
@@ -448,13 +536,16 @@ public class GameWorld : IWorld
     {
         try
         {
-            var before = new HashSet<GameItem>(GameApi.CollectAll());
+            // 执行前店里有哪些物品：上次扫描之后（同一帧里）只有这个世界自己的动作动过店里，结果都已记进来，不用再扫
+            if (_stale || _all == null || _scanFrame != UnityEngine.Time.frameCount) Refresh();
+            var before = _all;
             var sides = new[] { Before(t), Before(tool) }.Where(x => x != null).ToList();
             int cash0 = Cash.Current;
             var ui = GameUi.Snapshot();
             var dialog = GameDialog.Snapshot();
 
-            act();
+            _stale = true; // 下面扫描完才知道店里现在有什么
+            using (Perf.Begin("act")) act();
 
             // 游戏用通用对话框回话：单按钮是“做不了”的提示（缺配料、没水……），照游戏的话报原因，下次条件满足了照样做；
             // 双按钮是要玩家确认（例如清空），学徒不替玩家确认
@@ -471,7 +562,8 @@ public class GameWorld : IWorld
             }
 
             var now = GameApi.CollectAll();
-            var nowSet = new HashSet<GameItem>(now);
+            Adopt(now);
+            var nowSet = _all;
             var created = now.Where(i => !before.Contains(i)).ToList();
             var res = new StepResult { Ok = true, Label = label, Changes = new List<StepChange>(), OtherParts = new List<string>() };
             int other = 0;
@@ -524,7 +616,6 @@ public class GameWorld : IWorld
                 res.OtherParts.Add(Domain.L.T("report.product_output", prodNames) + unplaced);
             }
             res.Text = Domain.Rules.Text.FormatMerged(label, res.Changes, res.OtherParts);
-            Refresh();
             return res;
         }
         catch (Exception ex) { return StepResult.Fail(Domain.L.T("gameworld.action_error", label, ex.Message), FailCode.Error); }
@@ -540,8 +631,14 @@ public class GameWorld : IWorld
         return n.HasValue ? n.Value.ToString("0.##") : Str(it, id);
     }
 
-    private static Dictionary<string, string> TagValues(GameItem it) =>
-        ItemFacts.Tags(it.state).ToDictionary(kv => kv.Key, kv => $"{kv.Value.valueEnabled}|{kv.Value.valueBool}|{ItemFacts.Number(kv.Value)}|{kv.Value.valueString}");
+    private static Dictionary<string, string> TagValues(GameItem it)
+    {
+        var values = new Dictionary<string, string>();
+        var dict = it.state?.dict;
+        if (dict == null) return values;
+        foreach (var kv in dict) values[kv.Key] = $"{kv.Value.valueEnabled}|{kv.Value.valueBool}|{ItemFacts.Number(kv.Value)}|{kv.Value.valueString}";
+        return values;
+    }
 
     private static int Diff(Dictionary<string, string> a, Dictionary<string, string> b) =>
         a.Keys.Union(b.Keys).Count(k => !a.TryGetValue(k, out var x) || !b.TryGetValue(k, out var y) || x != y);

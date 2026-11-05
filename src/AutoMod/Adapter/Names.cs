@@ -16,17 +16,25 @@ public static class Names
         ["serum_green"] = "livestock_immunity",
     };
 
+    /// <summary>Kind() 从游戏和 mod 的本地化表查到的名字（一种物品只查一次，换语言时清掉）。</summary>
+    private static readonly Dictionary<string, string> Resolved = new();
+
     public static void ClearCache()
     {
         KindNames.Clear();
+        Resolved.Clear();
         _learnedAll = false;
     }
 
+    /// <summary>
+    /// 记下这种物品的名字。每种只学一次：每次收集全店物品都会对每件物品调用，
+    /// 重复查本地化表（查不到的还要建原型）会让班次的用时随“物品数 × 动作数”增长。
+    /// </summary>
     public static void LearnKind(GameItem item)
     {
         try
         {
-            if (item == null || string.IsNullOrEmpty(item.identifier)) return;
+            if (item == null || string.IsNullOrEmpty(item.identifier) || KindNames.ContainsKey(item.identifier)) return;
 
             // 1. mod 物品的显示名永远按当前语言取表，不记存档里的名字
             if (item.identifier == "probably_automated_intercom" || item.identifier == "probably_automated_handbook" || item.identifier == "probably_automated_daily")
@@ -129,7 +137,15 @@ public static class Names
     public static string Kind(string id)
     {
         if (string.IsNullOrEmpty(id)) return id;
+        if (Resolved.TryGetValue(id, out var known)) return known;
+        // 表里查到的才记住；表里没有的（下面的 5–7）每次照旧现查：学到的名字、能不能建原型会变
+        if (FromTables(id) is { } name) return Resolved[id] = name;
+        return Fallback(id);
+    }
 
+    /// <summary>游戏和 mod 的本地化表里这种物品的名字；都没有返回 null。</summary>
+    private static string FromTables(string id)
+    {
         // 1. 先判断是不是 mod 物品 id（ModItems.Intercom/Handbook/Daily，赠送的蓝色标签打印机用游戏自己的 labeler 名）
         if (id == "probably_automated_intercom" || id == "intercom") return Domain.L.T("item.intercom.name");
         if (id == "probably_automated_handbook" || id == "handbook") return Domain.L.T("item.handbook.name");
@@ -157,7 +173,11 @@ public static class Names
             string t = Domain.L.T("kind." + id);
             if (LocBridge.IsValidGameLoc(t, "kind." + id) && t != id) return t;
         }
+        return null;
+    }
 
+    private static string Fallback(string id)
+    {
         // 5. 检查已学到的名字（若当前非 zh/ja 且包含汉字，则判定为过时的存档中文名，不采用）
         if (KindNames.TryGetValue(id, out var n) && IsValidKindName(n, id)) return n;
 

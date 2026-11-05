@@ -134,8 +134,11 @@ public static class Automation
             // 班次统计：早班开始时（夜间结算之后）记一份，晚班结束时（夜间结算之前）记一份
             IWorld world = dryRun ? SimImport.FromGame(State.Rules) : new GameWorld();
             var sw = System.Diagnostics.Stopwatch.StartNew();
+            Perf.Start();
             var run = new Interpreter(world, State.Rules) { UpdateProfiles = !dryRun }.RunShift(shift, workers, applyXp: !dryRun);
-            Log.Info($"[Automation] {(dryRun ? "试运行" : "执行")}{shift} 用时 {sw.ElapsedMilliseconds} ms，完成 {run.Groups.Sum(g => g.Rules.Sum(r => r.Done.Values.Sum()))} 件");
+            // 用时和它的分段写进日志：玩家反馈卡顿时，从 Player.log 能看出店有多大、慢在哪个环节
+            string items = world is GameWorld gw ? $"，店里 {gw.ItemCount} 件物品" : "";
+            Log.Info($"[Automation] {(dryRun ? "试运行" : "执行")}{shift} 用时 {sw.ElapsedMilliseconds} ms，完成 {run.Groups.Sum(g => g.Rules.Sum(r => r.Done.Values.Sum()))} 件{items}（{Perf.Stop()}）");
             report = ShiftReport.From(run, dryRun, workers);
             if (!dryRun)
             {
@@ -147,6 +150,7 @@ public static class Automation
         }
         catch (Exception ex)
         {
+            Perf.Stop();
             Log.Error($"[Automation] {Shift.DisplayName(shift)}执行出错: {ex}");
             return null;
         }

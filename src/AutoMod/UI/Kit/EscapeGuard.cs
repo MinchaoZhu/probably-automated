@@ -12,6 +12,7 @@ namespace AutoMod.UI.Kit;
 public static class EscapeGuard
 {
     private static EscapeUIManager _menu;
+    private static float _nextLookup;
     private static bool _menuWasShown;
     private static int _escapableBefore;
     private static readonly List<CustomUIWindow> Suspended = new();
@@ -19,7 +20,12 @@ public static class EscapeGuard
     /// <summary>每帧 LateUpdate 调用（游戏和 CustomUIManager 都处理完这一帧的 Esc 之后）。</summary>
     public static void LateTick()
     {
-        if (_menu == null) _menu = Object.FindObjectOfType<EscapeUIManager>();
+        // 主菜单里没有这个面板：找不到时每秒再找一次，不每帧找
+        if (_menu == null && Time.unscaledTime >= _nextLookup)
+        {
+            _menu = Object.FindObjectOfType<EscapeUIManager>();
+            _nextLookup = Time.unscaledTime + 1f;
+        }
         bool shown = _menu != null && _menu.menuPanel != null && _menu.menuPanel.activeInHierarchy;
         int escapable = CountEscapable();
 

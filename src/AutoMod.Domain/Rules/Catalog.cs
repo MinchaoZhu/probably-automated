@@ -131,9 +131,23 @@ public static class Catalog
         T("food", Category.Husbandry),
     };
 
-    public static TraitDef Trait(string id) => Traits.FirstOrDefault(t => t.Id == id);
+    private static readonly Dictionary<string, TraitDef> TraitById = Traits.ToDictionary(t => t.Id);
 
-    public static bool IsTrait(string type) => type != null && (Trait(type) != null || type.StartsWith(ItemTypePrefix) || type.StartsWith(FamilyPrefix));
+    public static TraitDef Trait(string id) => id != null && TraitById.TryGetValue(id, out var t) ? t : null;
+
+    public static bool IsTrait(string type) => type != null && (Trait(type) != null || type.StartsWith(ItemTypePrefix, StringComparison.Ordinal) || type.StartsWith(FamilyPrefix, StringComparison.Ordinal));
+
+    /// <summary>类别 → 它自己和全部上级类别（目录里的类别是固定的，算一次）。</summary>
+    private static readonly Dictionary<string, HashSet<string>> Ancestors = Traits.ToDictionary(t => t.Id, t => Closure(new[] { t.Id }));
+
+    /// <summary>"a|b|c" 拆开的结果（筛选每件物品都要用，不每次重新拆）。</summary>
+    private static readonly Dictionary<string, string[]> Alternatives = new();
+
+    private static string[] Split(string type)
+    {
+        if (!Alternatives.TryGetValue(type, out var parts)) Alternatives[type] = parts = type.Split('|');
+        return parts;
+    }
 
     /// <summary>游戏商品类型的显示名（游戏侧换成游戏自己的名字）。</summary>
     public static Func<string, string> ItemTypeName = t => t;
@@ -269,13 +283,24 @@ public static class Catalog
         return set;
     }
 
-    public static bool HasTrait(IWorld w, object item, string trait) => Closure(w.Traits(item)).Contains(trait);
+    /// <summary>物品有这个类别：直接有，或它的某个类别的上级是它。筛选时每件物品都要问，不建集合。</summary>
+    public static bool HasTrait(IWorld w, object item, string trait)
+    {
+        foreach (var t in w.Traits(item))
+            if (t == trait || (Ancestors.TryGetValue(t, out var up) && up.Contains(trait))) return true;
+        return false;
+    }
 
     /// <summary>类型匹配：任意 / 种类 / 类别（含下级）；支持 | 并列。“容器本身”在展开时处理。</summary>
     public static bool Matches(IWorld w, object item, string type)
     {
         if (string.IsNullOrEmpty(type) || type == Any) return true;
-        if (type.Contains('|')) return type.Split('|').Any(t => Matches(w, item, t));
+        if (type.IndexOf('|') >= 0)
+        {
+            foreach (var t in Split(type))
+                if (Matches(w, item, t)) return true;
+            return false;
+        }
         if (type == Self) return true;
         return IsTrait(type) ? HasTrait(w, item, type) : w.Kind(item) == type;
     }

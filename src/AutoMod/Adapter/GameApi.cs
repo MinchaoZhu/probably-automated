@@ -22,20 +22,43 @@ public static class GameApi
         catch { return null; }
     }
 
+    /// <summary>直接装在容器里的物品（不含它们里面的），按游戏图节点的层序。</summary>
     public static List<GameItem> DirectChildren(GameItem container)
     {
         var list = new List<GameItem>();
-        System.Collections.Generic.List<GameItem> all;
-        try { all = container.FindAllChildItems(); }
-        catch { return list; }
-        if (all == null) return list;
-        for (int i = 0; i < all.Count; i++)
-        {
-            var child = all[i];
-            var parent = ParentContainer(child);
-            if (ReferenceEquals(parent, container)) list.Add(child);
-        }
+        ItemChildren(container, list);
         return list;
+    }
+
+    private static readonly Queue<GraphNodeStorage> NodeQueue = new();
+
+    /// <summary>
+    /// 节点（物品、窗口）下面最近一层的物品：沿图节点往下按层序找，遇到物品就收下、不再往它里面走。
+    /// 游戏的 FindAllChildItems 每次都遍历整棵子树，这里每个节点只看一次。
+    /// </summary>
+    private static void ItemChildren(GraphNodeStorage node, List<GameItem> into)
+    {
+        var queue = NodeQueue;
+        queue.Clear();
+        try
+        {
+            queue.Enqueue(node);
+            int guard = 0;
+            while (queue.Count > 0 && guard++ < 100000)
+            {
+                var kids = queue.Dequeue().children;
+                if (kids == null) continue;
+                for (int i = 0; i < kids.Count; i++)
+                {
+                    var k = kids[i];
+                    if (k == null) continue;
+                    if (k is GameItem item) into.Add(item);
+                    else queue.Enqueue(k);
+                }
+            }
+        }
+        catch { }
+        finally { queue.Clear(); }
     }
 
     public static GameSlotInventory BatterySlot(GameItem machine)
@@ -47,6 +70,7 @@ public static class GameApi
     /// <summary>店里的全部物品（含嵌套）。</summary>
     public static List<GameItem> CollectAll()
     {
+        using var _p = Domain.Perf.Begin("scan");
         var seen = new HashSet<GameItem>();
         var result = new List<GameItem>();
         var store = Store;
@@ -56,16 +80,14 @@ public static class GameApi
         return result;
     }
 
+    /// <summary>物品和它里面的全部物品（先自己，再逐个往里），每件只收一次。</summary>
     private static void Walk(GameItem item, HashSet<GameItem> seen, List<GameItem> result, int depth)
     {
         if (item == null || depth > 12 || !seen.Add(item)) return;
         result.Add(item);
-        try
-        {
-            var kids = item.FindAllChildItems();
-            if (kids != null) for (int i = 0; i < kids.Count; i++) Walk(kids[i], seen, result, depth + 1);
-        }
-        catch { }
+        var kids = new List<GameItem>();
+        ItemChildren(item, kids);
+        for (int i = 0; i < kids.Count; i++) Walk(kids[i], seen, result, depth + 1);
     }
 
     public static HashSet<GameItem> ItemSet(IEnumerable<GameItem> items) => new(items);
@@ -80,24 +102,39 @@ public static class GameApi
         if (Store == null || EmporiumEntry.Instance == null) return result;
         var e = EmporiumEntry.Instance;
         var seen = new HashSet<GameItem>();
-        var all = new List<GameItem>();
+        var tops = new List<GameItem>();
         foreach (var w in new GraphNodeStorage[] { e.invWindow, e.backInvWindow, e.backInvinvElementCounter, e.afterhourWindow, e.vendingFountainWindow, e.vendingMachineWindow })
         {
             if (w == null) continue;
-            try { foreach (var it in GraphUtils.FindAllChildrenType<GameItem>(w)) Walk(it, seen, all, 0); }
-            catch { }
+            tops.Clear();
+            ItemChildren(w, tops);
+            foreach (var it in tops) WalkShop(it, seen, result, 0, false);
         }
         // 店面（陈列柜）：装在那里的机器和机器里的东西算，陈列待售的货不算
         if (e.showcaseWindow != null)
         {
-            var front = new List<GameItem>();
-            try { foreach (var it in GraphUtils.FindAllChildrenType<GameItem>(e.showcaseWindow)) if (IsMachine(it)) Walk(it, seen, front, 0); }
+            try { foreach (var it in GraphUtils.FindAllChildrenType<GameItem>(e.showcaseWindow)) if (IsMachine(it)) WalkShop(it, seen, result, 0, InSaleStock(it)); }
             catch { }
-            all.AddRange(front);
         }
-        foreach (var it in all)
-            if (it.IsTag("IS_OWNED_TAG") && !InSaleStock(it)) result.Add(it);
         return result;
+    }
+
+    /// <summary>
+    /// 物品和它里面的全部物品里算全店的（归玩家、不在售货设备的货架上）。在不在货架上从外往里带下来：
+    /// 逐件往上找父容器的话，物品多的店每次要找几千回。
+    /// </summary>
+    private static void WalkShop(GameItem item, HashSet<GameItem> seen, List<GameItem> result, int depth, bool onSale)
+    {
+        if (item == null || depth > 12 || !seen.Add(item)) return;
+        try { if (!onSale && item.IsTag("IS_OWNED_TAG")) result.Add(item); }
+        catch { }
+        var kids = new List<GameItem>();
+        ItemChildren(item, kids);
+        if (kids.Count == 0) return;
+        bool vending = Tag(item, "VENDING_CASH") != null;
+        var battery = vending ? BatterySlot(item) : null;
+        for (int i = 0; i < kids.Count; i++)
+            WalkShop(kids[i], seen, result, depth + 1, onSale || (vending && !ReferenceEquals(kids[i].parentInventory, battery)));
     }
 
     private static bool IsMachine(GameItem it)

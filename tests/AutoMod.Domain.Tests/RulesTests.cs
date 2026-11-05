@@ -817,6 +817,47 @@ internal static class RulesTests
                 "电池轮转换过了，水培再筛选时没有低电量电池，不做也不花 AP");
         });
 
+        test("执行：筛选结果在没动过店里的任务之间接着用，动过之后重新筛", () =>
+        {
+            var w = new SimWorld();
+            var m = w.AddRoot("machine", 1, "机器");
+            w.Add(m, "battery_empty", batterySlot: true);
+            var shelf = w.AddRoot("storage", 2, "仓库");
+            for (int i = 0; i < 2; i++) w.Add(shelf, "battery_full");
+            var bin = w.AddRoot("storage", 3, "回收箱");
+            var d = new RulesData();
+            Named(w, "m", 1);
+            Named(w, "shelf", 2);
+            Named(w, "bin", 3);
+            Sel(d, "low", "#m", "battery", s => { s.Slot = "battery"; s.Where = new CondGroup { Items = { Cond.Cmp("energyPct", "<", Expr.Of(30)) } }; });
+            Sel(d, "spare", "#shelf", "battery");
+            PreCond Empty(string sel) => new() { Ref = sel, Test = PreTest.Empty };
+            var swap = new ActionDef { Verb = ActVerb.Swap, List = "low", To = "spare" };
+            var store = new ActionDef { Verb = ActVerb.Move, List = "spare", To = "#bin" };
+            var sch = new Schedule
+            {
+                Id = "s", Name = "s", Rules =
+                {
+                    // 条件不成立：两个筛选器都求值了，但什么都没动
+                    new WorkRule { Id = "r1", Name = "空转", Join = "any", Pre = { Empty("low"), Empty("spare") }, Actions = { swap } },
+                    new WorkRule { Id = "r2", Name = "换电池", Actions = { swap } },
+                    // 上一条动过店里：这里必须重新筛，低电量电池已经换下来了
+                    new WorkRule { Id = "r3", Name = "再换", Actions = { swap } },
+                    // 上一条没做事：接着用它筛出的结果，照样把仓库里的两块搬走
+                    new WorkRule { Id = "r4", Name = "收走", Actions = { store } },
+                    // 上一条搬走了：重新筛，仓库空了，条件成立
+                    new WorkRule { Id = "r5", Name = "仓库空了", Pre = { Empty("spare") }, Actions = { store } },
+                },
+            };
+            d.Schedules.Add(sch);
+            var rules = new Interpreter(w, d).RunShift(Shift.Morning, new[] { App("甲", 200, 3, "s") }).Groups[0].Rules;
+            Check(rules.All(r => r.Pre != PreResult.Broken), "没有结构错误：" + string.Join("；", rules.SelectMany(r => r.Issues).Select(i => i.Text)));
+            Check(rules[0].Pre == PreResult.Fail && rules[1].Done.GetValueOrDefault(ActVerb.Swap) == 1, "空转的任务之后照常换电池");
+            Check(rules[2].Done.Count == 0, "换过之后重新筛选：没有低电量电池可换");
+            Check(rules[3].Done.GetValueOrDefault(ActVerb.Move) == 2 && bin.Children.Count == 2, $"仓库里的两块搬进回收箱：{bin.Children.Count}");
+            Check(rules[4].Pre == PreResult.Pass && rules[4].Done.Count == 0, "搬走之后重新筛选：仓库空了");
+        });
+
         test("导入导出：设备名照用，定义归新排班，一样的共用定义复用，重名改名", () =>
         {
             var d = new RulesData();

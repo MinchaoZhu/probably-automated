@@ -180,7 +180,8 @@ public class Interpreter
         double startUsed = a.ApUsed;
         int Spent() => ApMath.Ceil(a.ApUsed) - ApMath.Ceil(startUsed);
         gr.ApTotal = a.ApLeft;
-        var profile = Proficiency.ProfileOf(_d, s, _w);
+        Dictionary<string, double> profile;
+        using (Perf.Begin("profile")) profile = Proficiency.ProfileOf(_d, s, _w);
         int effective = Proficiency.Effective(a, profile);
         gr.Proficiency[a.Name] = effective;
         gr.Mult = Proficiency.CostMult(effective);
@@ -189,23 +190,31 @@ public class Interpreter
         var memo = s.Notepad.ToDictionary(n => n.Id, n => n.Init);
         double xp = 0;
         bool stopped = false;
+        // 筛选器的求值结果按任务快照；上一条任务什么都没动（条件不成立、没东西可做）时店里没变，接着用，不重新筛一遍全店
+        EvalCtx ctx = null;
+        bool touched = true;
 
         foreach (var rule in s.Rules)
         {
             var rr = new RuleRunReport { RuleId = rule.Id, Name = rule.Name };
             gr.Rules.Add(rr);
             if (!rule.Enabled) { rr.Pre = PreResult.Disabled; continue; }
-            var errs = Errors?.Invoke(s, rule) ?? new List<string>();
+            List<string> errs;
+            using (Perf.Begin("check")) errs = Errors?.Invoke(s, rule) ?? new List<string>();
             if (errs.Count > 0)
             {
                 rr.Pre = PreResult.Broken;
                 rr.Issue("broken", L.T("report.error.broken", L.Join("semi", errs)));
                 continue;
             }
-            var ctx = new EvalCtx(_w, _d) { Memo = memo, Sys = v => v switch
+            if (touched)
             {
-                SysVar.ApLeft => a.ApLeft, SysVar.Shift => shift == Shift.Morning ? 1 : 2, SysVar.Day => _w.Day, _ => null,
-            } };
+                ctx = new EvalCtx(_w, _d) { Memo = memo, Sys = v => v switch
+                {
+                    SysVar.ApLeft => a.ApLeft, SysVar.Shift => shift == Shift.Morning ? 1 : 2, SysVar.Day => _w.Day, _ => null,
+                } };
+                touched = false;
+            }
             if (stopped)
             {
                 // AP 已在前面的任务里用完：只挑不做，把会处理的物品记成“留到下次”，让界面能写出原因
@@ -247,6 +256,7 @@ public class Interpreter
                     double v = Eval.Expr(ctx, act.Value) ?? 0;
                     if (act.Note != null)
                     {
+                        touched = true;
                         memo[act.Note] = act.NoteMode == "set" ? v : memo.GetValueOrDefault(act.Note) + v;
                         rr.Details.Add(L.T("report.details.record", s.Notepad.FirstOrDefault(n => n.Id == act.Note)?.Name, memo[act.Note].ToString("0.##")));
                     }
@@ -273,7 +283,7 @@ public class Interpreter
                     var item = list[k];
                     if (!Ok(item)) { notOk++; continue; }
 
-                    object tool = null, other = null;
+                    object tool = null, other = null, dest = null;
                     switch (op.Mechanism)
                     {
                         case Mechanism.Apply:
@@ -284,7 +294,10 @@ public class Interpreter
                             if (!_w.CanTrigger(item, how)) { notAllowed++; continue; }
                             break;
                         case Mechanism.Place:
-                            if (!targets.Any(b => _w.Fits(b, item))) { full++; continue; }
+                            // 目标里第一个放得下的（目标的顺序就是优先顺序）；问一次游戏，下面直接往它里面放
+                            foreach (var b in targets)
+                                if (_w.Fits(b, item)) { dest = b; break; }
+                            if (dest == null) { full++; continue; }
                             break;
                         case Mechanism.Swap:
                             // 按顺序取下一件还没配对的；同一处的两件互换没有意义，跳过
@@ -313,9 +326,10 @@ public class Interpreter
 
                     string desc = _w.Describe(item);
                     int uid = _w.Uid(item);
+                    touched = true;
                     StepResult res = op.Mechanism switch
                     {
-                        Mechanism.Place => PlaceInto(item, targets, act.To),
+                        Mechanism.Place => PlaceInto(item, dest, act.To),
                         Mechanism.Swap => _w.Swap(item, other),
                         Mechanism.Apply => UseTool(tool, item, tools, times),
                         Mechanism.Trigger => TriggerTimes(item, how, times),
@@ -409,21 +423,16 @@ public class Interpreter
         return null;
     }
 
-    /// <summary>放进目标里第一个放得下的（目标的顺序就是优先顺序）。结果文字写排班里的名字：目标是设备名写设备名（“移至 满电架”），是筛选器写“移至 充能器#3（空闲充能器）”。</summary>
-    private StepResult PlaceInto(object item, IReadOnlyList<object> targets, string toId)
+    /// <summary>放进选好的目标。结果文字写排班里的名字：目标是设备名写设备名（“移至 满电架”），是筛选器写“移至 充能器#3（空闲充能器）”。</summary>
+    private StepResult PlaceInto(object item, object box, string toId)
     {
-        foreach (var b in targets)
-            if (_w.Fits(b, item))
-            {
-                var res = _w.Place(item, b);
-                if (res.Ok && toId != null)
-                {
-                    if (Places.IsName(toId)) res.Text = L.T("report.step.moved_to", NameOf(toId));
-                    else if (_d.Selectors.Any(x => x.Id == toId)) res.Text += L.T("text.paren", NameOf(toId));
-                }
-                return res;
-            }
-        return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = L.T("report.fail.dest_full") };
+        var res = _w.Place(item, box);
+        if (res.Ok && toId != null)
+        {
+            if (Places.IsName(toId)) res.Text = L.T("report.step.moved_to", NameOf(toId));
+            else if (_d.Selectors.Any(x => x.Id == toId)) res.Text += L.T("text.paren", NameOf(toId));
+        }
+        return res;
     }
 
     /// <summary>
