@@ -6,5 +6,5 @@ public static class ModInfo
     public const string Id = "probably_automated";
     /// <summary>玩家看到的名字（Mods 菜单、物品来源、日报报头）。</summary>
     public const string Name = "Probably Automated";
-    public const string Version = "1.3.0";
+    public const string Version = "1.3.1";
 }
