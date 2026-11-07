@@ -622,12 +622,12 @@ public class GameWorld : IWorld
         catch { return new List<(string, string)>(); }
     }
 
-    /// <summary>物品在父容器的哪个格子里（"slot:角色"）；不分格的为空。</summary>
-    public static string SlotOf(GameItem item)
+    /// <summary>物品在父容器的哪个格子里（"slot:角色"）；不分格的为空。父容器的格子按容器记下来（读一次要翻它的整个窗口）。</summary>
+    public string SlotOf(GameItem item)
     {
         var parent = GameApi.ParentContainer(item);
         if (parent == null) return null;
-        var slot = MachineSlots.Of(parent).FirstOrDefault(s => s.Inventories.Any(inv => ReferenceEquals(item.parentInventory, inv)));
+        var slot = SlotsOf(parent).FirstOrDefault(s => s.Inventories.Any(inv => ReferenceEquals(item.parentInventory, inv)));
         return slot == null ? null : SlotNames.Prefix + slot.Role;
     }
 

@@ -99,7 +99,7 @@ public static class SimImport
             TraitsOverride = TraitBindings.TraitsOf(it),
             Buttons = gw.Buttons(it).ToList(),
             SlotList = gw.Slots(it).ToList(),
-            InSlot = GameWorld.SlotOf(it),
+            InSlot = gw.SlotOf(it),
         };
         foreach (var p in NumProps)
         {
