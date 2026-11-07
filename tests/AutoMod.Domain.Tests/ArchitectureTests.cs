@@ -54,6 +54,15 @@ internal static class ArchitectureTests
             check(bad.Count == 0, "领域里出现了游戏或插件引用：" + string.Join("；", bad.Distinct().Take(10)));
         });
 
+        test("架构：升级步骤只改 JSON，不引用当前模型", () =>
+        {
+            var bad = new List<string>();
+            foreach (var f in Sources(Path.Combine(domain, "Persistence", "Migrations")))
+                foreach (Match m in Regex.Matches(Code(File.ReadAllText(f)), @"\bAutoMod\.Domain\.(Rules|Workforce|Reports|Simulation)\b|\b(ModState|RulesData|SelectorDef|ActionDef|Schedule|Apprentice)\b"))
+                    bad.Add($"{Rel(root, f)}：{m.Value}");
+            check(bad.Count == 0, "升级步骤引用了当前模型：" + string.Join("；", bad.Distinct().Take(10)));
+        });
+
         test("架构：插件各层的依赖方向", () =>
         {
             var bad = new List<string>();

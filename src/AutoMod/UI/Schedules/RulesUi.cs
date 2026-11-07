@@ -59,7 +59,7 @@ public static class RulesUi
         try
         {
             if (!string.IsNullOrEmpty(target))
-                foreach (var box in Eval.Boxes(new EvalCtx(World, D), target).Take(10))
+                foreach (var box in Eval.Boxes(new EvalCtx(World, D), target).Take(40))
                     foreach (var sl in World.Slots(box))
                         if (list.All(x => x.id != sl.id)) list.Add(sl);
         }

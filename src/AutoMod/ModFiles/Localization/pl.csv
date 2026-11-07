@@ -222,6 +222,7 @@ card.param.button,Przycisk
 card.param.list,Obiekt
 card.param.pre,Obiekt
 card.param.to,Cel
+card.param.toslot,Slot
 card.param.tool,Narzędzie
 card.select_button,(wybierz przycisk)
 card.select_param,(wybierz {0})
@@ -669,6 +670,9 @@ intercom.tab_schedules,Procedury
 intercom.tip_add_duty,"Praktykant może wykonywać wiele procedur sekwencyjnie, dzieląc dzienne AP"
 intercom.tip_rest,"Odpoczynek: nie bierze udziału w zmianach, nie otrzymuje wynagrodzenia"
 intercom.tip_work,"Praca: bierze udział w zmianach następnego dnia, wynagrodzenie przed snem"
+intercom.frozen_broken,Nie można odczytać danych praktykantów.
+intercom.frozen_newer,"Dane z nowszej wersji moda ({0}, obecnie {1})."
+intercom.frozen_note,Praktykanci nie pracują. Dane są zachowane.
 intercom.title,Krótkofalówka praktykanta
 intercom.training_pending,Materiały szkoleniowe oczekują na przeczytanie
 intercom.training_pending_tip,"Czytane na początku pierwszej zmiany dnia, zużywa {0} AP"
@@ -767,6 +771,7 @@ editor.action_button,Przycisk
 editor.action_mark,Oznaczenie
 editor.action_swap_with,Z
 editor.action_target,Cel
+editor.slot_auto,Auto
 editor.action_value,Wartość
 editor.add_cond_tip,Licz tylko przedmioty spełniające warunek
 editor.add_cond_title,Dodaj warunek
@@ -844,6 +849,7 @@ editor.times_unit,
 editor.tip_action_apply,Dla każdego obiektu docelowego sprawdzaj narzędzia po kolei; pierwsze skuteczne zostanie użyte.\nKierunek ustala gra: np. użycie kranu na pustym wiadrze napełnia je wodą.
 editor.tip_action_swap,Połącz dwie grupy przedmiotów w pary i zamień ich pozycje. W przypadku różnej liczby nadmiarowe przedmioty zostają.
 editor.tip_action_target,"Umieść każdy przedmiot w pierwszym pasującym celu. Jeśli jest kilka celów, próbuj po kolei."
+editor.tip_action_slot,"Auto: slot wybiera gra. Przedmioty trafiają tylko do wybranego slotu. Każda zakładka magazynu liczy się jako slot, zakładki o tej samej nazwie jako jeden slot."
 editor.tip_add_pre_cond,"Licz tylko przedmioty spełniające warunek, np. „[A] Woda > 1000 ml”"
 editor.tip_advanced_when,"Połącz kilka warunków, liczników lub zmiennych systemowych"
 editor.tip_cannot_run,Nie można wykonać tego zadania:
@@ -979,6 +985,8 @@ selector.scope_from,Z
 selector.scope_items_inside,Przedmioty wewnątrz
 selector.scope_same_as_above,(Tak jak wyżej)
 selector.scope_self,Samo
+selector.slot_format,Przedmioty w: {0}
+selector.slot_format_shop,Przedmioty w: {0}
 selector.section_cond,Warunki
 selector.section_kind,Typ przedmiotu
 selector.section_pick,Wybór
@@ -1060,7 +1068,7 @@ handbook.p3.title_param,Parametry:
 handbook.p3.title_range,Zakres:
 handbook.p3.title_scope,Cały sklep i nazwy urządzeń:
 handbook.p4.banner,Zadania
-handbook.p4.text_move,"Przenosi przedmioty do pojemnika, magazynu lub maszyny (np. przeniesienie rozładowanych baterii do ładowarki). Cel musi być pojemnikiem."
+handbook.p4.text_move,"Przenosi przedmioty do pojemnika, magazynu lub maszyny (np. przeniesienie rozładowanych baterii do ładowarki). Cel musi być pojemnikiem. Można wybrać slot lub zakładkę magazynu."
 handbook.p4.text_pre,"Domyślnie wykonuje się na każdej zmianie. Można wybrać opcje takie jak ""...gdy [A] nie jest pusty"" lub ""...gdy [A] mniej niż N""; pominięte zadania nie zużywają AP. Bardziej złożone warunki konfiguruje się w ""Zaawansowane..."", np. ""[A] Woda > 1000 ml""."
 handbook.p4.text_press,"Naciska przyciski w oknach maszyn (start, drukuj, przenieś wszystko), rozpakowuje paczki lub przełącza przełączniki bez otwierania okien."
 handbook.p4.text_swap,Łączy w pary dwie grupy przedmiotów według kolejności i zamienia je miejscami. W przypadku różnej liczby nadmiarowe przedmioty pozostają na miejscu.

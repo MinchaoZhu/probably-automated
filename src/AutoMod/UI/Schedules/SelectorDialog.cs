@@ -299,8 +299,13 @@ public static class SelectorDialog
         {
             var ctx = new EvalCtx(RulesUi.World, D);
             foreach (var src in d.From)
-                foreach (var box in Eval.Boxes(ctx, src).Take(10))
+                foreach (var box in Eval.Boxes(ctx, src).Take(40))
                     foreach (var sl in RulesUi.World.Slots(box))
+                        if (slots.All(x => x.id != sl.id)) slots.Add(sl);
+            // 全店：机器的格子太多不列，储藏区的标签页列出来（同名的算一个，全店里都按这个标签页取）
+            if (shop)
+                foreach (var box in RulesUi.World.Shop().Where(x => Catalog.Matches(RulesUi.World, x, Catalog.Container)))
+                    foreach (var sl in RulesUi.World.Slots(box).Where(x => SlotNames.IsTab(x.id)))
                         if (slots.All(x => x.id != sl.id)) slots.Add(sl);
         }
         catch { }

@@ -222,6 +222,7 @@ card.param.button,ボタン
 card.param.list,対象
 card.param.pre,対象
 card.param.to,移動先
+card.param.toslot,スロット
 card.param.tool,道具
 card.select_button,（ボタンを選択）
 card.select_param,（{0}を選択）
@@ -669,6 +670,9 @@ intercom.tab_schedules,ルーチン
 intercom.tip_add_duty,見習いは複数のルーチンを順番に実行でき、その日のAPを共有します
 intercom.tip_rest,休暇：シフトに参加せず、給料は支払われません
 intercom.tip_work,出勤：翌日のシフトに参加し、睡眠時に給料が支払われます
+intercom.frozen_broken,見習いデータを読み込めません。
+intercom.frozen_newer,新しいMODのデータです（形式 {0}、現在 {1}）。
+intercom.frozen_note,見習いは作業を停止中です。データは保持されます。
 intercom.title,見習いトランシーバー
 intercom.training_pending,研修資料の確認待ち
 intercom.training_pending_tip,その日の最初のシフト開始時に読まれ、{0} APを消費します
@@ -767,6 +771,7 @@ editor.action_button,ボタン
 editor.action_mark,マーク
 editor.action_swap_with,対象
 editor.action_target,移動先
+editor.slot_auto,自動
 editor.action_value,値
 editor.add_cond_tip,条件を満たすアイテムのみをカウント
 editor.add_cond_title,条件を追加
@@ -844,6 +849,7 @@ editor.times_unit,回
 editor.tip_action_apply,対象の各アイテムに対して道具を順番に試行し、最初に有効なものが適用されます。\n作用の向きはゲームが判断します：例として蛇口を空のバケツに使用するとバケツに水が入ります。
 editor.tip_action_swap,2つのグループのアイテムを順番にペアにして位置を交換します。数量が異なる場合、余分なアイテムは移動しません。
 editor.tip_action_target,各アイテムを最初に入る移動先に入れます。移動先が複数ある場合は順に試します。
+editor.tip_action_slot,自動: ゲームがスロットを選びます。指定するとそのスロットにのみ入れます。保管のタブはそれぞれスロットとして扱い、同名のタブは同じスロットになります。
 editor.tip_add_pre_cond,条件に一致するアイテムのみをカウント（例：『[A] 水 > 1000 ml』）
 editor.tip_advanced_when,複数の条件、カウンター、システム変数を組み合わせて判定
 editor.tip_cannot_run,このタスクは実行できません:
@@ -979,6 +985,8 @@ selector.scope_from,起点
 selector.scope_items_inside,内の物品
 selector.scope_same_as_above,（同上）
 selector.scope_self,自身
+selector.slot_format,{0}内のアイテム
+selector.slot_format_shop,{0}内のアイテム
 selector.section_cond,条件
 selector.section_kind,物品タイプ
 selector.section_pick,抽出
@@ -1060,7 +1068,7 @@ handbook.p3.title_param,パラメーター:
 handbook.p3.title_range,対象範囲:
 handbook.p3.title_scope,店全体と機器名:
 handbook.p4.banner,タスク
-handbook.p4.text_move,コンテナ、保管エリア、機器にアイテムを移動します（例: 未充電のバッテリーを充電器へ移動）。移動先はコンテナである必要があります。
+handbook.p4.text_move,コンテナ、保管エリア、機器にアイテムを移動します（例: 未充電のバッテリーを充電器へ移動）。移動先はコンテナである必要があります。スロットや保管のタブも指定できます。
 handbook.p4.text_pre,標準で毎シフト実行されます。「...[A] が空でない時」や「...[A] が N 未満の時」などを選択でき、スキップされたタスクは AP を消費しません。より複雑な条件は「高度な条件...」で設定します（例: 「[A] 水分 > 1000 ml」）。
 handbook.p4.text_press,画面を開かずに、機器ウィンドウ内のボタン（開始、印刷、すべて移動）の押下、包みの開封、スイッチの切り替えを行います。
 handbook.p4.text_swap,二組のアイテムを順番通りにペアにして位置を入れ替えます。個数が一致しない場合、余ったアイテムはその場に残ります。

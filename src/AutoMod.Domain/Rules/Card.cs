@@ -130,6 +130,8 @@ public static class Card
                 _ => new List<Seg> { new Seg { Text = Text.Action(d, s, a), Kind = SegKind.Complex } },
             };
             if (!string.IsNullOrEmpty(times)) line.Add(new Seg { Text = times });
+            if (op.Mechanism == Mechanism.Place && !string.IsNullOrEmpty(a.ToSlot))
+                line.Insert(line.FindIndex(x => x.Param == "to") + 1, new Seg { Text = L.T("text.paren", SlotNames.Name(a.ToSlot, d, new[] { a.To })), Kind = SegKind.Type, Action = i, Param = "toslot" });
             lines.Add(line);
         }
         return lines;
@@ -172,7 +174,7 @@ public static class Card
     /// <summary>读写动作的某个参数（list / to / tool / button）。</summary>
     public static string Get(ActionDef a, string param) => param switch
     {
-        "list" => a.List, "to" => a.To, "tool" => a.Tool, "button" => a.Button, _ => null,
+        "list" => a.List, "to" => a.To, "toslot" => a.ToSlot, "tool" => a.Tool, "button" => a.Button, _ => null,
     };
 
     public static void Set(ActionDef a, string param, string value)
@@ -180,7 +182,11 @@ public static class Card
         switch (param)
         {
             case "list": a.List = value; break;
-            case "to": a.To = value; break;
+            case "to":
+                if (a.To != value) a.ToSlot = null; // 槽位是目标上的，换了目标就不算数了
+                a.To = value;
+                break;
+            case "toslot": a.ToSlot = value; break;
             case "tool": a.Tool = value; break;
             case "button": a.Button = value; break;
         }
@@ -194,6 +200,7 @@ public static class Card
         if (op.Mechanism == Mechanism.Note) { n.Note = a.Note; n.Value = a.Value; return n; }
         n.List = a.List;
         if (op.Mechanism is Mechanism.Place or Mechanism.Swap) n.To = a.To;
+        if (op.Mechanism == Mechanism.Place) n.ToSlot = a.ToSlot;
         if (op.Mechanism == Mechanism.Apply) { n.Tool = a.Tool; n.Times = Math.Max(1, a.Times); }
         if (op.Mechanism == Mechanism.Trigger) { n.Times = verb == ActVerb.Toggle ? 1 : Math.Max(1, a.Times); n.Button = a.Button; }
         if (op.Mechanism == Mechanism.Annotate) n.Text = string.IsNullOrEmpty(a.Text) ? "已处理" : a.Text;

@@ -150,6 +150,9 @@ public class GameWorld : IWorld
     {
         foreach (var s in SlotsOf(box))
             if (s.Role == role) return s;
+        // 未扩建的储藏区只有一页，规则写好后再扩建也不用改
+        if (role == SlotNames.FirstTab && StorageExpansionHelper.CanExpand(box) && box.contentWindow?.childElement is GameGridInventory grid)
+            return new MachineSlots.Slot { Role = role, Inventories = { grid } };
         return null;
     }
 
@@ -287,15 +290,16 @@ public class GameWorld : IWorld
 
     public bool Fits(object box, object item, string slot = null)
     {
-        try { return Node((GameItem)box, slot) is { } node && GraphUtils.CanAccept(node, (GameItem)item); }
+        try { return Node((GameItem)box, slot, (GameItem)item) is { } node && GraphUtils.CanAccept(node, (GameItem)item); }
         catch { return false; }
     }
 
-    /// <summary>放东西的位置：整个容器（游戏自己挑格子），或指定格子（机器窗口的面板）的第一个库存；格子不存在返回 null。</summary>
-    private GraphNodeStorage Node(GameItem box, string slot)
+    /// <summary>放东西的位置：整个容器（游戏自己挑格子），或指定格子里第一个放得下的库存（一个格子可以有几个库存，都放不下时给第一个）；格子不存在返回 null。</summary>
+    private GraphNodeStorage Node(GameItem box, string slot, GameItem item)
     {
         if (string.IsNullOrEmpty(slot)) return box;
-        return FindSlot(box, slot.StartsWith(SlotNames.Prefix) ? slot[SlotNames.Prefix.Length..] : slot)?.Inventories.FirstOrDefault();
+        var invs = FindSlot(box, slot.StartsWith(SlotNames.Prefix) ? slot[SlotNames.Prefix.Length..] : slot)?.Inventories;
+        return invs?.FirstOrDefault(inv => GraphUtils.CanAccept(inv, item)) ?? invs?.FirstOrDefault();
     }
 
     public string Describe(object item)
@@ -357,7 +361,7 @@ public class GameWorld : IWorld
         try
         {
             var from = GameApi.ParentContainer(it);
-            var node = Node(b, slot);
+            var node = Node(b, slot, it);
             if (node == null) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_no_slot", BoxName(b), SlotNames.Name(slot, new[] { ((GameItem)b).identifier })) };
             if (!GraphUtils.CanAccept(node, it)) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_full", BoxName(b)) };
             int rest = GraphUtils.TryAcceptAll(node, it, -1);
@@ -448,7 +452,7 @@ public class GameWorld : IWorld
 
     public IReadOnlyList<(string id, string name)> Slots(object box)
     {
-        try { return MachineSlots.Of((GameItem)box).Select(s => (SlotNames.Prefix + s.Role, s.Label ?? SlotNames.Name(s.Role))).ToList(); }
+        try { return MachineSlots.Of((GameItem)box).Where(s => !s.Hidden).Select(s => (SlotNames.Prefix + s.Role, s.Label ?? SlotNames.Name(s.Role))).ToList(); }
         catch { return new List<(string, string)>(); }
     }
 

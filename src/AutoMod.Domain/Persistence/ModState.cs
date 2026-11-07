@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using AutoMod.Domain;
+using AutoMod.Domain.Persistence.Migrations;
 using AutoMod.Domain.Reports;
 using AutoMod.Domain.Workforce;
 
@@ -11,16 +11,28 @@ namespace AutoMod.Domain.Persistence;
 
 /// <summary>
 /// mod 的全部存档数据，序列化成 JSON，由插件存进游戏存档的 mod 数据（ModHelper.SetModData）。
-/// 不做存档转换：格式版本不是当前版本的数据整份忽略，下次存档时用新格式覆盖。
+/// 旧格式的数据按 Migrator 升级。读不了的（比当前新、损坏、升级失败）不覆盖：原文留在 Frozen 里原样写回，学徒暂停工作。
 /// </summary>
 public class ModState : Roster
 {
     public const int MaxReports = 20;
 
-    /// <summary>当前存档格式。改动不兼容的结构时加一。</summary>
+    /// <summary>当前存档格式。什么时候加一见 Migrator。</summary>
     public const int Format = 8;
 
     public int Version { get; set; } = Format;
+
+    /// <summary>写这份数据的 mod 版本（只是记一下，排查问题用）。</summary>
+    public string ModVersion { get; set; }
+
+    /// <summary>读不了的数据原文：存档时原样写回，不跑班次。</summary>
+    [JsonIgnore] public string Frozen { get; private set; }
+
+    /// <summary>Frozen 的格式；比当前新时才有，损坏的为 0。</summary>
+    [JsonIgnore] public int FrozenFormat { get; private set; }
+
+    /// <summary>刚升级过：升级前的原文，要另外存一份；没升级为空。</summary>
+    [JsonIgnore] public string Backup { get; private set; }
 
     /// <summary>对象、挑选器、自定义属性、排班。</summary>
     public AutoMod.Domain.Rules.RulesData Rules { get; set; } = new();
@@ -59,29 +71,43 @@ public class ModState : Roster
         if (Reports.Count > MaxReports) Reports.RemoveRange(0, Reports.Count - MaxReports);
     }
 
-    public string ToJson() => JsonCodec.Serialize(this);
+    public string ToJson() => Frozen ?? JsonCodec.Serialize(this);
 
-    public static ModState FromJson(string json)
+    public static ModState FromJson(string json) => FromJson(json, Migrator.Steps, Format);
+
+    public static ModState FromJson(string json, IReadOnlyList<Migrator.Step> steps, int format)
     {
         if (string.IsNullOrWhiteSpace(json)) return new ModState();
         try
         {
-            var root = JObject.Parse(json);
-            var v = root.GetValue("version", System.StringComparison.OrdinalIgnoreCase);
-            int version = v != null && v.Type == JTokenType.Integer ? (int)v : 0;
-            if (version != Format)
+            var root = Migrator.Parse(json);
+            int version = Migrator.Version(root, "version", 0);
+            if (version < Migrator.First)
             {
-                Log.Info($"[ModState] 存档里是旧格式的 mod 数据（版本 {version}，当前 {Format}），已忽略，下次存档时覆盖");
+                Log.Info($"[ModState] 存档里是发布前的 mod 数据（版本 {version}），已忽略，下次存档时覆盖");
                 return new ModState();
             }
-            var st = JsonCodec.Deserialize<ModState>(json) ?? new ModState();
+            if (version > format)
+            {
+                Log.Warn($"[ModState] 存档里的 mod 数据比当前版本新（版本 {version}，当前 {format}），保留原文，学徒暂停工作");
+                return new ModState { Frozen = json, FrozenFormat = version };
+            }
+            string current = json;
+            if (version < format)
+            {
+                Migrator.Run(root, version, format, steps);
+                current = Migrator.Write(root);
+                Log.Info($"[ModState] mod 数据已从版本 {version} 升级到 {format}");
+            }
+            var st = JsonCodec.Deserialize<ModState>(current) ?? new ModState();
+            if (version < format) st.Backup = json;
             AutoMod.Domain.Rules.Scope.Normalize(st.Rules); // 挑选器按作用域和依赖排好序
             return st;
         }
         catch (Exception ex)
         {
-            Log.Error($"[ModState] 存档数据解析失败，使用空数据: {ex.Message}");
-            return new ModState();
+            Log.Error($"[ModState] 存档数据读取失败，保留原文，学徒暂停工作: {ex.Message}");
+            return new ModState { Frozen = json };
         }
     }
 }

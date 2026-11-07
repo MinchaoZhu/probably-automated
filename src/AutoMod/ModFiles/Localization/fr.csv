@@ -222,6 +222,7 @@ card.param.button,Bouton
 card.param.list,Objet
 card.param.pre,Objet
 card.param.to,Cible
+card.param.toslot,Emplacement
 card.param.tool,Outil
 card.select_button,(choisir bouton)
 card.select_param,(choisir {0})
@@ -669,6 +670,9 @@ intercom.tab_schedules,Routines
 intercom.tip_add_duty,"Un apprenti peut exécuter plusieurs routines séquentiellement, partageant ses PA quotidiens"
 intercom.tip_rest,"Repos : ne participe pas aux postes, ne reçoit aucun salaire"
 intercom.tip_work,"Travail : participe aux postes du lendemain, salaire versé au coucher"
+intercom.frozen_broken,Les données des apprentis sont illisibles.
+intercom.frozen_newer,"Données d'une version plus récente ({0}, actuel {1})."
+intercom.frozen_note,Apprentis à l'arrêt. Les données sont conservées.
 intercom.title,Interphone d'apprenti
 intercom.training_pending,Matériel de formation en attente de lecture
 intercom.training_pending_tip,"Lu au début du premier poste du jour, consomme {0} PA"
@@ -767,6 +771,7 @@ editor.action_button,Bouton
 editor.action_mark,Marque
 editor.action_swap_with,Avec
 editor.action_target,Cible
+editor.slot_auto,Auto
 editor.action_value,Valeur
 editor.add_cond_tip,Compter uniquement les objets correspondant à la condition
 editor.add_cond_title,Ajouter une condition
@@ -844,6 +849,7 @@ editor.times_unit,
 editor.tip_action_apply,"Pour chaque objet cible, tester les outils dans l'ordre ; le premier efficace est appliqué.\nLa direction est déterminée par le jeu : p. ex. robinet sur seau vide remplit le seau."
 editor.tip_action_swap,"Associer deux groupes d'objets dans l'ordre et échanger leurs positions. Si les nombres diffèrent, le surplus reste en place."
 editor.tip_action_target,"Placer chaque objet dans la première destination adaptée. Si plusieurs existent, essayer dans l'ordre."
+editor.tip_action_slot,"Auto : le jeu choisit l'emplacement. Les objets vont uniquement dans l'emplacement choisi. Chaque onglet de stockage compte comme un emplacement, ceux de même nom comme un seul."
 editor.tip_add_pre_cond,"Compter uniquement les objets correspondant, p. ex. « [A] Eau > 1000 ml »"
 editor.tip_advanced_when,"Combiner plusieurs conditions, compteurs ou variables système"
 editor.tip_cannot_run,Cette tâche ne peut pas être exécutée :
@@ -979,6 +985,8 @@ selector.scope_from,De
 selector.scope_items_inside,Objets à l'intérieur
 selector.scope_same_as_above,(Comme ci-dessus)
 selector.scope_self,Lui-même
+selector.slot_format,Objets dans : {0}
+selector.slot_format_shop,Objets dans : {0}
 selector.section_cond,Conditions
 selector.section_kind,Type d'objet
 selector.section_pick,Sélection
@@ -1060,7 +1068,7 @@ handbook.p3.title_param,Paramètres :
 handbook.p3.title_range,Portée :
 handbook.p3.title_scope,Tout le magasin & Noms d'appareils :
 handbook.p4.banner,Tâches
-handbook.p4.text_move,"Déplace des objets vers un conteneur, une zone de stockage ou une machine (ex. placer les batteries non chargées au chargeur). La destination doit être un conteneur."
+handbook.p4.text_move,"Déplace des objets vers un conteneur, une zone de stockage ou une machine (ex. placer les batteries non chargées au chargeur). La destination doit être un conteneur. Un emplacement ou un onglet de stockage peut être choisi."
 handbook.p4.text_pre,"S'exécute par défaut à chaque poste. Des options comme « ...quand [A] n'est pas vide » ou « ...quand [A] moins de N » sont possibles ; les tâches ignorées ne consomment pas d'AP. Les conditions avancées se règlent dans « Avancé... », ex. « [A] Eau > 1000 ml »."
 handbook.p4.text_press,"Appuie sur les boutons des machines (démarrer, imprimer, tout transférer), déballe les colis ou bascule les interrupteurs sans ouvrir de fenêtre."
 handbook.p4.text_swap,"Associe deux groupes d'objets dans l'ordre et échange leurs positions. Si les quantités diffèrent, les objets excédentaires restent sur place."

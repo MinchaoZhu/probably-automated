@@ -657,7 +657,13 @@ public static class ScheduleEditor
             case ActVerb.Move:
                 b.BeginRow(4, TextAnchor.MiddleLeft).AddLabel(Domain.L.T("editor.action_target"))
                     .WithTooltip(Domain.L.T("editor.tip_action_target"));
-                Pick(b, WithNone(RulesUi.Destinations(), Domain.L.T("editor.pick_dest_placeholder")), a.To, v => a.To = v);
+                Pick(b, WithNone(RulesUi.Destinations(), Domain.L.T("editor.pick_dest_placeholder")), a.To, v => AutoMod.Domain.Rules.Card.Set(a, "to", v));
+                var slots = RulesUi.SlotsOf(a.To, a.ToSlot);
+                if (slots.Count > 0)
+                {
+                    b.AddLabel(Domain.L.T("card.param.toslot")).WithTooltip(Domain.L.T("editor.tip_action_slot"));
+                    Pick(b, WithNone(slots, Domain.L.T("editor.slot_auto")), a.ToSlot, v => a.ToSlot = v);
+                }
                 b.End();
                 break;
             case ActVerb.Swap:

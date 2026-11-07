@@ -149,7 +149,8 @@ public class SimWorld : IWorld
         {
             "battery" => b.Children.Where(c => c.InBatterySlot),
             "filter" => b.Children.Where(c => InGroup(c, "filter")),
-            not null when slot.StartsWith(SlotNames.Prefix) => b.Children.Where(c => c.InSlot == slot),
+            SlotNames.Prefix + SlotNames.FirstTab when b.SlotList.Count == 0 => b.Children,
+            not null when slot.StartsWith(SlotNames.Prefix) => b.Children.Where(c => c.InSlot == slot || SlotNames.IsTabOf(c.InSlot, slot)),
             _ => b.Children,
         };
         return q.Cast<object>().ToList();
@@ -246,7 +247,10 @@ public class SimWorld : IWorld
 
     public string Str(object item, string prop) => ((SimItem)item).Str.TryGetValue(prop, out var s) ? s : null;
 
-    public bool Fits(object box, object item, string slot = null) => FitsSim((SimItem)box, (SimItem)item);
+    public bool Fits(object box, object item, string slot = null) => FitsSim((SimItem)box, (SimItem)item) && HasSlot((SimItem)box, slot);
+
+    private static bool HasSlot(SimItem box, string slot) =>
+        string.IsNullOrEmpty(slot) || box.SlotList.Any(s => s.id == slot) || box.SlotList.Count == 0 && slot == SlotNames.Prefix + SlotNames.FirstTab;
 
     public string Describe(object item)
     {

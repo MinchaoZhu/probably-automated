@@ -11,3 +11,5 @@ A console runner: `dotnet run --project tests/AutoMod.Domain.Tests` prints every
 - **Chinese snapshot**: `snapshot_zh.json` is the stored output of every Chinese UI string, compared word for word, so the multilingual
   rework could not change the Chinese text. If you change a Chinese string on purpose, delete the file and run the tests once to
   regenerate it. `zh_ui_08.txt` and `zh_ui_08_map.tsv` are the original 0.8 Chinese strings and their key map, used by the localization tests.
+- **Data samples**: `fixtures/state_vN.json` and `fixtures/pack_vN.txt` are real data written by the release that used format N. Every format
+  must have a sample, and each one must still load after the migration steps.

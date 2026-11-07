@@ -294,7 +294,7 @@ public class Interpreter
                         case Mechanism.Place:
                             // 目标里第一个放得下的（目标的顺序就是优先顺序）；问一次游戏，下面直接往它里面放
                             foreach (var b in targets)
-                                if (_w.Fits(b, item)) { dest = b; break; }
+                                if (_w.Fits(b, item, act.ToSlot)) { dest = b; break; }
                             if (dest == null) { full++; continue; }
                             break;
                         case Mechanism.Swap:
@@ -327,7 +327,7 @@ public class Interpreter
                     touched = true;
                     StepResult res = op.Mechanism switch
                     {
-                        Mechanism.Place => PlaceInto(item, dest, act.To),
+                        Mechanism.Place => PlaceInto(item, dest, act),
                         Mechanism.Swap => _w.Swap(item, other),
                         Mechanism.Apply => UseTool(tool, item, tools, times),
                         Mechanism.Trigger => TriggerTimes(item, how, times),
@@ -371,7 +371,7 @@ public class Interpreter
                 }
                 if (notAllowed > 0) rr.Issue(FailCode.NotAllowed, L.N("report.issue.not_allowed", notAllowed, op.Name, notAllowed));
                 if (noEffect > 0) rr.Issue(FailCode.NoEffect, L.N("report.issue.no_effect", noEffect, op.Name, noEffect));
-                if (full > 0) rr.Issue(FailCode.DestFull, L.N("report.issue.dest_full", full, NameOf(act.To), full));
+                if (full > 0) rr.Issue(FailCode.DestFull, NoSlot(act, targets) ? L.T("gameworld.box_no_slot", NameOf(act.To), SlotNames.Name(act.ToSlot, _d, new[] { act.To })) : L.N("report.issue.dest_full", full, NameOf(act.To), full));
                 if (doneHere > ManyThreshold)
                     rr.Issue(FailCode.Many, L.T("report.issue.many", op.Name, doneHere, NameOf(act.List)));
                 // 一件也没做、也没有别的问题：记下原因（报告、策略模拟器显示）
@@ -422,13 +422,15 @@ public class Interpreter
     }
 
     /// <summary>放进选好的目标。结果文字写排班里的名字：目标是设备名写设备名（“移至 满电架”），是筛选器写“移至 充能器#3（空闲充能器）”。</summary>
-    private StepResult PlaceInto(object item, object box, string toId)
+    private StepResult PlaceInto(object item, object box, ActionDef act)
     {
-        var res = _w.Place(item, box);
+        string toId = act.To;
+        var res = _w.Place(item, box, act.ToSlot);
         if (res.Ok && toId != null)
         {
             if (Places.IsName(toId)) res.Text = L.T("report.step.moved_to", NameOf(toId));
             else if (_d.Selectors.Any(x => x.Id == toId)) res.Text += L.T("text.paren", NameOf(toId));
+            if (act.ToSlot != null) res.Text += L.T("text.paren", SlotNames.Name(act.ToSlot, _d, new[] { toId }));
         }
         return res;
     }
@@ -546,6 +548,11 @@ public class Interpreter
         return plain;
     }
 
+    /// <summary>目标都没有指定的槽位（标签页改名后的旧规则）。未扩建的储藏区没有列出槽位，但算有第一页。</summary>
+    private bool NoSlot(ActionDef act, IReadOnlyList<object> targets) =>
+        act.ToSlot != null && act.ToSlot != SlotNames.Prefix + SlotNames.FirstTab
+        && !targets.Any(b => _w.Slots(b).Any(x => x.id == act.ToSlot));
+
     /// <summary>适用条件：不满足的对象静默跳过。</summary>
     private bool Applicable(OpDef op, ActionDef act, object item, IReadOnlyList<object> targets)
     {
@@ -554,7 +561,9 @@ public class Interpreter
         {
             case Mechanism.Place:
                 var parent = _w.Parent(item);
-                return parent == null || targets.All(b => !Equals(_w.Key(b), _w.Key(parent)));
+                if (parent == null || targets.All(b => !Equals(_w.Key(b), _w.Key(parent)))) return true;
+                // 已在目标里：指定了槽位时，在别的槽位（别的标签页）还要挪过去
+                return act.ToSlot != null && !_w.Contents(parent, act.ToSlot).Any(x => Equals(_w.Key(x), _w.Key(item)));
             case Mechanism.Annotate:
                 bool marked = _w.Num(item, "mark:" + act.Text) == 1;
                 return op.Id == ActVerb.Mark ? !marked : marked;

@@ -25,9 +25,16 @@ public static class MainWindow
 
     public static void Show(string tab = null)
     {
+        var st = Automation.State;
+        if (st.Frozen != null)
+        {
+            // 这份数据读不了，界面上的改动存档时也写不进去：不打开
+            string why = st.FrozenFormat > 0 ? Domain.L.T("intercom.frozen_newer", st.FrozenFormat, Domain.Persistence.ModState.Format) : Domain.L.T("intercom.frozen_broken");
+            Pickers.Confirm(Domain.L.T("intercom.title"), new[] { why, Domain.L.T("intercom.frozen_note") }, (Domain.L.T("ui.close"), null), default);
+            return;
+        }
         bool sameTab = tab == null || tab == _tab;
         if (tab != null) _tab = tab;
-        var st = Automation.State;
         int dayAp = st.Apprentices.Where(a => a.Paid).Sum(a => a.DailyAp);
 
         var b = Ui.Window(Id, Domain.L.T("intercom.title"), 720, 620, keepScroll: sameTab);

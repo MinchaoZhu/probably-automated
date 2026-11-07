@@ -222,6 +222,7 @@ card.param.button,Button
 card.param.list,Item
 card.param.pre,Item
 card.param.to,Target
+card.param.toslot,Slot
 card.param.tool,Tool
 card.select_button,(choose button)
 card.select_param,(choose {0})
@@ -669,6 +670,9 @@ intercom.tab_schedules,Routines
 intercom.tip_add_duty,"An apprentice can run multiple routines, sequentially in order, sharing daily AP"
 intercom.tip_rest,"Rest: Does not participate in shifts, receives no wage"
 intercom.tip_work,"Work: Participates in next day shifts, receives wage when sleeping"
+intercom.frozen_broken,Apprentice data cannot be read.
+intercom.frozen_newer,"Data written by a newer mod (format {0}, current {1})."
+intercom.frozen_note,Apprentices are off work. The data is kept.
 intercom.title,Apprentice Intercom
 intercom.training_pending,Training material pending
 intercom.training_pending_tip,"Read at start of the day first shift, consumes {0} AP"
@@ -767,6 +771,7 @@ editor.action_button,"    Button"
 editor.action_mark,"    Mark"
 editor.action_swap_with,"    With"
 editor.action_target,"    Target"
+editor.slot_auto,Auto
 editor.action_value,"    Value"
 editor.add_cond_tip,Only count items matching condition
 editor.add_cond_title,Add Condition
@@ -844,6 +849,7 @@ editor.times_unit,
 editor.tip_action_apply,"For each target item, try tool items in order; the first effective one applies to it.\nDirection is determined by the game: e.g. applying tap to empty bucket fills the bucket with water."
 editor.tip_action_swap,"Pair two groups of items in order and swap their positions. If counts differ, excess items remain in place."
 editor.tip_action_target,"Place each item into the first destination that fits. If multiple destinations exist, try them in order."
+editor.tip_action_slot,Auto: the game picks the slot. A chosen slot is the only place items go. Each storage tab counts as a slot; tabs with the same name count as one slot.
 editor.tip_add_pre_cond,"Only count items matching condition, e.g. '[A] Water > 1000 ml'"
 editor.tip_advanced_when,"Combine multiple conditions, counters, or system variables"
 editor.tip_cannot_run,This task cannot be executed:
@@ -979,6 +985,8 @@ selector.scope_from,From
 selector.scope_items_inside,Items inside
 selector.scope_same_as_above,(Same as above)
 selector.scope_self,Itself
+selector.slot_format,Items in {0}
+selector.slot_format_shop,Items in {0}
 selector.section_cond,Conditions
 selector.section_kind,Item Type
 selector.section_pick,Pick
@@ -1060,7 +1068,7 @@ handbook.p3.title_param,Parameters:
 handbook.p3.title_range,Scope:
 handbook.p3.title_scope,Whole Shop & Labels:
 handbook.p4.banner,Tasks
-handbook.p4.text_move,"Moves items to a container, storage bay, or machine (e.g. move uncharged batteries to recharger). Destination must be a container."
+handbook.p4.text_move,"Moves items to a container, storage bay, or machine (e.g. move uncharged batteries to recharger). Destination must be a container. You can also choose a slot or a storage tab."
 handbook.p4.text_pre,"Runs every shift by default. Options like ""...when [A] not empty"" or ""...when [A] less than N"" can be chosen; skipped tasks consume no AP. More complex conditions are configured under ""Advanced..."", e.g. ""[A] Water > 1000 ml""."
 handbook.p4.text_press,"Presses buttons on machine interfaces (start, print, transfer all), unwraps packages, or toggles switches without opening windows."
 handbook.p4.text_swap,"Pairs two groups of items in order and swaps their positions. If counts differ, excess items remain in place."

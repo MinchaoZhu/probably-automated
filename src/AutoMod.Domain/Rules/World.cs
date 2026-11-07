@@ -181,6 +181,31 @@ public static class SlotNames
 {
     public const string Prefix = "slot:";
 
+    /// <summary>储藏区的第一个标签页。未扩建的储藏区只有这一页，整个网格都算它。</summary>
+    public const string FirstTab = "storage#1";
+
+    /// <summary>
+    /// 储藏区标签页的角色：玩家改过名的用名字（"storage@肉类"，几个储藏区的同名标签页算同一个槽位），
+    /// 没改过的用序号（"storage#2"）。
+    /// </summary>
+    public static string TabRole(string panel, int index, string custom) =>
+        string.IsNullOrEmpty(custom) ? $"{panel}#{index + 1}" : $"{panel}@{custom}";
+
+    public static bool IsTab(string id) => id != null && (id.Contains('@') || id.Contains('#'));
+
+    /// <summary>这个槽位是不是 panel（"slot:storage"）里的一个标签页。</summary>
+    public static bool IsTabOf(string id, string panel) =>
+        id != null && panel != null && (id.StartsWith(panel + "@") || id.StartsWith(panel + "#"));
+
+    /// <summary>店里读不到标题时标签页的名字：改过名的就是名字，没改过的是面板名加序号。</summary>
+    private static string TabName(string role)
+    {
+        int at = role.IndexOf('@');
+        if (at >= 0) return role[(at + 1)..];
+        int hash = role.IndexOf('#');
+        return hash >= 0 ? L.T("slot." + role[..hash]) + " " + role[(hash + 1)..] : null;
+    }
+
     /// <summary>
     /// 游戏里读到的格子标题（适配器读窗口时记下），按“机器种类|角色”存：不同机器的同名角色标题可以不同
     /// （水培机的 seed 是“种子输入”，DNA 编辑器的 seed 是“目标”）。
@@ -215,7 +240,7 @@ public static class SlotNames
             labels.Add(kv.Value);
         }
         if (labels.Count == 1) return labels.First();
-        return L.T("slot." + role);
+        return TabName(role) ?? L.T("slot." + role);
     }
 
     /// <summary>槽位在这些设备名 / 筛选器所指机器上的名字。</summary>

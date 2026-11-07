@@ -255,7 +255,7 @@ public static class Text
         string times = a.Times > 1 ? L.N("action.times", a.Times) : "";
         return a.Verb switch
         {
-            ActVerb.Move => L.T("action.move", Lname, Name(d, a.To)),
+            ActVerb.Move => L.T("action.move", Lname, Name(d, a.To) + (string.IsNullOrEmpty(a.ToSlot) ? "" : L.T("text.paren", SlotNames.Name(a.ToSlot, d, new[] { a.To })))),
             ActVerb.Swap => L.T("action.swap", Lname, Name(d, a.To)),
             ActVerb.Activate => L.T("action.activate", Lname) + times,
             ActVerb.Press => L.T("action.press", Lname, ButtonName(a.Button)) + times,

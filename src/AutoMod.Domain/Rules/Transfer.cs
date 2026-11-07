@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMod.Domain.Persistence;
+using AutoMod.Domain.Persistence.Migrations;
 
 namespace AutoMod.Domain.Rules;
 
@@ -13,6 +15,9 @@ public class SchedulePack
     public const int CurrentFormat = 3;
 
     public int Format { get; set; } = CurrentFormat;
+
+    /// <summary>规则部分的格式（ModState.Format）。没有这个字段的是 Migrator.First。</summary>
+    public int DataFormat { get; set; } = ModState.Format;
 
     /// <summary>导出时的 mod 版本（只是记一下）。</summary>
     public string Version { get; set; }
@@ -129,7 +134,8 @@ public static class Transfer
         int brace = text.IndexOf('{');
         if (brace < 0) throw new TransferException(L.T("transfer.err.not_a_routine"));
         SchedulePack pack;
-        try { pack = JsonCodec.Deserialize<SchedulePack>(text[brace..].Trim()); }
+        try { pack = JsonCodec.Deserialize<SchedulePack>(Upgraded(text[brace..].Trim(), Migrator.Steps, ModState.Format)); }
+        catch (TransferException) { throw; }
         catch { throw new TransferException(L.T("transfer.err.not_a_routine")); }
         if (pack?.Schedule == null) throw new TransferException(L.T("transfer.err.not_a_routine"));
         if (pack.Format > SchedulePack.CurrentFormat) throw new TransferException(L.T("transfer.err.newer_version"));
@@ -140,5 +146,16 @@ public static class Transfer
         pack.Selectors ??= new List<SelectorDef>();
         pack.Properties ??= new List<PropertyDef>();
         return pack;
+    }
+
+    /// <summary>规则部分升级到 format 的流程文字。比 format 新的不能导入。</summary>
+    public static string Upgraded(string json, IReadOnlyList<Migrator.Step> steps, int format)
+    {
+        var root = Migrator.Parse(json);
+        int from = Migrator.Version(root, "dataFormat", Migrator.First);
+        if (from > format) throw new TransferException(L.T("transfer.err.newer_version"));
+        if (from == format) return json;
+        Migrator.RunPack(root, from, format, steps);
+        return Migrator.Write(root);
     }
 }

@@ -251,6 +251,16 @@ public static class SchedulePage
                 Pickers.Choose(Domain.L.T("schedule.pick_param", AutoMod.Domain.Rules.Card.ParamName(sg.Param)), opts);
                 break;
             }
+            case SegKind.Type when sg.Param == "toslot":
+            {
+                foreach (var (id, name) in RulesUi.SlotsOf(a.To, a.ToSlot).Prepend((null, Domain.L.T("editor.slot_auto"))))
+                {
+                    string target = id;
+                    opts.Add((name + (id == a.ToSlot ? Current : ""), () => { a.ToSlot = target; Rebuild(); }));
+                }
+                Pickers.Choose(Domain.L.T("schedule.pick_param", AutoMod.Domain.Rules.Card.ParamName(sg.Param)), opts);
+                break;
+            }
             case SegKind.Type when sg.Param == "button":
             {
                 foreach (var (id, name) in RulesUi.ButtonsOf(a.List, a.Button))

@@ -195,7 +195,7 @@ handbook.p3.title_param	参数：
 handbook.p3.title_range	范围：
 handbook.p3.title_scope	全店与设备名：
 handbook.p4.banner	任务
-handbook.p4.text_move	将对象逐件放入目标中第一个放得下的容器，槽位由游戏选择。目标有多个时按顺序尝试，可用于设置备用位置。
+handbook.p4.text_move	将对象逐件放入目标中第一个放得下的容器，槽位默认由游戏选择，也可指定槽位或储藏区标签页。目标有多个时按顺序尝试，可用于设置备用位置。
 handbook.p4.text_pre	默认每班执行。也可选择“【A】不为空时”“【A】少于 N 件时”等；条件不成立时跳过该任务，不消耗 AP。更复杂的条件在“高级条件…”中设置，例如“【A】的 含水 > 1000 毫升”。
 handbook.p4.text_press	按下机器窗口中的按钮（启动、打印、全部转移），拆开包装，或切换开关。无需打开窗口。
 handbook.p4.text_swap	两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。

@@ -291,6 +291,9 @@ public class ActionDef
     /// <summary>放入：目标容器（集合，按顺序试）；交换：和 List 配对的另一组东西。</summary>
     public string To { get; set; }
 
+    /// <summary>放入：目标的槽位（"slot:seed"、储藏区的标签页）；为空 = 由游戏选择。</summary>
+    public string ToSlot { get; set; }
+
     /// <summary>使用：工具（集合）：设备名、筛选器、水龙头这类固定设施。</summary>
     public string Tool { get; set; }
 

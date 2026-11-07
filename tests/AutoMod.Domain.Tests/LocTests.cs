@@ -237,6 +237,15 @@ internal static class LocTests
             }
             check(violations.Count == 0, $"复数键不能用 L.T 读取（必须使用 L.N）：\n" + string.Join("\n", violations));
 
+            // 三元表达式选的键上面的正则看不到，单独查表里有没有
+            var ternary = new Regex(@"L\.T\([^""\n]*\?\s*""([a-z0-9_.]+)""\s*:\s*""([a-z0-9_.]+)""");
+            var missing = new List<string>();
+            foreach (var f in Directory.GetFiles(srcRoot, "*.cs", SearchOption.AllDirectories))
+                foreach (Match m in ternary.Matches(File.ReadAllText(f)))
+                    foreach (var g in new[] { m.Groups[1].Value, m.Groups[2].Value })
+                        if (!en.ContainsKey(g)) missing.Add($"{Path.GetFileName(f)}: {g}");
+            check(missing.Count == 0, "三元表达式里的键不在表里：\n" + string.Join("\n", missing));
+
             // 2. 所有语言下生成的全部文字不含 |，且 L.Missing 为空
             foreach (var locale in new[] { "zh", "en", "ru", "de", "fr", "es", "pl", "ja" })
             {

@@ -222,6 +222,7 @@ card.param.button,Botón
 card.param.list,Objeto
 card.param.pre,Objeto
 card.param.to,Destino
+card.param.toslot,Ranura
 card.param.tool,Herramienta
 card.select_button,(elegir botón)
 card.select_param,(elegir {0})
@@ -669,6 +670,9 @@ intercom.tab_schedules,Rutinas
 intercom.tip_add_duty,"Un aprendiz puede ejecutar varias rutinas de forma secuencial, compartiendo sus PA diarios"
 intercom.tip_rest,"Descanso: no participa en turnos, no recibe salario"
 intercom.tip_work,"Trabajo: participa en turnos del día siguiente, recibe salario al dormir"
+intercom.frozen_broken,No se pueden leer los datos de aprendices.
+intercom.frozen_newer,"Datos de una versión más reciente ({0}, actual {1})."
+intercom.frozen_note,Aprendices en pausa. Los datos se conservan.
 intercom.title,Intercomunicador de aprendiz
 intercom.training_pending,Material de capacitación pendiente de lectura
 intercom.training_pending_tip,"Se lee al inicio del primer turno del día, consume {0} PA"
@@ -767,6 +771,7 @@ editor.action_button,Botón
 editor.action_mark,Marca
 editor.action_swap_with,Con
 editor.action_target,Objetivo
+editor.slot_auto,Auto
 editor.action_value,Valor
 editor.add_cond_tip,Solo contar objetos que cumplan la condición
 editor.add_cond_title,Añadir condición
@@ -844,6 +849,7 @@ editor.times_unit,
 editor.tip_action_apply,"Para cada objeto destino, prueba las herramientas en orden; se aplica la primera eficaz.\nLa dirección la determina el juego: p. ej., aplicar grifo al cubo vacío lo llena de agua."
 editor.tip_action_swap,"Empareja dos grupos de objetos en orden e intercambia sus posiciones. Si los recuentos difieren, los sobrantes se quedan."
 editor.tip_action_target,"Coloca cada objeto en el primer destino adecuado. Si hay varios destinos, pruébalos en orden."
+editor.tip_action_slot,"Auto: el juego elige la ranura. Los objetos van solo a la ranura elegida. Cada pestaña de almacén cuenta como ranura; las de igual nombre, como una sola."
 editor.tip_add_pre_cond,"Solo contar objetos que cumplan la condición, p. ej. «[A] Agua > 1000 ml»"
 editor.tip_advanced_when,"Combinar varias condiciones, contadores o variables del sistema"
 editor.tip_cannot_run,Esta tarea no se puede ejecutar:
@@ -979,6 +985,8 @@ selector.scope_from,De
 selector.scope_items_inside,Objetos dentro
 selector.scope_same_as_above,(Igual que arriba)
 selector.scope_self,Mismo
+selector.slot_format,Objetos en: {0}
+selector.slot_format_shop,Objetos en: {0}
 selector.section_cond,Condiciones
 selector.section_kind,Tipo de objeto
 selector.section_pick,Selección
@@ -1060,7 +1068,7 @@ handbook.p3.title_param,Parámetros:
 handbook.p3.title_range,Ámbito:
 handbook.p3.title_scope,Toda la tienda y nombres de dispositivo:
 handbook.p4.banner,Tareas
-handbook.p4.text_move,"Mueve objetos a un contenedor, zona de almacenamiento o máquina (ej. poner baterías descargadas en cargador). El destino debe ser un contenedor."
+handbook.p4.text_move,"Mueve objetos a un contenedor, zona de almacenamiento o máquina (ej. poner baterías descargadas en cargador). El destino debe ser un contenedor. Se puede elegir una ranura o una pestaña de almacén."
 handbook.p4.text_pre,"Se ejecuta por defecto en cada turno. Se pueden elegir opciones como «...cuando [A] no esté vacío» o «...cuando [A] menos de N»; las tareas omitidas no gastan AP. Condiciones más complejas se configuran en «Avanzado...», ej. «[A] Agua > 1000 ml»."
 handbook.p4.text_press,"Pulsa botones en máquinas (iniciar, imprimir, transferir todo), desenvuelve paquetes o acciona interruptores sin abrir ventanas."
 handbook.p4.text_swap,"Empareja dos grupos de objetos en orden e intercambia sus posiciones. Si las cantidades difieren, los objetos sobrantes se quedan en su sitio."

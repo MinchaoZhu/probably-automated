@@ -29,12 +29,16 @@ public static class Automation
     /// <summary>mod 数据在存档里的 key（游戏存成 "probably_automated:state"）。</summary>
     private const string DataKey = "state";
 
+    /// <summary>上一次升级前的数据原文：升级出了问题时还能找回来。</summary>
+    private const string BackupKey = "state.backup";
+
     // ---------- 存读档 ----------
 
     public static void OnGameLoaded()
     {
         var store = GameApi.Store;
         State = ModState.FromJson(ModHelper.GetModData(ModInfo.Id, DataKey));
+        if (State.Backup != null) ModHelper.SetModData(ModInfo.Id, BackupKey, State.Backup);
         Unlock.SyncPrice();
 
         // 学徒做不了的（要玩家在界面里操作的）记录：存在 mod 数据里，读档恢复
@@ -71,6 +75,7 @@ public static class Automation
     {
         var store = GameApi.Store;
         if (store == null) return;
+        State.ModVersion = ModInfo.Version;
         ModHelper.SetModData(ModInfo.Id, DataKey, State.ToJson());
     }
 
@@ -125,7 +130,7 @@ public static class Automation
 
     public static ShiftReport RunShift(string shift, bool dryRun)
     {
-        if ((!Settings.AutomationEnabled || !Unlock.IsUnlocked) && !dryRun) return null;
+        if (State.Frozen != null || (!Settings.AutomationEnabled || !Unlock.IsUnlocked) && !dryRun) return null;
         ShiftReport report;
         var workers = WorkersFor(shift, dryRun);
         if (dryRun) workers = workers.Where(a => a.DutiesIn(shift).Any()).ToList();

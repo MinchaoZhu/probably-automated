@@ -222,6 +222,7 @@ card.param.button,Taste
 card.param.list,Gegenstand
 card.param.pre,Gegenstand
 card.param.to,Ziel
+card.param.toslot,Slot
 card.param.tool,Werkzeug
 card.select_button,(Taste wählen)
 card.select_param,({0} wählen)
@@ -669,6 +670,9 @@ intercom.tab_schedules,Routinen
 intercom.tip_add_duty,Ein Lehrling kann mehrere Routinen nacheinander ausführen und teilt sich die täglichen AP
 intercom.tip_rest,"Ruhe: nimmt nicht an Schichten teil, kein Lohn"
 intercom.tip_work,"Arbeit: nimmt an Schichten des nächsten Tages teil, Lohn beim Schlafen"
+intercom.frozen_broken,Die Lehrlingsdaten können nicht gelesen werden.
+intercom.frozen_newer,"Daten einer neueren Mod-Version ({0}, aktuell {1})."
+intercom.frozen_note,Lehrlinge pausieren. Die Daten bleiben erhalten.
 intercom.title,Lehrlings-Funkgerät
 intercom.training_pending,Schulungsmaterial wartet auf Lektüre
 intercom.training_pending_tip,"Wird zu Beginn der ersten Schicht des Tages gelesen, verbraucht {0} AP"
@@ -767,6 +771,7 @@ editor.action_button,Taste
 editor.action_mark,Markierung
 editor.action_swap_with,Mit
 editor.action_target,Ziel
+editor.slot_auto,Auto
 editor.action_value,Wert
 editor.add_cond_tip,"Nur Gegenstände zählen, die der Bedingung entsprechen"
 editor.add_cond_title,Bedingung hinzufügen
@@ -844,6 +849,7 @@ editor.times_unit,
 editor.tip_action_apply,Für jeden Zielgegenstand Werkzeuge der Reihe nach testen; das erste wirksame wird angewendet.\nRichtung wird vom Spiel bestimmt: z. B. Hahn auf leeren Eimer füllt ihn mit Wasser.
 editor.tip_action_swap,Zwei Gruppen von Gegenständen der Reihe nach paaren und Positionen tauschen. Bei ungleicher Anzahl bleiben überschüssige liegen.
 editor.tip_action_target,Jeden Gegenstand in das erste passende Ziel legen. Bei mehreren Zielen der Reihe nach versuchen.
+editor.tip_action_slot,"Auto: Das Spiel wählt den Slot. Gegenstände landen nur im gewählten Slot. Jeder Lager-Tab gilt als Slot, gleichnamige Tabs als ein Slot."
 editor.tip_add_pre_cond,"Nur Gegenstände zählen, die Bedingung erfüllen, z. B. „[A] Wasser > 1000 ml“"
 editor.tip_advanced_when,"Mehrere Bedingungen, Zähler oder Systemvariablen kombinieren"
 editor.tip_cannot_run,Diese Aufgabe kann nicht ausgeführt werden:
@@ -979,6 +985,8 @@ selector.scope_from,Aus
 selector.scope_items_inside,Gegenstände darin
 selector.scope_same_as_above,(Wie oben)
 selector.scope_self,Selbst
+selector.slot_format,Gegenstände in: {0}
+selector.slot_format_shop,Gegenstände in: {0}
 selector.section_cond,Bedingungen
 selector.section_kind,Gegenstandstyp
 selector.section_pick,Auswahl
@@ -1060,7 +1068,7 @@ handbook.p3.title_param,Parameter:
 handbook.p3.title_range,Bereich:
 handbook.p3.title_scope,Gesamter Laden & Gerätenamen:
 handbook.p4.banner,Aufgaben
-handbook.p4.text_move,"Verschiebt Gegenstände in einen Behälter, ein Lager oder eine Maschine (z. B. ungeladene Batterien in die Ladestation). Das Ziel muss ein Behälter sein."
+handbook.p4.text_move,"Verschiebt Gegenstände in einen Behälter, ein Lager oder eine Maschine (z. B. ungeladene Batterien in die Ladestation). Das Ziel muss ein Behälter sein. Ein Slot oder Lager-Tab kann gewählt werden."
 handbook.p4.text_pre,"Wird standardmäßig jede Schicht ausgeführt. Optionen wie ""...wenn [A] nicht leer"" oder ""...wenn [A] weniger als N"" sind wählbar; übersprungene Aufgaben kosten keine AP. Komplexere Bedingungen werden unter ""Erweitert..."" eingestellt, z. B. ""[A] Wasser > 1000 ml""."
 handbook.p4.text_press,"Drückt Tasten auf Maschinenoberflächen (Start, Drucken, Alle übertragen), packt Pakete aus oder betätigt Schalter, ohne Fenster öffnen zu müssen."
 handbook.p4.text_swap,Paart zwei Gruppen von Gegenständen der Reihe nach und tauscht ihre Plätze. Bei unterschiedlicher Anzahl bleiben überschüssige Gegenstände an Ort und Stelle.
