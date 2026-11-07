@@ -28,7 +28,7 @@ public static class FlowStats
         }
         var groups = reports.SelectMany(r => r.Groups.Where(g => g.Schedule == s.Name)).ToList(); // 几名学徒执行同一流程时每人一组
         var entries = reports.SelectMany(r => r.Entries.Where(e => e.Ws == s.Name)).ToList();
-        int done = entries.Count(e => e.Ok);
+        int done = entries.Where(e => e.Ok).Sum(e => e.Units());
         double used = groups.Sum(g => g.ApUsed);
         string from = Domain.L.T("schedule.day_shift", reports.First().Day, Shift.DisplayName(reports.First().Shift));
         string to = Domain.L.T("schedule.day_shift", reports.Last().Day, Shift.DisplayName(reports.Last().Shift));
@@ -48,7 +48,7 @@ public static class FlowStats
             Table.BeginItem(b, i, false);
             b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
             Table.Cell(b, names[i], 150, Tone.Bold, 16);
-            Table.Cell(b, Domain.L.N("schedule.stats_done_items", mine.Count(e => e.Ok)), 70);
+            Table.Cell(b, Domain.L.N("schedule.stats_done_items", mine.Where(e => e.Ok).Sum(e => e.Units())), 70);
             Table.Cell(b, $"{mine.Where(e => e.Ok).Sum(e => e.Cost):0.#}", 70);
             Table.Cell(b, top, 300, issues.Count == 0 ? Tone.Dim : t => Tone.Color(t, Tone.Warn),
                 tip: issues.Count > 1 ? string.Join("\n", issues.Skip(1).Take(5).Select(g => Domain.L.N("schedule.stats_issue_count", g.Count(), g.First().Reason))) : null);

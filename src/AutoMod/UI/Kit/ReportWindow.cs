@@ -91,12 +91,10 @@ public static class ReportWindow
         b.Show();
     }
 
-    private static readonly Regex Uid = new(@"#\d+", RegexOptions.Compiled);
-
-    /// <summary>物品的说法去掉编号和括号里的状态，再去掉开头的动作名（任务名已经说了）：“使用 桶装水#12（0ml）” → “桶装水”。</summary>
+    /// <summary>物品的说法去掉编号和它后面的状态，再去掉开头的动作名（任务名已经说了）：“使用 桶装水#12（0ml）” → “桶装水”。</summary>
     private static string Plain(string item)
     {
-        var s = Regex.Replace(Uid.Replace(item ?? "", ""), "（[^）]*）", "").Trim();
+        var s = ShiftReport.Plain(item);
         int sp = s.IndexOf(' ');
         return sp > 0 && sp <= 4 ? s[(sp + 1)..] : s;
     }
@@ -106,19 +104,21 @@ public static class ReportWindow
         void Add(ReportLine.Kinds kind, string text, string aux = null) => lines.Add(new ReportLine { Kind = kind, Text = text, Aux = aux });
         var done = entries.Where(e => e.Ok).ToList();
         double ap = done.Sum(e => e.Cost);
-        if (done.Count > 0) Add(ReportLine.Kinds.RuleDone, rule, Domain.L.N("report.window.group_stats", done.Count, ap.ToString("0.#")));
+        int n = done.Sum(e => e.Units());
+        if (n > 0) Add(ReportLine.Kinds.RuleDone, rule, Domain.L.N("report.window.group_stats", n, ap.ToString("0.#")));
         else Add(ReportLine.Kinds.RuleNone, rule);
         // 同样的事合并：去掉物品编号后文字相同的算一种
-        foreach (var same in done.GroupBy(e => Plain(e.Item) + "｜" + Uid.Replace(e.Text ?? "", "")))
+        foreach (var same in done.GroupBy(e => Plain(e.Item) + "｜" + ShiftReport.NoUid(e.Text)))
         {
             var e = same.First();
             string what = Plain(e.Item);
             string text = e.Text ?? "";
             int colon = text.IndexOfAny(new[] { '：', ':' });
             string action = colon >= 0 ? text[..colon] : text, change = colon >= 0 ? text[(colon + 1)..] : "";
-            string n = same.Count() > 1 ? $" ×{same.Count()}" : "";
-            action = Regex.Replace(Uid.Replace(action, ""), "（[^）]*）", "");
-            Add(ReportLine.Kinds.Detail, action.Contains(what) ? $"{action}{n}" : $"{what}{n}　{action}");
+            int units = same.Sum(x => x.Units());
+            string times = units > 1 ? $" ×{units}" : "";
+            action = Regex.Replace(ShiftReport.NoUid(action), "（[^）]*）", "");
+            Add(ReportLine.Kinds.Detail, action.Contains(what) ? $"{action}{times}" : $"{what}{times}　{action}");
             if (change != "") Add(ReportLine.Kinds.Change, change.Replace("，", " · ").Replace(", ", " · "));
         }
         foreach (var e in entries.Where(e => !e.Ok))

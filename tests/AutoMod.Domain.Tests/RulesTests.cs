@@ -1260,6 +1260,20 @@ internal static class RulesTests
             Check(rep.Deferred == g.Deferred, $"未处理 {rep.Deferred} 件 = 解释器的 {g.Deferred} 件");
             Check(rep.Detail().Contains(Text.Ap(g.ApUsed, g.ApTotal)) && rep.Summary().Contains($"{rep.Deferred} 件因 AP 不足未做"), $"明细写 AP，早报的一句话写 AP 不足没做的件数：{rep.Summary()}");
             Check(rr.Items.Where(e => e.Outcome == Outcomes.Done).All(e => e.Text == "移至 满电架"), "移动结果写设备名（不是东西本来的名字“乙架”）");
+
+            // 同样的事合成一条：6 件一样的电池都搬走 → 一条“×6”，件数、AP 照算
+            var w4 = new SimWorld();
+            var a4 = w4.AddRoot("storage", 1, "甲架");
+            w4.AddRoot("storage", 2, "乙架");
+            for (int i = 0; i < 6; i++) w4.Add(a4, "battery_full");
+            Named(w4, "oa", 1); Named(w4, "满电架", 2);
+            var run4 = new Interpreter(w4, d).RunShift(Shift.Morning, new[] { App("甲", 100, 5, "sch") });
+            var rep4 = ShiftReport.From(run4, false, new Apprentice[0]);
+            var ok4 = rep4.Entries.Where(e => e.Ok).ToList();
+            Check(ok4.Count == 1 && ok4[0].Count == 6 && rep4.Done == 6 && !ok4[0].Item.Contains("#"), $"同样的 6 件合成一条：{string.Join("；", ok4.Select(e => $"{e.Item} ×{e.Count}"))}");
+            Check(ShiftReport.Plain("使用 水桶#1490（0ml，水质 0%）") == "使用 水桶" && ShiftReport.Plain("放入 生肉（小）#1680") == "放入 生肉（小）",
+                "合并时去掉编号和它后面的状态，名字里的括号留着");
+            Check(ok4[0].Cost == run4.Groups[0].ApUsed && rep4.Detail().Contains("×6") && rep4.Summary().Contains("6 件"), $"合成后 AP 合计不变，明细写 ×6：{rep4.Summary()}");
         });
 
         test("规则·水务模板：收集 → 过滤 → 成品罐 → 贴标签", () =>

@@ -245,7 +245,7 @@ public static class ScheduleEditor
         if (rep == null) return (null, null);
         var mine = rep.Entries.Where(e => e.Ws == s.Name && e.Rule == r.Name).ToList();
         if (mine.Any(e => !e.Ok)) return (mine.First(e => !e.Ok).Reason, Tone.Warn);
-        return mine.Count > 0 ? (Domain.L.N("editor.done_items", mine.Count), Tone.Ok) : (Domain.L.T("editor.unprocessed"), Tone.Muted);
+        return mine.Count > 0 ? (Domain.L.N("editor.done_items", mine.Sum(e => e.Units())), Tone.Ok) : (Domain.L.T("editor.unprocessed"), Tone.Muted);
     }
 
     /// <summary>

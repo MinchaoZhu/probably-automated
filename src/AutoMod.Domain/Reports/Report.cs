@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using AutoMod.Domain.Rules;
 using AutoMod.Domain.Workforce;
 
@@ -43,8 +44,11 @@ public class ReportEntry
     /// <summary>AP（保留 1 位小数）。</summary>
     public double Cost { get; set; }
 
-    /// <summary>汇总条目代表的件数（“AP 耗尽，N 件未处理”）；0 = 1 件。</summary>
+    /// <summary>汇总条目代表的件数（“AP 耗尽，N 件未处理”；同样的事做了 N 件合成一条）；0 = 1 件。</summary>
     public int Count { get; set; }
+
+    /// <summary>这条代表几件。</summary>
+    public int Units() => Math.Max(1, Count);
 
     /// <summary>执行的学徒。</summary>
     public string Worker { get; set; } = "";
@@ -77,7 +81,7 @@ public class ShiftReport
     /// <summary>由排班解释器生成的一行摘要；不为空时 Summary() 直接用它。</summary>
     public string SummaryOverride { get; set; }
 
-    public int Done => Entries.Count(e => e.Ok);
+    public int Done => Entries.Where(e => e.Ok).Sum(e => e.Units());
     public int Failed => Entries.Count(e => !e.Ok && !e.Deferred);
     /// <summary>AP 耗尽、留到下次的件数。</summary>
     public int Deferred => Entries.Where(e => e.Deferred && e.Code != FailCode.NotAllowed).Sum(e => Math.Max(1, e.Count));
@@ -96,7 +100,7 @@ public class ShiftReport
         string who = Workers.Count > 0 ? L.Join("list", Workers.Keys) : L.T("report.apprentice");
         if (!string.IsNullOrEmpty(Note) && Entries.Count == 0) return L.T("report.shift_note", AutoMod.Domain.Workforce.Shift.DisplayName(Shift), Note);
         if (Entries.Count == 0) return L.T("report.shift_empty", who, AutoMod.Domain.Workforce.Shift.DisplayName(Shift));
-        var byWs = Entries.Where(e => e.Ok).GroupBy(e => e.Ws).Select(g => $"{g.Key} {L.N("report.count_items", g.Count())}");
+        var byWs = Entries.Where(e => e.Ok).GroupBy(e => e.Ws).Select(g => $"{g.Key} {L.N("report.count_items", g.Sum(e => e.Units()))}");
         string s = L.T("report.shift_done", who, AutoMod.Domain.Workforce.Shift.DisplayName(Shift), Done, L.Join("list", byWs));
         if (Deferred > 0) s += L.N("report.shift_deferred", Deferred);
         if (Failed > 0) s += L.N("report.shift_failed", Failed);
@@ -126,7 +130,8 @@ public class ShiftReport
                 string who = string.IsNullOrEmpty(e.Worker) ? "" : $"{e.Worker} ";
                 string levelup = e.LevelUps > 0 ? L.T("report.detail.levelup") : "";
                 string itemColon = e.Item == "" ? "" : L.T("text.pair_after", e.Item);
-                sb.AppendLine(e.Ok ? $"  ✓ {who}{itemColon}{e.Text}  ({e.Rule}, {e.Cost:0.#} AP{levelup})"
+                string times = e.Count > 1 ? $" ×{e.Count}" : "";
+                sb.AppendLine(e.Ok ? $"  ✓ {who}{itemColon}{e.Text}{times}  ({e.Rule}, {e.Cost:0.#} AP{levelup})"
                     : e.Deferred ? $"  … {itemColon}{e.Reason}  ({e.Rule})"
                     : $"  ✗ {itemColon}{e.Reason}  ({e.Rule})");
             }
@@ -148,12 +153,24 @@ public class ShiftReport
                     .Where(t => t.why != null).Select(t => L.T("fmt.colon", t.Name, t.why)).ToList() });
             foreach (var rule in g.Rules)
             {
+                // 同样的事合成一条：去掉物品编号和括号里的状态后，物品和结果文字都相同的（“放入 营养果：移至 食品仓库 ×591”）
+                var same = new Dictionary<string, ReportEntry>();
                 foreach (var ev in rule.Items.Where(e => e.Outcome == Outcomes.Done))
-                    r.Entries.Add(new ReportEntry
+                {
+                    string item = $"{Catalog.Op(ev.Op).Name} {ev.Item}";
+                    string key = Plain(item) + "｜" + NoUid(ev.Text);
+                    if (same.TryGetValue(key, out var first))
                     {
-                        Ok = true, Ws = g.ScheduleName, Rule = rule.Name, Worker = L.Join("list", g.Workers),
-                        Item = $"{Catalog.Op(ev.Op).Name} {ev.Item}", Text = ev.Text, Cost = ev.Ap,
-                    });
+                        first.Count = first.Units() + 1;
+                        first.Cost += ev.Ap;
+                        first.Item = Plain(item);
+                        first.Text = NoUid(ev.Text);
+                        continue;
+                    }
+                    var entry = new ReportEntry { Ok = true, Ws = g.ScheduleName, Rule = rule.Name, Worker = L.Join("list", g.Workers), Item = item, Text = ev.Text, Cost = ev.Ap };
+                    same[key] = entry;
+                    r.Entries.Add(entry);
+                }
                 foreach (var i in rule.Issues)
                     r.Entries.Add(new ReportEntry { Ok = false, Ws = g.ScheduleName, Rule = rule.Name, Item = i.Count > 1 ? L.N("report.count_items", i.Count) : "", Code = i.Code, Reason = i.Text,
                         Deferred = i.Code == FailCode.NotAllowed });
@@ -167,6 +184,17 @@ public class ShiftReport
         r.SummaryOverride = L.T("report.summary_override", AutoMod.Domain.Workforce.Shift.DisplayName(run.Shift), Text.RunSummary(run));
         return r;
     }
+
+    private static readonly Regex Uid = new(@"#\d+", RegexOptions.Compiled);
+
+    /// <summary>编号和紧跟着的状态括号（“#12（0ml，水质 0%）”）；名字里的括号在编号前面（“生肉（小）#1680”），不算。</summary>
+    private static readonly Regex UidState = new(@"#\d+（[^）]*）", RegexOptions.Compiled);
+
+    /// <summary>去掉物品编号（“营养果#1804” → “营养果”）。</summary>
+    public static string NoUid(string s) => Uid.Replace(s ?? "", "");
+
+    /// <summary>去掉物品编号和它后面的状态（“使用 水桶#12（0ml，水质 0%）” → “使用 水桶”，“生肉（小）#1680” → “生肉（小）”）。</summary>
+    public static string Plain(string s) => NoUid(UidState.Replace(s ?? "", "")).Trim();
 }
 
 /// <summary>班次报告里的一个执行组。</summary>

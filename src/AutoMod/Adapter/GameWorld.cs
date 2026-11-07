@@ -42,6 +42,8 @@ public class GameWorld : IWorld
         _shop = null;
         _named = null;
         _slots.Clear();
+        _room.Clear();
+        _fit = default;
         for (int i = 0; i < items.Count; i++)
         {
             var it = items[i];
@@ -290,16 +292,154 @@ public class GameWorld : IWorld
 
     public bool Fits(object box, object item, string slot = null)
     {
-        try { return Node((GameItem)box, slot, (GameItem)item) is { } node && GraphUtils.CanAccept(node, (GameItem)item); }
+        var b = (GameItem)box;
+        var it = (GameItem)item;
+        _fit = default;
+        try
+        {
+            var nodes = Nodes(b, slot);
+            if (nodes == null) return false;
+            foreach (var node in nodes)
+            {
+                if (CannotFit(node, it)) continue;
+                // 游戏找位置（GraphUtils.CanAccept 就是这一步）；找到的位置留给紧接着的 Place 用，不再找第二遍
+                var marker = node.TryFindOneValidInventorySlot(it);
+                if (marker != null)
+                {
+                    _fit = (it, b, slot, node, marker);
+                    return true;
+                }
+                Rejected(node, it);
+            }
+            return false;
+        }
         catch { return false; }
     }
 
-    /// <summary>放东西的位置：整个容器（游戏自己挑格子），或指定格子里第一个放得下的库存（一个格子可以有几个库存，都放不下时给第一个）；格子不存在返回 null。</summary>
-    private GraphNodeStorage Node(GameItem box, string slot, GameItem item)
+    /// <summary>放东西的位置：整个容器（游戏自己挑格子），或指定格子的各个库存（一个格子可以有几个库存，按顺序）；格子不存在返回 null。</summary>
+    private List<GraphNodeStorage> Nodes(GameItem box, string slot)
     {
-        if (string.IsNullOrEmpty(slot)) return box;
+        if (string.IsNullOrEmpty(slot)) return new List<GraphNodeStorage> { box };
         var invs = FindSlot(box, slot.StartsWith(SlotNames.Prefix) ? slot[SlotNames.Prefix.Length..] : slot)?.Inventories;
-        return invs?.FirstOrDefault(inv => GraphUtils.CanAccept(inv, item)) ?? invs?.FirstOrDefault();
+        return invs?.Cast<GraphNodeStorage>().ToList();
+    }
+
+    // ---------- 放入前的预检：只排除肯定放不下的，其余照样问游戏 ----------
+
+    /// <summary>上一次 Fits 找到的位置：Place 同一件、同一处时直接放进去（游戏找一次位置要逐格逐朝向地试）。</summary>
+    private (GameItem item, GameItem box, string slot, GraphNodeStorage node, SlotMarker marker) _fit;
+
+    /// <summary>网格的空格数和“放不下”的记录；网格里少了东西、交换、作用、重新扫描时作废（见 Forget）。只在同一帧里有效。</summary>
+    private readonly Dictionary<GameGridInventory, Room> _room = new();
+    private int _roomFrame = -1;
+
+    private sealed class Room
+    {
+        /// <summary>空着的格子数。</summary>
+        public int Free;
+
+        /// <summary>
+        /// 能按空格数判断：网格和里面的东西都不会把物品转放进别处（游戏的 slotSearchPassthroughForItemFunc），
+        /// 放不下就是真的放不下。
+        /// </summary>
+        public bool Exact;
+
+        /// <summary>
+        /// 游戏说放不下的物品（种类、形状、件数、全部标签都相同的算同一种）。网格只会越放越满，
+        /// 同样的东西放不下的，之后也放不下。
+        /// </summary>
+        public readonly HashSet<string> Rejected = new();
+    }
+
+    private Room RoomOf(GameGridInventory g)
+    {
+        if (_roomFrame != UnityEngine.Time.frameCount)
+        {
+            _room.Clear();
+            _roomFrame = UnityEngine.Time.frameCount;
+        }
+        if (_room.TryGetValue(g, out var r)) return r;
+        r = new Room { Exact = g.slotSearchPassthroughForItemFunc == null, Free = g.inventoryShape == null ? 0 : FreeCells(g.inventoryShape) };
+        foreach (var c in g.childItems)
+        {
+            if (c == null) continue;
+            if (c.slotSearchPassthroughForItemFunc != null) r.Exact = false;
+            r.Free -= c.shape == null ? 1 : Math.Max(1, Cells(c.shape));
+        }
+        _room[g] = r;
+        return r;
+    }
+
+    /// <summary>容器的全部库存都是网格时返回这些网格（游戏在容器里找位置，就是在这些库存里找）；有别的库存（机器槽位）返回 null。</summary>
+    private static List<GameGridInventory> GridsOf(GraphNodeStorage node)
+    {
+        if (node is GameGridInventory g) return new List<GameGridInventory> { g };
+        if (node is not GameItem box) return null;
+        var invs = ItemFacts.Inventories(box);
+        if (invs.Count == 0) return null;
+        var grids = new List<GameGridInventory>(invs.Count);
+        foreach (var inv in invs)
+        {
+            if (inv is not GameGridInventory grid) return null;
+            grids.Add(grid);
+        }
+        return grids;
+    }
+
+    /// <summary>
+    /// 肯定放不下（不用问游戏）：每个网格都是空格比物品占的格子少，或者同样的东西刚被它拒绝过，
+    /// 或者（正方形的东西）不转向就没有位置——转向后还是同一个形状，游戏逐个朝向地试也一样找不到。
+    /// 能叠放的东西不判断：没有空格也可能叠到同类上。
+    /// </summary>
+    private bool CannotFit(GraphNodeStorage node, GameItem it)
+    {
+        if (it.mayStackItemFunc != null || it.shape == null) return false;
+        var grids = GridsOf(node);
+        if (grids == null) return false;
+        int area = Math.Max(1, Cells(it.shape));
+        bool square = it.shape.width == it.shape.height && area == it.shape.width * it.shape.height;
+        string key = null;
+        foreach (var g in grids)
+        {
+            var room = RoomOf(g);
+            if (!room.Exact) return false;
+            if (room.Free < area) continue;
+            key ??= ItemKey(it);
+            if (room.Rejected.Contains(key)) continue;
+            if (square && g.TryFindOneValidInventorySlot(it, keepOrientation: true) == null)
+            {
+                room.Rejected.Add(key);
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>游戏说这件放不进 node：记到它的每个网格上。</summary>
+    private void Rejected(GraphNodeStorage node, GameItem it)
+    {
+        if (it.mayStackItemFunc != null || it.shape == null || GridsOf(node) is not { } grids) return;
+        string key = ItemKey(it);
+        foreach (var g in grids)
+        {
+            var room = RoomOf(g);
+            if (room.Exact) room.Rejected.Add(key);
+        }
+    }
+
+    /// <summary>判断“同样的东西”：种类、形状、件数、全部标签都相同（游戏能不能放只看这些）。</summary>
+    private static string ItemKey(GameItem it)
+    {
+        var sb = new System.Text.StringBuilder(it.identifier).Append('|').Append(it.shape.width).Append('x').Append(it.shape.height).Append('|').Append(it.unitCount);
+        foreach (var kv in TagValues(it).OrderBy(kv => kv.Key, StringComparer.Ordinal)) sb.Append('|').Append(kv.Key).Append('=').Append(kv.Value);
+        return sb.ToString();
+    }
+
+    /// <summary>网格里少了东西（拿走、交换）：它的空格数和“放不下”的记录作废。</summary>
+    private void Forget(GameInventory inv)
+    {
+        if (inv is GameGridInventory g) _room.Remove(g);
     }
 
     public string Describe(object item)
@@ -361,10 +501,32 @@ public class GameWorld : IWorld
         try
         {
             var from = GameApi.ParentContainer(it);
-            var node = Node(b, slot, it);
-            if (node == null) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_no_slot", BoxName(b), SlotNames.Name(slot, new[] { ((GameItem)b).identifier })) };
-            if (!GraphUtils.CanAccept(node, it)) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_full", BoxName(b)) };
-            int rest = GraphUtils.TryAcceptAll(node, it, -1);
+            var fromInv = it.parentInventory;
+            var fit = _fit;
+            if (!ReferenceEquals(fit.item, it) || !ReferenceEquals(fit.box, b) || fit.slot != slot)
+            {
+                if (Nodes(b, slot) == null) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_no_slot", BoxName(b), SlotNames.Name(slot, new[] { ((GameItem)b).identifier })) };
+                if (!Fits(b, it, slot)) return new StepResult { Ok = false, Code = FailCode.DestFull, Reason = Domain.L.T("gameworld.box_full", BoxName(b)) };
+                fit = _fit;
+            }
+            _fit = default;
+            // 和 GraphUtils.TryAcceptAll 一样：先放进找到的位置，没放完（拆分的一叠）再让游戏接着找
+            var marker = fit.marker;
+            var destInv = marker.inventory ?? marker.targetItem?.parentInventory;
+            int amount = it.unitCount;
+            int accepted = marker.numTransfer > 0 ? marker.TryAcceptOnce(amount) : 0;
+            int rest = amount - accepted;
+            if (rest > 0 && accepted > 0) rest = GraphUtils.TryAcceptAll(fit.node, it, rest);
+            if (accepted > 0)
+            {
+                Forget(fromInv);
+                // 放进去的网格只会更满：“放不下”的记录照用，空格数减掉这件；能叠放、会转放的东西放进去后就不好说了
+                if (destInv is GameGridInventory dg && _room.TryGetValue(dg, out var room))
+                {
+                    if (it.mayStackItemFunc != null || it.slotSearchPassthroughForItemFunc != null || it.shape == null || rest != 0) _room.Remove(dg);
+                    else room.Free -= Math.Max(1, Cells(it.shape));
+                }
+            }
             _slots.Clear(); // 放进机器的东西（例如模块）可能让它的窗口多出格子
             // 只是换了地方时店里的物品还是那些；物品没了（游戏把它并进了别的物品）或只放进去一部分时，下次作用前重新扫描
             if (rest != 0 || !Alive(it)) _stale = true;
@@ -387,7 +549,11 @@ public class GameWorld : IWorld
         try
         {
             var (tp, rp) = (GameApi.ParentContainer(t), GameApi.ParentContainer(r));
+            var (ti, ri) = (t.parentInventory, r.parentInventory);
+            _fit = default;
             if (!GraphUtils.SwapItemsInPlace(t, r)) return StepResult.Fail(Domain.L.T("gameworld.swap_not_allowed"));
+            Forget(ti);
+            Forget(ri);
             _slots.Clear();
             var res = StepResult.Done(Domain.L.T("gameworld.swap_with", Describe(r)));
             res.Effects.Add(Moved(r, rp, tp));
@@ -546,6 +712,8 @@ public class GameWorld : IWorld
             var dialog = GameDialog.Snapshot();
 
             _stale = true; // 下面扫描完才知道店里现在有什么
+            _room.Clear();
+            _fit = default;
             act();
 
             // 游戏用通用对话框回话：单按钮是“做不了”的提示（缺配料、没水……），照游戏的话报原因，下次条件满足了照样做；
@@ -647,6 +815,7 @@ public class GameWorld : IWorld
     public StepResult Annotate(object item, string text, bool on)
     {
         var it = (GameItem)item;
+        _fit = default;
         if (on) GameApi.SetString(it, PropBindings.MarkPrefix + text, "1");
         else GameApi.RemoveTag(it, PropBindings.MarkPrefix + text);
         return StepResult.Done(on ? Domain.L.T("gameworld.add_mark", text) : Domain.L.T("gameworld.remove_mark", text));

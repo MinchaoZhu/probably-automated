@@ -103,8 +103,8 @@ public class DailyEdition
             var list = new List<DailyFlowSummary>();
             foreach (var name in flowNames)
             {
-                int nightDone = Night?.Entries?.Count(e => (e.Ws == name || (string.IsNullOrEmpty(e.Ws) && e.Flow == name)) && e.Ok) ?? 0;
-                int morningDone = Morning?.Entries?.Count(e => (e.Ws == name || (string.IsNullOrEmpty(e.Ws) && e.Flow == name)) && e.Ok) ?? 0;
+                int nightDone = Night?.Entries?.Where(e => (e.Ws == name || (string.IsNullOrEmpty(e.Ws) && e.Flow == name)) && e.Ok).Sum(e => e.Units()) ?? 0;
+                int morningDone = Morning?.Entries?.Where(e => (e.Ws == name || (string.IsNullOrEmpty(e.Ws) && e.Flow == name)) && e.Ok).Sum(e => e.Units()) ?? 0;
 
                 double apNight = Night?.Groups?.Where(g => g.Schedule == name).Sum(g => g.ApUsed) ?? 0;
                 double apMorning = Morning?.Groups?.Where(g => g.Schedule == name).Sum(g => g.ApUsed) ?? 0;
