@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using AutoMod.Domain;
 using AutoMod.Domain.Rules;
@@ -79,15 +80,24 @@ public static class LocBridge
 
     private static bool _subscribed;
 
-    /// <summary>初始化并订阅语言变化事件。</summary>
+    /// <summary>
+    /// 订阅语言变化事件。Init 在 mod 加载阶段调用，这里不能读当前语言：提前定下语言后，
+    /// 其他 mod 在加载阶段取本地化表会让游戏的本地化初始化失败，存档里的语言也应用不上。
+    /// </summary>
     public static void Init()
     {
-        Apply();
         if (!_subscribed)
         {
             LocalizationSettings.SelectedLocaleChanged += _ => OnLocaleChanged();
             _subscribed = true;
         }
+    }
+
+    /// <summary>等游戏的本地化初始化完成后应用当前语言（协程，mod 加载阶段结束后启动）。</summary>
+    public static IEnumerator ApplyWhenReady()
+    {
+        yield return LocalizationSettings.InitializationOperation;
+        Apply();
     }
 
     /// <summary>游戏自带的 mod 文字接口（当前语言 → en → 键本身，string.Format 参数）。</summary>

@@ -99,6 +99,17 @@ internal static class ArchitectureTests
                 }
             check(bad.Count == 0, "发布代码里出现了需要能力或补丁的用法：" + string.Join("；", bad.Distinct().Take(15)));
         });
+
+        // mod 加载阶段读当前语言，后面的 mod 在加载阶段取本地化表时，游戏的本地化初始化会失败。
+        test("架构：mod 加载阶段不读游戏语言", () =>
+        {
+            string entry = Code(File.ReadAllText(Path.Combine(plugin, "ModEntry.cs")));
+            string bridge = Code(File.ReadAllText(Path.Combine(plugin, "Adapter", "LocBridge.cs")));
+            string init = Regex.Match(bridge, @"void Init\(\)\s*\{.*?\n    \}", RegexOptions.Singleline).Value;
+            var reads = new Regex(@"\b(SelectedLocale|GetCurrentLocale|GetCurrentLocaleCode|CurrentCode|Apply)\b");
+            check(init.Length > 0, "没找到 LocBridge.Init");
+            check(!reads.IsMatch(entry) && !reads.IsMatch(init), "ModEntry 或 LocBridge.Init 读了当前语言");
+        });
     }
 
     /// <summary>UI 各功能里定义的类型。</summary>

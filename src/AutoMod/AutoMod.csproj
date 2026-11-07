@@ -30,6 +30,7 @@
     <Reference Include="$(ManagedDir)/UnityEngine*.dll" Private="false" />
     <Reference Include="$(ManagedDir)/Unity.TextMeshPro.dll" Private="false" />
     <Reference Include="$(ManagedDir)/Unity.Localization.dll" Private="false" />
+    <Reference Include="$(ManagedDir)/Unity.ResourceManager.dll" Private="false" />
     <Reference Include="$(ManagedDir)/Newtonsoft.Json.dll" Private="false" />
     <!-- 开发诊断代码（DevSourceDir）用 Harmony 拦截存档、追踪调用 -->
     <Reference Include="$(ManagedDir)/0Harmony.dll" Private="false" Condition="'$(DevSourceDir)' != ''" />

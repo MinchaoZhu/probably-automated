@@ -17,6 +17,8 @@ namespace AutoMod.UI;
 /// <summary>界面根节点：mod 入口建的常驻物体上的组件，每帧驱动各功能（不打补丁，靠轮询游戏的公开状态）。</summary>
 public class UiRoot : MonoBehaviour
 {
+    private void Start() => StartCoroutine(LocBridge.ApplyWhenReady());
+
     private void Update()
     {
         try
