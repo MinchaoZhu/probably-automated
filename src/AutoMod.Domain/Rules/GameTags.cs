@@ -34,8 +34,14 @@ public static class GameTags
     }
 
     /// <summary>液体成分标签（CURRENT_PART_WATER）→ 液体 id（water）；不是返回 null。</summary>
-    public static string LiquidOf(string key) =>
-        key != null && key.StartsWith(LiquidPrefix) && key.Length > LiquidPrefix.Length ? key[LiquidPrefix.Length..].ToLowerInvariant() : null;
+    public static string LiquidOf(string key)
+    {
+        if (key == null || !key.StartsWith(LiquidPrefix, StringComparison.Ordinal) || key.Length <= LiquidPrefix.Length) return null;
+        if (!Liquids.TryGetValue(key, out var liquid)) Liquids[key] = liquid = key[LiquidPrefix.Length..].ToLowerInvariant();
+        return liquid;
+    }
+
+    private static readonly Dictionary<string, string> Liquids = new();
 
     public static string LiquidTag(string liquid) => LiquidPrefix + liquid.ToUpperInvariant();
 
@@ -47,21 +53,30 @@ public static class GameTags
     public static string MaxOf(string key, ICollection<string> keys)
     {
         if (string.IsNullOrEmpty(key) || keys == null) return null;
+        if (!MaxCandidates.TryGetValue(key, out var cands)) MaxCandidates[key] = cands = MaxCandidatesOf(key);
+        foreach (var c in cands)
+            if (keys.Contains(c)) return c;
+        return null;
+    }
+
+    /// <summary>键名 → 可能的上限 / 目标标签名，按试的顺序（只取决于键名：复制全店时每件物品的每个标签都要问，记下来不重复拼）。</summary>
+    private static readonly Dictionary<string, string[]> MaxCandidates = new();
+
+    private static string[] MaxCandidatesOf(string key)
+    {
         var parts = key.Split('_');
         bool upper = key.Any(char.IsUpper);
         var words = new[] { "MAX", "TARGET", "REQUIRED" }.Select(w => upper ? w : w.ToLowerInvariant()).ToList();
-        if (parts.Any(p => words.Contains(p))) return null; // 本身就是上限 / 目标
+        if (parts.Any(p => words.Contains(p))) return Array.Empty<string>(); // 本身就是上限 / 目标
         string current = upper ? "CURRENT" : "current";
+        var cands = new List<string>();
         foreach (var w in words)
         {
-            var cands = new List<string>();
             for (int i = 0; i < parts.Length; i++) cands.Add(string.Join("_", parts.Take(i).Append(w).Concat(parts.Skip(i))));
             for (int i = 0; i < parts.Length; i++)
                 if (parts[i] == current || i == 0) cands.Add(string.Join("_", parts.Take(i).Append(w).Concat(parts.Skip(i + 1))));
-            var hit = cands.FirstOrDefault(c => c != key && keys.Contains(c));
-            if (hit != null) return hit;
         }
-        return null;
+        return cands.Where(c => c != key).ToArray();
     }
 
     /// <summary>
@@ -70,6 +85,15 @@ public static class GameTags
     public static bool IsInternal(string key)
     {
         if (string.IsNullOrEmpty(key)) return true;
+        if (!Internal.TryGetValue(key, out bool yes)) Internal[key] = yes = IsInternalKey(key);
+        return yes;
+    }
+
+    /// <summary>键名 → 是不是内部标签（只取决于键名，复制全店时每件物品的每个标签都要问）。</summary>
+    private static readonly Dictionary<string, bool> Internal = new();
+
+    private static bool IsInternalKey(string key)
+    {
         string k = key.ToUpperInvariant();
         if (k is "IS_OWNED_TAG" or "IMPORTANT_TAG" or "ITEM_TYPE_STRING" or "MACHINE" or "CONTAINER_TAG" or "MANUFACTURE") return true;
         if (k.EndsWith("_ITEM_TAG") || k.EndsWith("_ID") || k.Contains("_ID_") || k.EndsWith("_ID_TAG") || k.EndsWith("_IDS")) return true;

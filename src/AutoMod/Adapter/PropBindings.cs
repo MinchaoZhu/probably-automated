@@ -189,8 +189,9 @@ public static class PropBindings
     /// <summary>标签相对它的上限（同一物品上的 MAX 标签）的百分比。</summary>
     private static PropVal ReadPct(GameItem item, string key)
     {
-        var keys = new HashSet<string>(ItemFacts.Tags(item.state).Select(kv => kv.Key));
-        var max = GameTags.MaxOf(key, keys);
+        var tags = item.state?.dict;
+        if (tags == null) return PropVal.None;
+        var max = GameTags.MaxOf(key, tags.Keys);
         if (max == null) return PropVal.None;
         double m = ItemFacts.Number(GameApi.Tag(item, max));
         return m <= 0 ? PropVal.None : PropVal.Of(ItemFacts.Number(GameApi.Tag(item, key)) * 100.0 / m);
@@ -203,7 +204,7 @@ public static class PropBindings
     public static List<string> RawTagProps(IEnumerable<GameItem> items, bool includeInternal = false)
     {
         items = items.ToList();
-        var named = new HashSet<string>(Builtins.Values.Select(b => b.key));
+        var named = BuiltinKeys;
         var text = new HashSet<string>();
         var valued = new HashSet<string>();   // 见过数字或开关值的
         var liquids = new SortedSet<string>(StringComparer.Ordinal);
@@ -211,8 +212,10 @@ public static class PropBindings
         var seen = new SortedSet<string>(StringComparer.Ordinal);
         foreach (var it in items)
         {
-            var tags = ItemFacts.Tags(it.state);
-            var keys = new HashSet<string>(tags.Select(kv => kv.Key));
+            // 顺序无关（结果都进有序集合）：直接用游戏的标签字典，不排序、不另建键集合
+            var tags = it.state?.dict;
+            if (tags == null) continue;
+            var keys = tags.Keys;
             foreach (var kv in tags)
             {
                 string k = kv.Key;
@@ -240,6 +243,9 @@ public static class PropBindings
         return props;
     }
 
+
+    /// <summary>已经有友好名的标签（Builtins 的键），RawTagProps 不重复列。</summary>
+    private static readonly HashSet<string> BuiltinKeys = new(Builtins.Values.Select(b => b.key));
 
     private static PropVal ReadTag(GameItem item, string key, Kind kind)
     {
