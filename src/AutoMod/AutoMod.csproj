@@ -51,8 +51,8 @@
     <MakeDir Directories="$(ModInstallDir)" />
     <Copy SourceFiles="$(TargetPath);$(TargetDir)ProbablyAutomated.Domain.dll" DestinationFolder="$(ModInstallDir)" />
     <Copy SourceFiles="@(ModFile)" DestinationFiles="@(ModFile->'$(ModInstallDir)/%(RecursiveDir)%(Filename)%(Extension)')" />
-    <!-- 带开发诊断的构建会读写文件：只改已安装的清单，声明 files；发布清单（ModFiles/manifest.xml）仍然是 <Capabilities /> -->
-    <Exec Condition="'$(DevSourceDir)' != ''" Command="sed -i 's#&lt;Capabilities /&gt;#&lt;Capabilities&gt;&lt;Capability&gt;files&lt;/Capability&gt;&lt;/Capabilities&gt;#' &quot;$(ModInstallDir)/manifest.xml&quot;" />
+    <!-- 带开发诊断的构建会读写文件、用 Harmony 反射：只改已安装的清单，声明 files 和 reflection-external（游戏 REV12 起扫描反射）；发布清单（ModFiles/manifest.xml）仍然是 <Capabilities /> -->
+    <Exec Condition="'$(DevSourceDir)' != ''" Command="sed -i 's#&lt;Capabilities /&gt;#&lt;Capabilities&gt;&lt;Capability&gt;files&lt;/Capability&gt;&lt;Capability&gt;reflection-external&lt;/Capability&gt;&lt;/Capabilities&gt;#' &quot;$(ModInstallDir)/manifest.xml&quot;" />
     <Message Importance="high" Text="Installed into $(ModInstallDir)" />
   </Target>
 
