@@ -60,6 +60,20 @@ public static class Unlock
         catch (Exception ex) { Log.Warn($"[Unlock] 同步价格失败: {ex.Message}"); }
     }
 
+    /// <summary>
+    /// 读档后：早期版本的对讲机在存档里记着 3×3 的占格，游戏读档时用存档里的占格，不看新图。
+    /// 换成新的一件，放到后柜台（和买下时一样）；店里放不下时留着旧的。
+    /// </summary>
+    public static void ReplaceOldIntercoms()
+    {
+        foreach (var old in GameApi.CollectAll().Where(x => x.identifier == ModItems.Intercom && (x.shape?.width != 2 || x.shape?.height != 2)).ToList())
+        {
+            var item = ModHelper.SpawnItem(ModItems.Intercom);
+            Give(item, ModItems.Intercom);
+            if (item?.parentInventory != null) old.Destroy();
+        }
+    }
+
     /// <summary>玩家在人脉网络里买下升级（游戏已扣款）。</summary>
     private static void OnPurchased()
     {

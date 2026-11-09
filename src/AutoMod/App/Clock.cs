@@ -33,6 +33,7 @@ internal static class Clock
     {
         AutoMod.Adapter.LocBridge.Apply();
         Safe("读档", Automation.OnGameLoaded);
+        Safe("更换旧对讲机", Unlock.ReplaceOldIntercoms);
     }
 
     /// <summary>新游戏不触发读档钩子，mod 数据从空开始。</summary>
