@@ -14,7 +14,7 @@ public static class ModItems
     public const string Handbook = "probably_automated_handbook";
     public const string Daily = "probably_automated_daily";
 
-    /// <summary>对讲机的图（ModFiles/Textures/Items/intercom.png，48×48 = 3×3 格）。人脉升级的图标也用它。</summary>
+    /// <summary>对讲机的图（ModFiles/Textures/Items/intercom.png，32×32 = 2×2 格）。人脉升级的图标也用它。</summary>
     public const string IntercomSprite = "intercom";
 
     /// <summary>“使用”时打开的界面：界面层在启用时接上（App 不引用界面）。</summary>
