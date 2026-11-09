@@ -907,6 +907,7 @@ filter.auto_name.items,Objetos
 filter.auto_name.items_in,{1} en {0}
 filter.auto_name.self,{0}
 filter.auto_name.shop,Toda la tienda
+filter.auto_name.sub,{0} · Subfiltro
 filter.auto_name.target,{0} {1}
 object_dlg.btn_confirm_promote,Hacer global
 object_dlg.btn_promote,Hacer parámetro global...
@@ -993,6 +994,14 @@ selector.section_scope,Ámbito
 selector.sort_asc,De menor a mayor
 selector.sort_desc,De mayor a menor
 selector.sort_unspecified,Sin especificar
+selector.btn_add_sub,＋ Subfiltro
+selector.label_sub,Subfiltro
+selector.scope_result_items,Objetos del resultado
+selector.section_result,Resultado actual
+selector.result_more,{0} en total
+selector.result_number,Valor: {0}
+selector.result_no_value,Sin valor
+selector.promote_unsaved,Guarda los cambios antes de promover a filtro global.
 selector.stat_tip,Las estadísticas se pueden usar para condiciones y valores
 selector.take_count,Cantidad de objetos:
 selector.take_exclude_first,Excluir primeros
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,"Pulsa botones en máquinas (iniciar, imprimir, transferi
 handbook.p4.text_swap,"Empareja dos grupos de objetos en orden e intercambia sus posiciones. Si las cantidades difieren, los objetos sobrantes se quedan en su sitio."
 handbook.p4.text_use,"Aplica una herramienta sobre un objeto, ej. cuchillo en rata, jarra de agua en botella vacía. La dirección la decide el juego: grifo en cubo vacío llena el cubo."
 handbook.p4.tip,"¡Qué objetos, en qué orden y cuántos se definen en los filtros; la acción solo decide qué hacer!"
+handbook.p4.tip_sub,Un subfiltro acota el resultado de su filtro superior y conserva su orden si no tiene orden propio.
 handbook.p4.title_move,Colocar:
 handbook.p4.title_pre,Condición de ejecución:
 handbook.p4.title_press,"Pulsar botón, activar, alternar:"

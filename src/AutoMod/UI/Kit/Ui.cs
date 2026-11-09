@@ -83,6 +83,23 @@ public static class Ui
         return b;
     }
 
+    /// <summary>窗口显示后：滚动区内容的右侧留出滚动条的宽度，避免滚动条盖住内容。</summary>
+    public static void ScrollGutter(string id, int px)
+    {
+        try
+        {
+            var win = Get(id);
+            if (win?.Rect == null) return;
+            foreach (var sr in win.Rect.GetComponentsInChildren<UnityEngine.UI.ScrollRect>(true))
+            {
+                if (sr.content == null || sr.content.GetComponent<UnityEngine.UI.VerticalLayoutGroup>() is not { } group) continue;
+                group.padding.right = px;
+                UnityEngine.UI.LayoutRebuilder.MarkLayoutForRebuild(sr.content);
+            }
+        }
+        catch { }
+    }
+
     /// <summary>重建前记下的各滚动区内容位置（窗口根节点名 → 位置），窗口显示后由 UiFixes 恢复。</summary>
     private static readonly Dictionary<string, List<Vector2>> PendingScroll = new();
 

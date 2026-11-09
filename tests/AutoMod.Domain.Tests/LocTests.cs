@@ -457,6 +457,7 @@ internal static class LocTests
                     ("entry", new[] { "handbook.p4.title_use", "handbook.p4.text_use" }),
                     ("entry", new[] { "handbook.p4.title_press", "handbook.p4.text_press" }),
                     ("tip", new[] { "handbook.p4.tip" }),
+                    ("tip", new[] { "handbook.p4.tip_sub" }),
                 },
                 // p5 自动换电与执行顺序
                 new[]

@@ -101,12 +101,14 @@ public static class RulesUi
     /// <summary>
     /// 筛选器的来源里此刻有的东西（来源是设备名：里面的东西，或只取某个槽位的，选“本身”时是它们自己；来源是筛选器：它选出的），最多 40 件。
     /// </summary>
-    public static List<object> SourceItems(SelectorDef d)
+    /// <param name="data">求值用的数据（对话框的草稿）；为空 = 规则数据。</param>
+    public static List<object> SourceItems(SelectorDef d, RulesData data = null)
     {
         var list = new List<object>();
+        data ??= D;
         try
         {
-            var ctx = new EvalCtx(World, D);
+            var ctx = new EvalCtx(World, data);
             foreach (var src in d.From)
             {
                 if (Places.IsShop(src))
@@ -116,17 +118,76 @@ public static class RulesUi
                     if (list.Count >= 40) break;
                     continue;
                 }
-                var sel = D.Selectors.FirstOrDefault(x => x.Id == src);
+                var sel = data.Selectors.FirstOrDefault(x => x.Id == src);
                 bool boxes = Places.IsName(src) || (sel != null && Eval.YieldsBoxes(sel, World));
                 bool self = d.Kind == Catalog.Self && string.IsNullOrEmpty(d.Slot); // 选本身：来源里的就是它们自己
-                foreach (var x in Eval.Boxes(ctx, src).Take(20))
+                foreach (var x in Eval.Boxes(ctx, src))
+                {
                     list.AddRange(boxes && !self ? World.Contents(x, d.Slot) : new[] { x });
+                    if (list.Count >= 40) break;
+                }
                 if (list.Count >= 40) break;
             }
         }
         catch { }
         return list.Take(40).ToList();
     }
+
+    // ---------- 当前结果 ----------
+
+    /// <summary>下拉列表悬停时显示几件。</summary>
+    private const int TipLines = 6;
+
+    /// <summary>折叠行上的件数或数值。</summary>
+    public static string CountText(EvalCtx ctx, string id)
+    {
+        try
+        {
+            if (SelectorPreview.Of(ctx, id, 0) is not { } p) return "";
+            if (p.IsNumber) return NumberText(p);
+            return p.Count == 0 ? Domain.L.T("selector.scope_empty") : Domain.L.N("selector.scope_count", p.Count, "");
+        }
+        catch { return ""; }
+    }
+
+    private static string NumberText(SelectorPreview p) =>
+        p.Number is { } v ? Domain.L.T("selector.result_number", v.ToString("0.##")) : Domain.L.T("selector.result_no_value");
+
+    /// <summary>筛选器或设备名此刻的结果，多行文字；不是这两者时为空。</summary>
+    /// <param name="withPlace">每件后面带上所在容器（提示窗口窄，不带）。</param>
+    public static string PreviewText(EvalCtx ctx, string id, int limit, bool withPlace = true)
+    {
+        try
+        {
+            if (SelectorPreview.Of(ctx, id, limit) is not { } p) return null;
+            if (p.IsNumber) return NumberText(p);
+            if (p.Count == 0) return p.EmptyReason ?? Domain.L.T("selector.scope_empty");
+            var lines = new List<string> { Domain.L.N("selector.scope_count", p.Count, "") };
+            foreach (var x in p.Items)
+            {
+                string at = withPlace && World.Parent(x) is GameItem box ? World.DistinctName(box) : null;
+                lines.Add(at == null ? World.Describe(x) : World.Describe(x) + Domain.L.T("text.dot_sep") + at);
+            }
+            if (p.Count > p.Items.Count) lines.Add(Domain.L.N("selector.result_more", p.Count));
+            return string.Join("\n", lines);
+        }
+        catch { return null; }
+    }
+
+    /// <summary>刚加的下拉框：悬停某一行时显示该项的当前结果。ids 和选项一一对应。</summary>
+    /// <param name="data">求值用的数据；为空 = 规则数据。</param>
+    public static void AttachPreview(CustomUIBuilder b, IReadOnlyList<string> ids, Func<RulesData> data = null) =>
+        DropdownRowInfo.Attach(b.Last?.dropdown, () =>
+        {
+            var ctx = new EvalCtx(World, data?.Invoke() ?? D);
+            var seen = new Dictionary<int, string>();
+            return i =>
+            {
+                if (i < 0 || i >= ids.Count || string.IsNullOrEmpty(ids[i])) return null;
+                if (!seen.TryGetValue(i, out var text)) seen[i] = text = PreviewText(ctx, ids[i], TipLines, false);
+                return text;
+            };
+        });
 
     /// <summary>来源里这些东西的类别（含上级），常用条件按它过滤。</summary>
     public static HashSet<string> TraitsOf(IEnumerable<object> items) =>

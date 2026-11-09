@@ -271,15 +271,18 @@ public static class ScheduleEditor
             // 新建不改变当前选择，先重建窗口把下拉框的显示恢复
             (Domain.L.T("editor.menu_new_filter"), () => { Refresh(); SelectorDialog.New(s.Id, x => Choose(x.Id), newKind); }, null),
         };
+        var ids = new List<string> { current, null }; // 和 rows 一一对应，悬停时显示当前结果
         foreach (var o in opts.Where(o => o.id != current))
         {
             string id = o.id;
             rows.Add((o.name, () => Choose(id), EditOf(id)));
+            ids.Add(id);
         }
-        if (shown != none) rows.Add((none, () => Choose(null), null));
+        if (shown != none) { rows.Add((none, () => Choose(null), null)); ids.Add(null); }
 
         b.AddDropdown(Ui.L(rows.Select(x => x.name)), 0, Ui.AI(k => rows[k].run?.Invoke()));
         DropdownRowEdit.Attach(b.Last?.dropdown, Domain.L.T("editor.btn_edit"), rows.Select(x => x.edit).ToList());
+        RulesUi.AttachPreview(b, ids);
         if (width is { } w) b.Width(w);
     }
 

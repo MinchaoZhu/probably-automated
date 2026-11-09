@@ -907,6 +907,7 @@ filter.auto_name.items,Items
 filter.auto_name.items_in,{1} in {0}
 filter.auto_name.self,{0}
 filter.auto_name.shop,Whole Shop
+filter.auto_name.sub,{0} · Sub-filter
 filter.auto_name.target,{0} {1}
 object_dlg.btn_confirm_promote,Promote to Global
 object_dlg.btn_promote,Promote to Global Parameter...
@@ -993,6 +994,14 @@ selector.section_scope,Scope
 selector.sort_asc,Low to High
 selector.sort_desc,High to Low
 selector.sort_unspecified,Unspecified
+selector.btn_add_sub,＋ Sub-filter
+selector.label_sub,Sub-filter
+selector.scope_result_items,Items in results
+selector.section_result,Current Results
+selector.result_more,{0} total
+selector.result_number,Value: {0}
+selector.result_no_value,No value
+selector.promote_unsaved,Save changes before promoting to a global filter.
 selector.stat_tip,Statistical results can be used for execution conditions and values in conditions
 selector.take_count,Item count:
 selector.take_exclude_first,Exclude first
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,"Presses buttons on machine interfaces (start, print, tra
 handbook.p4.text_swap,"Pairs two groups of items in order and swaps their positions. If counts differ, excess items remain in place."
 handbook.p4.text_use,"Applies a tool to an object, e.g. knife on rat, water jug on empty bottle. Direction is decided by game: faucet on empty bucket fills the bucket."
 handbook.p4.tip,"Which items, in what order, and how many are all defined in filters; the action only decides what to do!"
+handbook.p4.tip_sub,A sub-filter narrows its parent's results and keeps their order unless it has its own sort.
 handbook.p4.title_move,Move:
 handbook.p4.title_pre,Run When:
 handbook.p4.title_press,"Press Button, Activate, Toggle:"

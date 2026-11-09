@@ -7,21 +7,28 @@ using AutoMod.UI.Kit;
 namespace AutoMod.UI.Schedules;
 
 /// <summary>
-/// 筛选器对话框：范围 → 物品类型 → 条件 → 选取（或统计数值），名字在最上面。在草稿上编辑，保存时写回。
+/// 筛选器对话框：一个筛选器和它的上下级在同一个窗口里编辑，同一时间展开一个，其余折叠成一行。
+/// 展开的一项是 范围 → 物品类型 → 条件 → 选取（或统计数值）→ 当前结果。在草稿上编辑，保存时一起写回。
 /// 筛选器之间可以按任意顺序引用，只是不能循环。
 /// </summary>
 public static class SelectorDialog
 {
     private const string Id = "am_seldlg";
     public const string DialogId = Id;
-    private static SelectorDef _d, _orig;
-    private static bool _nameTouched;
+    private const int ResultLines = 8;
 
-    /// <summary>条件里展开“更多”（条件组、排除）。</summary>
-    private static bool _more;
+    private static SelectorDrafts _s;
+    private static string _title;
+
+    /// <summary>下一次重建回到顶部（展开了别的项）。</summary>
+    private static bool _toTop;
 
     /// <summary>保存后的回调（在任务里新建时，把新筛选器填进任务）。</summary>
     private static Action<SelectorDef> _onSaved;
+
+    /// <summary>这次重建用的数据（规则数据 + 草稿）和求值上下文：同一个上级只算一次。</summary>
+    private static RulesData _data;
+    private static EvalCtx _ctx;
 
     private static RulesData D => RulesUi.D;
 
@@ -30,89 +37,93 @@ public static class SelectorDialog
     /// <param name="kind">默认的物品类型；为空 = 全部物品。</param>
     public static void New(string owner = null, Action<SelectorDef> onSaved = null, string kind = null)
     {
-        _orig = null;
-        _d = new SelectorDef { Id = Defs.NewId("s"), From = { Places.Shop }, Kind = kind ?? Catalog.Any, Where = new CondGroup(), Owner = owner };
-        _nameTouched = false;
-        _more = false;
+        var def = new SelectorDef { Id = Defs.NewId("s"), From = { Places.Shop }, Kind = kind ?? Catalog.Any, Where = new CondGroup(), Owner = owner };
+        _s = SelectorDrafts.New(D, RulesUi.World, def, ScheduleEditor.CurrentId ?? owner);
+        _title = Domain.L.T("selector.title_new");
         _onSaved = onSaved;
-        AutoName();
+        AutoName(_s.Active);
         Ui.Close(Id); // 新开的对话框从顶部开始；之后的重建保留滚动位置
         Show();
     }
 
     public static void Edit(SelectorDef s)
     {
-        _orig = s;
-        _d = Defs.Clone(s);
-        _d.Where ??= new CondGroup();
-        _nameTouched = true;
-        _more = _d.Minus != null || _d.Where.Items.Any(c => c.Group != null);
+        _s = SelectorDrafts.Edit(D, RulesUi.World, s, ScheduleEditor.CurrentId ?? s.Owner);
+        _title = Domain.L.T("selector.title_edit", s.Name);
         _onSaved = null;
         Ui.Close(Id);
         Show();
     }
 
-    private static int MyIndex => _orig == null ? D.Selectors.Count : D.Selectors.IndexOf(_orig);
-
-    private static void AutoName()
+    private static void AutoName(SelectorDraft e)
     {
-        if (_nameTouched) return;
-        string from = Domain.L.Join("list", _d.From.Select(f => Places.IsShop(f) ? Domain.L.T("filter.auto_name.shop") : RulesUi.Name(f)));
-        string conds = string.Join("", _d.Where.Items.Where(c => c.Preset != null && c.Preset != "alive").Select(c => Catalog.Preset(c.Preset)?.Name ?? ""));
-        string kind = _d.Kind == Catalog.Self ? "" : _d.Kind == Catalog.Any ? Domain.L.T("filter.auto_name.items") : Catalog.TypeName(_d.Kind).Replace("任意", "");
+        if (e.NameTouched) return;
+        var d = e.Def;
+        var data = _s.Overlay();
+        string from = Domain.L.Join("list", d.From.Select(f => Places.IsShop(f) ? Domain.L.T("filter.auto_name.shop") : Text.Name(data, f)));
+        string conds = string.Join("", d.Where.Items.Where(c => c.Preset != null && c.Preset != "alive").Select(c => Catalog.Preset(c.Preset)?.Name ?? ""));
+        string kind = d.Kind == Catalog.Self ? "" : d.Kind == Catalog.Any ? Domain.L.T("filter.auto_name.items") : Catalog.TypeName(d.Kind).Replace("任意", "");
         string target = Domain.L.T("filter.auto_name.target", conds, kind).Trim();
         if (string.IsNullOrEmpty(target)) target = Domain.L.T("filter.auto_name.items");
 
-        if (_d.Kind == Catalog.Self)
+        if (d.Kind == Catalog.Self)
         {
-            _d.Name = Domain.L.T("filter.auto_name.self", from);
+            d.Name = Domain.L.T("filter.auto_name.self", from);
         }
-        else if (_d.IsNumber)
+        else if (d.IsNumber)
         {
-            var agg = _d.Agg ?? new AggSpec();
+            var agg = d.Agg ?? new AggSpec();
             if (agg.Fn == AggFn.Count)
             {
-                _d.Name = Domain.L.T("filter.auto_name.agg_count", from, target);
+                d.Name = Domain.L.T("filter.auto_name.agg_count", from, target);
             }
             else
             {
                 string fn = Vocab.AggName(agg.Fn).Replace("值", "");
                 string prop = RulesUi.PropName(agg.Prop);
-                _d.Name = Domain.L.T("filter.auto_name.agg_prop", from, target, fn, prop);
+                d.Name = Domain.L.T("filter.auto_name.agg_prop", from, target, fn, prop);
             }
+        }
+        else if (d.From.Count > 0 && d.From.All(f => SelectorFamily.IsItemList(data, f, RulesUi.World)))
+        {
+            d.Name = Domain.L.T("filter.auto_name.sub", from);
         }
         else
         {
-            _d.Name = Domain.L.T("filter.auto_name.items_in", from, target);
+            d.Name = Domain.L.T("filter.auto_name.items_in", from, target);
         }
 
-        if (string.IsNullOrEmpty(_d.Name)) _d.Name = Domain.L.T("filter.auto_name.default");
+        if (string.IsNullOrEmpty(d.Name)) d.Name = Domain.L.T("filter.auto_name.default");
+        if (d.From.Any(f => data.Selectors.Any(x => x.Id == f)))
+            d.Name = Defs.UniqueName(data.Selectors.Where(x => x.Id != d.Id).Select(x => x.Name), d.Name);
     }
 
     private static void Rebuild()
     {
-        AutoName();
+        foreach (var e in _s.Entries) AutoName(e);
         Show();
     }
 
+    private static void Open(SelectorDraft e)
+    {
+        _s.Expand(e);
+        _toTop = true;
+        Rebuild();
+    }
+
     /// <summary>
-    /// 可选的类型：全部物品、容器本身、物品类别、种类（常见的 + 来源里实际出现的）、
-    /// 来源里出现过的商品类型、容器类别。
+    /// 可选的类型：全部物品、容器本身、物品类别、种类（常见的 + 范围里实际出现的）、
+    /// 范围里出现过的商品类型、容器类别。
     /// </summary>
-    private static List<(string id, string name)> KindOptions()
+    private static List<(string id, string name)> KindOptions(SelectorDef d)
     {
         var list = new List<(string id, string name)> { (Catalog.Any, Domain.L.T("kind.any")) };
         list.AddRange(Catalog.Traits.Where(t => !Catalog.IsContainerType(t.Id)).Select(t => (t.Id, t.Name)));
-        // 范围里实际有的东西：全店就是店里所有东西，设备名、筛选器是它们里面的东西
         var kinds = new List<string>();
         var types = new List<string>();
         try
         {
-            var ctx = new EvalCtx(RulesUi.World, D);
-            var items = _d.From.SelectMany(src => Places.IsShop(src)
-                ? RulesUi.World.Shop()
-                : Eval.Boxes(ctx, src).SelectMany(box => RulesUi.World.Contents(box, null)));
-            foreach (var child in items)
+            foreach (var child in d.From.SelectMany(src => Eval.Expand(_ctx, d, src)))
             {
                 var k = RulesUi.World.Kind(child);
                 if (!kinds.Contains(k)) kinds.Add(k);
@@ -124,59 +135,86 @@ public static class SelectorDialog
         // 游戏的商品类型（药品、食品、材料、武器……）排在具体种类前面，各自按名字排序
         list.AddRange(types.Select(t => (t, (t.StartsWith(Catalog.FamilyPrefix) ? Domain.L.T("selector.prefix_family") : Domain.L.T("selector.prefix_item_type")) + Catalog.TypeName(t))).OrderBy(x => x.Item2));
         list.AddRange(kinds.Select(k => (k, Catalog.TypeName(k))).OrderBy(x => x.Item2));
-        list.AddRange(Catalog.Traits.Where(t => Catalog.IsContainerType(t.Id)).Select(t => (t.Id, t.Id == Catalog.Container ? t.Name : Domain.L.T("selector.prefix_container") + t.Name)));
-        if (_d.Kind != Catalog.Self && list.All(x => x.id != _d.Kind)) list.Add((_d.Kind, Catalog.TypeName(_d.Kind)));
+        list.AddRange(Catalog.Traits.Where(t => Catalog.IsContainerType(t.Id)).Select(t => (t.Id, t.Id == Catalog.Container ? t.Name : Domain.L.T("selector.prefix_container", t.Name))));
+        if (d.Kind != Catalog.Self && list.All(x => x.id != d.Kind)) list.Add((d.Kind, Catalog.TypeName(d.Kind)));
         return list;
     }
 
     public static void Show()
     {
-        var d = _d;
-        RulesUi.View = d.Owner; // 共用的筛选器只能用共用的定义；本流程的能用本流程 + 共用
-        var others = RulesUi.VisibleSelectors.Where(x => x.Id != d.Id && (_orig == null || x.Id != _orig.Id)).ToList();
-        var otherItems = others.Where(x => !x.IsNumber).ToList();
-        var source = RulesUi.SourceItems(d);
-        var b = Ui.Window(Id, _orig == null ? Domain.L.T("selector.title_new") : Domain.L.T("selector.title_edit", _orig.Name), 900, 800, keepScroll: true);
+        var s = _s;
+        bool single = s.Entries.Count == 1 && s.Active != null;
+        _data = s.Overlay();
+        _ctx = new EvalCtx(RulesUi.World, _data);
+        var b = Ui.Window(Id, _title, 900, 800, keepScroll: !_toTop);
+        _toTop = false;
 
-        b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft)
-            .AddLabel(Domain.L.T("ui.name")).AddInput(Domain.L.T("ui.name"), d.Name, Ui.AS(v => { d.Name = v; _nameTouched = true; })).Width(320)
-            .AddLabel(Tone.Dim(ObjectDialog.ScopeText(D, d.Owner)));
-        if (_orig != null && d.Owner != null) b.AddButton(Domain.L.T("selector.btn_promote"), Ui.A(() => ObjectDialog.Promote(_orig.Id)));
-        b.End();
-
-        b.BeginScroll(620);
-
-        // ---- 1 范围 ----
-        var places = new List<(string id, string name)> { (Places.Shop, Domain.L.T("scope.shop")) };
-        places.AddRange(RulesUi.DeviceNames());
-        places.AddRange(otherItems.Select(x => (x.Id, x.Name + Domain.L.T("schedule.selector_suffix"))));
-        var modes = ScopeModes(d);
-        int mode = d.Kind == Catalog.Self ? 1 : d.Slot == null ? 0 : modes.FindIndex(m => m.slot == d.Slot);
-        b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
-        b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(Domain.L.T("selector.section_scope")))
-            .AddFlexibleSpace().AddLabel(Tone.Small(Tone.Dim(source.Count == 0 ? Domain.L.T("selector.scope_empty") : Domain.L.N("selector.scope_count", source.Count, source.Count >= 40 ? "+" : "")))).End();
-        for (int k = 0; k < d.From.Count; k++)
+        if (single) NameRow(b, s.Active, false);
+        b.BeginScroll(single ? 620 : 664);
+        foreach (var e in s.Entries)
         {
-            int at = k;
-            b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(k == 0 ? Domain.L.T("selector.scope_from") : Domain.L.T("selector.scope_and")).Width(Domain.L.Int("layout.selector.scope_label_width", 24))
-                .AddDropdown(Ui.L(places.Select(x => x.name)), RulesUi.IndexOf(places, x => x.id == d.From[at]), Ui.AI(v => { d.From[at] = places[v].id; Rebuild(); })).Width(260);
-            if (k == 0)
-                b.AddDropdown(Ui.L(modes.Select(m => m.name)), Math.Max(0, mode), Ui.AI(v =>
-                {
-                    var m = modes[v];
-                    if (m.self) { d.Kind = Catalog.Self; d.Slot = null; }
-                    else { if (d.Kind == Catalog.Self) d.Kind = Catalog.Any; d.Slot = m.slot; }
-                    Rebuild();
-                })).Width(240);
-            else b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("selector.scope_same_as_above"))));
-            if (d.From.Count > 1) b.AddButton("×", Ui.A(() => { d.From.RemoveAt(at); Rebuild(); }));
-            b.End();
+            if (e == s.Active) Expanded(b, e, single);
+            else Folded(b, e);
         }
-        b.AddButton(Domain.L.T("selector.btn_add_scope"), Ui.A(() => { d.From.Add(Places.Shop); Rebuild(); })).Tip(Domain.L.T("selector.tip_add_scope"));
         b.End();
+        Footer(b, s, single);
+        b.Show();
+        Ui.ScrollGutter(Id, 16);
+    }
+
+    // ---------- 一行：折叠的项 ----------
+
+    private static void Folded(CustomUIBuilder b, SelectorDraft e)
+    {
+        var errs = Check.SelectorErrors(_data, e.Def);
+        b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
+        b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(e.Def.Name)).AddFlexibleSpace()
+            .AddLabel(Tone.Small(Tone.Dim(RulesUi.CountText(_ctx, e.Def.Id))))
+            .AddButton(Domain.L.T("ui.expand"), Ui.A(() => Open(e))).End();
+        b.AddLabel(Tone.Small(Tone.Dim(Text.SelectorShort(_data, e.Def))));
+        if (errs.Count > 0) b.AddLabel(Tone.Small(Tone.Color(errs[0], Tone.Bad)));
+        b.End();
+    }
+
+    // ---------- 名称行 ----------
+
+    private static void NameRow(CustomUIBuilder b, SelectorDraft e, bool inList)
+    {
+        var d = e.Def;
+        bool sub = inList && d.From.Any(f => _s.Entries.Any(x => x.Def.Id == f));
+        b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
+        if (sub) b.AddLabel(Tone.Bold(Domain.L.T("selector.label_sub")));
+        b.AddLabel(Domain.L.T("ui.name")).AddInput(Domain.L.T("ui.name"), d.Name, Ui.AS(v => { d.Name = v; e.NameTouched = true; })).Width(inList ? 260 : 320)
+            .AddLabel(Tone.Dim(ObjectDialog.ScopeText(D, d.Owner)));
+        if (e.Orig != null && d.Owner != null) b.AddButton(Domain.L.T("selector.btn_promote"), Ui.A(() =>
+        {
+            if (_s.AnyDirty) { Toast.Show(Domain.L.T("selector.promote_unsaved")); return; }
+            ObjectDialog.Promote(e.Orig.Id);
+        }));
+        if (inList) b.AddFlexibleSpace().AddButton(Domain.L.T("ui.collapse"), Ui.A(() => { _s.Collapse(); Rebuild(); }));
+        b.End();
+    }
+
+    // ---------- 展开的一项 ----------
+
+    private static void Expanded(CustomUIBuilder b, SelectorDraft e, bool single)
+    {
+        var d = e.Def;
+        RulesUi.View = d.Owner; // 共用的筛选器只能用共用的定义；本流程的能用本流程 + 共用
+        var others = Scope.Selectors(_data, d.Owner).Where(x => x.Id != d.Id).ToList();
+        var otherItems = others.Where(x => !x.IsNumber).ToList();
+        var source = RulesUi.SourceItems(d, _data);
+
+        if (!single)
+        {
+            b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 6, 6);
+            NameRow(b, e, true);
+        }
+
+        ScopePanel(b, d, otherItems, source);
 
         // ---- 2 物品类型 ----
-        var kinds = KindOptions();
+        var kinds = KindOptions(d);
         var props = RulesUi.PropsFor(d.Kind == Catalog.Self ? Catalog.Any : d.Kind, source);
         b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
         b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(Domain.L.T("selector.section_kind")));
@@ -192,7 +230,65 @@ public static class SelectorDialog
         b.End();
         b.End();
 
-        // ---- 3 条件 ----
+        CondPanel(b, e, props, others, otherItems, source);
+
+        // ---- 4 选取 ----
+        Pick(b, d, props, others);
+
+        ResultPanel(b, e);
+
+        if (!single) b.End();
+    }
+
+    // ---------- 1 范围 ----------
+
+    private static void ScopePanel(CustomUIBuilder b, SelectorDef d, List<SelectorDef> otherItems, List<object> source)
+    {
+        var places = new List<(string id, string name)> { (Places.Shop, Domain.L.T("scope.shop")) };
+        places.AddRange(RulesUi.DeviceNames());
+        places.AddRange(otherItems.Select(x => (x.Id, x.Name + Domain.L.T("schedule.selector_suffix"))));
+        bool ItemList(string f) => SelectorFamily.IsItemList(_data, f, RulesUi.World);
+        // 范围方式只对容器来源起作用：放在第一个容器来源那一行，物品列表来源显示固定文字
+        int modeRow = d.From.FindIndex(f => !ItemList(f));
+        var modes = ScopeModes(d, modeRow);
+        int mode = d.Kind == Catalog.Self ? 1 : d.Slot == null ? 0 : modes.FindIndex(m => m.slot == d.Slot);
+        b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
+        b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(Domain.L.T("selector.section_scope")))
+            .AddFlexibleSpace().AddLabel(Tone.Small(Tone.Dim(source.Count == 0 ? Domain.L.T("selector.scope_empty") : Domain.L.N("selector.scope_count", source.Count, source.Count >= 40 ? "+" : "")))).End();
+        for (int k = 0; k < d.From.Count; k++)
+        {
+            int at = k;
+            b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(k == 0 ? Domain.L.T("selector.scope_from") : Domain.L.T("selector.scope_and")).Width(Domain.L.Int("layout.selector.scope_label_width", 24))
+                .AddDropdown(Ui.L(places.Select(x => x.name)), RulesUi.IndexOf(places, x => x.id == d.From[at]), Ui.AI(v =>
+                {
+                    d.From[at] = places[v].id;
+                    if (d.From.All(ItemList)) SelectorDrafts.ClearScopeMode(d);
+                    Rebuild();
+                })).Width(260);
+            RulesUi.AttachPreview(b, places.Select(x => x.id).ToList(), () => _s.Overlay());
+            if (ItemList(d.From[k]))
+                b.AddLabel(Tone.Dim(Domain.L.T("selector.scope_result_items")));
+            else if (k == modeRow)
+                b.AddDropdown(Ui.L(modes.Select(m => m.name)), Math.Max(0, mode), Ui.AI(v =>
+                {
+                    var m = modes[v];
+                    if (m.self) { d.Kind = Catalog.Self; d.Slot = null; }
+                    else { if (d.Kind == Catalog.Self) d.Kind = Catalog.Any; d.Slot = m.slot; }
+                    Rebuild();
+                })).Width(240);
+            else b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("selector.scope_same_as_above"))));
+            if (d.From.Count > 1) b.AddButton("×", Ui.A(() => { d.From.RemoveAt(at); Rebuild(); }));
+            b.End();
+        }
+        b.AddButton(Domain.L.T("selector.btn_add_scope"), Ui.A(() => { d.From.Add(Places.Shop); Rebuild(); })).Tip(Domain.L.T("selector.tip_add_scope"));
+        b.End();
+    }
+
+    // ---------- 3 条件 ----------
+
+    private static void CondPanel(CustomUIBuilder b, SelectorDraft e, List<string> props, List<SelectorDef> others, List<SelectorDef> otherItems, List<object> source)
+    {
+        var d = e.Def;
         b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
         b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(Domain.L.T("selector.section_cond")));
         if (d.Where.Items.Count > 1)
@@ -217,14 +313,14 @@ public static class SelectorDialog
         }
         foreach (var c in d.Where.Items.Where(c => c.Preset == null).ToList())
         {
-            if (c.Group != null) GroupRows(b, d.Where, c, props, others);
-            else CondRow(b, d.Where, c, props, others, "");
+            if (c.Group != null) GroupRows(b, d, d.Where, c, props, others);
+            else CondRow(b, d, d.Where, c, props, others, "");
         }
         var unused = presets.Where(p => d.Where.Items.All(c => c.Preset != p.Id)).ToList();
         if (unused.Count > 0)
         {
             b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Small(Tone.Dim(Domain.L.T("selector.common_presets")))).End();
-            b.BeginGrid(3, 270, 30);
+            b.BeginGrid(3, 250, 30);
             foreach (var p in unused)
             {
                 var pid = p.Id;
@@ -234,9 +330,9 @@ public static class SelectorDialog
         }
         b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft)
             .AddButton(Domain.L.T("selector.btn_add_cond"), Ui.A(() => { d.Where.Items.Add(Cond.Cmp(props.FirstOrDefault() ?? "weight", ">=", Expr.Of(0))); Rebuild(); }))
-            .AddButton(_more ? Domain.L.T("selector.btn_collapse") : Domain.L.T("selector.btn_more"), Ui.A(() => { _more = !_more; Show(); })).Tip(Domain.L.T("selector.tip_more"));
+            .AddButton(e.More ? Domain.L.T("selector.btn_collapse") : Domain.L.T("selector.btn_more"), Ui.A(() => { e.More = !e.More; Show(); })).Tip(Domain.L.T("selector.tip_more"));
         b.End();
-        if (_more)
+        if (e.More)
         {
             b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft)
                 .AddButton(Domain.L.T("selector.btn_add_cond_group"), Ui.A(() => { d.Where.Items.Add(Cond.Sub("any", Cond.Cmp(props.FirstOrDefault() ?? "weight", ">=", Expr.Of(0)))); Rebuild(); }));
@@ -246,6 +342,7 @@ public static class SelectorDialog
                 minus.AddRange(otherItems.Select(x => (x.Id, x.Name)));
                 b.AddFlexibleSpace().AddLabel(Domain.L.T("selector.label_minus")).AddDropdown(Ui.L(minus.Select(x => x.name)), RulesUi.IndexOf(minus, x => x.id == d.Minus), Ui.AI(k => { d.Minus = minus[k].id; Rebuild(); })).Width(220)
                     .Tip(Domain.L.T("selector.tip_minus"));
+                RulesUi.AttachPreview(b, minus.Select(x => x.id).ToList(), () => _s.Overlay());
             }
             b.End();
             b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft)
@@ -254,63 +351,94 @@ public static class SelectorDialog
                 .End();
         }
         b.End();
+    }
 
-        // ---- 4 选取 ----
-        Pick(b, d, props, others);
+    // ---------- 当前结果 ----------
+
+    private static void ResultPanel(CustomUIBuilder b, SelectorDraft e)
+    {
+        b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
+        b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(Domain.L.T("selector.section_result"))).AddFlexibleSpace();
+        if (!e.Def.IsNumber)
+            b.AddButton(Domain.L.T("selector.btn_add_sub"), Ui.A(() =>
+            {
+                _s.AddChild(e, ScheduleEditor.CurrentId);
+                _toTop = true;
+                Rebuild();
+            }));
         b.End();
-
-        // ---- 底部 ----
-        var errs = Check.SelectorErrors(WithDraft(), d);
-        foreach (var e in errs) b.AddLabel(Tone.Small(Tone.Color(e, Tone.Bad)));
-        var users = _orig == null ? new List<(Schedule, WorkRule)>() : Check.UsedBy(D, _orig.Id);
-        b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft);
-        if (_orig != null)
+        b.AddLabel(Tone.Small(RulesUi.PreviewText(_ctx, e.Def.Id, ResultLines) ?? ""));
+        var label = b.Last;
+        // 数值、名称的输入不重建窗口：内容变了就只更新这段文字
+        ChangeWatcher.Attach(label?.root, () => Defs.Json(e.Def), () =>
         {
-            b.AddButton(Domain.L.T("ui.delete"), Ui.A(Delete));
+            var ctx = new EvalCtx(RulesUi.World, _s.Overlay());
+            label.SetText(Tone.Small(RulesUi.PreviewText(ctx, e.Def.Id, ResultLines) ?? ""));
+        });
+        b.End();
+    }
+
+    // ---------- 底部 ----------
+
+    private static void Footer(CustomUIBuilder b, SelectorDrafts s, bool single)
+    {
+        var e = s.Active;
+        if (e != null)
+            foreach (var err in Check.SelectorErrors(_data, e.Def)) b.AddLabel(Tone.Small(Tone.Color(err, Tone.Bad)));
+        var users = e?.Orig == null ? new List<(Schedule, WorkRule)>() : Check.UsedBy(_data, e.Def.Id);
+        b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft);
+        if (e != null && (!e.IsNew || !single))
+        {
+            b.AddButton(Domain.L.T("ui.delete"), Ui.A(() => Delete(e)));
             b.AddButton(Domain.L.T("ui.copy"), Ui.A(() =>
             {
-                var c = Defs.Clone(_d);
-                c.Id = Defs.NewId("s");
                 // 在编辑器里复制：副本属于正在编辑的排班（共用筛选器想只改一处时用它）
-                c.Owner = ScheduleEditor.CurrentId ?? _d.Owner;
-                string name = Domain.L.T("selector.copy_name", _d.Name);
-                for (int i = 2; Scope.NameConflict(D, true, name, c.Owner) != null; i++) name = Domain.L.T("selector.copy_name_seq", _d.Name, i);
-                c.Name = name;
-                _orig = null;
-                _d = c;
-                _nameTouched = true;
+                s.Copy(e, ScheduleEditor.CurrentId);
+                _toTop = true;
                 Show();
             }));
         }
         b.AddLabel(Tone.Small(Tone.Dim(users.Count > 0 ? Domain.L.T("selector.used_in_rules", Domain.L.Join("list", users.Take(3).Select(u => $"{u.Item1.Name} · {u.Item2.Name}")), users.Count > 3 ? Domain.L.T("selector.more_suffix") : "") : "")))
             .AddFlexibleSpace()
             .AddButton(Domain.L.T("ui.cancel"), Ui.A(() => Ui.Close(Id))).AddButton(Domain.L.T("ui.save"), Ui.A(Save)).End();
-        b.Show();
     }
 
     /// <summary>
-    /// 范围的写法：里面的东西 / 本身 / 某个槽位（范围里的机器上实际有的槽位；全店时是各机器的电池槽、滤芯槽）。
+    /// 范围的写法：里面的东西 / 本身 / 某个槽位。来源里有东西时只列实际存在的槽位；全店、来源暂时为空时列电池槽、滤芯槽，
+    /// 便于提前配置。已选中的槽位始终保留。
     /// </summary>
-    private static List<(string name, bool self, string slot)> ScopeModes(SelectorDef d)
+    private static List<(string name, bool self, string slot)> ScopeModes(SelectorDef d, int row)
     {
-        bool shop = d.From.Count > 0 && Places.IsShop(d.From[0]);
+        string src = row >= 0 ? d.From[row] : null;
+        bool shop = src != null && Places.IsShop(src);
         var list = new List<(string name, bool self, string slot)> { (shop ? Domain.L.T("selector.scope_all_inside") : Domain.L.T("selector.scope_items_inside"), false, null), (Domain.L.T("selector.scope_self"), true, null) };
-        var slots = new List<(string id, string name)> { ("battery", Domain.L.T("slot.battery")), ("filter", Domain.L.T("slot.filter")) };
+        var slots = new List<(string id, string name)>();
+        var w = RulesUi.World;
+        (string id, string name) battery = ("battery", Domain.L.T("slot.battery")), filter = ("filter", Domain.L.T("slot.filter"));
         try
         {
-            var ctx = new EvalCtx(RulesUi.World, D);
-            foreach (var src in d.From)
-                foreach (var box in Eval.Boxes(ctx, src).Take(40))
-                    foreach (var sl in RulesUi.World.Slots(box))
-                        if (slots.All(x => x.id != sl.id)) slots.Add(sl);
+            var boxes = d.From.Where(f => !SelectorFamily.IsItemList(_data, f, w) && !Places.IsShop(f)).SelectMany(f => Eval.Boxes(_ctx, f)).Take(40).ToList();
+            if (d.From.Any(Places.IsShop) || boxes.Count == 0)
+            {
+                slots.Add(battery);
+                slots.Add(filter);
+            }
+            else
+            {
+                if (boxes.Any(w.HasBatterySlot)) slots.Add(battery);
+                if (boxes.Any(x => Catalog.HasTrait(w, x, "filterHolder") || w.Contents(x, "filter").Count > 0)) slots.Add(filter);
+            }
+            foreach (var box in boxes)
+                foreach (var sl in w.Slots(box))
+                    if (slots.All(x => x.id != sl.id)) slots.Add(sl);
             // 全店：机器的格子太多不列，储藏区的标签页列出来（同名的算一个，全店里都按这个标签页取）
             if (shop)
-                foreach (var box in RulesUi.World.Shop().Where(x => Catalog.Matches(RulesUi.World, x, Catalog.Container)))
-                    foreach (var sl in RulesUi.World.Slots(box).Where(x => SlotNames.IsTab(x.id)))
+                foreach (var box in w.Shop().Where(x => Catalog.Matches(w, x, Catalog.Container)))
+                    foreach (var sl in w.Slots(box).Where(x => SlotNames.IsTab(x.id)))
                         if (slots.All(x => x.id != sl.id)) slots.Add(sl);
         }
         catch { }
-        if (d.Slot != null && slots.All(x => x.id != d.Slot)) slots.Add((d.Slot, SlotNames.Name(d.Slot, D, d.From)));
+        if (d.Slot != null && slots.All(x => x.id != d.Slot)) slots.Add((d.Slot, SlotNames.Name(d.Slot, _data, d.From)));
         list.AddRange(slots.Select(x => (Domain.L.T(shop ? "selector.slot_format_shop" : "selector.slot_format", x.name), false, x.id)));
         return list;
     }
@@ -361,7 +489,7 @@ public static class SelectorDialog
         }
         else
         {
-            // 排序：不指定时按店内的先后
+            // 排序：不指定时沿用范围里的先后
             var opts = new List<(string id, string name)> { (null, Domain.L.T("selector.sort_unspecified")) };
             opts.AddRange(sorts);
             b.AddLabel(Domain.L.T("selector.label_sort")).AddDropdown(Ui.L(opts.Select(x => x.name)), RulesUi.IndexOf(opts, x => x.id == d.Sort?.Prop), Ui.AI(k =>
@@ -388,7 +516,7 @@ public static class SelectorDialog
         if (d.Take != null && Count(d) == null)
         {
             b.AddLabel(Tone.Small(Tone.Dim(d.Take.Mode == TakeMode.From ? Domain.L.T("selector.take_start_from") : Domain.L.T("selector.take_count"))));
-            ExprEditor.Build(b, d.Take.N, new ExprEditor.Options { Stats = others.Where(x => x.IsNumber).Select(x => x.Id).ToList() }, Rebuild);
+            ExprEditor.Build(b, d.Take.N, new ExprEditor.Options { Stats = others.Where(x => x.IsNumber).Select(x => x.Id).ToList(), Data = _data }, Rebuild);
         }
         b.End();
     }
@@ -404,25 +532,11 @@ public static class SelectorDialog
         return d.Take.Mode == TakeMode.From ? Math.Max(1, n - 1) : Math.Max(1, n);
     }
 
-    /// <summary>把草稿放进一份临时数据里（检查和预览用）。</summary>
-    private static RulesData WithDraft()
-    {
-        var list = D.Selectors.ToList();
-        if (_orig != null) list[list.IndexOf(_orig)] = _d; else list.Add(_d);
-        return new RulesData { Objects = D.Objects, Properties = D.Properties, Selectors = list, Schedules = D.Schedules };
-    }
-
-    private static void Toggle(List<string> list, string id, bool on)
-    {
-        list.Remove(id);
-        if (on) list.Add(id);
-    }
-
-    private static void CondRow(CustomUIBuilder b, CondGroup parent, Cond c, List<string> props, List<SelectorDef> above, string indent) =>
+    private static void CondRow(CustomUIBuilder b, SelectorDef d, CondGroup parent, Cond c, List<string> props, List<SelectorDef> above, string indent) =>
         CondEditor.Row(b, c, props, above.Where(x => x.IsNumber || !Eval.YieldsBoxes(x)).Select(x => x.Id).ToList(), indent,
-            () => _d.Kind, () => KindOptions().Where(x => x.id != Catalog.Any && x.id != Catalog.Self).ToList(), () => parent.Items.Remove(c), Rebuild);
+            () => d.Kind, () => KindOptions(d).Where(x => x.id != Catalog.Any && x.id != Catalog.Self).ToList(), () => parent.Items.Remove(c), Rebuild, _data);
 
-    private static void GroupRows(CustomUIBuilder b, CondGroup parent, Cond g, List<string> props, List<SelectorDef> above)
+    private static void GroupRows(CustomUIBuilder b, SelectorDef d, CondGroup parent, Cond g, List<string> props, List<SelectorDef> above)
     {
         b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Domain.L.T("selector.group_prefix"))
             .AddDropdown(Ui.L(new[] { Domain.L.T("selector.cond_all"), Domain.L.T("selector.cond_any") }), g.Group.IsAny ? 1 : 0, Ui.AI(k => { g.Group.Join = k == 1 ? "any" : "all"; Rebuild(); })).Width(130)
@@ -436,35 +550,39 @@ public static class SelectorDialog
                 var cc = c;
                 b.BeginRow(4).AddLabel("    " + (Catalog.Preset(c.Preset)?.Name ?? c.Preset)).AddButton("×", Ui.A(() => { g.Group.Items.Remove(cc); Rebuild(); })).End();
             }
-            else if (c.Group == null) CondRow(b, g.Group, c, props, above, "    ");
+            else if (c.Group == null) CondRow(b, d, g.Group, c, props, above, "    ");
         }
     }
 
     private static void Save()
     {
-        var d = _d;
-        if (string.IsNullOrWhiteSpace(d.Name)) { Toast.Show(Domain.L.T("object_dlg.name_empty")); return; }
-        d.Name = d.Name.Trim();
-        if (Scope.NameConflict(D, true, d.Name, d.Owner, d.Id) is { } conflict) { Toast.Show(conflict + "。"); return; }
-        if (d.From.Count == 0) { Toast.Show(Domain.L.T("selector.save_no_scope")); return; }
-        if (!d.IsNumber) d.Agg = null;
-        else { d.Sort = null; d.Take = null; d.Minus = null; }
-        if (_orig == null) D.Selectors.Add(d);
-        else D.Selectors[D.Selectors.IndexOf(_orig)] = d;
-        Scope.Normalize(D); // 新建的共用筛选器移到共用组末尾
+        if (_s.Commit() is { } why)
+        {
+            Toast.Show(why);
+            _toTop = true;
+            Rebuild();
+            return;
+        }
+        var target = _s.TaskTarget;
         Ui.Close(Id);
         var cb = _onSaved;
         _onSaved = null;
-        try { cb?.Invoke(d); } catch (Exception ex) { AutoMod.Domain.Log.Warn($"[UI] {ex.Message}"); }
+        try { if (target != null) cb?.Invoke(target); } catch (Exception ex) { AutoMod.Domain.Log.Warn($"[UI] {ex.Message}"); }
         ScheduleEditor.Refresh();
         SchedulePage.Refresh();
     }
 
-    private static void Delete()
+    private static void Delete(SelectorDraft e)
     {
-        var refs = Check.Referrers(D, _orig.Id);
-        if (refs.Count > 0) { Toast.Show(Domain.L.T("selector.delete_still_used", Domain.L.Join("list", refs.Take(4)))); return; }
-        D.Selectors.Remove(_orig);
+        int at = _s.Entries.IndexOf(e);
+        if (_s.Remove(e) is { } why) { Toast.Show(why); return; }
+        if (_s.Entries.Count > 0)
+        {
+            Open(_s.Entries[Math.Max(0, at - 1)]);
+            return;
+        }
+        // 对话框里已经没有别的项：和原来一样立即生效
+        _s.Commit();
         Ui.Close(Id);
         ScheduleEditor.Refresh();
         SchedulePage.Refresh();

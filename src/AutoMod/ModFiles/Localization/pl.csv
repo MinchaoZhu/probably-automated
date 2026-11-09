@@ -907,6 +907,7 @@ filter.auto_name.items,Przedmioty
 filter.auto_name.items_in,{1} w {0}
 filter.auto_name.self,{0}
 filter.auto_name.shop,Cały sklep
+filter.auto_name.sub,{0} · Podfiltr
 filter.auto_name.target,{0} {1}
 object_dlg.btn_confirm_promote,Ustaw jako globalny
 object_dlg.btn_promote,Ustaw jako parametr globalny...
@@ -993,6 +994,14 @@ selector.section_scope,Zakres
 selector.sort_asc,Rosnąco
 selector.sort_desc,Malejąco
 selector.sort_unspecified,Nieokreślone
+selector.btn_add_sub,＋ Podfiltr
+selector.label_sub,Podfiltr
+selector.scope_result_items,Przedmioty z wyniku
+selector.section_result,Bieżący wynik
+selector.result_more,łącznie {0}
+selector.result_number,Wartość: {0}
+selector.result_no_value,Brak wartości
+selector.promote_unsaved,Zapisz zmiany przed awansem do filtra globalnego.
 selector.stat_tip,Statystyki mogą być używane w warunkach wykonania i wartościach
 selector.take_count,Liczba sztuk:
 selector.take_exclude_first,Wyklucz pierwsze
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,"Naciska przyciski w oknach maszyn (start, drukuj, przeni
 handbook.p4.text_swap,Łączy w pary dwie grupy przedmiotów według kolejności i zamienia je miejscami. W przypadku różnej liczby nadmiarowe przedmioty pozostają na miejscu.
 handbook.p4.text_use,"Stosuje narzędzie do obiektu, np. nóż na szczurze, dzbanek z wodą na pustej butelce. Kierunek ustala gra: kran na pustym wiadrze napełnia wiadro."
 handbook.p4.tip,"Które przedmioty, w jakiej kolejności i ile — wszystko to określają filtry; sama akcja decyduje tylko o tym, co zrobić!"
+handbook.p4.tip_sub,"Podfiltr zawęża wynik filtra nadrzędnego i zachowuje jego kolejność, jeśli nie ma własnego sortowania."
 handbook.p4.title_move,Umieść:
 handbook.p4.title_pre,Warunek wykonania:
 handbook.p4.title_press,"Naciśnij przycisk, aktywuj, przełącz:"

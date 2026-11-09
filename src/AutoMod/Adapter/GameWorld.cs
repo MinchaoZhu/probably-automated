@@ -190,6 +190,10 @@ public class GameWorld : IWorld
     }
 
     public object Parent(object item) => GameApi.ParentContainer((GameItem)item);
+
+    /// <summary>这件东西有没有电池槽（游戏的机器供电槽）。</summary>
+    public bool HasBatterySlot(object box) => GameApi.BatterySlot((GameItem)box) != null;
+
     public bool Exists(object item) => Alive((GameItem)item);
     public object Key(object item) => item;
     public int Uid(object item) => ((GameItem)item).uniqueId;

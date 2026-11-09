@@ -198,6 +198,7 @@ internal static class SnapshotTest
                     "handbook.p4.title_press",
                     "handbook.p4.text_press",
                     "handbook.p4.tip",
+                    "handbook.p4.tip_sub",
                     "handbook.p5.banner_swap",
                     "handbook.p5.steps_swap",
                     "handbook.p5.banner_order",

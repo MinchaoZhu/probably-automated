@@ -907,6 +907,7 @@ filter.auto_name.items,物品
 filter.auto_name.items_in,{0}的{1}
 filter.auto_name.self,{0}
 filter.auto_name.shop,全店
+filter.auto_name.sub,{0} · 子筛选器
 filter.auto_name.target,{0}{1}
 object_dlg.btn_confirm_promote,设为全局
 object_dlg.btn_promote,设为全局参数…
@@ -993,6 +994,14 @@ selector.section_scope,范围
 selector.sort_asc,从低到高
 selector.sort_desc,从高到低
 selector.sort_unspecified,不指定
+selector.btn_add_sub,＋ 子筛选器
+selector.label_sub,子筛选器
+selector.scope_result_items,结果内的物品
+selector.section_result,当前结果
+selector.result_more,等 {0} 件
+selector.result_number,数值：{0}
+selector.result_no_value,无数值
+selector.promote_unsaved,存在未保存的修改，保存后方可设为全局筛选器。
 selector.stat_tip,统计结果可用于执行条件和条件中的数值
 selector.take_count,件数：
 selector.take_exclude_first,排除前
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,按下机器窗口中的按钮（启动、打印、全部
 handbook.p4.text_swap,两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。
 handbook.p4.text_use,用工具作用于对象，例如用刀处理鼠、用满桶为空瓶加水。方向由游戏判断：用水龙头作用于空桶，即为空桶接水。
 handbook.p4.tip,处理哪些物品、按何种顺序、处理多少件，均在筛选器中设置；动作本身只决定做什么！
+handbook.p4.tip_sub,子筛选器在上级的结果上继续筛选，未指定排序时沿用上级的顺序。
 handbook.p4.title_move,放入：
 handbook.p4.title_pre,执行条件：
 handbook.p4.title_press,按按钮、激活、开关：

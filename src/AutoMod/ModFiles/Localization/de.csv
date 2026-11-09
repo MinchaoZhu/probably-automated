@@ -907,6 +907,7 @@ filter.auto_name.items,Gegenstände
 filter.auto_name.items_in,{1} in {0}
 filter.auto_name.self,{0}
 filter.auto_name.shop,Ganzer Laden
+filter.auto_name.sub,{0} · Unterfilter
 filter.auto_name.target,{0} {1}
 object_dlg.btn_confirm_promote,Zu global machen
 object_dlg.btn_promote,Zu globalem Parameter machen...
@@ -993,6 +994,14 @@ selector.section_scope,Bereich
 selector.sort_asc,Niedrig nach Hoch
 selector.sort_desc,Hoch nach Niedrig
 selector.sort_unspecified,Nicht spezifiziert
+selector.btn_add_sub,＋ Unterfilter
+selector.label_sub,Unterfilter
+selector.scope_result_items,Gegenstände im Ergebnis
+selector.section_result,Aktuelles Ergebnis
+selector.result_more,{0} insgesamt
+selector.result_number,Wert: {0}
+selector.result_no_value,Kein Wert
+selector.promote_unsaved,Änderungen vor dem Umwandeln in einen globalen Filter speichern.
 selector.stat_tip,Statistiken können für Ausführungsbedingungen und Werte genutzt werden
 selector.take_count,Stückzahl:
 selector.take_exclude_first,Erste ausschließen
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,"Drückt Tasten auf Maschinenoberflächen (Start, Drucken
 handbook.p4.text_swap,Paart zwei Gruppen von Gegenständen der Reihe nach und tauscht ihre Plätze. Bei unterschiedlicher Anzahl bleiben überschüssige Gegenstände an Ort und Stelle.
 handbook.p4.text_use,"Wendet ein Werkzeug auf ein Objekt an, z. B. Messer auf Ratte, Wasserkrug auf leere Flasche. Die Wirkungsrichtung bestimmt das Spiel: Wasserhahn auf leeren Eimer füllt den Eimer."
 handbook.p4.tip,"Welche Gegenstände, in welcher Reihenfolge und wie viele, wird komplett in Filtern festgelegt; die Aktion bestimmt nur, was getan wird!"
+handbook.p4.tip_sub,Ein Unterfilter grenzt das Ergebnis seines Oberfilters weiter ein und behält ohne eigene Sortierung dessen Reihenfolge.
 handbook.p4.title_move,Einlegen:
 handbook.p4.title_pre,Ausführbedingung:
 handbook.p4.title_press,"Taste drücken, Aktivieren, Umschalten:"

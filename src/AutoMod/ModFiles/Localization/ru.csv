@@ -907,6 +907,7 @@ filter.auto_name.items,Предметы
 filter.auto_name.items_in,{1} в {0}
 filter.auto_name.self,{0}
 filter.auto_name.shop,Весь магазин
+filter.auto_name.sub,{0} · Подфильтр
 filter.auto_name.target,{0} {1}
 object_dlg.btn_confirm_promote,Сделать глобальным
 object_dlg.btn_promote,Сделать глобальным параметром...
@@ -993,6 +994,14 @@ selector.section_scope,Область
 selector.sort_asc,По возрастанию
 selector.sort_desc,По убыванию
 selector.sort_unspecified,Не указано
+selector.btn_add_sub,＋ Подфильтр
+selector.label_sub,Подфильтр
+selector.scope_result_items,Предметы из результата
+selector.section_result,Текущий результат
+selector.result_more,всего {0}
+selector.result_number,Значение: {0}
+selector.result_no_value,Нет значения
+selector.promote_unsaved,Сохраните изменения перед повышением до глобального фильтра.
 selector.stat_tip,Статистику можно использовать для условий выполнения и значений
 selector.take_count,Количество предметов:
 selector.take_exclude_first,Исключить первые
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,"Нажимает кнопки в интерфейсах 
 handbook.p4.text_swap,"Связывает две группы предметов по порядку и меняет их местами. Если количество различается, лишние предметы остаются на месте."
 handbook.p4.text_use,"Применяет инструмент к объекту, например нож к крысе, кувшин с водой к пустой бутылке. Направление определяет игра: кран на пустое ведро наполнит ведро водой."
 handbook.p4.tip,"Какие предметы, в каком порядке и сколько — всё это задаётся в фильтрах; само действие определяет лишь то, что нужно сделать!"
+handbook.p4.tip_sub,"Подфильтр уточняет результат родительского фильтра и сохраняет его порядок, если не задана своя сортировка."
 handbook.p4.title_move,Положить:
 handbook.p4.title_pre,Условие запуска:
 handbook.p4.title_press,"Нажатие кнопки, активация, переключение:"

@@ -907,6 +907,7 @@ filter.auto_name.items,Objets
 filter.auto_name.items_in,{1} dans {0}
 filter.auto_name.self,{0}
 filter.auto_name.shop,Toute la boutique
+filter.auto_name.sub,{0} · Sous-filtre
 filter.auto_name.target,{0} {1}
 object_dlg.btn_confirm_promote,Rendre global
 object_dlg.btn_promote,Rendre paramètre global...
@@ -993,6 +994,14 @@ selector.section_scope,Portée
 selector.sort_asc,Croissant
 selector.sort_desc,Décroissant
 selector.sort_unspecified,Non spécifié
+selector.btn_add_sub,＋ Sous-filtre
+selector.label_sub,Sous-filtre
+selector.scope_result_items,Objets du résultat
+selector.section_result,Résultat actuel
+selector.result_more,{0} au total
+selector.result_number,Valeur : {0}
+selector.result_no_value,Aucune valeur
+selector.promote_unsaved,Enregistrez les modifications avant de promouvoir en filtre global.
 selector.stat_tip,Les stats peuvent servir de conditions ou de valeurs
 selector.take_count,Nombre d'objets :
 selector.take_exclude_first,Exclure les premiers
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,"Appuie sur les boutons des machines (démarrer, imprimer
 handbook.p4.text_swap,"Associe deux groupes d'objets dans l'ordre et échange leurs positions. Si les quantités diffèrent, les objets excédentaires restent sur place."
 handbook.p4.text_use,"Applique un outil sur un objet, ex. couteau sur rat, cruche d'eau sur bouteille vide. La direction dépend du jeu : robinet sur seau vide remplit le seau."
 handbook.p4.tip,"Quels objets, dans quel ordre et en quelle quantité sont définis dans les filtres ; l'action ne décide que de ce qu'il faut faire !"
+handbook.p4.tip_sub,"Un sous-filtre affine le résultat de son parent et en conserve l'ordre, sauf tri propre."
 handbook.p4.title_move,Placer :
 handbook.p4.title_pre,Condition d'exécution :
 handbook.p4.title_press,"Appuyer sur un bouton, Activer, Basculer :"

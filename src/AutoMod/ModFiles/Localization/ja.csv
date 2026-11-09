@@ -907,6 +907,7 @@ filter.auto_name.items,アイテム
 filter.auto_name.items_in,{0}の{1}
 filter.auto_name.self,{0}
 filter.auto_name.shop,店全体
+filter.auto_name.sub,{0} · サブフィルター
 filter.auto_name.target,{0}{1}
 object_dlg.btn_confirm_promote,グローバルに設定
 object_dlg.btn_promote,グローバルパラメータに昇格…
@@ -993,6 +994,14 @@ selector.section_scope,範囲
 selector.sort_asc,昇順
 selector.sort_desc,降順
 selector.sort_unspecified,指定なし
+selector.btn_add_sub,＋ サブフィルター
+selector.label_sub,サブフィルター
+selector.scope_result_items,結果内のアイテム
+selector.section_result,現在の結果
+selector.result_more,計 {0} 件
+selector.result_number,数値: {0}
+selector.result_no_value,値なし
+selector.promote_unsaved,グローバルフィルターへ昇格する前に変更を保存してください。
 selector.stat_tip,統計結果は実行条件や条件内の数値に使用できます
 selector.take_count,個数:
 selector.take_exclude_first,先頭を除外
@@ -1073,6 +1082,7 @@ handbook.p4.text_press,画面を開かずに、機器ウィンドウ内のボタ
 handbook.p4.text_swap,二組のアイテムを順番通りにペアにして位置を入れ替えます。個数が一致しない場合、余ったアイテムはその場に残ります。
 handbook.p4.text_use,対象に道具を使用します（例: ネズミに包丁、空のボトルに水差し）。作用する方向はゲームが判断します（空のバケツに蛇口を使うと、バケツに水を汲みます）。
 handbook.p4.tip,どのアイテムを、どの順序で、何個処理するかはすべてフィルターで定義され、アクション自体は何をするかだけを決めます！
+handbook.p4.tip_sub,サブフィルターは上位の結果をさらに絞り込み、並べ替えを指定しない場合は上位の順序を引き継ぎます。
 handbook.p4.title_move,入れる:
 handbook.p4.title_pre,実行条件:
 handbook.p4.title_press,ボタンを押す、作動、切替:

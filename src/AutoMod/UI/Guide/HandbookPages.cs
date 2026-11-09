@@ -141,6 +141,7 @@ public static class HandbookPages
             Entry("kitchen_cleaver", Domain.L.T("handbook.p4.title_use"), Domain.L.T("handbook.p4.text_use")),
             Entry("bottle_printer", Domain.L.T("handbook.p4.title_press"), Domain.L.T("handbook.p4.text_press")),
             Tip(Domain.L.T("handbook.p4.tip")),
+            Tip(Domain.L.T("handbook.p4.tip_sub")),
         },
         // 5 自动换电、执行顺序
         new()

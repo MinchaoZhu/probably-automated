@@ -1421,6 +1421,209 @@ internal static class RulesTests
             Check(Defs.PickOrder(d).Select(x => x.Id).SequenceEqual(new[] { b.Id, a.Id, "old1", "old2" }), "下拉框：最新的在最前，旧数据按列表顺序排在后面");
             Check(d.Schedules.Last() == b, "排班列表（执行顺序）里新建的仍加在最后");
         });
+
+        RunSubFilters(test);
+    }
+
+    // ================= 子筛选器 =================
+
+    /// <summary>一个笼子，五只鼠，体重 100～500，uid 依次递增。</summary>
+    private static (SimWorld w, RulesData d, SelectorDef heavy) SubScene()
+    {
+        var w = new SimWorld();
+        var cage = w.AddRoot("animal_cage", 1, "笼");
+        foreach (var kg in new[] { 300, 100, 500, 200, 400 }) w.Add(cage, kg % 200 == 0 ? "rat_m" : "rat_f", r => r.Num["weight"] = kg);
+        Named(w, "笼", 1);
+        var d = new RulesData();
+        var heavy = Sel(d, "heavy", "#笼", "rat", s => { s.Sort = new SortSpec { Prop = "weight", Desc = true }; s.Take = new TakeSpec { Mode = TakeMode.First, N = Expr.Of(3) }; });
+        return (w, d, heavy);
+    }
+
+    private static List<double> Weights(SimWorld w, RulesData d, string id) =>
+        Eval.List(new EvalCtx(w, d), id).Select(x => w.Num(x, "weight") ?? -1).ToList();
+
+    private static void RunSubFilters(Action<string, Action> test)
+    {
+        test("子筛选器·求值：先取前 N 再筛，沿用上级顺序，可多层", () =>
+        {
+            var (w, d, _) = SubScene();
+            Sel(d, "sub", "heavy", Catalog.Any, s => s.Where.Items.Add(Cond.Cmp("weight", "<", Expr.Of(500))));
+            Sel(d, "sub2", "sub", Catalog.Any, s => s.Where.Items.Add(Cond.Cmp("weight", "<", Expr.Of(400))));
+            Check(Weights(w, d, "heavy").SequenceEqual(new double[] { 500, 400, 300 }), "上级：体重最高的 3 只");
+            Check(Weights(w, d, "sub").SequenceEqual(new double[] { 400, 300 }), "子筛选器在上级结果里筛选，顺序沿用上级");
+            Check(Weights(w, d, "sub2").SequenceEqual(new double[] { 300 }), "第三层继续筛选");
+        });
+
+        test("子筛选器·求值：上级是容器取内容物，上级是数值时为空", () =>
+        {
+            var (w, d, _) = SubScene();
+            Sel(d, "cages", "#笼", Catalog.Self);
+            Sel(d, "inside", "cages", "rat");
+            Sel(d, "self", "cages", Catalog.Self);
+            Sel(d, "n", "#笼", "rat", s => { s.Mode = SelectorMode.Number; s.Agg = new AggSpec { Fn = AggFn.Count }; });
+            Sel(d, "fromN", "n", Catalog.Any);
+            var c = new EvalCtx(w, d);
+            Check(Eval.List(c, "inside").Count == 5, "容器：默认取里面的物品");
+            Check(Eval.List(c, "self").Count == 1, "容器：选“本身”继续筛选容器");
+            Check(Eval.List(c, "fromN").Count == 0, "数值不能作为范围");
+            Check(SelectorFamily.IsItemList(d, "heavy", w) && !SelectorFamily.IsItemList(d, "cages", w) && !SelectorFamily.IsItemList(d, "n", w) && !SelectorFamily.IsItemList(d, Places.Shop, w) && !SelectorFamily.IsItemList(d, "#笼", w), "只有结果是物品的筛选器算物品列表");
+        });
+
+        test("子筛选器·层级：上级从根到近、菱形去重、循环不死循环、跨流程不可见", () =>
+        {
+            var d = new RulesData { Schedules = { new Schedule { Id = "x" }, new Schedule { Id = "y" } } };
+            var a = Sel(d, "a", Places.Shop, Catalog.Any);
+            var b = Sel(d, "b", "a", Catalog.Any);
+            var c = Sel(d, "c", "a", Catalog.Any);
+            var e = Sel(d, "e", "b", Catalog.Any, s => s.From.Add("c"));
+            Check(SelectorFamily.Ancestors(d, e).Select(x => x.Id).SequenceEqual(new[] { "a", "b", "c" }), "菱形：a 只出现一次，排在最前");
+            Sel(d, "p", "q", Catalog.Any);
+            var q = Sel(d, "q", "p", Catalog.Any);
+            Check(SelectorFamily.Ancestors(d, q).Select(x => x.Id).SequenceEqual(new[] { "p" }), "循环引用不死循环");
+            Sel(d, "mine", "a", Catalog.Any, s => s.Owner = "x");
+            Sel(d, "other", "a", Catalog.Any, s => s.Owner = "y");
+            Check(SelectorFamily.Children(d, a, "x").Select(s => s.Id).SequenceEqual(new[] { "b", "c", "mine" }), "只列全局和当前流程的子筛选器");
+            Check(SelectorFamily.Children(d, a, null).Select(s => s.Id).SequenceEqual(new[] { "b", "c" }), "全局视角只列全局的");
+        });
+
+        test("子筛选器·草稿：打开时的顺序，展开不移除已显示的项", () =>
+        {
+            var (w, d, heavy) = SubScene();
+            var sub = Sel(d, "sub", "heavy", Catalog.Any);
+            Sel(d, "other", "heavy", Catalog.Any);
+            Sel(d, "leaf", "sub", Catalog.Any);
+            var r = SelectorDrafts.Edit(d, w, sub, null);
+            Check(r.Entries.Select(e => e.Def.Id).SequenceEqual(new[] { "heavy", "sub", "leaf" }) && r.Active.Def.Id == "sub", "上级在上、当前展开、直接子筛选器在下");
+            r.Expand(r.Entries[0]);
+            Check(r.Entries.Select(e => e.Def.Id).SequenceEqual(new[] { "heavy", "other", "sub", "leaf" }) && r.Active.Def.Id == "heavy", "展开上级：加上它的其他子筛选器，已显示的保留");
+            r.Collapse();
+            Check(r.Active == null, "允许全部收起");
+            Check(d.Selectors.Contains(heavy) && !r.AnyDirty, "打开不算改动，原数据不变");
+        });
+
+        test("子筛选器·草稿：未保存的上级可被下级求值，保存一次写入，取消不写", () =>
+        {
+            var (w, d, heavy) = SubScene();
+            var r = SelectorDrafts.Edit(d, w, heavy, null);
+            r.Active.Def.Take.N = Expr.Of(2);
+            var child = r.AddChild(r.Active, null);
+            child.Def.Name = "子";
+            child.Def.Where.Items.Add(Cond.Cmp("weight", "<", Expr.Of(500)));
+            var view = r.Overlay();
+            Check(Weights(w, view, child.Def.Id).SequenceEqual(new double[] { 400 }), "上级未保存的改动已反映到子筛选器");
+            Check(r.Active == child && d.Selectors.Count == 1 && heavy.Take.N.Terms[0].Num == 3, "保存前规则数据不变");
+            Check(r.Commit() == null && d.Selectors.Count == 2 && d.Selectors[0].Take.N.Terms[0].Num == 2 && d.Selectors[1].From[0] == "heavy", "保存后全部写入");
+        });
+
+        test("子筛选器·草稿：未改动项不写入，校验失败什么都不写", () =>
+        {
+            var (w, d, heavy) = SubScene();
+            var sub = Sel(d, "sub", "heavy", Catalog.Any);
+            var r = SelectorDrafts.Edit(d, w, sub, null);
+            r.Active.Def.Where.Items.Add(Cond.Cmp("weight", "<", Expr.Of(9)));
+            Check(r.Commit() == null && ReferenceEquals(d.Selectors[0], heavy) && !ReferenceEquals(d.Selectors[1], sub), "只替换改动的项");
+
+            var r2 = SelectorDrafts.Edit(d, w, d.Selectors[1], null);
+            r2.Entries[0].Def.Name = "  ";
+            r2.Entries[1].Def.Where.Items.Clear();
+            string why = r2.Commit();
+            Check(why != null && r2.Active == r2.Entries[0], "校验失败：返回原因并展开出错项");
+            Check(d.Selectors[0].Name == "heavy" && d.Selectors[1].Where.Items.Count == 1, "校验失败时什么都没写");
+
+            var r3 = SelectorDrafts.Edit(d, w, d.Selectors[1], null);
+            r3.Entries[1].Def.Name = "heavy";
+            Check(r3.Commit() != null, "草稿之间也不能重名");
+            var r4 = SelectorDrafts.New(d, w, new SelectorDef { Id = "n1", Name = "新", From = { Places.Shop }, Kind = Catalog.Any }, null);
+            r4.AddChild(r4.Active, null).Def.Name = "新";
+            Check(r4.Commit() != null && d.Selectors.Count == 2, "两份新草稿重名：拒绝且不写入");
+        });
+
+        test("子筛选器·草稿：删除与复制", () =>
+        {
+            var (w, d, heavy) = SubScene();
+            var sub = Sel(d, "sub", "heavy", Catalog.Any);
+            var r = SelectorDrafts.Edit(d, w, heavy, null);
+            Check(r.Remove(r.Entries[0]) != null && r.Entries.Count == 2, "仍被子筛选器引用：拒绝删除");
+            Check(r.Remove(r.Entries[1]) == null && r.Entries.Count == 1 && d.Selectors.Contains(sub), "已保存的项：保存前规则数据里还在");
+            Check(r.AnyDirty, "标记删除算改动");
+            Check(r.Remove(r.Entries[0]) == null, "子筛选器移除后可删上级");
+            Check(d.Selectors.Count == 2, "不保存就不删除，可放弃");
+            Check(r.Commit() == null && d.Selectors.Count == 0, "保存时才删除");
+
+            var (w2, d2, heavy2) = SubScene();
+            var r2 = SelectorDrafts.Edit(d2, w2, heavy2, null);
+            var kid = r2.AddChild(r2.Active, null);
+            kid.Def.Name = "子";
+            Check(r2.Remove(r2.Entries[0]) != null, "被未保存的草稿引用：也拒绝");
+            Check(r2.Remove(kid) == null && r2.Active == null && r2.Entries.Count == 1, "未保存的草稿直接移除");
+            var copy = r2.Copy(r2.Entries[0], null);
+            Check(r2.Entries[1] == copy && r2.Active == copy && copy.Def.Id != heavy2.Id && copy.Def.Name != heavy2.Name, "复制：新草稿在下方展开，新 Id，不重名");
+        });
+
+        test("子筛选器·草稿：所属流程、数值上级、任务引用", () =>
+        {
+            var w = new SimWorld();
+            var d = new RulesData { Schedules = { new Schedule { Id = "x" } } };
+            var g = Sel(d, "g", Places.Shop, Catalog.Any);
+            var local = Sel(d, "l", Places.Shop, Catalog.Any, s => s.Owner = "x");
+            var n = Sel(d, "n", Places.Shop, Catalog.Any, s => s.Mode = SelectorMode.Number);
+            var r = SelectorDrafts.Edit(d, w, g, "x");
+            Check(r.AddChild(r.Active, "x").Def.Owner == "x", "全局上级：子筛选器属于当前流程");
+            Check(SelectorDrafts.Edit(d, w, local, "x") is var rl && rl.AddChild(rl.Active, "y").Def.Owner == "x", "本流程上级：子筛选器同属该流程");
+            Check(SelectorDrafts.Edit(d, w, n, "x") is var rn && rn.AddChild(rn.Active, "x") == null, "数值上级不能建子筛选器");
+
+            var root = new SelectorDef { Id = "root", Name = "根", From = { Places.Shop }, Kind = Catalog.Any };
+            var t = SelectorDrafts.New(d, w, root, "x");
+            Check(t.TaskTarget == root, "没有新建子筛选器：引用最初的筛选器");
+            var a = t.AddChild(t.Active, "x");
+            var b = t.AddChild(a, "x");
+            b.Def.Mode = SelectorMode.Number;
+            Check(t.TaskTarget == a.Def, "引用最后新建的物品筛选器，跳过数值的");
+            Check(t.Remove(b) == null && t.Remove(a) == null && t.TaskTarget == root, "移除后回到最初的筛选器");
+        });
+
+        test("子筛选器·草稿：物品列表上级的残留范围方式在打开时清除，不算改动", () =>
+        {
+            var (w, d, _) = SubScene();
+            var sub = Sel(d, "sub", "heavy", Catalog.Self, s => s.Slot = "battery");
+            var r = SelectorDrafts.Edit(d, w, sub, null);
+            Check(r.Active.Def.Slot == null && r.Active.Def.Kind == Catalog.Any, "打开时清除");
+            Check(!r.AnyDirty && Weights(w, r.Overlay(), "sub").SequenceEqual(Weights(w, d, "sub")), "结果不变，也不算改动");
+            Check(r.Commit() == null && ReferenceEquals(d.Selectors[1], sub), "未改动就不写回");
+        });
+
+        test("子筛选器·当前结果：件数、截断、数值、空结果原因、设备名", () =>
+        {
+            var (w, d, _) = SubScene();
+            Sel(d, "none", "heavy", Catalog.Any, s => s.Where.Items.Add(Cond.Cmp("weight", ">", Expr.Of(9999))));
+            Sel(d, "n", "#笼", "rat", s => { s.Mode = SelectorMode.Number; s.Agg = new AggSpec { Fn = AggFn.Count }; });
+            var c = new EvalCtx(w, d);
+            var p = SelectorPreview.Of(c, "heavy", 2);
+            Check(p.Count == 3 && p.Items.Count == 2 && w.Num(p.Items[0], "weight") == 500, "件数是全部结果，列表按输出顺序截断");
+            var e = SelectorPreview.Of(c, "none", 8);
+            Check(e.Count == 0 && !string.IsNullOrEmpty(e.EmptyReason), "结果为空时给出原因");
+            var n = SelectorPreview.Of(c, "n", 8);
+            Check(n.IsNumber && n.Number == 5, "统计数值");
+            Check(SelectorPreview.Of(c, "#笼", 8).Count == 1, "设备名：叫这个名字的东西本身");
+            Check(SelectorPreview.Of(c, "nothing", 8) == null && SelectorPreview.Of(c, null, 8) == null, "不是筛选器时为空");
+            Check(SelectorPreview.Of(c, "#不存在", 8) is { Count: 0 } m && !string.IsNullOrEmpty(m.EmptyReason), "店内没有这个名字时给出原因");
+        });
+
+        test("子筛选器·兼容：带上下级的流程包导出再导入，引用正确", () =>
+        {
+            var d = new RulesData();
+            var sch = new Schedule { Id = "x", Name = "流程" };
+            d.Schedules.Add(sch);
+            var a = Sel(d, "a", Places.Shop, "rat", s => { s.Owner = "x"; s.Name = "上级"; });
+            var b = Sel(d, "b", "a", Catalog.Any, s => { s.Owner = "x"; s.Name = "下级"; });
+            sch.Rules.Add(new WorkRule { Id = "r", Name = "任务", Actions = { new ActionDef { Verb = ActVerb.Mark, List = b.Id, Text = "m" } } });
+            string text = Transfer.Export(d, sch, "test");
+            var fresh = new RulesData();
+            var s2 = Transfer.Import(fresh, text);
+            var nb = fresh.Selectors.First(x => x.Name == "下级");
+            var na = fresh.Selectors.First(x => x.Name == "上级");
+            Check(nb.From.Single() == na.Id && s2.Rules[0].Actions[0].List == nb.Id, "导入后下级仍引用上级，任务引用下级");
+        });
     }
 
     private static (SelectorDef a, SelectorDef b)? Check0(RulesData d, List<SelectorDef> order) => AutoMod.Domain.Rules.Check.FirstBackRef(d, order);

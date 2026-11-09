@@ -45,7 +45,7 @@ public static class CondEditor
     /// stats：右边表达式能引用的筛选器；kind：当前的类型（换成“类型”组时的默认值）；kinds：“是 / 不是某类型”的选项。
     /// </summary>
     public static void Row(CustomUIBuilder b, Cond c, List<string> props, List<string> stats, string indent,
-        Func<string> kind, Func<List<(string id, string name)>> kinds, Action remove, Action rebuild)
+        Func<string> kind, Func<List<(string id, string name)>> kinds, Action remove, Action rebuild, RulesData data = null)
     {
         var all = props.ToList();
         if (c.Prop != null && c.Prop != Catalog.TypeProp && !all.Contains(c.Prop)) all.Add(c.Prop);
@@ -122,7 +122,7 @@ public static class CondEditor
         b.AddDropdown(Ui.L(opn), Math.Max(0, Array.IndexOf(ops, c.Op)), Ui.AI(k => { c.Op = ops[k]; rebuild(); })).Width(60);
         ExprEditor.Build(b, c.Right ??= Expr.Of(0), new ExprEditor.Options
         {
-            OwnProps = props, Stats = stats, Inline = true,
+            OwnProps = props, Stats = stats, Inline = true, Data = data,
             Tail = r => r.AddButton("×", Ui.A(() => { remove(); rebuild(); })),
         }, rebuild);
     }

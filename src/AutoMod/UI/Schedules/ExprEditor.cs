@@ -18,6 +18,7 @@ public static class ExprEditor
         public int PerRow = 2;              // 每行几项，超出换行
         public bool Inline;                 // 接在调用方已开始的行后面（第一项和比较方式同一行），不另起一行
         public Action<CustomUIBuilder> Tail; // 最后一行末尾再加的控件（例如条件的删除按钮）
+        public RulesData Data;              // 查筛选器名称用的数据（对话框的草稿）；为空 = 规则数据
     }
 
     private static readonly string[] OpIds = { "+", "-", "*", "/" };
@@ -66,7 +67,7 @@ public static class ExprEditor
                     RefDropdown(b, t, (opt.OwnProps ?? new List<string>()).Select(p => (p, RulesUi.PropName(p))).ToList(), changed);
                     break;
                 case TermKind.Stat:
-                    RefDropdown(b, t, (opt.Stats ?? new List<string>()).Select(id => RulesUi.D.Selectors.FirstOrDefault(x => x.Id == id)).Where(x => x != null)
+                    RefDropdown(b, t, (opt.Stats ?? new List<string>()).Select(id => (opt.Data ?? RulesUi.D).Selectors.FirstOrDefault(x => x.Id == id)).Where(x => x != null)
                         .Select(x => (x.Id, x.IsNumber ? x.Name : x.Name + ".数量")).ToList(), changed);
                     break;
                 case TermKind.Note:
