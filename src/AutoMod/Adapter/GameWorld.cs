@@ -194,6 +194,9 @@ public class GameWorld : IWorld
     /// <summary>这件东西有没有电池槽（游戏的机器供电槽）。</summary>
     public bool HasBatterySlot(object box) => GameApi.BatterySlot((GameItem)box) != null;
 
+    /// <summary>列表里的大类。</summary>
+    public string GroupOf(object item) => ItemGroups.Of(TraitBindings.Facts((GameItem)item));
+
     public bool Exists(object item) => Alive((GameItem)item);
     public object Key(object item) => item;
     public int Uid(object item) => ((GameItem)item).uniqueId;

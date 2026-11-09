@@ -75,6 +75,17 @@ public static class TraitBindings
         return set;
     }
 
+    /// <summary>物品的商品类型和生效的标签名，大类按它判定。</summary>
+    public static HashSet<string> Facts(GameItem it)
+    {
+        var set = new HashSet<string>();
+        if (it.itemTypes != null) set.UnionWith(it.itemTypes);
+        if (it.state?.dict != null)
+            foreach (var kv in it.state.dict)
+                if (kv.Value.valueEnabled) set.Add(kv.Key);
+        return set;
+    }
+
     /// <summary>显示用主类别（cage / charger / storage……），不是容器为空。</summary>
     public static string PrimaryTrait(GameItem it)
     {

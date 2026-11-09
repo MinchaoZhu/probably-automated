@@ -1435,3 +1435,21 @@ daily.publisher,Мод Probably Automated
 daily.title,Дневной отчёт ученика
 item.daily.desc,Сводка работы учеников за прошлую ночную и сегодняшнюю утреннюю смены от мода Probably Automated. Двойной клик для чтения.
 item.daily.name,Дневной отчёт ученика
+list.search,Поиск
+list.no_match,Нет совпадений
+list.group_all,Все
+item_group.machine,Машины
+item_group.storage,Хранение
+item_group.water,Вода
+item_group.power,Энергия
+item_group.husbandry,Животные
+item_group.farming,Растения
+item_group.weapon,Оружие
+item_group.module,Модули
+item_group.chem,Медицина
+item_group.food,Еда
+item_group.document,Документы
+item_group.material,Материалы
+item_group.tool,Инструменты
+item_group.goods,Товары
+item_group.other,Прочее

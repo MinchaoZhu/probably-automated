@@ -810,6 +810,7 @@ internal static class LocTests
             // 1. 明确收集各动态键前缀及其全部已知合法取值
             var dynamicPatterns = new Dictionary<string, List<string>>
             {
+                ["item_group."] = ItemGroups.Order.ToList(),
                 ["failcode."] = new()
                 {
                     "no_source", "no_tool", "dest_full", "destfull", "many", "not_allowed", "notallowed",

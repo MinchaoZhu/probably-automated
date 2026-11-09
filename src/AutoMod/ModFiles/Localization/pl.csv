@@ -1435,3 +1435,21 @@ daily.publisher,Mod Probably Automated
 daily.title,Dzienny raport praktykanta
 item.daily.desc,"Podsumowanie pracy praktykantów z wczorajszej nocy i dzisiejszego poranka, wydane przez mod Probably Automated. Kliknij dwukrotnie, aby przeczytać."
 item.daily.name,Dzienny raport praktykanta
+list.search,Szukaj
+list.no_match,Brak wyników
+list.group_all,Wszystko
+item_group.machine,Maszyny
+item_group.storage,Magazyn
+item_group.water,Woda
+item_group.power,Energia
+item_group.husbandry,Hodowla
+item_group.farming,Uprawa
+item_group.weapon,Broń
+item_group.module,Moduły
+item_group.chem,Medycyna
+item_group.food,Żywność
+item_group.document,Dokumenty
+item_group.material,Materiały
+item_group.tool,Narzędzia
+item_group.goods,Towary
+item_group.other,Inne

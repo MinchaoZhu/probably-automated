@@ -1435,3 +1435,21 @@ daily.publisher,Mod Probably Automated
 daily.title,Informe diario del aprendiz
 item.daily.desc,"Resumen del trabajo de los aprendices de anoche y esta mañana, emitido por el mod Probably Automated. Doble clic para leer."
 item.daily.name,Informe diario del aprendiz
+list.search,Buscar
+list.no_match,Sin resultados
+list.group_all,Todo
+item_group.machine,Máquinas
+item_group.storage,Almacén
+item_group.water,Agua
+item_group.power,Energía
+item_group.husbandry,Ganadería
+item_group.farming,Cultivo
+item_group.weapon,Armas
+item_group.module,Módulos
+item_group.chem,Medicina
+item_group.food,Comida
+item_group.document,Documentos
+item_group.material,Materiales
+item_group.tool,Herramientas
+item_group.goods,Bienes
+item_group.other,Otros

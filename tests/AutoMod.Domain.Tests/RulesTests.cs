@@ -1423,6 +1423,7 @@ internal static class RulesTests
         });
 
         RunSubFilters(test);
+        RunItemGroups(test);
     }
 
     // ================= 子筛选器 =================
@@ -1441,6 +1442,34 @@ internal static class RulesTests
 
     private static List<double> Weights(SimWorld w, RulesData d, string id) =>
         Eval.List(new EvalCtx(w, d), id).Select(x => w.Num(x, "weight") ?? -1).ToList();
+
+    private static void RunItemGroups(Action<string, Action> test)
+    {
+        test("列表大类：按类型和标签判定，靠前的规则优先，其余归其他", () =>
+        {
+            Check(ItemGroups.Of(new[] { "MACHINE" }) == "machine", "充能器的商品类型是机器");
+            Check(ItemGroups.Of(new[] { "HOUSEHOLD_GOOD", "LIQUID_CONTAINER_TAG" }) == "water", "水罐按液体容器标签归水，不归日用品");
+            Check(ItemGroups.Of(new[] { "TOOL", "CONTRABAND" }) == "tool", "其他模组的物品用已有类型时自动归类");
+            Check(ItemGroups.Of(new[] { "SOME_MOD_TYPE" }) == ItemGroups.Other, "不认识的类型归其他");
+            Check(ItemGroups.Of(Array.Empty<string>()) == ItemGroups.Other, "没有类型归其他");
+        });
+        test("列表大类：类型选项的归类", () =>
+        {
+            Check(ItemGroups.OfTraitOption("battery") == "power", "类别行");
+            Check(ItemGroups.OfTraitOption(Catalog.ItemTypePrefix + "FOOD") == "food", "商品类型行");
+            Check(ItemGroups.OfTraitOption(Catalog.FamilyPrefix + "CHEM") == "chem", "家族行");
+            Check(ItemGroups.OfTraitOption("durable") == null, "跨大类的类别只在全部下显示");
+            Check(ItemGroups.OfTraitOption("water_jug") == null, "具体种类由调用方按物品判定");
+        });
+        test("列表搜索：包含关键词，不区分大小写", () =>
+        {
+            Check(ItemGroups.Matches("Water Filter", "filter"), "不区分大小写");
+            Check(ItemGroups.Matches("感冒药", "药"), "中文片段");
+            Check(ItemGroups.Matches("感冒药", ""), "空关键词全部匹配");
+            Check(!ItemGroups.Matches("感冒药", "水"), "不包含");
+            Check(!ItemGroups.Matches(null, "水"), "空文字不匹配");
+        });
+    }
 
     private static void RunSubFilters(Action<string, Action> test)
     {

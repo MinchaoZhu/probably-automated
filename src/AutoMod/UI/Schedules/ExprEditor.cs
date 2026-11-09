@@ -52,7 +52,7 @@ public static class ExprEditor
             {
                 e.Terms[idx] = kinds[k].id == TermKind.Num ? Term.N(0) : new Term { Kind = kinds[k].id };
                 changed();
-            }));
+            })).Searchable();
             if (opt.Inline) b.Width(100);
             switch (t.Kind)
             {
@@ -89,6 +89,6 @@ public static class ExprEditor
     {
         var list = new List<(string id, string name)> { (null, Domain.L.T("expr.select_placeholder")) };
         list.AddRange(opts);
-        b.AddDropdown(Ui.L(list.Select(o => o.name)), RulesUi.IndexOf(list, o => o.id == t.Ref), Ui.AI(k => { t.Ref = list[k].id; changed(); }));
+        b.AddDropdown(Ui.L(list.Select(o => o.name)), RulesUi.IndexOf(list, o => o.id == t.Ref), Ui.AI(k => { t.Ref = list[k].id; changed(); })).Searchable();
     }
 }

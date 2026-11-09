@@ -1435,3 +1435,21 @@ daily.publisher,Probably Automated MOD
 daily.title,見習い日報
 item.daily.desc,昨夜の遅番と今朝の早番における見習いの作業概要。Probably Automated MOD が発行。ダブルクリックで読む。
 item.daily.name,見習い日報
+list.search,検索
+list.no_match,一致なし
+list.group_all,すべて
+item_group.machine,機械
+item_group.storage,収納
+item_group.water,水・液体
+item_group.power,電力
+item_group.husbandry,畜産
+item_group.farming,栽培
+item_group.weapon,武器
+item_group.module,モジュール
+item_group.chem,医薬・化学
+item_group.food,食品
+item_group.document,書類
+item_group.material,素材
+item_group.tool,工具
+item_group.goods,日用・収集品
+item_group.other,その他

@@ -55,15 +55,23 @@ public static class Pickers
         var list = options.ToList();
         // 宽度跟着最长的选项走，避免中文选项被截断
         float w = Math.Clamp(80 + list.Select(o => o.label.Length).DefaultIfEmpty(10).Max() * 17, 320, 760);
-        var b = Ui.Window(Id, title, w, 380);
+        var b = Ui.Window(Id, title, w, 424);
         if (note != null) b.AddLabel(note);
+        var rows = new List<(string label, CustomUIElement button)>();
+        b.AddInput(Domain.L.T("list.search"), "", null, null, Ui.AS(q =>
+        {
+            foreach (var (label, button) in rows) button?.SetVisible(Domain.Rules.ItemGroups.Matches(label, q.Trim()));
+        }));
+        var search = b.Last;
         b.BeginScroll(300);
         foreach (var (label, action) in list)
         {
             var act = action;
             b.AddButton(label, Ui.A(() => { Ui.Close(Id); act(); }));
+            rows.Add((label, b.Last));
         }
         b.End().BeginRow(8).AddFlexibleSpace().AddButton(Domain.L.T("ui.cancel"), Ui.A(() => Ui.Close(Id))).End().Show();
+        search?.input?.ActivateInputField();
     }
 
     /// <summary>输入一个数字的小窗。</summary>

@@ -1435,3 +1435,21 @@ daily.publisher,Mod Probably Automated
 daily.title,Rapport quotidien d'apprenti
 item.daily.desc,"Résumé du travail des apprentis d'hier soir et de ce matin, fourni par le mod Probably Automated. Double-cliquez pour lire."
 item.daily.name,Rapport quotidien d'apprenti
+list.search,Rechercher
+list.no_match,Aucun résultat
+list.group_all,Tout
+item_group.machine,Machines
+item_group.storage,Stockage
+item_group.water,Eau
+item_group.power,Énergie
+item_group.husbandry,Élevage
+item_group.farming,Culture
+item_group.weapon,Armes
+item_group.module,Modules
+item_group.chem,Médical
+item_group.food,Nourriture
+item_group.document,Documents
+item_group.material,Matériaux
+item_group.tool,Outils
+item_group.goods,Biens
+item_group.other,Autre

@@ -126,7 +126,7 @@ public static class SelectorDialog
             foreach (var child in d.From.SelectMany(src => Eval.Expand(_ctx, d, src)))
             {
                 var k = RulesUi.World.Kind(child);
-                if (!kinds.Contains(k)) kinds.Add(k);
+                if (!kinds.Contains(k)) { kinds.Add(k); RulesUi.NoteKindGroup(k, child); }
                 foreach (var t in RulesUi.World.Traits(child).Where(t => t.StartsWith(Catalog.ItemTypePrefix) || t.StartsWith(Catalog.FamilyPrefix)))
                     if (!types.Contains(t)) types.Add(t);
             }
@@ -226,7 +226,7 @@ public static class SelectorDialog
                 var allowed = Catalog.PresetsFor(d.Kind, RulesUi.World).Select(p => p.Id).ToHashSet();
                 d.Where.Items.RemoveAll(c => c.Preset != null && !allowed.Contains(c.Preset));
                 Rebuild();
-            })).Width(260);
+            })).Searchable(i => RulesUi.KindGroup(kinds[i].id)).Width(260);
         b.End();
         b.End();
 
@@ -264,7 +264,7 @@ public static class SelectorDialog
                     d.From[at] = places[v].id;
                     if (d.From.All(ItemList)) SelectorDrafts.ClearScopeMode(d);
                     Rebuild();
-                })).Width(260);
+                })).Searchable().Width(260);
             RulesUi.AttachPreview(b, places.Select(x => x.id).ToList(), () => _s.Overlay());
             if (ItemList(d.From[k]))
                 b.AddLabel(Tone.Dim(Domain.L.T("selector.scope_result_items")));
@@ -275,7 +275,7 @@ public static class SelectorDialog
                     if (m.self) { d.Kind = Catalog.Self; d.Slot = null; }
                     else { if (d.Kind == Catalog.Self) d.Kind = Catalog.Any; d.Slot = m.slot; }
                     Rebuild();
-                })).Width(240);
+                })).Searchable().Width(240);
             else b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("selector.scope_same_as_above"))));
             if (d.From.Count > 1) b.AddButton("×", Ui.A(() => { d.From.RemoveAt(at); Rebuild(); }));
             b.End();
@@ -340,7 +340,7 @@ public static class SelectorDialog
             {
                 var minus = new List<(string id, string name)> { (null, Domain.L.T("selector.minus_none")) };
                 minus.AddRange(otherItems.Select(x => (x.Id, x.Name)));
-                b.AddFlexibleSpace().AddLabel(Domain.L.T("selector.label_minus")).AddDropdown(Ui.L(minus.Select(x => x.name)), RulesUi.IndexOf(minus, x => x.id == d.Minus), Ui.AI(k => { d.Minus = minus[k].id; Rebuild(); })).Width(220)
+                b.AddFlexibleSpace().AddLabel(Domain.L.T("selector.label_minus")).AddDropdown(Ui.L(minus.Select(x => x.name)), RulesUi.IndexOf(minus, x => x.id == d.Minus), Ui.AI(k => { d.Minus = minus[k].id; Rebuild(); })).Searchable().Width(220)
                     .Tip(Domain.L.T("selector.tip_minus"));
                 RulesUi.AttachPreview(b, minus.Select(x => x.id).ToList(), () => _s.Overlay());
             }

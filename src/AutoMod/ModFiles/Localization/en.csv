@@ -1435,3 +1435,21 @@ daily.publisher,Probably Automated Mod
 daily.title,Apprentice Daily Report
 item.daily.desc,"Summary of apprentice work from last night and this morning, issued by the Probably Automated mod. Double-click to read."
 item.daily.name,Apprentice Daily Report
+list.search,Search
+list.no_match,No matches
+list.group_all,All
+item_group.machine,Machines
+item_group.storage,Storage
+item_group.water,Water & liquids
+item_group.power,Power
+item_group.husbandry,Husbandry
+item_group.farming,Farming
+item_group.weapon,Weapons
+item_group.module,Modules
+item_group.chem,Meds & chems
+item_group.food,Food
+item_group.document,Documents
+item_group.material,Materials
+item_group.tool,Tools
+item_group.goods,Goods
+item_group.other,Other

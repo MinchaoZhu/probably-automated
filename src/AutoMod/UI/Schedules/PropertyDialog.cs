@@ -44,7 +44,7 @@ public static class PropertyDialog
             d.ItemKind = Kinds[k].id;
             d.Formula = Expr.Ref(TermKind.Own, Catalog.PropsFor(d.ItemKind, RulesUi.World).FirstOrDefault());
             Show();
-        })).End();
+        })).Searchable().End();
         b.AddLabel(Tone.Bold(Domain.L.T("prop_dlg.formula")));
         ExprEditor.Build(b, d.Formula, new ExprEditor.Options { OwnProps = Catalog.PropsFor(d.ItemKind, RulesUi.World).ToList() }, Show);
         b.AddLabel($"<size=13>{Domain.L.T("prop_dlg.formula_display", AutoMod.Domain.Rules.Text.Expr(D, d.Formula))}</size>");

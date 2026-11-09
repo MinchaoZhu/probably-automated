@@ -280,7 +280,7 @@ public static class ScheduleEditor
         }
         if (shown != none) { rows.Add((none, () => Choose(null), null)); ids.Add(null); }
 
-        b.AddDropdown(Ui.L(rows.Select(x => x.name)), 0, Ui.AI(k => rows[k].run?.Invoke()));
+        b.AddDropdown(Ui.L(rows.Select(x => x.name)), 0, Ui.AI(k => rows[k].run?.Invoke())).Searchable(null, 1); // 第 2 行是“新建筛选器”
         DropdownRowEdit.Attach(b.Last?.dropdown, Domain.L.T("editor.btn_edit"), rows.Select(x => x.edit).ToList());
         RulesUi.AttachPreview(b, ids);
         if (width is { } w) b.Width(w);
@@ -653,7 +653,7 @@ public static class ScheduleEditor
 
     private static void Pick(CustomUIBuilder b, List<(string id, string name)> opts, string current, Action<string> set)
     {
-        b.AddDropdown(Ui.L(opts.Select(o => o.name)), RulesUi.IndexOf(opts, o => o.id == current), Ui.AI(k => { set(opts[k].id); Refresh(); }));
+        b.AddDropdown(Ui.L(opts.Select(o => o.name)), RulesUi.IndexOf(opts, o => o.id == current), Ui.AI(k => { set(opts[k].id); Refresh(); })).Searchable();
     }
 
     /// <summary>
@@ -674,7 +674,7 @@ public static class ScheduleEditor
                 if (verbs[k].Id == ActVerb.Note) { na.List = null; na.Value = Expr.Ref(TermKind.Stat, keep); na.Note = s.Notepad.FirstOrDefault()?.Id; }
                 r.Actions[i] = na;
                 Refresh();
-            }));
+            })).Searchable();
         // 第一行和句子的开头一致：“使用 [工具]”“放入 [对象]”“交换 [对象]”……
         if (a.Verb == ActVerb.Use) RefPicker(b, s, RulesUi.ToolSources(), Domain.L.T("editor.pick_tool_placeholder"), a.Tool, v => a.Tool = v);
         else if (a.Verb != ActVerb.Note) ListPicker(b, s, a.List, v => a.List = v);

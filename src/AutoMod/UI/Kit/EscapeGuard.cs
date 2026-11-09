@@ -42,6 +42,12 @@ public static class EscapeGuard
         _escapableBefore = CountEscapable();
     }
 
+    /// <summary>暂停菜单开着时关掉（下拉列表收起时，这次 Esc 同时打开了菜单）。</summary>
+    public static void CloseMenu()
+    {
+        if (_menu != null && _menu.menuPanel != null && _menu.menuPanel.activeInHierarchy) _menu.CloseEscapeMenu();
+    }
+
     private static int CountEscapable()
     {
         int n = 0;

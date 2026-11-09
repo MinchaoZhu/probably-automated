@@ -89,6 +89,15 @@ public static class RulesUi
 
     public static string Name(string id) => AutoMod.Domain.Rules.Text.Name(D, id);
 
+    /// <summary>见过的具体种类 → 大类（列类型选项时记下，本次游戏会话内有效）。</summary>
+    private static readonly Dictionary<string, string> KindGroups = new();
+
+    public static void NoteKindGroup(string kind, object item) => KindGroups[kind] = World.GroupOf(item);
+
+    /// <summary>类型选项的大类；“全部物品”这类通用选项为空，只在“全部”下显示。</summary>
+    public static string KindGroup(string id) =>
+        ItemGroups.OfTraitOption(id) ?? (id != null && KindGroups.TryGetValue(id, out var g) ? g : null);
+
     /// <summary>
     /// 某类型可用的属性：内置 + 适用的自定义属性 + 游戏标签（排在最后）。给了来源里的东西时，游戏标签取自它们
     /// （“全部物品”也能列出来源里水瓶的含水量）；没给时取店里这类物品。
@@ -135,7 +144,7 @@ public static class RulesUi
 
     // ---------- 当前结果 ----------
 
-    /// <summary>下拉列表悬停时显示几件。</summary>
+    /// <summary>下拉列表旁的信息面板显示几件。</summary>
     private const int TipLines = 6;
 
     /// <summary>折叠行上的件数或数值。</summary>
@@ -154,7 +163,7 @@ public static class RulesUi
         p.Number is { } v ? Domain.L.T("selector.result_number", v.ToString("0.##")) : Domain.L.T("selector.result_no_value");
 
     /// <summary>筛选器或设备名此刻的结果，多行文字；不是这两者时为空。</summary>
-    /// <param name="withPlace">每件后面带上所在容器（提示窗口窄，不带）。</param>
+    /// <param name="withPlace">每件后面带上所在容器（下拉列表旁的面板窄，不带）。</param>
     public static string PreviewText(EvalCtx ctx, string id, int limit, bool withPlace = true)
     {
         try

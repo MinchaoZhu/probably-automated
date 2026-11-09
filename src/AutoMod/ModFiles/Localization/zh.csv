@@ -1435,3 +1435,21 @@ daily.publisher,Probably Automated 模组
 daily.title,学徒工作日报
 item.daily.desc,学徒昨夜晚班与今晨早班的工作汇总，由 Probably Automated 模组提供。双击阅读。
 item.daily.name,学徒工作日报
+list.search,搜索
+list.no_match,无匹配
+list.group_all,全部
+item_group.machine,机器
+item_group.storage,储物
+item_group.water,水与液体
+item_group.power,电力
+item_group.husbandry,养殖
+item_group.farming,种植
+item_group.weapon,武器
+item_group.module,模块
+item_group.chem,药物化学
+item_group.food,食品
+item_group.document,文件
+item_group.material,材料
+item_group.tool,工具
+item_group.goods,日用与收藏
+item_group.other,其他

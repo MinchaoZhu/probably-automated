@@ -112,7 +112,7 @@ public static class SimulatorWindow
         var runs = new[] { (1, Domain.L.T("sim.run_1_shift")), (2, Domain.L.T("sim.run_1_day")), (6, Domain.L.T("sim.run_3_days")), (14, Domain.L.T("sim.run_7_days")) };
         b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
         if (schedules.Count > 0)
-            b.AddLabel(Domain.L.T("sim.schedule")).AddDropdown(Ui.L(schedules.Select(x => Table.Fit(x.Name, 170, 13, out _))), Math.Max(0, schedules.IndexOf(s)), Ui.AI(k => { _schId = schedules[k].Id; Reset(); Show(); })).Width(200);
+            b.AddLabel(Domain.L.T("sim.schedule")).AddDropdown(Ui.L(schedules.Select(x => Table.Fit(x.Name, 170, 13, out _))), Math.Max(0, schedules.IndexOf(s)), Ui.AI(k => { _schId = schedules[k].Id; Reset(); Show(); })).Searchable().Width(200);
         b.AddLabel(Domain.L.T("sim.start_shift")).AddDropdown(Ui.L(new[] { Domain.L.T("sim.start_morning"), Domain.L.T("sim.start_night") }), _start == Shift.Night ? 1 : 0, Ui.AI(k => { _start = k == 1 ? Shift.Night : Shift.Morning; Show(); })).Width(Domain.L.Int("layout.sim.start_width", 90))
             .AddLabel(Domain.L.T("sim.duration")).AddDropdown(Ui.L(runs.Select(r => r.Item2)), Ui.IndexOf(runs, r => r.Item1 == _runs), Ui.AI(k => { _runs = runs[k].Item1; Show(); })).Width(Domain.L.Int("layout.sim.duration_width", 110))
             .AddButton(Domain.L.T("sim.btn_start"), Ui.A(Run))

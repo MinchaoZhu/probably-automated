@@ -60,7 +60,7 @@ public static class CondEditor
                 if (groups[k] == GroupType) { c.Prop = Catalog.TypeProp; c.Text ??= kind(); c.Right = null; if (c.Op != "!=") c.Op = "="; }
                 else if (all.FirstOrDefault(p => GroupOf(p) == groups[k]) is { } first) SetProp(c, first);
                 rebuild();
-            })).Width(Domain.L.Int("layout.cond.value_width", 120));
+            })).Searchable().Width(Domain.L.Int("layout.cond.value_width", 120));
 
         // 类型：是 / 不是某类型（例：不是违禁品）
         if (c.Prop == Catalog.TypeProp)
@@ -68,7 +68,7 @@ public static class CondEditor
             var kindList = kinds();
             if (c.Text != null && kindList.All(x => x.id != c.Text)) kindList.Add((c.Text, Catalog.TypeName(c.Text)));
             b.AddDropdown(Ui.L(new[] { Domain.L.T("cond.is"), Domain.L.T("cond.is_not") }), c.Op == "!=" ? 1 : 0, Ui.AI(k => { c.Op = k == 1 ? "!=" : "="; rebuild(); }))
-                .AddDropdown(Ui.L(kindList.Select(x => x.name)), RulesUi.IndexOf(kindList, x => x.id == c.Text), Ui.AI(k => { c.Text = kindList[k].id; rebuild(); }))
+                .AddDropdown(Ui.L(kindList.Select(x => x.name)), RulesUi.IndexOf(kindList, x => x.id == c.Text), Ui.AI(k => { c.Text = kindList[k].id; rebuild(); })).Searchable(i => RulesUi.KindGroup(kindList[i].id))
                 .AddButton("×", Ui.A(() => { remove(); rebuild(); }))
                 .End();
             return;
@@ -88,7 +88,7 @@ public static class CondEditor
             SetProp(c, opts[k].p);
             if (opts[k].v is { } v) { c.Op = "="; c.Right = Expr.Of(v); }
             rebuild();
-        })).Width(200);
+        })).Searchable().Width(200);
         // 文字属性（标签文字、品质等级名）：等于 / 不等于一段文字
         if (GameTags.IsTextProp(c.Prop))
         {
@@ -111,7 +111,7 @@ public static class CondEditor
             var gops = new[] { "<=", ">=", "=" };
             int cur = (int)Math.Round(c.Right?.Terms.FirstOrDefault()?.Num ?? 0);
             b.AddDropdown(Ui.L(new[] { Domain.L.T("cond.at_least"), Domain.L.T("cond.at_most"), Domain.L.T("cond.is") }), Math.Max(0, Array.IndexOf(gops, c.Op)), Ui.AI(k => { c.Op = gops[k]; rebuild(); }))
-                .AddDropdown(Ui.L(grades), Math.Clamp(cur, 0, grades.Count - 1), Ui.AI(k => { c.Right = Expr.Of(k); rebuild(); }))
+                .AddDropdown(Ui.L(grades), Math.Clamp(cur, 0, grades.Count - 1), Ui.AI(k => { c.Right = Expr.Of(k); rebuild(); })).Searchable()
                 .AddButton("×", Ui.A(() => { remove(); rebuild(); }))
                 .End();
             return;

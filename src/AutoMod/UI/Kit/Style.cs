@@ -42,6 +42,15 @@ public static class UiExt
         return b.BeginRow(8).AddLabel(Tone.Bold(title)).AddFlexibleSpace().AddLabel(Tone.Dim(right)).End();
     }
 
+    /// <summary>最近加的下拉框：列表顶部有搜索框，展开时滚动到当前项。</summary>
+    /// <param name="group">第几行属于哪个大类；传了才有大类按钮。</param>
+    /// <param name="pinned">搜索时固定显示的行。</param>
+    public static CustomUIBuilder Searchable(this CustomUIBuilder b, Func<int, string> group = null, params int[] pinned)
+    {
+        DropdownSearch.Attach(b.Last?.dropdown, group, pinned);
+        return b;
+    }
+
     /// <summary>最近加的元素：固定宽度。</summary>
     public static CustomUIBuilder Width(this CustomUIBuilder b, float w)
     {

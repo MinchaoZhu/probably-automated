@@ -126,7 +126,7 @@ public static class MainWindow
                 app.Duties.Add(new Duty { ScheduleId = schedules[k - 1].Id, Shift = Shift.Morning });
                 Session.Changed();
                 Show();
-            })).Width(270);
+            })).Searchable().Width(270);
         }
         else Table.Cell(b, Domain.L.Join("list", duties.Select(d => $"{st.Rules.Schedules.First(x => x.Id == d.ScheduleId).Name}" + Domain.L.T("text.paren", ShortShift(d.Shift)))), 270,
             tip: Domain.L.T("intercom.duty_tip"));
@@ -173,7 +173,7 @@ public static class MainWindow
             int curSched = Math.Max(0, schedules.FindIndex(x => x.Id == d.ScheduleId));
             Table.BeginSecondLine(b);
             b.AddLabel(Tone.Small($"{i + 1}.")).Width(24)
-                .AddDropdown(Ui.L(names), curSched, Ui.AI(k => { d.ScheduleId = schedules[k].Id; Session.Changed(); Show(); })).Width(200);
+                .AddDropdown(Ui.L(names), curSched, Ui.AI(k => { d.ScheduleId = schedules[k].Id; Session.Changed(); Show(); })).Searchable().Width(200);
             if (curSched < schedules.Count) b.Tip(schedules[curSched].Name);
             b.AddDropdown(Ui.L(new[] { ShortShift(Shift.Morning), ShortShift(Shift.Night) }), d.Shift == Shift.Night ? 1 : 0, Ui.AI(k => { d.Shift = k == 1 ? Shift.Night : Shift.Morning; Show(); })).Width(Domain.L.Int("layout.intercom.shift_width", 80))
                 .Tip(Domain.L.T("intercom.duty_shift_tip"));

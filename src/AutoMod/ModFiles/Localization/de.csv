@@ -1435,3 +1435,21 @@ daily.publisher,Mod Probably Automated
 daily.title,Lehrlings-Tagesbericht
 item.daily.desc,"Zusammenfassung der Lehrlingsarbeit der gestrigen Spätschicht und heutigen Frühschicht, ausgegeben von der Mod Probably Automated. Doppelklick zum Lesen."
 item.daily.name,Lehrlings-Tagesbericht
+list.search,Suchen
+list.no_match,Keine Treffer
+list.group_all,Alle
+item_group.machine,Maschinen
+item_group.storage,Lager
+item_group.water,Wasser
+item_group.power,Strom
+item_group.husbandry,Tierzucht
+item_group.farming,Anbau
+item_group.weapon,Waffen
+item_group.module,Module
+item_group.chem,Medizin
+item_group.food,Nahrung
+item_group.document,Dokumente
+item_group.material,Material
+item_group.tool,Werkzeuge
+item_group.goods,Waren
+item_group.other,Sonstiges
