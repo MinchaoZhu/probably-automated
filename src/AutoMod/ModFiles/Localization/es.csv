@@ -784,7 +784,6 @@ editor.btn_disable,Desactivar
 editor.btn_edit,Editar
 editor.btn_enable,Activar
 editor.btn_name_device,＋ Nombrar…
-editor.btn_new,+ Nuevo
 editor.btn_new_rule,＋ Nueva tarea
 editor.btn_only_refs,Solo los usados por esta tarea
 editor.btn_return,Volver
@@ -812,6 +811,7 @@ editor.label_custom_props,Propiedades personalizadas
 editor.local_in_tasks,Otros {0} filtros solo se usan en tareas individuales
 editor.menu_device_reuse,Usar este nombre para otros objetos…
 editor.menu_device_to_filter,Convertir en filtro…
+editor.menu_new_filter,Nuevo filtro...
 editor.no_actions,Aún no hay acciones
 editor.no_devices,Ninguno aún. Nombra objetos para usarlos directamente en filtros y acciones.
 editor.no_rules,No hay tareas. Pulsa el botón de arriba para añadir.
@@ -860,7 +860,6 @@ editor.tip_enable,Reanudar ejecución de esta tarea
 editor.tip_expand_global,Desplegar: muestra todos los elementos globales
 editor.tip_last_result,Último resultado de ejecución
 editor.tip_name_device,Haz doble clic en una máquina o contenedor para nombrarlo; otros objetos con la rotuladora azul
-editor.tip_new_filter,Crear un nuevo filtro aquí
 editor.tip_only_refs,Mostrar solo parámetros y filtros referenciados por las tareas de esta rutina
 editor.tip_rule_reorder,Clic para desplegar o plegar; arrastra para ordenar
 editor.tip_show_all,Mostrar todos los parámetros y filtros de esta rutina

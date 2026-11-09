@@ -784,7 +784,6 @@ editor.btn_disable,無効化
 editor.btn_edit,編集
 editor.btn_enable,有効化
 editor.btn_name_device,＋ 命名…
-editor.btn_new,+ 新規
 editor.btn_new_rule,＋ 新規タスク
 editor.btn_only_refs,このタスクで使われる項目のみ
 editor.btn_return,戻る
@@ -812,6 +811,7 @@ editor.label_custom_props,カスタムプロパティ
 editor.local_in_tasks,他に {0} 個のフィルターが単一タスクでのみ使用されています
 editor.menu_device_reuse,店内の他のアイテムにこの名前を使用…
 editor.menu_device_to_filter,フィルターに変換…
+editor.menu_new_filter,新規フィルター...
 editor.no_actions,アクションがまだありません
 editor.no_devices,なし。店内のアイテムに名前を付けると、フィルターやアクションで直接選択できます。
 editor.no_rules,タスクがありません。上のボタンをクリックして追加してください。
@@ -860,7 +860,6 @@ editor.tip_enable,このタスクの実行を再開
 editor.tip_expand_global,展開する: すべてのグローバル項目を表示
 editor.tip_last_result,前回の実行結果
 editor.tip_name_device,店内の容器や機器をダブルクリックして命名。その他のアイテムは青いラベルプリンターで命名
-editor.tip_new_filter,ここで新しいフィルターを作成
 editor.tip_only_refs,このルーチンのタスクで参照されているパラメータとフィルターのみ表示
 editor.tip_rule_reorder,クリックで開閉、ドラッグで順序変更
 editor.tip_show_all,このルーチンのすべてのパラメータとフィルターを表示

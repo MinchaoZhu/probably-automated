@@ -784,7 +784,6 @@ editor.btn_disable,Deaktivieren
 editor.btn_edit,Bearbeiten
 editor.btn_enable,Aktivieren
 editor.btn_name_device,＋ Benennen…
-editor.btn_new,+ Neu
 editor.btn_new_rule,＋ Neue Aufgabe
 editor.btn_only_refs,Nur von dieser Aufgabe verwendete
 editor.btn_return,Zurück
@@ -812,6 +811,7 @@ editor.label_custom_props,Benutzerdefinierte Eigenschaften
 editor.local_in_tasks,Weitere {0} Filter werden nur in einzelnen Aufgaben verwendet
 editor.menu_device_reuse,Diesen Namen für andere Objekte verwenden…
 editor.menu_device_to_filter,In Filter umwandeln…
+editor.menu_new_filter,Neuer Filter...
 editor.no_actions,Noch keine Aktionen
 editor.no_devices,Noch keine. Benannte Gegenstände können direkt in Filtern und Aktionen gewählt werden.
 editor.no_rules,Keine Aufgaben. Klicke oben zum Hinzufügen.
@@ -860,7 +860,6 @@ editor.tip_enable,Ausführung dieser Aufgabe fortsetzen
 editor.tip_expand_global,Ausklappen: Alle globalen Parameter und Filter anzeigen
 editor.tip_last_result,Letztes Ausführungsergebnis
 editor.tip_name_device,Behälter oder Maschinen im Laden doppelklicken zum Benennen; andere Gegenstände mit blauem Drucker
-editor.tip_new_filter,Hier einen neuen Filter erstellen
 editor.tip_only_refs,Nur von Aufgaben dieser Routine referenzierte Parameter und Filter anzeigen
 editor.tip_rule_reorder,Klicken zum Ein-/Ausklappen; Ziehen zum Ändern der Reihenfolge
 editor.tip_show_all,Alle Parameter und Filter dieser Routine anzeigen

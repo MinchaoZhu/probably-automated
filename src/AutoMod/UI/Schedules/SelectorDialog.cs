@@ -27,10 +27,11 @@ public static class SelectorDialog
 
     /// <param name="owner">所属排班 Id；为空 = 全局。</param>
     /// <param name="onSaved">保存后调用（在任务里新建时用）。</param>
-    public static void New(string owner = null, Action<SelectorDef> onSaved = null)
+    /// <param name="kind">默认的物品类型；为空 = 全部物品。</param>
+    public static void New(string owner = null, Action<SelectorDef> onSaved = null, string kind = null)
     {
         _orig = null;
-        _d = new SelectorDef { Id = Defs.NewId("s"), From = { Places.Shop }, Kind = Catalog.Any, Where = new CondGroup(), Owner = owner };
+        _d = new SelectorDef { Id = Defs.NewId("s"), From = { Places.Shop }, Kind = kind ?? Catalog.Any, Where = new CondGroup(), Owner = owner };
         _nameTouched = false;
         _more = false;
         _onSaved = onSaved;

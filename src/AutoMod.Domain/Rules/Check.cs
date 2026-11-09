@@ -82,6 +82,19 @@ public static class Check
     public static List<(Schedule s, WorkRule r)> UsedBy(RulesData d, string id) =>
         d.Schedules.SelectMany(s => s.Rules.Select(r => (s, r))).Where(x => Closure(d, RuleRefs(x.r)).Contains(id)).ToList();
 
+    /// <summary>任务的下拉框直接选的定义（执行条件和动作的对象、目标、工具），这些位置都能打开编辑。</summary>
+    public static IEnumerable<string> PickerRefs(WorkRule r)
+    {
+        foreach (var p in r.Pre)
+            if (p.RefKind == PreRef.Selector && !string.IsNullOrEmpty(p.Ref)) yield return p.Ref;
+        foreach (var a in r.Actions)
+        {
+            if (a.Verb != ActVerb.Note && !string.IsNullOrEmpty(a.List)) yield return a.List;
+            if (a.Verb is ActVerb.Move or ActVerb.Swap && !string.IsNullOrEmpty(a.To)) yield return a.To;
+            if (a.Verb == ActVerb.Use && !string.IsNullOrEmpty(a.Tool) && !Fixtures.Is(a.Tool)) yield return a.Tool;
+        }
+    }
+
     /// <summary>所有直接引用这个定义的地方（删除前检查用）：规则、挑选器、属性。</summary>
     public static List<string> Referrers(RulesData d, string id)
     {

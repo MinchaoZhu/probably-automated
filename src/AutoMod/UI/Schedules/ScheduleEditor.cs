@@ -106,9 +106,9 @@ public static class ScheduleEditor
         var globalSel = new List<string>();
 
         var mineObjs = D.Objects.Where(o => o.Owner == s.Id).ToList();
-        // 只用在一个任务里的筛选器在任务里编辑，左栏只列可复用的（被几处用到、或还没用到的）
+        // 只用在一个任务、且能从任务的下拉框打开的筛选器在任务里编辑；其余留在左栏（被几处用到、还没用到、只被别的筛选器或表达式引用的）
         var allMine = D.Selectors.Where(x => x.Owner == s.Id).ToList();
-        var mineSels = allMine.Where(x => Uses(s, x.Id) != 1).ToList();
+        var mineSels = allMine.Where(x => !(Uses(s, x.Id) == 1 && s.Rules.Any(r => Check.PickerRefs(r).Contains(x.Id)))).ToList();
         int inTasks = allMine.Count - mineSels.Count;
         b.BeginRow(6, TextAnchor.MiddleLeft).AddButton(Domain.L.T("editor.group_local"), Ui.A(() => { _localOpen = !_localOpen; Show(); })).Tip(_localOpen ? Domain.L.T("ui.collapse") : Domain.L.T("ui.expand"))
             .AddLabel(Tone.Dim($"{mineObjs.Count + allMine.Count}")).AddFlexibleSpace();
@@ -116,7 +116,7 @@ public static class ScheduleEditor
         b.End();
         if (_localOpen)
         {
-            DefRows(b, mineObjs.Where(o => Visible(o.Id)), mineSels.Where(x => Visible(x.Id)), closure, usedHere, localSel, "am_sell_");
+            DefRows(b, mineObjs.Where(o => Visible(o.Id)), mineSels.Where(x => Visible(x.Id)), closure, localSel, "am_sell_");
             if (mineObjs.Count + mineSels.Count == 0) b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("editor.empty_none"))));
             if (inTasks > 0) b.AddLabel(Tone.Small(Tone.Dim(Domain.L.N("editor.local_in_tasks", inTasks))));
         }
@@ -131,22 +131,23 @@ public static class ScheduleEditor
         GroupButtons(b, null);
         b.End();
         bool Shown(string id) => Visible(id) && (_globalAll || usedHere.Contains(id) || closure.Contains(id));
-        DefRows(b, globObjs.Where(o => Shown(o.Id)), globSels.Where(x => Shown(x.Id)), closure, usedHere, globalSel, "am_selg_");
+        DefRows(b, globObjs.Where(o => Shown(o.Id)), globSels.Where(x => Shown(x.Id)), closure, globalSel, "am_selg_");
 
-        // 设备名：这个排班用到的（店里有几个叫这个名字的东西；还没有的点开去店里起名）
-        var names = AutoMod.Domain.Rules.Card.DeviceNames(D, s);
+        // 设备名是全店的：这个流程用到的在前，其余改过名字的在后（店里有几个叫这个名字的东西；还没有的点开去店里起名）
+        var flowNames = AutoMod.Domain.Rules.Card.DeviceNames(D, s);
+        var names = flowNames.Concat(RulesUi.DeviceNames().Select(x => Places.NameOf(x.id)).Where(n => !flowNames.Contains(n))).ToList();
         b.AddSpace(6);
         b.BeginRow(6, TextAnchor.MiddleLeft).AddLabel(Domain.L.T("editor.sec_devices")).AddFlexibleSpace()
             .AddButton(Domain.L.T("editor.btn_name_device"), Ui.A(() => { Hide(); DeviceNameDialog.Pick(null, Show); })).Tip(Domain.L.T("editor.tip_name_device")).End();
         if (names.Count == 0) b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("editor.no_devices"))));
         {
-            foreach (var n in names)
+            foreach (var n in names.Where(n => Visible(Places.Ref(n))))
             {
                 string name = n;
                 var items = Session.World.Named(name).Cast<GameItem>().ToList();
                 Entry(b, RulesUi.DeviceLabel(name),
                     items.Count > 0 ? Domain.L.Join("list", items.Select(i => Session.World.KindName(i))) : Domain.L.T("editor.device_none_named"),
-                    null, closure.Contains(Places.Ref(name)), true, 0, () => DeviceMenu(s, name), null,
+                    null, closure.Contains(Places.Ref(name)), Check.UsedBy(D, Places.Ref(name)).Count, () => DeviceMenu(s, name), null,
                     items.Count > 0 ? Domain.L.N("schedule.count_devices", items.Count) : Tone.Color(Domain.L.T("editor.device_none_short"), Tone.Warn));
             }
         }
@@ -161,13 +162,13 @@ public static class ScheduleEditor
             foreach (var p in D.Properties.Where(p => Visible(p.Id)))
             {
                 var prop = p;
-                Entry(b, prop.Name, AutoMod.Domain.Rules.Text.Property(D, prop), null, closure.Contains(prop.Id), usedHere.Contains(prop.Id), Check.UsedBy(D, prop.Id).Count, () => PropertyDialog.Edit(prop), null);
+                Entry(b, prop.Name, AutoMod.Domain.Rules.Text.Property(D, prop), null, closure.Contains(prop.Id), Check.UsedBy(D, prop.Id).Count, () => PropertyDialog.Edit(prop), null);
             }
             b.BeginRow(6, TextAnchor.MiddleLeft).AddLabel(Domain.L.T("editor.label_counters")).AddFlexibleSpace().AddButton("＋", Ui.A(() => NoteDialog(null))).End();
             foreach (var n in s.Notepad)
             {
                 var note = n;
-                Entry(b, note.Name, Domain.L.T("editor.note_desc", note.Init.ToString("0.##")), null, noteRefs.Contains(note.Id), true, 0, () => NoteDialog(note), null);
+                Entry(b, note.Name, Domain.L.T("editor.note_desc", note.Init.ToString("0.##")), null, noteRefs.Contains(note.Id), 0, () => NoteDialog(note), null);
             }
         }
         b.End();
@@ -249,17 +250,42 @@ public static class ScheduleEditor
     }
 
     /// <summary>
-    /// 选一组东西（任务的对象、执行条件）：下拉框选已有的设备名、筛选器；旁边“编辑”改当前的筛选器，
-    /// “＋ 新建”在任务里直接写一个新的（属于这个流程，只用在这里时不出现在左栏）。
+    /// 任务里引用筛选器、设备名的下拉框。第一项是当前选中的，接着是新建筛选器（属于这个流程，只用在这里时不出现在左栏），
+    /// 然后是其他选项，最后一项清空。点行是选择；筛选器和设备名的行右边有“编辑”，不改变当前选择。
     /// </summary>
-    private static void ListPicker(CustomUIBuilder b, Schedule s, string current, Action<string> set, float width = 300)
+    private static void RefPicker(CustomUIBuilder b, Schedule s, List<(string id, string name)> opts, string none, string current, Action<string> set, float? width = null, string newKind = null)
     {
-        var opts = WithNone(RulesUi.ItemSelectors, Domain.L.T("editor.picker_placeholder"));
-        b.AddDropdown(Ui.L(opts.Select(o => o.name)), RulesUi.IndexOf(opts, o => o.id == current), Ui.AI(k => { set(opts[k].id); Refresh(); })).Width(width);
-        if (D.Selectors.FirstOrDefault(x => x.Id == current) is { } cur)
-            b.AddButton(Domain.L.T("editor.btn_edit"), Ui.A(() => SelectorDialog.Edit(cur))).Tip(AutoMod.Domain.Rules.Text.Selector(D, cur));
-        b.AddButton(Domain.L.T("editor.btn_new"), Ui.A(() => SelectorDialog.New(s.Id, sel => { set(sel.Id); Refresh(); }))).Tip(Domain.L.T("editor.tip_new_filter"));
+        void Choose(string v) { set(v); Refresh(); }
+        Action EditOf(string id)
+        {
+            if (D.Selectors.FirstOrDefault(x => x.Id == id) is { } x) return () => SelectorDialog.Edit(x);
+            return Places.NameOf(id) is { } name ? () => DeviceMenu(s, name) : null;
+        }
+        var sel = D.Selectors.FirstOrDefault(x => x.Id == current);
+        string device = Places.NameOf(current);
+        string shown = (current == null ? null : opts.FirstOrDefault(o => o.id == current).name) ?? sel?.Name ?? (device != null ? RulesUi.DeviceLabel(device) : none);
+
+        var rows = new List<(string name, Action run, Action edit)>
+        {
+            (shown, null, EditOf(current)),
+            // 新建不改变当前选择，先重建窗口把下拉框的显示恢复
+            (Domain.L.T("editor.menu_new_filter"), () => { Refresh(); SelectorDialog.New(s.Id, x => Choose(x.Id), newKind); }, null),
+        };
+        foreach (var o in opts.Where(o => o.id != current))
+        {
+            string id = o.id;
+            rows.Add((o.name, () => Choose(id), EditOf(id)));
+        }
+        if (shown != none) rows.Add((none, () => Choose(null), null));
+
+        b.AddDropdown(Ui.L(rows.Select(x => x.name)), 0, Ui.AI(k => rows[k].run?.Invoke()));
+        DropdownRowEdit.Attach(b.Last?.dropdown, Domain.L.T("editor.btn_edit"), rows.Select(x => x.edit).ToList());
+        if (width is { } w) b.Width(w);
     }
+
+    /// <summary>选一组东西（任务的对象、执行条件）：设备名和筛选器。</summary>
+    private static void ListPicker(CustomUIBuilder b, Schedule s, string current, Action<string> set, float width = 300) =>
+        RefPicker(b, s, RulesUi.ItemSelectors, Domain.L.T("editor.picker_placeholder"), current, set, width);
 
     private static HashSet<string> NoteRefs(WorkRule r) =>
         r.Pre.Where(p => p.RefKind == PreRef.Note).Select(p => p.Ref)
@@ -276,20 +302,20 @@ public static class ScheduleEditor
     }
 
     /// <summary>一组定义：参数在前，筛选器在后（筛选器的行可拖动，行 id = prefix + 序号）。</summary>
-    private static void DefRows(CustomUIBuilder b, IEnumerable<ObjectDef> objs, IEnumerable<SelectorDef> sels, HashSet<string> closure, HashSet<string> usedHere, List<string> selIds, string prefix)
+    private static void DefRows(CustomUIBuilder b, IEnumerable<ObjectDef> objs, IEnumerable<SelectorDef> sels, HashSet<string> closure, List<string> selIds, string prefix)
     {
         foreach (var o in objs)
         {
             var obj = o;
             string def = AutoMod.Domain.Rules.Text.Object(obj) + (string.IsNullOrEmpty(obj.Hint) ? "" : "\n" + obj.Hint);
-            Entry(b, obj.Name, def, null, closure.Contains(obj.Id), usedHere.Contains(obj.Id), Check.UsedBy(D, obj.Id).Count,
+            Entry(b, obj.Name, def, null, closure.Contains(obj.Id), Check.UsedBy(D, obj.Id).Count,
                 () => ObjectDialog.Edit(obj), null, $"{obj.Value:0.##}{obj.Unit}");
         }
         foreach (var x in sels)
         {
             var sel = x;
             var errs = Check.SelectorErrors(D, sel);
-            Entry(b, sel.Name, AutoMod.Domain.Rules.Text.Selector(D, sel), errs.FirstOrDefault(), closure.Contains(sel.Id), usedHere.Contains(sel.Id), Check.UsedBy(D, sel.Id).Count,
+            Entry(b, sel.Name, AutoMod.Domain.Rules.Text.Selector(D, sel), errs.FirstOrDefault(), closure.Contains(sel.Id), Check.UsedBy(D, sel.Id).Count,
                 () => SelectorDialog.Edit(sel), prefix + selIds.Count);
             selIds.Add(sel.Id);
         }
@@ -311,19 +337,22 @@ public static class ScheduleEditor
         }, Domain.L.T("editor.tip_device_to_filter", name));
     }
 
+    /// <summary>左栏名字按钮最多显示的字数，超出的在悬停提示里看全名。</summary>
+    private const int EntryNameMax = 20;
+
     /// <summary>左栏条目的序号（底色交替用），每次重建窗口时清零。</summary>
     private static int _entry;
 
     /// <summary>
     /// 左栏一项，两行：第一行名字按钮、右边一点说明；第二行灰色的定义（太长截断，悬停看全文）。
-    /// 当前任务用到的高亮；这个流程没用到的名字变灰；有错误的标红 !。
+    /// 当前任务用到的高亮；有错误的标红 !。
     /// </summary>
-    private static void Entry(CustomUIBuilder b, string name, string def, string err, bool highlight, bool usedHere, int refs, Action edit, string rowId, string right = null)
+    private static void Entry(CustomUIBuilder b, string name, string def, string err, bool highlight, int refs, Action edit, string rowId, string right = null)
     {
         Table.BeginItem(b, _entry++, highlight);
         b.BeginRow(6, TextAnchor.MiddleLeft);
-        string label = usedHere || highlight ? name : Tone.Dim(name);
-        b.AddButton(label, Ui.A(edit), rowId).Tip(def + (refs > 0 ? Domain.L.N("editor.entry_refs", refs) : Domain.L.T("editor.entry_no_refs")));
+        string shown = name.Length > EntryNameMax ? name.Substring(0, EntryNameMax - 1) + "…" : name;
+        b.AddButton(shown, Ui.A(edit), rowId).Tip((shown != name ? name + "\n" : "") + def + (refs > 0 ? Domain.L.N("editor.entry_refs", refs) : Domain.L.T("editor.entry_no_refs")));
         if (err != null) b.AddLabel(Tone.Color("<b>!</b>", Tone.Bad)).Tip(err);
         b.AddFlexibleSpace();
         if (right != null) b.AddLabel(Tone.Small(Tone.Dim(right)));
@@ -540,22 +569,20 @@ public static class ScheduleEditor
         refs.AddRange(RulesUi.VisibleSelectors.Select(x => (PreRef.Selector, x.Id, x.Name + (x.IsNumber ? Domain.L.T("editor.num_tag") : ""))));
         refs.AddRange(s.Notepad.Select(n => (PreRef.Note, n.Id, Domain.L.T("editor.counter_tag", n.Name))));
         refs.AddRange(Vocab.SysVars.Select(v => (PreRef.Sys, v.id, v.name)));
-        refs.Insert(0, (PreRef.Selector, null, Domain.L.T("editor.picker_placeholder")));
         bool isList = p.RefKind == PreRef.Selector && Defs.Selector(D, p.Ref) is { IsNumber: false };
         var tests = isList ? ListTests : NumTests;
         var names = isList ? ListTestNames : NumTestNames;
-        b.BeginRow(4, TextAnchor.MiddleLeft)
-            .AddDropdown(Ui.L(refs.Select(x => x.name)), RulesUi.IndexOf(refs, x => x.kind == p.RefKind && x.id == p.Ref), Ui.AI(k =>
-            {
-                p.RefKind = refs[k].kind;
-                p.Ref = refs[k].id;
-                bool list = p.RefKind == PreRef.Selector && Defs.Selector(D, p.Ref) is { IsNumber: false };
-                if (!list) p.Where = null;
-                if (list && !ListTests.Contains(p.Test)) p.Test = PreTest.NotEmpty;
-                if (!list && !NumTests.Contains(p.Test)) p.Test = ">=";
-                Refresh();
-            })).Width(240)
-            .AddDropdown(Ui.L(names), Math.Max(0, Array.IndexOf(tests, p.Test)), Ui.AI(k => { p.Test = tests[k]; Refresh(); })).Width(140);
+        b.BeginRow(4, TextAnchor.MiddleLeft);
+        RefPicker(b, s, refs.Select(x => (x.id, x.name)).ToList(), Domain.L.T("editor.picker_placeholder"), p.Ref, v =>
+        {
+            p.RefKind = refs.FirstOrDefault(x => x.id == v).kind ?? PreRef.Selector; // 刚新建的筛选器不在 refs 里
+            p.Ref = v;
+            bool list = p.RefKind == PreRef.Selector && Defs.Selector(D, p.Ref) is { IsNumber: false };
+            if (!list) p.Where = null;
+            if (list && !ListTests.Contains(p.Test)) p.Test = PreTest.NotEmpty;
+            if (!list && !NumTests.Contains(p.Test)) p.Test = ">=";
+        }, 240);
+        b.AddDropdown(Ui.L(names), Math.Max(0, Array.IndexOf(tests, p.Test)), Ui.AI(k => { p.Test = tests[k]; Refresh(); })).Width(140);
         // 比较的值接在同一行；“＋ 条件”和删除按钮在这一行最后
         void Tail(CustomUIBuilder row)
         {
@@ -646,7 +673,7 @@ public static class ScheduleEditor
                 Refresh();
             }));
         // 第一行和句子的开头一致：“使用 [工具]”“放入 [对象]”“交换 [对象]”……
-        if (a.Verb == ActVerb.Use) Pick(b, WithNone(RulesUi.ToolSources(), Domain.L.T("editor.pick_tool_placeholder")), a.Tool, v => a.Tool = v);
+        if (a.Verb == ActVerb.Use) RefPicker(b, s, RulesUi.ToolSources(), Domain.L.T("editor.pick_tool_placeholder"), a.Tool, v => a.Tool = v);
         else if (a.Verb != ActVerb.Note) ListPicker(b, s, a.List, v => a.List = v);
         b.AddButton(Domain.L.T("ui.move_up"), Ui.A(() => { if (i > 0) { r.Actions.RemoveAt(i); r.Actions.Insert(i - 1, a); Refresh(); } }))
             .AddButton("×", Ui.A(() => { r.Actions.RemoveAt(i); Refresh(); }))
@@ -657,7 +684,7 @@ public static class ScheduleEditor
             case ActVerb.Move:
                 b.BeginRow(4, TextAnchor.MiddleLeft).AddLabel(Domain.L.T("editor.action_target"))
                     .WithTooltip(Domain.L.T("editor.tip_action_target"));
-                Pick(b, WithNone(RulesUi.Destinations(), Domain.L.T("editor.pick_dest_placeholder")), a.To, v => AutoMod.Domain.Rules.Card.Set(a, "to", v));
+                RefPicker(b, s, RulesUi.Destinations(), Domain.L.T("editor.pick_dest_placeholder"), a.To, v => AutoMod.Domain.Rules.Card.Set(a, "to", v), newKind: Catalog.Container);
                 var slots = RulesUi.SlotsOf(a.To, a.ToSlot);
                 if (slots.Count > 0)
                 {

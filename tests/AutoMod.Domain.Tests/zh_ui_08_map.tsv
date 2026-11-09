@@ -50,7 +50,6 @@ editor.btn_disable	停用
 editor.btn_edit	编辑
 editor.btn_enable	启用
 editor.btn_name_device	＋ 命名…
-editor.btn_new	＋ 新建
 editor.btn_new_rule	＋ 新建任务
 editor.btn_only_refs	仅显示此任务引用的项
 editor.btn_return	返回
@@ -119,7 +118,6 @@ editor.tip_enable	恢复执行这个任务
 editor.tip_expand_global	展开：显示全部全局参数和筛选器（所有流程可用）
 editor.tip_last_result	上次执行结果
 editor.tip_name_device	在店内双击要命名的容器或机器；其他物品可用蓝色标签打印机命名
-editor.tip_new_filter	在此新建筛选器
 editor.tip_only_refs	左栏只列出展开的任务用到的参数和筛选器
 editor.tip_rule_reorder	点击展开或收起；拖动可调整顺序
 editor.tip_show_all	显示本流程的全部参数和筛选器

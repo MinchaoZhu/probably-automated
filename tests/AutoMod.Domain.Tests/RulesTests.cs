@@ -455,6 +455,12 @@ internal static class RulesTests
             var ps = Card.Parameters(d, sch);
             Check(ps.Count == 7 && ps.All(p => p.Unit != null && p.Hint != null), $"参数 = 规则用到的 7 个常量，都带单位和说明（{ps.Count}）");
             Check(Card.DeviceNames(d, sch).OrderBy(x => x).SequenceEqual(new[] { "精英笼", "育种笼", "育肥笼", "肉类储藏", "工具箱" }.OrderBy(x => x)), "设备名 = 任务用到的 5 个");
+            var picked = new WorkRule
+            {
+                Pre = { new PreCond { RefKind = PreRef.Selector, Ref = "s1", Test = PreTest.NotEmpty }, new PreCond { RefKind = PreRef.Note, Ref = "m1", Test = ">=", Right = Expr.Ref(TermKind.Stat, "s9") } },
+                Actions = { new ActionDef { Verb = ActVerb.Move, List = "s2", To = "s3" }, new ActionDef { Verb = ActVerb.Press, List = "s4", To = "stale" }, new ActionDef { Verb = ActVerb.Use, Tool = "s5", List = "s6" } },
+            };
+            Check(AutoMod.Domain.Rules.Check.PickerRefs(picked).SequenceEqual(new[] { "s1", "s2", "s3", "s4", "s6", "s5" }), "下拉框直接选的定义：不含表达式里的、动作没有显示的参数");
             var ready = sch.Rules.First(r => r.Name == "育肥笼出栏");
             string Line(WorkRule r) => string.Join(" / ", Card.Sentence(d, sch, r).Select(l => string.Concat(l.Select(x => x.Text))));
             Check(Line(ready) == "当 待出栏鼠 不为空 时： / 用 刀具 作用于 待出栏鼠（每件 2 次） / 将 待出栏鼠.数量 累加到 本班宰杀数", Line(ready));

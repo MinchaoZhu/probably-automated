@@ -784,7 +784,6 @@ editor.btn_disable,Wyłącz
 editor.btn_edit,Edytuj
 editor.btn_enable,Włącz
 editor.btn_name_device,＋ Nazwij…
-editor.btn_new,+ Nowy
 editor.btn_new_rule,＋ Nowe zadanie
 editor.btn_only_refs,Tylko używane przez to zadanie
 editor.btn_return,Wstecz
@@ -812,6 +811,7 @@ editor.label_custom_props,Własne właściwości
 editor.local_in_tasks,Inne {0} filtry są używane tylko w pojedynczych zadaniach
 editor.menu_device_reuse,Użyj tej nazwy dla innych przedmiotów…
 editor.menu_device_to_filter,Przekształć w filtr…
+editor.menu_new_filter,Nowy filtr...
 editor.no_actions,Brak akcji
 editor.no_devices,"Brak. Nazwij przedmioty, aby wybierać je bezpośrednio w selektorach i akcjach."
 editor.no_rules,"Brak zadań. Kliknij przycisk powyżej, aby dodać."
@@ -860,7 +860,6 @@ editor.tip_enable,Wznów wykonywanie tego zadania
 editor.tip_expand_global,Rozwiń: pokaż wszystkie globalne parametry i filtry
 editor.tip_last_result,Ostatni wynik wykonania
 editor.tip_name_device,"Kliknij dwukrotnie pojemnik lub maszynę w sklepie, aby nazwać; inne przedmioty niebieską drukarką"
-editor.tip_new_filter,Utwórz tutaj nowy filtr
 editor.tip_only_refs,Pokaż tylko parametry i filtry używane przez zadania tej procedury
 editor.tip_rule_reorder,"Kliknij, aby rozwinąć lub zwinąć; przeciągnij, aby zmienić kolejność"
 editor.tip_show_all,Pokaż wszystkie parametry i filtry tej procedury

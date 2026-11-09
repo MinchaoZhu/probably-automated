@@ -784,7 +784,6 @@ editor.btn_disable,Disable
 editor.btn_edit,Edit
 editor.btn_enable,Enable
 editor.btn_name_device,＋ Name...
-editor.btn_new,+ New
 editor.btn_new_rule,＋ New Task
 editor.btn_only_refs,Referenced only
 editor.btn_return,Back
@@ -812,6 +811,7 @@ editor.label_custom_props,Custom Properties
 editor.local_in_tasks,Another {0} filters used only in single tasks; edit within those tasks
 editor.menu_device_reuse,Use this name for other shop items...
 editor.menu_device_to_filter,Convert to filter...
+editor.menu_new_filter,New filter...
 editor.no_actions,No actions yet
 editor.no_devices,None yet. Name shop items to select them directly in filters and actions.
 editor.no_rules,No tasks. Click button above to add.
@@ -860,7 +860,6 @@ editor.tip_enable,Resume running this task
 editor.tip_expand_global,Expand: show all global parameters and filters (available to all routines)
 editor.tip_last_result,Last execution result
 editor.tip_name_device,Double-click a container or machine in shop to name it; other items can be named with blue labeler
-editor.tip_new_filter,Create a new filter here
 editor.tip_only_refs,Left column lists only parameters and filters used by expanded tasks
 editor.tip_rule_reorder,Click to expand or collapse; drag to reorder
 editor.tip_show_all,Show all parameters and filters in this routine

@@ -784,7 +784,6 @@ editor.btn_disable,Отключить
 editor.btn_edit,Изменить
 editor.btn_enable,Включить
 editor.btn_name_device,＋ Назвать…
-editor.btn_new,+ Создать
 editor.btn_new_rule,＋ Новая задача
 editor.btn_only_refs,Только для этой задачи
 editor.btn_return,Назад
@@ -812,6 +811,7 @@ editor.label_custom_props,Пользовательские свойства
 editor.local_in_tasks,Ещё {0} фильтров используются только в отдельных задачах
 editor.menu_device_reuse,Присвоить это имя другим предметам…
 editor.menu_device_to_filter,Преобразовать в фильтр…
+editor.menu_new_filter,Новый фильтр...
 editor.no_actions,Действий пока нет
 editor.no_devices,"Пока нет. Назовите предметы в магазине, чтобы выбирать их в фильтрах и действиях."
 editor.no_rules,"Задач нет. Нажмите кнопку выше, чтобы добавить."
@@ -860,7 +860,6 @@ editor.tip_enable,Возобновить выполнение задачи
 editor.tip_expand_global,Развернуть: показать все глобальные параметры и фильтры
 editor.tip_last_result,Результат прошлого выполнения
 editor.tip_name_device,"Двойной клик на контейнер или станок в магазине, чтобы назвать; прочее — синим принтером"
-editor.tip_new_filter,Создать здесь новый фильтр
 editor.tip_only_refs,В левой колонке только параметры и фильтры развёрнутых задач
 editor.tip_rule_reorder,"Нажмите, чтобы развернуть/свернуть; перетащите для изменения порядка"
 editor.tip_show_all,Показать все параметры и фильтры этого процесса
