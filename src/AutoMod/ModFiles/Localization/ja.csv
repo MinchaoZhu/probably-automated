@@ -131,6 +131,8 @@ kind.feces_medium,動物のフン
 kind.feces_small,動物のフン（小）
 kind.fillerweed,フィラーウィード
 kind.fillerweed_seed,フィラーウィードの種
+kind.hydroreed_seed,ハイドロリードの種
+kind.plant_dna_disk,DNAデータディスク
 kind.fish_scrap,魚の内臓
 kind.hydroponic,水耕システム
 kind.industrial_fish_feed,産業用の魚のエサ
@@ -199,6 +201,9 @@ slot.output,産出
 slot.power,電源
 slot.recipe,レシピ
 slot.seed,種子
+slot.input_disk,特性ディスク
+slot.output_disk,空のディスク
+slot.eject,出力
 slot.storage,保管
 slot.tank,水槽
 slot.trap,トラップ
@@ -417,6 +422,8 @@ sim.desc.rat,{0}ネズミ #{1} ({2}g、{3}日{4}{5})
 sim.duration,期間
 sim.empty,空
 sim.fail.dest_full,{0}は満杯
+sim.fail.locked,{0}は機械で処理中のため取り出せません
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,変化なし
 sim.fail.simulated,シミュレーションで処理済み（実際の影響は不明）
 sim.group_stats,{0} / {1} AP · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1日
 sim.run_1_shift,1シフト
 sim.run_3_days,3日
 sim.run_7_days,7日
+sim.run_14_days,14日
+sim.run_28_days,28日
 sim.schedule,ルーチン
 sim.search_placeholder,名前またはID
 sim.sex.female,メス
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,名前付きの数値（例: 「バッテリー交換し�
 handbook.p3.text_range,店全体、特定の機器名、または別のフィルターを指定でき、複数追加も可能です。「中身」は内部のアイテムを指し、「自身」は容器や機器自体を指します（例: [水耕栽培機] 自身に条件「空きスロットあり」を指定すると空き機器を抽出）。
 handbook.p3.text_scope,フィルターは標準で店全体（販売用商品を除く所有アイテム）を検索します。特定の保管エリア、機器、コンテナを対象にするには、青いラベラーで名前を付けるか（例: 「水培倉庫」）、ルーチンエディターの「＋ 命名…」を使用します。複数のオブジェクトに同じ名前を付けられます。
 handbook.p3.tip_name,フィルターを新規作成しなくても、カスタム名（[名前]）をフィルター対象として直接選択できます！
+handbook.p3.tip_tags,ゲームタグの名前はゲームのものです。アイテムにないタグは0として扱われ、ある特性を持たない種はその特性が0レベルです。
+handbook.pdna.banner,例：植物の特性
+handbook.pdna.title_disk,遺伝子ディスク作成：
+handbook.pdna.text_disk,浄化用と低栄養価用の抽出機が、それぞれハイドロリードの種とフィラーウィードの種から特性を取り出し、書き込んだディスクを【遺伝子バンク】へ入れます。在庫が足りれば停止します。精密取り出しモジュールを書き込み済みのディスクに使うと、その特性に設定されます。
+handbook.pdna.title_edit,遺伝子編集：
+handbook.pdna.text_edit,【書き込み機】の対象スロットの種に浄化を書き込み、目標レベルか熱の上限で停止します。ある特性を持たない種はその特性が0レベルです。
+handbook.pdna.title_breed,遺伝子育種：
+handbook.pdna.text_breed,熱は育種でしか下がりません。書き込んだ種を【育種用水耕機】で育て、収穫した子孫は熱0で書き込み機に戻ります。低栄養価はレベルごとに複雑さを2下げ、浄化のレベルごとの+3を打ち消します。
+handbook.pdna.tip,成功率 = 95 − 5 ×（複雑さ + 熱）+ 機械の品質ボーナス、最低5%。書き込みや取り出しのたびに、成否にかかわらず熱が上がります。
 handbook.p3.title_filter,フィルター:
 handbook.p3.title_param,パラメーター:
 handbook.p3.title_range,対象範囲:
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,高度なろ過器
 names.kind.water_jug,水差し
 names.kind.wire_cutter,ワイヤーカッター
 names.prop.has,{0} (有無)
+names.prop.has_yes,{0}あり
+names.prop.has_no,{0}なし
 names.prop.liq,{0} 含有 (ml)
 names.prop.mark,マーク [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,空き水耕栽培ユニット
 example.hydro.sel.seed,種1個
 example.hydro.sel.tablets,栄養錠剤
 example.hydro.store,水培倉庫
+example.dna.device.extract_pur,浄化抽出機
+example.dna.device.extract_np,低栄養価抽出機
+example.dna.device.writer,書き込み機
+example.dna.device.hydro,育種用水耕機
+example.dna.store,遺伝子バンク
+example.dna.param.target,目標レベル
+example.dna.param.target.hint,浄化がこのレベルに達したら書き込みを停止
+example.dna.param.heat,熱の上限
+example.dna.param.heat.hint,種の熱がこの値に達したら書き込みを停止
+example.dna.prop.eff,ハイドロリードの実効複雑さ
+example.dna.sel.output,{0}の出力
+example.dna.sel.target_slot,{0}の対象スロット
+example.dna.sel.blank_slot,{0}の空のディスクスロット
+example.dna.sel.disk_slot,{0}の特性ディスクスロット
+example.dna.sel.seed_slot,{0}の種スロット
+example.dna.sel.water_slot,{0}の水スロット
+example.dna.sel.stock,在庫の{0}ディスク
+example.dna.sel.raw,{0}を持つ{1}
+example.dna.sel.blank,空のディスク1枚
+example.dna.sel.disk,{0}ディスク1枚
+example.dna.sel.writable,書き込み可能な種
+example.dna.sel.child,収穫した子孫
+example.dna.sel.first,最初の対象
+example.dna.sel.can_write,{0}を書き込める種
+example.dna.sel.breed,育種待ちの種
+example.dna.rule.collect,{0}のディスクを回収
+example.dna.rule.load_seed,{0}に原料を入れる
+example.dna.rule.load_blank,{0}に空のディスクを入れる
+example.dna.rule.write,{0}を書き込む
+example.dna.rule.child,子孫を入れる
+example.dna.rule.harvest,収穫を保管
+example.dna.rule.first,最初の対象を入れる
+example.dna.rule.breed,育種へ送る
+example.dna.rule.water,水ボトルを入れる
 example.ranch.rule.auto_blend,自動混合を有効化
 example.ranch.rule.butcher_dead,死んだネズミを処理
 example.ranch.rule.cull,ネズミを出荷
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,整理整頓
 example.spec.tidy.note,散乱した薬品や食料を【薬品倉庫】【食品倉庫】に分別収納（複数の保管場所に同名を設定可能）
 example.spec.water.name,水販売
 example.spec.water.note,ボトルプリント、給水、基本水に浄水、ボトリングして陳列、売上金回収
+example.spec.dna_disk.name,遺伝子ディスク作成
+example.spec.dna_disk.note,【浄化抽出機】【低栄養価抽出機】がハイドロリードの種とフィラーウィードの種から特性を抽出し、書き込んだディスクを【遺伝子バンク】へ入れます。在庫が足りれば停止します。各抽出機には対応する特性を設定した精密取り出しモジュールが必要です
+example.spec.dna_edit.name,遺伝子編集
+example.spec.dna_edit.note,【書き込み機】の対象スロットの種に浄化を書き込み、目標レベルか熱の上限に達したら停止します
+example.spec.dna_breed.name,遺伝子育種
+example.spec.dna_breed.note,【書き込み機】で浄化と低栄養価を書き込み、熱が高くなった種を【育種用水耕機】で育て、収穫した子孫を書き込み機に戻して目標レベルまで続けます。ディスクは「遺伝子ディスク作成」で用意します
 example.tidy.rule.food,食品を整理
 example.tidy.rule.medical,薬品を整理
 example.tidy.sel.loose_food,未整理の食品
@@ -1398,6 +1458,15 @@ rule.when_arrow,{0}の時 → {1}
 cond.equal,等しい
 cond.not_equal,等しくない
 cond.text_input,テキスト
+tagname.genetic_heat_int,熱
+tagname.dna_disk_uses_int,残り使用回数
+tagname.qualifier.current,現在の{0}
+tagname.qualifier.base,基本{0}
+tagname.qualifier.default,デフォルトの{0}
+tagname.qualifier.max,最大{0}
+tagname.qualifier.min,最小{0}
+cond.text_empty,（空）
+cond.text_other,その他…
 layout.btn_more_width,60
 layout.editor.when_dropdown_width,180
 layout.new_schedule.btn_width,160

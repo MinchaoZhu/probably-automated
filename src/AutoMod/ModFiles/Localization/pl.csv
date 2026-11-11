@@ -131,6 +131,8 @@ kind.feces_medium,Odchody zwierzęce
 kind.feces_small,Odchody zwierzęce (małe)
 kind.fillerweed,Zapchwast
 kind.fillerweed_seed,Nasiono zapchwasta
+kind.hydroreed_seed,Nasiono hydrotrzciny
+kind.plant_dna_disk,Dysk danych DNA
 kind.fish_scrap,Odpady rybne
 kind.hydroponic,System hydroponiczny
 kind.industrial_fish_feed,Przemysłowa karma dla ryb
@@ -199,6 +201,9 @@ slot.output,Wyjście
 slot.power,Zasilanie
 slot.recipe,Przepis
 slot.seed,Nasiono
+slot.input_disk,Dysk z cechą
+slot.output_disk,Czysty dysk
+slot.eject,Wyjście
 slot.storage,Magazyn
 slot.tank,Zbiornik
 slot.trap,Pułapka
@@ -417,6 +422,8 @@ sim.desc.rat,"Szczur {0} #{1} ({2} g, {3} dni{4}{5})"
 sim.duration,Czas
 sim.empty,Pusty
 sim.fail.dest_full,{0} jest pełny
+sim.fail.locked,{0} jest właśnie przetwarzany w maszynie i nie można go wyjąć
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,Bez zmian
 sim.fail.simulated,Przetworzono w podglądzie (efekt nieznany)
 sim.group_stats,{0} / {1} AP · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 dzień
 sim.run_1_shift,1 zmiana
 sim.run_3_days,3 dni
 sim.run_7_days,7 dni
+sim.run_14_days,14 dni
+sim.run_28_days,28 dni
 sim.schedule,Procedura
 sim.search_placeholder,Nazwa lub ID
 sim.sex.female,Samica
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,"Nazwane wartości liczbowe, np. ""Próg wymiany baterii 
 handbook.p3.text_range,"Cały sklep, nazwa urządzenia lub inny filtr; można dodać wiele. ""Zawartość"" oznacza przedmioty wewnątrz; ""Samo"" oznacza sam pojemnik lub maszynę (np. [Hydroponika] samo z warunkiem ""ma wolne miejsce"" wybiera wolną hydroponikę)."
 handbook.p3.text_scope,"Filtry domyślnie przeszukują cały sklep (twoje przedmioty, z wyłączeniem towarów na sprzedaż). Aby wskazać konkretne magazyny, maszyny lub pojemniki, nazwij je za pomocą niebieskiej etykieciarki (np. ""Magazyn hydro"") lub przycisku ""＋ Nazwij…"" w edytorze procedury. Wiele obiektów może dzielić tę samą nazwę."
 handbook.p3.tip_name,Możesz bezpośrednio wybrać własną nazwę ([Nazwa]) jako cel filtra bez tworzenia osobnego filtra!
+handbook.p3.tip_tags,"Tagi gry mają nazwy z gry; brakujący tag liczy się jako 0, więc nasiono bez cechy ma ją na poziomie 0."
+handbook.pdna.banner,Przykłady: cechy roślin
+handbook.pdna.title_disk,Dyski genowe:
+handbook.pdna.text_disk,"Dwa ekstraktory wyodrębniają Oczyszczające z nasion hydrotrzciny i Słabą odżywczość z nasion zapchwasta; zapisane dyski trafiają do [Bank genów], a przy wystarczającym zapasie wyodrębnianie ustaje. Moduł precyzyjnego wyodrębniania użyty na zapisanym dysku ustawia się na jego cechę."
+handbook.pdna.title_edit,Edycja genów:
+handbook.pdna.text_edit,Zapisuje Oczyszczające w nasieniu w slocie docelowym [Zapisywacz cech] do poziomu docelowego lub limitu obciążenia. Nasiono bez cechy ma ją na poziomie 0.
+handbook.pdna.title_breed,Hodowla genów:
+handbook.pdna.text_breed,"Obciążenie spada tylko przez hodowlę: po zapisie nasiono trafia do [Hydroponika hodowlana], a zebrane potomstwo wraca do zapisywacza z obciążeniem 0. Każdy poziom Słabej odżywczości obniża złożoność o 2, równoważąc +3 za poziom Oczyszczającego."
+handbook.pdna.tip,"Szansa na powodzenie = 95 − 5 × (złożoność + obciążenie) + premia jakości maszyny, co najmniej 5%. Każdy zapis lub wyodrębnienie zwiększa obciążenie, niezależnie od wyniku."
 handbook.p3.title_filter,Filtry:
 handbook.p3.title_param,Parametry:
 handbook.p3.title_range,Zakres:
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,Zaawansowany filtr do wody
 names.kind.water_jug,Dzbanek wody
 names.kind.wire_cutter,Szczypce do drutu
 names.prop.has,{0} (Obecność)
+names.prop.has_yes,{0}: jest
+names.prop.has_no,{0}: brak
 names.prop.liq,Zawiera {0} (ml)
 names.prop.mark,Oznaczenie [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,Wolne jednostki hydroponiczne
 example.hydro.sel.seed,Jedno nasiono
 example.hydro.sel.tablets,Tabletki odżywcze
 example.hydro.store,Magazyn hydroponiki
+example.dna.device.extract_pur,Ekstraktor Oczyszczające
+example.dna.device.extract_np,Ekstraktor Słaba odżywczość
+example.dna.device.writer,Zapisywacz cech
+example.dna.device.hydro,Hydroponika hodowlana
+example.dna.store,Bank genów
+example.dna.param.target,Poziom docelowy
+example.dna.param.target.hint,"Zapis ustaje, gdy Oczyszczające osiągnie ten poziom"
+example.dna.param.heat,Limit obciążenia
+example.dna.param.heat.hint,"Zapis ustaje, gdy obciążenie nasiona osiągnie tę wartość"
+example.dna.prop.eff,Efektywna złożoność hydrotrzciny
+example.dna.sel.output,{0}: wyjście
+example.dna.sel.target_slot,{0}: slot docelowy
+example.dna.sel.blank_slot,{0}: slot czystego dysku
+example.dna.sel.disk_slot,{0}: slot dysku z cechą
+example.dna.sel.seed_slot,{0}: slot nasiona
+example.dna.sel.water_slot,{0}: slot wody
+example.dna.sel.stock,Dyski „{0}” w zapasie
+example.dna.sel.raw,{1} z cechą {0}
+example.dna.sel.blank,Jeden czysty dysk
+example.dna.sel.disk,Jeden dysk „{0}”
+example.dna.sel.writable,Nasiono do zapisu
+example.dna.sel.child,Zebrane potomstwo
+example.dna.sel.first,Cel startowy
+example.dna.sel.can_write,Nasiono gotowe na {0}
+example.dna.sel.breed,Nasiono do hodowli
+example.dna.rule.collect,Odbierz dyski z {0}
+example.dna.rule.load_seed,Załaduj {0}
+example.dna.rule.load_blank,Czysty dysk do {0}
+example.dna.rule.write,Zapisz {0}
+example.dna.rule.child,Załaduj potomstwo
+example.dna.rule.harvest,Odłóż plon
+example.dna.rule.first,Załaduj cel startowy
+example.dna.rule.breed,Wyślij do hodowli
+example.dna.rule.water,Wstaw butelkę wody
 example.ranch.rule.auto_blend,Włącz automatyczne mieszanie
 example.ranch.rule.butcher_dead,Opraw martwe szczury
 example.ranch.rule.cull,Ubij szczury
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,Porządkowanie
 example.spec.tidy.note,Sortuj leki i żywność do [Magazyn leków] i [Magazyn żywności] (wiele miejsc może mieć tę samą nazwę)
 example.spec.water.name,Sprzedaż wody
 example.spec.water.note,"Drukuj butelki, nalewaj wodę, oczyszczaj do wody bazowej, butelkuj i wykładaj na półki, zbieraj gotówkę"
+example.spec.dna_disk.name,Dyski genowe
+example.spec.dna_disk.note,"[Ekstraktor Oczyszczające] i [Ekstraktor Słaba odżywczość] wyodrębniają cechy z nasion hydrotrzciny i zapchwasta; zapisane dyski trafiają do [Bank genów], a przy wystarczającym zapasie wyodrębnianie ustaje. Każdy ekstraktor potrzebuje modułu precyzyjnego wyodrębniania ustawionego na swoją cechę"
+example.spec.dna_edit.name,Edycja genów
+example.spec.dna_edit.note,"Zapisuje Oczyszczające w nasieniu w slocie docelowym [Zapisywacz cech], aż do poziomu docelowego lub limitu obciążenia"
+example.spec.dna_breed.name,Hodowla genów
+example.spec.dna_breed.note,"[Zapisywacz cech] zapisuje Oczyszczające i Słabą odżywczość; przy zbyt wysokim obciążeniu nasiono trafia do [Hydroponika hodowlana], a zebrane potomstwo wraca do zapisywacza, aż do poziomu docelowego. Dyski przygotowuje Dyski genowe"
 example.tidy.rule.food,Uporządkuj żywność
 example.tidy.rule.medical,Uporządkuj leki
 example.tidy.sel.loose_food,Żywność do uporządkowania
@@ -1398,6 +1458,15 @@ rule.when_arrow,Gdy {0} → {1}
 cond.equal,Równe
 cond.not_equal,Różne
 cond.text_input,Tekst
+tagname.genetic_heat_int,Obciążenie
+tagname.dna_disk_uses_int,Pozostałe użycia
+tagname.qualifier.current,{0} (bieżąca wartość)
+tagname.qualifier.base,{0} (wartość bazowa)
+tagname.qualifier.default,{0} (domyślnie)
+tagname.qualifier.max,{0} (maks.)
+tagname.qualifier.min,{0} (min.)
+cond.text_empty,(puste)
+cond.text_other,Inne…
 layout.btn_more_width,84
 layout.editor.when_dropdown_width,190
 layout.new_schedule.btn_width,220

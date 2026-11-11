@@ -4,7 +4,7 @@ namespace AutoMod.Adapter;
 
 /// <summary>
 /// 属性名用游戏自己的文字（跟着游戏语言变）：游戏提示里用的本地化条目，只取纯标签（不是带占位符的句子）；
-/// 枪的标签用游戏的 GunHelper.IDToString。取不到返回 null（用目录里的中文名）。
+/// 游戏标签的名字见 TagNames（Label 给它读条目）。取不到返回 null（用目录里的中文名）。
 /// </summary>
 public static class GameName
 {
@@ -48,14 +48,19 @@ public static class GameName
         return Cache[key] = t;
     }
 
-    /// <summary>枪的标签名（GunHelper.IDToString 认识的才有）。</summary>
-    public static string Gun(string tagKey)
+    /// <summary>
+    /// 本地化条目的文字当标签名（TagNames 用）：只收纯标签，不收说明句和带占位符的句子；末尾的冒号去掉（“剩余使用次数：”）。
+    /// </summary>
+    public static string Label(string key)
     {
-        try
-        {
-            var n = GunHelper.IDToString(tagKey);
-            return string.IsNullOrWhiteSpace(n) || n == tagKey ? null : n;
-        }
-        catch { return null; }
+        if (!LocBridge.TryGetGameString("Mechanic", key, out var raw)) return null;
+        string t = raw.Trim();
+        if (t.Length == 0 || t.Length > 40 || t.Contains("{") || t.Contains("\n")) return null;
+        if (t.EndsWith(".") || t.EndsWith("。") || t.EndsWith("!") || t.EndsWith("！") || t.EndsWith("?") || t.EndsWith("？")) return null;
+        t = t.TrimEnd(':', '：').Trim();
+        return t.Length == 0 ? null : t;
     }
+
+    /// <summary>本地化条目的原文（带占位符的也原样给）。</summary>
+    public static string Format(string key) => LocBridge.TryGetGameString("Mechanic", key, out var raw) ? raw : null;
 }

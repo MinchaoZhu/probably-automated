@@ -131,6 +131,8 @@ kind.feces_medium,Помёт животных
 kind.feces_small,Экскременты животных (маленькая кучка)
 kind.fillerweed,Набей-трава
 kind.fillerweed_seed,Семена набей-травы
+kind.hydroreed_seed,Семена гидротростника
+kind.plant_dna_disk,Диск для записи генетических данных
 kind.fish_scrap,Рыбные отходы
 kind.hydroponic,Гидропонная система
 kind.industrial_fish_feed,Корм промышленного производства для рыб
@@ -199,6 +201,9 @@ slot.output,Выход
 slot.power,Питание
 slot.recipe,Рецепт
 slot.seed,Семена
+slot.input_disk,Диск с записанной чертой
+slot.output_disk,Диск для записи
+slot.eject,Вывод данных
 slot.storage,Хранилище
 slot.tank,Бак
 slot.trap,Ловушка
@@ -417,6 +422,8 @@ sim.desc.rat,"{0} крыса #{1} ({2} г, {3} дн.{4}{5})"
 sim.duration,Длит.
 sim.empty,Пусто
 sim.fail.dest_full,{0} заполнено
+sim.fail.locked,{0} обрабатывается в машине, его нельзя забрать
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,Без изменений
 sim.fail.simulated,Уже обработано в предпросмотре (эффект неизвестен)
 sim.group_stats,{0} / {1} AP · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 день
 sim.run_1_shift,1 смена
 sim.run_3_days,3 дня
 sim.run_7_days,7 дней
+sim.run_14_days,14 дней
+sim.run_28_days,28 дней
 sim.schedule,Процесс
 sim.search_placeholder,Имя или ID
 sim.sex.female,Самка
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,"Именованные числовые значения
 handbook.p3.text_range,"Весь магазин, имя устройства или другой фильтр; можно добавить несколько. «Содержимое» указывает на предметы внутри; «Само» — на сам контейнер или машину (например, [Гидропоника] сама с условием «есть слот» выбирает свободную гидропонику)."
 handbook.p3.text_scope,"По умолчанию фильтры ищут по всему магазину (ваши предметы, кроме товаров на продажу). Чтобы указать конкретные склады, машины или контейнеры, назовите их с помощью синего маркиратора (например, «Склад гидропоники») или через «＋ Назвать…» в редакторе процесса. Несколько объектов могут иметь одинаковое имя."
 handbook.p3.tip_name,Пользовательские имена ([Имя]) можно сразу выбирать как цель фильтра без создания отдельного фильтра!
+handbook.p3.tip_tags,"Теги игры называются так же, как в игре; отсутствующий тег считается равным 0, например у семени без черты она на уровне 0."
+handbook.pdna.banner,Примеры: черты растений
+handbook.pdna.title_disk,Генные диски:
+handbook.pdna.text_disk,"Два экстрактора извлекают очищение из семян гидротростника и низкую питательность из семян набей-травы; записанные диски идут в [Генный банк], при достаточном запасе извлечение прекращается. Модуль точного извлечения, применённый к записанному диску, настраивается на его черту."
+handbook.pdna.title_edit,Генная правка:
+handbook.pdna.text_edit,Записывает очищение в семя в целевом слоте [Редактор черт] до целевого уровня или предела перегрузки. Семя без черты считается имеющим её на уровне 0.
+handbook.pdna.title_breed,Генная селекция:
+handbook.pdna.text_breed,"Перегрузка сбрасывается только при разведении: после записи семя идёт в [Селекционная гидропоника], а собранное потомство возвращается в редактор с перегрузкой 0. Каждый уровень низкой питательности снижает сложность на 2, компенсируя +3 за уровень очищения."
+handbook.pdna.tip,"Шанс успеха = 95 − 5 × (сложность + перегрузка) + бонус качества машины, не меньше 5%. Каждая запись или извлечение повышает перегрузку, независимо от результата."
 handbook.p3.title_filter,Фильтры:
 handbook.p3.title_param,Параметры:
 handbook.p3.title_range,Область:
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,Продвинутый фильтр для воды
 names.kind.water_jug,Канистра воды
 names.kind.wire_cutter,Кусачки для проводов
 names.prop.has,{0} (Наличие)
+names.prop.has_yes,{0}: есть
+names.prop.has_no,{0}: нет
 names.prop.liq,Содержит {0} (мл)
 names.prop.mark,Метка [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,Свободные гидропонные модули
 example.hydro.sel.seed,Одно семя
 example.hydro.sel.tablets,Питательные таблетки
 example.hydro.store,Склад гидропоники
+example.dna.device.extract_pur,Экстрактор (очищение)
+example.dna.device.extract_np,Экстрактор (низкая питательность)
+example.dna.device.writer,Редактор черт
+example.dna.device.hydro,Селекционная гидропоника
+example.dna.store,Генный банк
+example.dna.param.target,Целевой уровень
+example.dna.param.target.hint,"Запись прекращается, когда очищение достигает этого уровня"
+example.dna.param.heat,Предел перегрузки
+example.dna.param.heat.hint,"Запись прекращается, когда перегрузка семени достигает этого значения"
+example.dna.prop.eff,Эффективная сложность гидротростника
+example.dna.sel.output,{0}: вывод
+example.dna.sel.target_slot,{0}: целевой слот
+example.dna.sel.blank_slot,{0}: слот диска для записи
+example.dna.sel.disk_slot,{0}: слот диска с чертой
+example.dna.sel.seed_slot,{0}: слот семени
+example.dna.sel.water_slot,{0}: слот воды
+example.dna.sel.stock,Диски «{0}» в запасе
+example.dna.sel.raw,{1} с чертой «{0}»
+example.dna.sel.blank,Один диск для записи
+example.dna.sel.disk,Один диск «{0}»
+example.dna.sel.writable,Семя для записи
+example.dna.sel.child,Собранное потомство
+example.dna.sel.first,Начальная цель
+example.dna.sel.can_write,Семя под «{0}»
+example.dna.sel.breed,Семя для селекции
+example.dna.rule.collect,Забрать диски: {0}
+example.dna.rule.load_seed,Загрузить {0}
+example.dna.rule.load_blank,Диск для записи в {0}
+example.dna.rule.write,Записать «{0}»
+example.dna.rule.child,Загрузить потомство
+example.dna.rule.harvest,Убрать урожай
+example.dna.rule.first,Загрузить начальную цель
+example.dna.rule.breed,Отправить на селекцию
+example.dna.rule.water,Поставить бутылку воды
 example.ranch.rule.auto_blend,Включить автосмешивание
 example.ranch.rule.butcher_dead,Разделать мёртвых крыс
 example.ranch.rule.cull,Забить крыс
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,Уборка
 example.spec.tidy.note,Раскладывать медикаменты и еду по складам [Склад лекарств] и [Склад еды] (несколько полок могут иметь общее имя)
 example.spec.water.name,Продажа воды
 example.spec.water.note,"Печатать бутылки, набирать воду, очищать до базовой, разливать и выставлять на продажу, забирать выручку"
+example.spec.dna_disk.name,Генные диски
+example.spec.dna_disk.note,"[Экстрактор (очищение)] и [Экстрактор (низкая питательность)] извлекают черты из семян гидротростника и набей-травы; записанные диски идут в [Генный банк], при достаточном запасе извлечение прекращается. Каждому экстрактору нужен модуль точного извлечения, настроенный на его черту"
+example.spec.dna_edit.name,Генная правка
+example.spec.dna_edit.note,"Записывает очищение в семя в целевом слоте [Редактор черт], пока не достигнут целевой уровень или предел перегрузки"
+example.spec.dna_breed.name,Генная селекция
+example.spec.dna_breed.note,"[Редактор черт] записывает очищение и низкую питательность; при высокой перегрузке семя уходит в [Селекционная гидропоника], а собранное потомство возвращается в редактор, пока не достигнут целевой уровень. Диски готовит «Генные диски»"
 example.tidy.rule.food,Разложить еду
 example.tidy.rule.medical,Разложить медикаменты
 example.tidy.sel.loose_food,Неразложенная еда
@@ -1398,6 +1458,15 @@ rule.when_arrow,Когда {0} → {1}
 cond.equal,Равно
 cond.not_equal,Не равно
 cond.text_input,Текст
+tagname.genetic_heat_int,Перегрузка
+tagname.dna_disk_uses_int,Осталось использований
+tagname.qualifier.current,{0} (текущее значение)
+tagname.qualifier.base,{0} (базовое значение)
+tagname.qualifier.default,{0} (по умолчанию)
+tagname.qualifier.max,{0} (макс.)
+tagname.qualifier.min,{0} (мин.)
+cond.text_empty,(пусто)
+cond.text_other,Другое…
 layout.btn_more_width,78
 layout.editor.when_dropdown_width,190
 layout.new_schedule.btn_width,180

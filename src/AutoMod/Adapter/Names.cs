@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AutoMod.Domain.Rules;
 
 namespace AutoMod.Adapter;
 
@@ -22,6 +23,7 @@ public static class Names
     public static void ClearCache()
     {
         KindNames.Clear();
+        TagNames.ClearCache();
         Resolved.Clear();
         _learnedAll = false;
     }
@@ -272,15 +274,16 @@ public static class Names
         if (prop == "sex") return Domain.L.T("prop.sex");
         // 品质：类别名 + 等级范围（等级名是游戏的）
         if (prop.StartsWith("q:") || prop.StartsWith("qt:") || prop.StartsWith("ql:") || prop.StartsWith("qok:") || prop.StartsWith("qd:")) return Quality.PropName(prop);
-        // 游戏标签：游戏自己有名字的用游戏的（枪的属性），其余显示原始键名
-        if (prop.StartsWith("tag:") && prop.StartsWith("tag:GUN_") && GameName.Gun(prop[4..]) is { } gun) return gun;
-        if (prop.StartsWith("tag:")) return prop[4..];
-        if (prop.StartsWith("str:")) return Domain.L.T("names.prop.str", prop[4..]);
-        if (prop.StartsWith("has:")) return Domain.L.T("names.prop.has", prop[4..]);
-        if (prop.StartsWith("pct:")) return Domain.L.T("names.prop.pct", prop[4..]);
+        // 游戏标签：按游戏起条目名的惯例找游戏的名字（TagNames），找不到显示原始键名
+        if (prop.StartsWith("tag:")) return TagName(prop[4..]);
+        if (prop.StartsWith("str:")) return Domain.L.T("names.prop.str", TagName(prop[4..]));
+        if (prop.StartsWith("has:")) return Domain.L.T("names.prop.has", TagName(prop[4..]));
+        if (prop.StartsWith("pct:")) return Domain.L.T("names.prop.pct", TagName(prop[4..]));
         if (prop.StartsWith("liq:")) return Domain.L.T("names.prop.liq", LiquidName(prop[4..]));
         return prop;
     }
+
+    private static string TagName(string key) => TagNames.Name(key) ?? key;
 
     /// <summary>液体的名字：从游戏本地化取当前语言的名（LocHelper.GetLocalizedMechanic("liquid_" + id)）。</summary>
     public static string LiquidName(string id)

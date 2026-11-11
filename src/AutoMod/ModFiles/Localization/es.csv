@@ -131,6 +131,8 @@ kind.feces_medium,Excremento animal
 kind.feces_small,Excremento animal (pequeño)
 kind.fillerweed,Borrajilla
 kind.fillerweed_seed,Semilla de borrajilla
+kind.hydroreed_seed,Semilla de hidrojunco
+kind.plant_dna_disk,Disquete de ADN
 kind.fish_scrap,Despojos de pescado
 kind.hydroponic,Sistema hidropónico
 kind.industrial_fish_feed,Alimento industrial para peces
@@ -199,6 +201,9 @@ slot.output,Salida
 slot.power,Alimentación
 slot.recipe,Receta
 slot.seed,Semilla
+slot.input_disk,Disquete con atributo
+slot.output_disk,Disquete vacío
+slot.eject,Bandeja de salida
 slot.storage,Almacén
 slot.tank,Tanque
 slot.trap,Trampa
@@ -417,6 +422,8 @@ sim.desc.rat,"Rata {0} #{1} ({2} g, {3} días{4}{5})"
 sim.duration,Dur.
 sim.empty,Vacío
 sim.fail.dest_full,{0} está lleno
+sim.fail.locked,{0} se está procesando en una máquina y no se puede sacar
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,Sin cambios
 sim.fail.simulated,Ya procesado en vista previa (efecto desconocido)
 sim.group_stats,{0} / {1} PA · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 día
 sim.run_1_shift,1 turno
 sim.run_3_days,3 días
 sim.run_7_days,7 días
+sim.run_14_days,14 días
+sim.run_28_days,28 días
 sim.schedule,Rutina
 sim.search_placeholder,Nombre o ID
 sim.sex.female,Hembra
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,"Valores numéricos con nombre, ej. «Umbral de cambio de
 handbook.p3.text_range,"Toda la tienda, un nombre de dispositivo u otro filtro; se pueden añadir varios. «Contenido» se refiere a los objetos dentro; «Mismo» al contenedor o máquina en sí (ej. [Hidroponía] mismo con condición «tiene ranura» selecciona hidroponías libres)."
 handbook.p3.text_scope,"Los filtros buscan por defecto en toda la tienda (objetos propios, no a la venta). Para asignar zonas de almacenamiento, máquinas o contenedores específicos, nómbralos con la rotuladora azul (ej. «Almacén hidro») o mediante «＋ Nombrar…» en el editor de rutinas. Varios objetos pueden compartir el mismo nombre."
 handbook.p3.tip_name,¡Puedes seleccionar directamente nombres personalizados ([Nombre]) como objetivo de filtro sin crear uno!
+handbook.p3.tip_tags,"Las etiquetas usan los nombres del juego; una etiqueta ausente cuenta como 0, así una semilla sin un atributo lo tiene en rango 0."
+handbook.pdna.banner,Ejemplos: atributos de plantas
+handbook.pdna.title_disk,Disquetes genéticos:
+handbook.pdna.text_disk,Dos extractores sacan Purificante de semillas de hidrojunco y Deficiente en nutrientes de semillas de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Un módulo de precisión usado sobre un disquete escrito queda ajustado a su atributo.
+handbook.pdna.title_edit,Edición genética:
+handbook.pdna.text_edit,Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos] hasta el rango objetivo o el tope de riesgo. Una semilla sin un atributo lo tiene en rango 0.
+handbook.pdna.title_breed,Cría genética:
+handbook.pdna.text_breed,"El riesgo solo baja criando: tras escribir, la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador con riesgo 0. Cada rango de Deficiente en nutrientes baja la complejidad en 2 y compensa el +3 por rango de Purificante."
+handbook.pdna.tip,"Probabilidad de éxito = 95 − 5 × (complejidad + riesgo) + bonificación de calidad de la máquina, mínimo 5 %. Cada escritura o extracción aumenta el riesgo, salga bien o no."
 handbook.p3.title_filter,Filtros:
 handbook.p3.title_param,Parámetros:
 handbook.p3.title_range,Ámbito:
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,Filtro de agua avanzado
 names.kind.water_jug,Jarra de agua
 names.kind.wire_cutter,Cortacables
 names.prop.has,{0} (Presencia)
+names.prop.has_yes,Con {0}
+names.prop.has_no,Sin {0}
 names.prop.liq,Contiene {0} (ml)
 names.prop.mark,Marca [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,Unidades hidropónicas libres
 example.hydro.sel.seed,Una semilla
 example.hydro.sel.tablets,Pastillas de nutrientes
 example.hydro.store,Almacén Hidroponía
+example.dna.device.extract_pur,Extractor Purificante
+example.dna.device.extract_np,Extractor Deficiente en nutrientes
+example.dna.device.writer,Grabador de atributos
+example.dna.device.hydro,Hidroponía de cría
+example.dna.store,Banco genético
+example.dna.param.target,Rango objetivo
+example.dna.param.target.hint,Se deja de escribir cuando Purificante llega a este rango
+example.dna.param.heat,Tope de riesgo
+example.dna.param.heat.hint,Se deja de escribir cuando el riesgo de la semilla llega a este valor
+example.dna.prop.eff,Complejidad efectiva del hidrojunco
+example.dna.sel.output,{0}: salida
+example.dna.sel.target_slot,{0}: ranura objetivo
+example.dna.sel.blank_slot,{0}: ranura de disquete vacío
+example.dna.sel.disk_slot,{0}: ranura de disquete con atributo
+example.dna.sel.seed_slot,{0}: ranura de semilla
+example.dna.sel.water_slot,{0}: ranura de agua
+example.dna.sel.stock,Disquetes {0} en reserva
+example.dna.sel.raw,{1} con {0}
+example.dna.sel.blank,Un disquete vacío
+example.dna.sel.disk,Un disquete {0}
+example.dna.sel.writable,Semilla para escribir
+example.dna.sel.child,Descendencia cosechada
+example.dna.sel.first,Objetivo inicial
+example.dna.sel.can_write,Semilla lista para {0}
+example.dna.sel.breed,Semilla lista para cría
+example.dna.rule.collect,Recoger disquetes de {0}
+example.dna.rule.load_seed,Cargar {0}
+example.dna.rule.load_blank,Disquete vacío en {0}
+example.dna.rule.write,Escribir {0}
+example.dna.rule.child,Cargar descendencia
+example.dna.rule.harvest,Guardar cosecha
+example.dna.rule.first,Cargar objetivo inicial
+example.dna.rule.breed,Enviar a cría
+example.dna.rule.water,Colocar botella de agua
 example.ranch.rule.auto_blend,Habilitar mezcla automática
 example.ranch.rule.butcher_dead,Despiezar ratas muertas
 example.ranch.rule.cull,Sacrificar ratas
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,Ordenar
 example.spec.tidy.note,Ordenar medicinas y comida en [Almacén Medicina] y [Almacén Comida] (varios contenedores pueden compartir nombre)
 example.spec.water.name,Venta de agua
 example.spec.water.note,"Imprimir botellas, recoger agua, purificar a agua base, embotellar y surtir, y recoger el efectivo"
+example.spec.dna_disk.name,Disquetes genéticos
+example.spec.dna_disk.note,[Extractor Purificante] y [Extractor Deficiente en nutrientes] extraen atributos de semillas de hidrojunco y de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Cada extractor necesita un módulo de precisión ajustado a su atributo
+example.spec.dna_edit.name,Edición genética
+example.spec.dna_edit.note,Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos] hasta el rango objetivo o el tope de riesgo
+example.spec.dna_breed.name,Cría genética
+example.spec.dna_breed.note,"El [Grabador de atributos] escribe Purificante y Deficiente en nutrientes; con riesgo demasiado alto la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador, hasta el rango objetivo. Los disquetes los prepara Disquetes genéticos"
 example.tidy.rule.food,Ordenar comida
 example.tidy.rule.medical,Ordenar medicina
 example.tidy.sel.loose_food,Comida suelta a ordenar
@@ -1398,6 +1458,15 @@ rule.when_arrow,Cuando {0} → {1}
 cond.equal,Igual
 cond.not_equal,Distinto
 cond.text_input,Texto
+tagname.genetic_heat_int,Riesgo
+tagname.dna_disk_uses_int,Usos restantes
+tagname.qualifier.current,{0} (valor actual)
+tagname.qualifier.base,{0} (valor base)
+tagname.qualifier.default,{0} (por defecto)
+tagname.qualifier.max,{0} (máx.)
+tagname.qualifier.min,{0} (mín.)
+cond.text_empty,(vacío)
+cond.text_other,Otro…
 layout.btn_more_width,78
 layout.editor.when_dropdown_width,190
 layout.new_schedule.btn_width,225

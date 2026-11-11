@@ -401,7 +401,16 @@ public static class Catalog
     private static readonly HashSet<string> BoolProps = new() { "mature", "dead", "neutered", "gravid", "working", "repairable", "labelOk", "powered", "inStorage", "inBatterySlot" };
 
     /// <summary>是非属性的否定名称（支持本地化语义键 prop.<id>.not）。</summary>
-    public static string PropNotName(string id) => id == null || !IsBool(id) ? null : L.T("prop." + id.ToLowerInvariant() + ".not");
+    public static string PropNotName(string id)
+    {
+        if (id == null || !IsBool(id)) return null;
+        if (id.StartsWith("has:")) return L.T("names.prop.has_no", TagNames.Name(id[4..]) ?? id[4..]);
+        return L.T("prop." + id.ToLowerInvariant() + ".not");
+    }
+
+    /// <summary>是非属性的肯定名称：游戏标签的有无写成“有 X”（和“没有 X”成对）；其余用属性名（返回 null）。</summary>
+    public static string PropYesName(string id) =>
+        id != null && id.StartsWith("has:") ? L.T("names.prop.has_yes", TagNames.Name(id[4..]) ?? id[4..]) : null;
 
     public static Func<string, string> GradeShortNameHook = _ => null;
 

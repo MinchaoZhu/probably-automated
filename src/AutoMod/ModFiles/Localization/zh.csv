@@ -131,6 +131,8 @@ kind.feces_medium,feces_medium
 kind.feces_small,feces_small
 kind.fillerweed,fillerweed
 kind.fillerweed_seed,fillerweed_seed
+kind.hydroreed_seed,hydroreed_seed
+kind.plant_dna_disk,plant_dna_disk
 kind.fish_scrap,fish_scrap
 kind.hydroponic,hydroponic
 kind.industrial_fish_feed,industrial_fish_feed
@@ -199,6 +201,9 @@ slot.output,产出
 slot.power,电池
 slot.recipe,配方
 slot.seed,种子
+slot.input_disk,特性数据盘
+slot.output_disk,空白数据盘
+slot.eject,输出
 slot.storage,储存
 slot.tank,鱼缸
 slot.trap,陷阱
@@ -417,6 +422,8 @@ sim.desc.rat,{0}鼠#{1}（{2}g，{3} 天{4}{5}）
 sim.duration,时长
 sim.empty,空
 sim.fail.dest_full,{0} 已满
+sim.fail.locked,{0}正在机器里加工，拿不出来
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,无变化
 sim.fail.simulated,预演中已处理过（实际效果未知）
 sim.group_stats,{0} / {1} AP · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 天
 sim.run_1_shift,1 个班
 sim.run_3_days,3 天
 sim.run_7_days,7 天
+sim.run_14_days,14 天
+sim.run_28_days,28 天
 sim.schedule,流程
 sim.search_placeholder,名称或 ID
 sim.sex.female,雌
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,带名称的数值，例如“换电阈值 30”。可供
 handbook.p3.text_range,全店、某个设备名或另一个筛选器，可添加多个。“内的物品”指其中的物品，“本身”指这些容器或机器本身，例如【水培机】本身加上条件“有空位”，即为空闲的水培机。
 handbook.p3.text_scope,筛选器默认在全店范围内查找，即店内归你所有的物品，不含待售商品。如需指定某个储藏区、机器或容器，可用蓝色标签打印机为其命名（例如“水培仓库”），也可在流程编辑器中选择“＋ 命名…”。多个物品可使用同一名称。
 handbook.p3.tip_name,可以直接选中自定义名称（【名称】）作为筛选条件，无需另建筛选器！
+handbook.p3.tip_tags,“游戏标签”组的名称取自游戏；物品上没有的标签按 0 计，例如种子没有某个特性即为 0 级。
+handbook.pdna.banner,示例：植物特性
+handbook.pdna.title_disk,制作基因盘：
+handbook.pdna.text_disk,两台提取机分别从水培芦苇种子、填料草种子提取净化水质、营养匮乏，写好的数据盘收进【基因库】，库存够了即停。精准提取模组对一张写好的数据盘使用一次，即锁定该特性。
+handbook.pdna.title_edit,优化基因：
+handbook.pdna.text_edit,为【写入机】目标格里的种子写入净化水质，到目标等级或热度上限即停。没有某个特性的种子按 0 级计。
+handbook.pdna.title_breed,基因培育：
+handbook.pdna.text_breed,热度只在繁殖时清零：写入后送进【育种水培机】，收获的子代热度为 0，回到写入机继续。营养匮乏每级使复杂度 −2，抵消净化水质每级 +3。
+handbook.pdna.tip,成功率 = 95 − 5 ×（复杂度 + 热度）+ 机器品质加成，最低 5%。每次写入或提取，无论成败，热度都会增加。
 handbook.p3.title_filter,筛选器：
 handbook.p3.title_param,参数：
 handbook.p3.title_range,范围：
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,高级滤水器
 names.kind.water_jug,桶装水
 names.kind.wire_cutter,剪线钳
 names.prop.has,{0}（有无）
+names.prop.has_yes,有{0}
+names.prop.has_no,没有{0}
 names.prop.liq,含{0}（毫升）
 names.prop.mark,标记【{0}】
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,空闲水培机
 example.hydro.sel.seed,一颗种子
 example.hydro.sel.tablets,营养片
 example.hydro.store,水培仓库
+example.dna.device.extract_pur,净化提取机
+example.dna.device.extract_np,营养匮乏提取机
+example.dna.device.writer,写入机
+example.dna.device.hydro,育种水培机
+example.dna.store,基因库
+example.dna.param.target,目标等级
+example.dna.param.target.hint,净化水质达到此等级后停止写入
+example.dna.param.heat,热度上限
+example.dna.param.heat.hint,种子热度达到此值后停止写入
+example.dna.prop.eff,芦苇有效复杂度
+example.dna.sel.output,{0}的输出
+example.dna.sel.target_slot,{0}的目标格
+example.dna.sel.blank_slot,{0}的空白数据盘格
+example.dna.sel.disk_slot,{0}的特性数据盘格
+example.dna.sel.seed_slot,{0}的种子格
+example.dna.sel.water_slot,{0}的水格
+example.dna.sel.stock,库存的{0}数据盘
+example.dna.sel.raw,带{0}的{1}
+example.dna.sel.blank,一张空白数据盘
+example.dna.sel.disk,一张{0}数据盘
+example.dna.sel.writable,可写入的种子
+example.dna.sel.child,收获的子代
+example.dna.sel.first,初始目标
+example.dna.sel.can_write,可写{0}的种子
+example.dna.sel.breed,待繁殖的种子
+example.dna.rule.collect,收回{0}的数据盘
+example.dna.rule.load_seed,{0}装原料
+example.dna.rule.load_blank,{0}装空白盘
+example.dna.rule.write,写入{0}
+example.dna.rule.child,子代上机
+example.dna.rule.harvest,收获入库
+example.dna.rule.first,放入初始目标
+example.dna.rule.breed,送去繁殖
+example.dna.rule.water,放水瓶
 example.ranch.rule.auto_blend,开启自动混合
 example.ranch.rule.butcher_dead,分解死鼠
 example.ranch.rule.cull,出栏
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,整理
 example.spec.tidy.note,把散放在各储藏区的药品、食品分别放进【药品仓库】【食品仓库】（可以给多个储藏区起同一个名字）
 example.spec.water.name,卖水
 example.spec.water.note,打印水瓶、接水、净化至基础水、装瓶上架、收取货款
+example.spec.dna_disk.name,制作基因盘
+example.spec.dna_disk.note,【净化提取机】【营养匮乏提取机】分别从水培芦苇种子、填料草种子提取特性，写好的数据盘收进【基因库】，库存够了即停。提取机需装好设定了对应特性的精准提取模组
+example.spec.dna_edit.name,优化基因
+example.spec.dna_edit.note,为【写入机】目标格里的种子写入净化水质，达到目标等级或热度达到上限即停
+example.spec.dna_breed.name,基因培育
+example.spec.dna_breed.note,在【写入机】中写入净化水质和营养匮乏，热度过高时送进【育种水培机】繁殖，收获的子代回到写入机，直至目标等级。数据盘由“制作基因盘”准备
 example.tidy.rule.food,整理食品
 example.tidy.rule.medical,整理药品
 example.tidy.sel.loose_food,待整理的食品
@@ -1398,6 +1458,15 @@ rule.when_arrow,当 {0} 时 → {1}
 cond.equal,等于
 cond.not_equal,不等于
 cond.text_input,文字
+tagname.genetic_heat_int,热度
+tagname.dna_disk_uses_int,剩余使用次数
+tagname.qualifier.current,当前{0}
+tagname.qualifier.base,基础{0}
+tagname.qualifier.default,默认{0}
+tagname.qualifier.max,最大{0}
+tagname.qualifier.min,最小{0}
+cond.text_empty,（空）
+cond.text_other,其他…
 layout.btn_more_width,50
 layout.editor.when_dropdown_width,180
 layout.new_schedule.btn_width,160

@@ -11,7 +11,7 @@ namespace AutoMod.Domain.Simulation;
 /// 物品沿用 SimItem / SimCatalog；夜间变化按实测速率。
 /// 从游戏导入时物品 Id 取游戏 uid，所以对象绑定的 uid 在模拟世界里同样有效。
 /// </summary>
-public class SimWorld : IWorld
+public partial class SimWorld : IWorld
 {
     public readonly List<SimItem> Roots = new();
     private int _nextId = 50_000_000;
@@ -242,7 +242,10 @@ public class SimWorld : IWorld
         // 液体成分：模拟只记总量，水按总量算（夜里用水、接水都改总量）；其他成分用导入时的值，没有就是 0
         if (prop.StartsWith("liq:") && it.Num.ContainsKey("volumeMl"))
             return prop == "liq:water" ? it.N("volumeMl") : it.N(prop);
-        return it.Num.TryGetValue(prop, out var v) ? v : null;
+        if (it.Num.TryGetValue(prop, out var v)) return v;
+        // 游戏标签的有无：复制时只给没有值的标记记 has:，有值的标签看它在不在（和游戏读 has: 一样）
+        if (prop.StartsWith("has:")) return it.Num.ContainsKey("tag:" + prop[4..]) || it.Str.ContainsKey("str:" + prop[4..]) ? 1 : 0;
+        return null;
     }
 
     public string Str(object item, string prop) => ((SimItem)item).Str.TryGetValue(prop, out var s) ? s : null;
@@ -276,6 +279,7 @@ public class SimWorld : IWorld
     {
         var it = (SimItem)item;
         var b = (SimItem)box;
+        if (it.N("locked") == 1) return StepResult.Fail(L.T("sim.fail.locked", it.Name), FailCode.NotAllowed);
         if (!FitsSim(b, it)) return new StepResult { Ok = false, Reason = L.T("sim.fail.dest_full", b.Name), Code = FailCode.DestFull };
         var from = it.Parent;
         Attach(it, b, false);
@@ -289,6 +293,7 @@ public class SimWorld : IWorld
     {
         var t = (SimItem)a;
         var r = (SimItem)b;
+        if (t.N("locked") == 1 || r.N("locked") == 1) return StepResult.Fail(L.T("sim.fail.locked", t.N("locked") == 1 ? t.Name : r.Name), FailCode.NotAllowed);
         var (tp, ts, rp, rs) = (t.Parent, t.InBatterySlot, r.Parent, r.InBatterySlot);
         var (tsl, rsl) = (t.InSlot, r.InSlot);
         Attach(r, tp, ts);
@@ -420,7 +425,8 @@ public class SimWorld : IWorld
 
     /// <summary>
     /// 推进一夜：充电、耗电、产水、净化、鼠生长与繁殖。天数 +1。
-    /// 模拟这几类（按类别认）：充能器、水分收集器、净水器、笼子里的鼠、鱼、水培机里的种子、带进度的机器（只推进度，不知道产物）；
+    /// 模拟这几类（按类别认）：充能器、水分收集器、净水器、笼子里的鼠、鱼、水培机里的种子（返还种子的作物收获时放一颗子代）、
+    /// DNA 编辑器（写入 / 提取，见 SimWorld.Dna）、带进度的机器（只推进度，不知道产物）；
     /// 数值是对游戏规则的近似（从游戏导入时带上物种的成年天数、种子的所需进度和收成等）。其他物品夜里不变。
     /// </summary>
     public void Night()
@@ -454,8 +460,9 @@ public class SimWorld : IWorld
         }
         foreach (var cage in All().Where(c => Has(c, "cage")).ToList()) RatsNight(cage);
         foreach (var fish in All().Where(f => Has(f, "fish") && f.N("dead") == 0).ToList()) FishNight(fish);
-        foreach (var seed in All().Where(s => Has(s, "seed") && s.Parent != null && s.InSlot == SlotNames.Prefix + "seed").ToList()) SeedNight(seed);
-        foreach (var m in All().Where(m => m.N("working") == 1 && m.N("progressMax") > 0 && !m.Children.Any(c => Has(c, "seed"))).ToList()) MachineNight(m);
+        foreach (var seed in All().Where(s => Has(s, "seed") && s.Parent != null && s.InSlot == SlotNames.Prefix + "seed" && !IsDnaEditor(s.Parent)).ToList()) SeedNight(seed);
+        foreach (var m in All().Where(IsDnaEditor).ToList()) DnaNight(m);
+        foreach (var m in All().Where(m => m.N("working") == 1 && m.N("progressMax") > 0 && !IsDnaEditor(m) && !m.Children.Any(c => Has(c, "seed"))).ToList()) MachineNight(m);
         Day++;
     }
 
@@ -505,6 +512,13 @@ public class SimWorld : IWorld
             Attach(crop, m, false);
             crop.InSlot = SlotNames.Prefix + "output";
         }
+        // 返还种子的作物：子代继承特性、热度清零（游戏里各作物还可能多给一颗，这里只算种子产量倍数的整数部分加一次概率）
+        if (seed.N("seedReturn") == 1)
+        {
+            double yield = seed.N("seedYield", 1);
+            int copies = (int)yield + (_rng.NextDouble() < yield - Math.Floor(yield) ? 1 : 0);
+            for (int i = 0; i < copies; i++) Attach(Offspring(seed), m, false);
+        }
         Remove(seed);
         m.Num["working"] = 0;
     }
@@ -522,7 +536,8 @@ public class SimWorld : IWorld
     {
         if (!machine.HasBatterySlot) return true;
         var b = machine.Children.FirstOrDefault(c => c.InBatterySlot);
-        return b != null && b.N("energy") > 0;
+        // 电流转换器（游戏的 CURRENT_CONVERTER_TAG）：从现金买电，模拟里当作一直有电
+        return b != null && (b.N("energy") > 0 || b.N("has:CURRENT_CONVERTER_TAG") == 1 || b.Kind == "current_converter");
     }
 
     private void RatsNight(SimItem cage)

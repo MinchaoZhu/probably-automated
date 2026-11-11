@@ -82,7 +82,7 @@ public static class Text
         }
         // 是非属性：“在机器里”“不在机器里”“已死亡”“未死亡”这样写
         if (Catalog.IsBool(c.Prop) && c.Op == "=" && c.Right?.Terms.Count == 1 && c.Right.Terms[0].Kind == TermKind.Num)
-            return c.Right.Terms[0].Num != 0 ? PropName(d, c.Prop) : Catalog.PropNotName(c.Prop);
+            return c.Right.Terms[0].Num != 0 ? Catalog.PropYesName(c.Prop) ?? PropName(d, c.Prop) : Catalog.PropNotName(c.Prop);
         return $"{PropName(d, c.Prop)} {Vocab.OpText(c.Op)} {Expr(d, c.Right)}";
     }
 

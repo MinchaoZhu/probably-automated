@@ -24,6 +24,7 @@ public static class SimImport
     {
         var sim = new SimWorld(seed);
         var gw = new GameWorld();
+        sim.Genetics = Genetics();
         sim.Day = gw.Day;
         // 全店复制进来（筛选器从全店找）：每件只复制一次，从最外层的容器往里复制
         var have = new HashSet<int>();
@@ -129,7 +130,15 @@ public static class SimImport
                 x.Num["growProgress"] = GameApi.Tag(it, "GROWING_PROGRESS") is { } gp ? ItemFacts.Number(gp) : 0;
                 if (Try(() => (double?)HydroponicHelper.GetRequiredProgress(it)) is { } req) x.Num["growRequired"] = req;
                 if (Try(() => (double?)HydroponicHelper.GetBaseHarvestQuantity(it)) is { } qty) x.Num["harvestQty"] = qty;
+                // DNA 编辑和水培子代要的：作物 id、会不会返还种子、种子产量倍数
+                if (Try(() => HydroponicHelper.GetPlant(it)) is { } plant)
+                {
+                    x.Str["plantId"] = plant.id;
+                    x.Num["seedReturn"] = plant.returnsSeeds ? 1 : 0;
+                    if (Try(() => (double?)PlantGeneticsHelper.GetStatMultiplier(it, "SEED_YIELD")) is { } y) x.Num["seedYield"] = y;
+                }
             }
+            if (GameApi.Tag(it, "DNA_MANIPULATOR_TAG") != null && Try(() => (double?)ModuleHelper.GetAjustedQuality(it)) is { } q) x.Num["dnaQuality"] = q;
             if ((AquacultureHelper.IsFish(it) || AquacultureHelper.IsGroup(it)) && AquacultureHelper.GetSpecies(it) is { } sp && sp.stageStartDays != null && sp.stageStartDays.Length > (int)FishStage.Adult)
                 x.Num["adultAge"] = sp.stageStartDays[(int)FishStage.Adult];
         }
@@ -152,6 +161,33 @@ public static class SimImport
             }
         }
         return x;
+    }
+
+    /// <summary>游戏的植物特性规则（复杂度、等级上限、互斥、对哪些作物无效）和各作物的先天特性，给模拟里的 DNA 编辑用。</summary>
+    private static SimGenetics Genetics()
+    {
+        var g = new SimGenetics();
+        try
+        {
+            var plants = PlantRegistry.All.ToList();
+            var traits = PlantTraitRegistry.All.ToList();
+            foreach (var t in traits)
+            {
+                var st = new SimTrait
+                {
+                    Id = t.id, Complexity = t.complexity, OffsetPerRank = t.complexityOffsetPerRank, MaxRank = t.maxRank, Locked = t.locked,
+                    Negative = t.IsNegative, Exclusive = t.exclusiveGroup, NeedsLiquid = t.seedRequirement != null, Produces = t.ProducedLiquids().Any(),
+                };
+                foreach (var o in traits)
+                    if (o.id != t.id && t.IsIncompatibleWith(o.id)) st.Incompatible.Add(o.id);
+                foreach (var p in plants)
+                    if (!PlantGeneticsHelper.IsTraitCompatible(p, t, out _)) st.NoEffectOn.Add(p.id);
+                g.Traits.Add(st);
+            }
+            foreach (var p in plants) g.Innate[p.id] = new Dictionary<string, int>(p.innateTraits);
+        }
+        catch (Exception ex) { AutoMod.Domain.Log.Warn($"[SimImport] 植物特性规则读取失败：{ex.Message}"); }
+        return g;
     }
 
     private static T Try<T>(Func<T> f)

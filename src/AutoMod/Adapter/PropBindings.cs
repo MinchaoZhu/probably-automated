@@ -225,7 +225,7 @@ public static class PropBindings
                 if (GameTags.LiquidOf(k) is { } liq) { if (ItemFacts.Number(t) != 0) liquids.Add("liq:" + liq); continue; }
                 if (!includeInternal && GameTags.IsInternal(k)) continue;
                 seen.Add(k);
-                if (!string.IsNullOrEmpty(t.valueString)) text.Add(k);
+                if (!string.IsNullOrEmpty(t.valueString) || k.EndsWith("_STRING", StringComparison.Ordinal)) text.Add(k); // 文字标签值为空时也是文字（空白数据盘）
                 if (ItemFacts.Number(t) != 0 || t.valueBool) valued.Add(k);
                 if (GameTags.MaxOf(k, keys) != null) pcts.Add("pct:" + k);
             }
@@ -243,6 +243,19 @@ public static class PropBindings
         return props;
     }
 
+
+    /// <summary>读这个游戏标签的内置属性的名字（标签取名的对照表用）；没有为 null。</summary>
+    public static string BuiltinName(string key)
+    {
+        foreach (var kv in Builtins)
+        {
+            if (kv.Value.key != key) continue;
+            if (Catalog.PropName(kv.Key) is { } name) return name;
+            string loc = "prop." + kv.Key.ToLowerInvariant();
+            if (Domain.L.Has(loc)) return Domain.L.T(loc);
+        }
+        return null;
+    }
 
     /// <summary>已经有友好名的标签（Builtins 的键），RawTagProps 不重复列。</summary>
     private static readonly HashSet<string> BuiltinKeys = new(Builtins.Values.Select(b => b.key));

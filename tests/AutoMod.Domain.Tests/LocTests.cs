@@ -1372,18 +1372,18 @@ internal static class LocTests
             var enTable = LoadTable("en");
             L.Use("en", enTable, enTable);
 
-            // 1. “没有名字键的物品”：serum_red / serum_green，以及缺少键的 plant_dna_disk
+            // 1. “没有名字键的物品”：serum_red / serum_green，以及游戏和 mod 表里都没有名字键的物品（test_no_key_item）
             // 存档中即使带有中文残留（"牲畜类固醇血清"），在 en 模式下也绝不返回汉字或原始 id
             var noKeyItems = new[]
             {
                 ("serum_red", "Livestock Steroid Serum", "牲畜类固醇血清"),
                 ("serum_green", "Livestock Immunity Serum", "牲畜免疫血清"),
-                ("plant_dna_disk", "Plant DNA Disk", "植物DNA芯片"),
+                ("test_no_key_item", "Plant DNA Disk", "植物DNA芯片"),
                 ("rat", "Rat", "老鼠")
             };
             foreach (var (id, expected, staleZh) in noKeyItems)
             {
-                string res = FakeGame.SimulateGameItemName(id, id == "plant_dna_disk" ? expected : null, staleZh);
+                string res = FakeGame.SimulateGameItemName(id, id == "test_no_key_item" ? expected : null, staleZh);
                 check(!res.Any(c => c >= 0x4E00 && c <= 0x9FFF), $"[{id}] 英文模式下包含汉字: {res}");
                 check(res != id, $"[{id}] 退回到了原始 id: {res}");
                 check(res == expected, $"[{id}] 期望解析为 [{expected}]，实际为 [{res}]");

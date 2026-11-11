@@ -131,6 +131,8 @@ kind.feces_medium,Tierkot
 kind.feces_small,Tierkot (klein)
 kind.fillerweed,Füllkraut
 kind.fillerweed_seed,Füllkrautsamen
+kind.hydroreed_seed,Hydroschilf-Saatgut
+kind.plant_dna_disk,DNA-Datendisk
 kind.fish_scrap,Fischrest
 kind.hydroponic,Hydrokultursystem
 kind.industrial_fish_feed,Industrielles Fischfutter
@@ -199,6 +201,9 @@ slot.output,Ausgang
 slot.power,Strom
 slot.recipe,Rezept
 slot.seed,Saatgut
+slot.input_disk,Merkmal-Disk
+slot.output_disk,Leere Disk
+slot.eject,Ausgabe
 slot.storage,Lager
 slot.tank,Tank
 slot.trap,Falle
@@ -417,6 +422,8 @@ sim.desc.rat,"{0}-Ratte #{1} ({2} g, {3} Tage{4}{5})"
 sim.duration,Dauer
 sim.empty,Leer
 sim.fail.dest_full,{0} ist voll
+sim.fail.locked,{0} wird gerade in einer Maschine bearbeitet und kann nicht entnommen werden
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,Keine Änderung
 sim.fail.simulated,Bereits in Vorschau verarbeitet (Wirkung unbekannt)
 sim.group_stats,{0} / {1} AP · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 Tag
 sim.run_1_shift,1 Schicht
 sim.run_3_days,3 Tage
 sim.run_7_days,7 Tage
+sim.run_14_days,14 Tage
+sim.run_28_days,28 Tage
 sim.schedule,Routine
 sim.search_placeholder,Name oder ID
 sim.sex.female,Weibchen
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,"Benannte Zahlenwerte, z. B. ""Batteriewechsel-Schwelle 3
 handbook.p3.text_range,"Gesamter Laden, ein Gerätename oder ein anderer Filter; mehrere hinzufügbar. ""Inhalt"" bezieht sich auf enthaltene Gegenstände; ""Selbst"" auf den Behälter bzw. die Maschine selbst (z. B. [Hydrokultur] selbst mit Bedingung ""hat freien Platz"" wählt freie Hydrokulturen)."
 handbook.p3.text_scope,"Filter durchsuchen standardmäßig den gesamten Laden (eigene Gegenstände, keine Verkaufsware). Um bestimmte Lager, Maschinen oder Behälter anzusprechen, benenne sie mit dem blauen Etikettierer (z. B. ""Hydro-Lager"") oder über ""＋ Benennen…"" im Routinen-Editor. Mehrere Objekte können denselben Namen teilen."
 handbook.p3.tip_name,"Du kannst benutzerdefinierte Namen ([Name]) direkt als Filterziel auswählen, ohne einen Filter zu erstellen!"
+handbook.p3.tip_tags,"Spiel-Tags tragen die Namen aus dem Spiel; ein fehlender Tag zählt als 0, ein Samen ohne Merkmal hat es also auf Stufe 0."
+handbook.pdna.banner,Beispiele: Pflanzenmerkmale
+handbook.pdna.title_disk,Gen-Disks:
+handbook.pdna.text_disk,"Zwei Extraktoren gewinnen Reinigend aus Hydroschilf-Saatgut und Nährstoffarm aus Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Ein Präzisions-Extraktionsmodul, auf eine beschriebene Disk angewendet, wird auf deren Merkmal eingestellt."
+handbook.pdna.title_edit,Gen-Bearbeitung:
+handbook.pdna.text_edit,Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber] bis zur Zielstufe oder Risiko-Grenze. Ein Samen ohne ein Merkmal hat es auf Stufe 0.
+handbook.pdna.title_breed,Gen-Zucht:
+handbook.pdna.text_breed,"Risiko sinkt nur durch Zucht: Nach dem Schreiben kommt der Samen in die [Zucht-Hydrokultur], der geerntete Nachwuchs kehrt mit Risiko 0 zum Schreiber zurück. Jede Stufe Nährstoffarm senkt die Komplexität um 2 und gleicht +3 je Stufe Reinigend aus."
+handbook.pdna.tip,"Erfolgschance = 95 − 5 × (Komplexität + Risiko) + Qualitätsbonus der Maschine, mindestens 5 %. Jedes Schreiben oder Extrahieren erhöht das Risiko, ob erfolgreich oder nicht."
 handbook.p3.title_filter,Filter:
 handbook.p3.title_param,Parameter:
 handbook.p3.title_range,Bereich:
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,Fortgeschrittener Wasserfilter
 names.kind.water_jug,Krug Wasser
 names.kind.wire_cutter,Seitenschneider
 names.prop.has,{0} (Vorhanden)
+names.prop.has_yes,{0}: vorhanden
+names.prop.has_no,{0}: nicht vorhanden
 names.prop.liq,Enthält {0} (ml)
 names.prop.mark,Markierung [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,Freie Hydrokultur-Einheiten
 example.hydro.sel.seed,Ein Samen
 example.hydro.sel.tablets,Nährstofftabletten
 example.hydro.store,Hydrokultur-Lager
+example.dna.device.extract_pur,Extraktor Reinigend
+example.dna.device.extract_np,Extraktor Nährstoffarm
+example.dna.device.writer,Merkmal-Schreiber
+example.dna.device.hydro,Zucht-Hydrokultur
+example.dna.store,Genbank
+example.dna.param.target,Zielstufe
+example.dna.param.target.hint,"Schreiben endet, wenn Reinigend diese Stufe erreicht"
+example.dna.param.heat,Risiko-Grenze
+example.dna.param.heat.hint,"Schreiben endet, wenn das Risiko des Samens diesen Wert erreicht"
+example.dna.prop.eff,Effektive Komplexität Hydroschilf
+example.dna.sel.output,{0}: Ausgabe
+example.dna.sel.target_slot,{0}: Zielplatz
+example.dna.sel.blank_slot,{0}: Platz leere Disk
+example.dna.sel.disk_slot,{0}: Platz Merkmal-Disk
+example.dna.sel.seed_slot,{0}: Samenplatz
+example.dna.sel.water_slot,{0}: Wasserplatz
+example.dna.sel.stock,Disks „{0}“ auf Lager
+example.dna.sel.raw,{1} mit {0}
+example.dna.sel.blank,Eine leere Disk
+example.dna.sel.disk,Eine Disk „{0}“
+example.dna.sel.writable,Beschreibbarer Samen
+example.dna.sel.child,Geernteter Nachwuchs
+example.dna.sel.first,Startziel
+example.dna.sel.can_write,Samen für {0}
+example.dna.sel.breed,Samen zur Zucht
+example.dna.rule.collect,Disks aus {0} holen
+example.dna.rule.load_seed,{0} bestücken
+example.dna.rule.load_blank,Leere Disk in {0}
+example.dna.rule.write,{0} schreiben
+example.dna.rule.child,Nachwuchs einsetzen
+example.dna.rule.harvest,Ernte einlagern
+example.dna.rule.first,Startziel einsetzen
+example.dna.rule.breed,Zur Zucht schicken
+example.dna.rule.water,Wasserflasche einsetzen
 example.ranch.rule.auto_blend,Automatisches Mischen aktivieren
 example.ranch.rule.butcher_dead,Tote Ratten zerlegen
 example.ranch.rule.cull,Ratten schlachten
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,Aufräumen
 example.spec.tidy.note,Lose Medizin und Essen in [Medizinlager] und [Essenslager] sortieren (mehrere Fächer können denselben Namen tragen)
 example.spec.water.name,Wasserverkauf
 example.spec.water.note,"Flaschen drucken, Wasser schöpfen, zu Basiswasser reinigen, abfüllen und einräumen, Erlöse abholen"
+example.spec.dna_disk.name,Gen-Disks
+example.spec.dna_disk.note,"[Extraktor Reinigend] und [Extraktor Nährstoffarm] extrahieren Merkmale aus Hydroschilf-Saatgut und Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Jeder Extraktor braucht ein Präzisions-Extraktionsmodul, das auf sein Merkmal eingestellt ist"
+example.spec.dna_edit.name,Gen-Bearbeitung
+example.spec.dna_edit.note,"Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber], bis die Zielstufe oder die Risiko-Grenze erreicht ist"
+example.spec.dna_breed.name,Gen-Zucht
+example.spec.dna_breed.note,"Der [Merkmal-Schreiber] schreibt Reinigend und Nährstoffarm; ist das Risiko zu hoch, kommt der Samen in die [Zucht-Hydrokultur], und der geerntete Nachwuchs kehrt zum Schreiber zurück, bis zur Zielstufe. Die Disks liefert Gen-Disks"
 example.tidy.rule.food,Essen sortieren
 example.tidy.rule.medical,Medizin sortieren
 example.tidy.sel.loose_food,Zu sortierendes Essen
@@ -1398,6 +1458,15 @@ rule.when_arrow,Wenn {0} → {1}
 cond.equal,Gleich
 cond.not_equal,Ungleich
 cond.text_input,Text
+tagname.genetic_heat_int,Risiko
+tagname.dna_disk_uses_int,Verbleibende Anwendungen
+tagname.qualifier.current,{0} (aktuell)
+tagname.qualifier.base,{0} (Basis)
+tagname.qualifier.default,{0} (Standard)
+tagname.qualifier.max,{0} (max.)
+tagname.qualifier.min,{0} (min.)
+cond.text_empty,(leer)
+cond.text_other,Andere…
 layout.btn_more_width,82
 layout.editor.when_dropdown_width,190
 layout.new_schedule.btn_width,225

@@ -27,6 +27,9 @@ public static class CondEditor
         return GroupQuality;
     }
 
+    /// <summary>选了“其他…”、正在手填文字的条件。</summary>
+    private static readonly HashSet<Cond> Typing = new();
+
     private static readonly string[] GroupIds = { GroupBase, GroupQuality, GroupIngredient, GroupRatio, GroupTag, GroupType };
 
     public static string GroupName(string id) => id switch
@@ -79,7 +82,7 @@ public static class CondEditor
         var opts = new List<(string p, int? v, string name)>();
         foreach (var (p, name) in inGroup)
         {
-            if (Catalog.IsBool(p)) { opts.Add((p, 1, name)); opts.Add((p, 0, Catalog.PropNotName(p) ?? name)); }
+            if (Catalog.IsBool(p)) { opts.Add((p, 1, Catalog.PropYesName(p) ?? name)); opts.Add((p, 0, Catalog.PropNotName(p) ?? name)); }
             else opts.Add((p, null, name));
         }
         int at = RulesUi.IndexOf(opts, x => x.p == c.Prop && (x.v == null || !simpleBool || (x.v == 1) == yes));
@@ -89,14 +92,24 @@ public static class CondEditor
             if (opts[k].v is { } v) { c.Op = "="; c.Right = Expr.Of(v); }
             rebuild();
         })).Searchable().Width(200);
-        // 文字属性（标签文字、品质等级名）：等于 / 不等于一段文字
+        // 文字属性（标签文字、品质等级名）：等于 / 不等于一段文字。值从店里出现过的里选，“其他…”再手填
         if (GameTags.IsTextProp(c.Prop))
         {
             var tops = new[] { "=", "!=" };
+            var values = RulesUi.TextValues(c.Prop);
+            if (c.Text != null && !values.Contains(c.Text)) values.Add(c.Text);
+            bool typing = Typing.Contains(c);
+            var shown = values.Select(v => v.Length == 0 ? Domain.L.T("cond.text_empty") : v).Append(Domain.L.T("cond.text_other")).ToList();
             b.AddDropdown(Ui.L(new[] { Domain.L.T("cond.equal"), Domain.L.T("cond.not_equal") }), c.Op == "!=" ? 1 : 0, Ui.AI(k => { c.Op = tops[k]; rebuild(); }))
-                .AddInput(Domain.L.T("cond.text_input"), c.Text ?? "", Ui.AS(v => { c.Text = v.Trim(); rebuild(); }))
-                .AddButton("×", Ui.A(() => { remove(); rebuild(); }))
-                .End();
+                .Width(Domain.L.Int("layout.cond.value_width", 120))
+                .AddDropdown(Ui.L(shown), typing ? shown.Count - 1 : Math.Max(0, values.IndexOf(c.Text)), Ui.AI(k =>
+                {
+                    if (k == shown.Count - 1) Typing.Add(c);
+                    else { Typing.Remove(c); c.Text = values[k]; }
+                    rebuild();
+                })).Searchable();
+            if (typing) b.AddInput(Domain.L.T("cond.text_input"), c.Text ?? "", Ui.AS(v => { c.Text = v.Trim(); rebuild(); }));
+            b.AddButton("×", Ui.A(() => { Typing.Remove(c); remove(); rebuild(); })).End();
             return;
         }
         // 是非属性：正反已经在属性列表里选了

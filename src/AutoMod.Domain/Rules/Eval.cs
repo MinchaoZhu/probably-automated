@@ -110,6 +110,8 @@ public static class Eval
             // 派生属性（电量% 等）由目录计算，世界只提供基础值
             if (Catalog.Prop(prop)?.Ratio is var (num, den))
                 return c.W.Num(item, num) is { } a && c.W.Num(item, den) is { } b && b > 0 ? a * 100 / b : null;
+            // 游戏标签的数字：物品上没有这个标签按 0 算（游戏自己读标签也是这样，例如没有某个特性 = 0 级）
+            if (prop.StartsWith("tag:")) return c.W.Num(item, prop) ?? 0;
             return c.W.Num(item, prop);
         }
         var key = (c.W.Key(item), prop);

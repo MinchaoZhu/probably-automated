@@ -109,7 +109,7 @@ public static class SimulatorWindow
         var s = Sch;
         var b = Ui.Window(Id, Domain.L.T("sim.title"), 1440, 860, draggable: false);
         var schedules = Defs.PickOrder(D); // 新建的排在最前
-        var runs = new[] { (1, Domain.L.T("sim.run_1_shift")), (2, Domain.L.T("sim.run_1_day")), (6, Domain.L.T("sim.run_3_days")), (14, Domain.L.T("sim.run_7_days")) };
+        var runs = new[] { (1, Domain.L.T("sim.run_1_shift")), (2, Domain.L.T("sim.run_1_day")), (6, Domain.L.T("sim.run_3_days")), (14, Domain.L.T("sim.run_7_days")), (28, Domain.L.T("sim.run_14_days")), (56, Domain.L.T("sim.run_28_days")) };
         b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
         if (schedules.Count > 0)
             b.AddLabel(Domain.L.T("sim.schedule")).AddDropdown(Ui.L(schedules.Select(x => Table.Fit(x.Name, 170, 13, out _))), Math.Max(0, schedules.IndexOf(s)), Ui.AI(k => { _schId = schedules[k].Id; Reset(); Show(); })).Searchable().Width(200);
@@ -251,11 +251,12 @@ public static class SimulatorWindow
             string inner = string.Join(" ", sub.Select(x => x.Children.Count == 0 ? Domain.L.T("sim.empty") : string.Join("", x.Children.Where(c => SimWorld.InGroup(c, "battery")).Select(c => $"{c.N("energy") * 100 / Math.Max(1, c.N("energyMax", 100)):0}%"))));
             parts.Add(Domain.L.T("sim.sub_summary", sub[0].Name, sub.Count, inner));
         }
-        var others = box.Children.Where(c => c.Kind != "rat" && !SimWorld.InGroup(c, "battery") && !SimWorld.IsBox(c)).GroupBy(c => c.Name);
+        var others = box.Children.Where(c => c.Kind != "rat" && !SimWorld.InGroup(c, "battery") && !SimWorld.IsBox(c)).GroupBy(c => c.Name + (_world?.GeneSummary(c) ?? ""));
         foreach (var g in others) parts.Add(g.Count() > 1 ? $"{g.Key} ×{g.Count()}" : g.Key);
         if (box.Num.ContainsKey("volumeMl")) parts.Add(Domain.L.T("sim.water_summary", $"{box.N("volumeMl"):0}", $"{box.N("purity"):0}"));
         var slot = box.Children.FirstOrDefault(c => c.InBatterySlot);
-        if (box.HasBatterySlot) parts.Add(Domain.L.T("sim.slot_summary", slot == null ? Domain.L.T("sim.empty") : $"{slot.N("energy") * 100 / Math.Max(1, slot.N("energyMax", 100)):0}%"));
+        bool converter = slot != null && (slot.N("has:CURRENT_CONVERTER_TAG") == 1 || slot.Kind == "current_converter");
+        if (box.HasBatterySlot) parts.Add(Domain.L.T("sim.slot_summary", slot == null ? Domain.L.T("sim.empty") : converter ? slot.Name : $"{slot.N("energy") * 100 / Math.Max(1, slot.N("energyMax", 100)):0}%"));
         string cap = box.Capacity > 0 ? " <color=#A8988F>" + Domain.L.T("text.paren", $"{box.Used}/{box.Capacity}") + "</color>" : "";
         return (parts.Count == 0 ? Domain.L.T("sim.empty") : string.Join(" · ", parts)) + cap;
     }

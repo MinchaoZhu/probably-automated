@@ -131,6 +131,8 @@ kind.feces_medium,Excréments d'animaux
 kind.feces_small,Excréments d'animaux (petit)
 kind.fillerweed,Pâlaitue
 kind.fillerweed_seed,Graine de pâlaitue
+kind.hydroreed_seed,Graine d'hydroseau
+kind.plant_dna_disk,Disquette de données ADN
 kind.fish_scrap,Déchets de poisson
 kind.hydroponic,Système hydroponique
 kind.industrial_fish_feed,Nourriture industrielle pour poisson
@@ -199,6 +201,9 @@ slot.output,Sortie
 slot.power,Alimentation
 slot.recipe,Recette
 slot.seed,Graine
+slot.input_disk,Disquette de trait
+slot.output_disk,Disquette vierge
+slot.eject,Résultat
 slot.storage,Stockage
 slot.tank,Réservoir
 slot.trap,Piège
@@ -417,6 +422,8 @@ sim.desc.rat,"Rat {0} #{1} ({2} g, {3} jours{4}{5})"
 sim.duration,Durée
 sim.empty,Vide
 sim.fail.dest_full,{0} est plein
+sim.fail.locked,{0} est en cours de traitement dans une machine et ne peut pas être retiré
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,Aucun changement
 sim.fail.simulated,Déjà traité dans l'aperçu (effet inconnu)
 sim.group_stats,{0} / {1} PA · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 jour
 sim.run_1_shift,1 poste
 sim.run_3_days,3 jours
 sim.run_7_days,7 jours
+sim.run_14_days,14 jours
+sim.run_28_days,28 jours
 sim.schedule,Routine
 sim.search_placeholder,Nom ou ID
 sim.sex.female,Femelle
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,"Valeurs numériques nommées, ex. « Seuil de remplaceme
 handbook.p3.text_range,"Tout le magasin, un nom d'appareil ou un autre filtre ; plusieurs peuvent être ajoutés. « Contenu » désigne les objets à l'intérieur ; « Lui-même » désigne le conteneur ou la machine (ex. [Hydroponie] lui-même avec la condition « a un emplacement » cible les bacs libres)."
 handbook.p3.text_scope,"Par défaut, les filtres cherchent dans tout le magasin (vos objets, hors articles en vente). Pour cibler des zones de stockage, machines ou conteneurs précis, nommez-les avec l'étiqueteuse bleue (ex. « Stock hydro ») ou via « ＋ Nommer… » dans l'éditeur de routine. Plusieurs objets peuvent porter le même nom."
 handbook.p3.tip_name,Vous pouvez directement choisir un nom personnalisé ([Nom]) comme cible sans créer de filtre !
+handbook.p3.tip_tags,"Les étiquettes portent les noms du jeu ; une étiquette absente vaut 0, une graine sans un trait l'a donc au rang 0."
+handbook.pdna.banner,Exemples : traits des plantes
+handbook.pdna.title_disk,Disquettes génétiques :
+handbook.pdna.text_disk,Deux extracteurs tirent Purification des graines d'hydroseau et Pauvreté nutritive des graines de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Un module d'extraction précise utilisé sur une disquette écrite se règle sur son trait.
+handbook.pdna.title_edit,Édition génétique :
+handbook.pdna.text_edit,Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] jusqu'au rang visé ou au plafond de fragilité. Une graine sans un trait l'a au rang 0.
+handbook.pdna.title_breed,Sélection génétique :
+handbook.pdna.text_breed,"La fragilité ne retombe qu'en sélectionnant : après l'écriture, la graine part dans l'[Hydroponie de sélection], et la descendance récoltée revient au graveur avec une fragilité de 0. Chaque rang de Pauvreté nutritive baisse la complexité de 2 et compense les +3 par rang de Purification."
+handbook.pdna.tip,"Chance de réussite = 95 − 5 × (complexité + fragilité) + bonus de qualité de la machine, au moins 5 %. Chaque écriture ou extraction augmente la fragilité, réussie ou non."
 handbook.p3.title_filter,Filtres :
 handbook.p3.title_param,Paramètres :
 handbook.p3.title_range,Portée :
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,Filtre à eau avancé
 names.kind.water_jug,Cruche d'eau
 names.kind.wire_cutter,Pince coupante
 names.prop.has,{0} (Présence)
+names.prop.has_yes,{0} : présent
+names.prop.has_no,{0} : absent
 names.prop.liq,Contient {0} (ml)
 names.prop.mark,Marque [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,Unités hydroponiques libres
 example.hydro.sel.seed,Une graine
 example.hydro.sel.tablets,Comprimés de nutriments
 example.hydro.store,Stock Hydroponie
+example.dna.device.extract_pur,Extracteur Purification
+example.dna.device.extract_np,Extracteur Pauvreté nutritive
+example.dna.device.writer,Graveur de traits
+example.dna.device.hydro,Hydroponie de sélection
+example.dna.store,Banque de gènes
+example.dna.param.target,Rang visé
+example.dna.param.target.hint,L'écriture s'arrête quand Purification atteint ce rang
+example.dna.param.heat,Plafond de fragilité
+example.dna.param.heat.hint,L'écriture s'arrête quand la fragilité de la graine atteint cette valeur
+example.dna.prop.eff,Complexité effective de l'hydroseau
+example.dna.sel.output,{0} : résultat
+example.dna.sel.target_slot,{0} : emplacement cible
+example.dna.sel.blank_slot,{0} : emplacement disquette vierge
+example.dna.sel.disk_slot,{0} : emplacement disquette de trait
+example.dna.sel.seed_slot,{0} : emplacement de graine
+example.dna.sel.water_slot,{0} : emplacement d'eau
+example.dna.sel.stock,Disquettes {0} en stock
+example.dna.sel.raw,{1} avec {0}
+example.dna.sel.blank,Une disquette vierge
+example.dna.sel.disk,Une disquette {0}
+example.dna.sel.writable,Graine à écrire
+example.dna.sel.child,Descendance récoltée
+example.dna.sel.first,Cible de départ
+example.dna.sel.can_write,Graine prête pour {0}
+example.dna.sel.breed,Graine prête pour la sélection
+example.dna.rule.collect,Récupérer les disquettes de {0}
+example.dna.rule.load_seed,Charger {0}
+example.dna.rule.load_blank,Disquette vierge dans {0}
+example.dna.rule.write,Écrire {0}
+example.dna.rule.child,Charger la descendance
+example.dna.rule.harvest,Ranger la récolte
+example.dna.rule.first,Charger la cible de départ
+example.dna.rule.breed,Envoyer en sélection
+example.dna.rule.water,Placer une bouteille d'eau
 example.ranch.rule.auto_blend,Activer mélange auto
 example.ranch.rule.butcher_dead,Dépecer rats morts
 example.ranch.rule.cull,Abattre les rats
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,Rangement
 example.spec.tidy.note,Ranger médicaments et nourriture dans [Stock Médicaments] et [Stock Nourriture] (plusieurs zones peuvent partager le même nom)
 example.spec.water.name,Vente d'eau
 example.spec.water.note,"Imprimer bouteilles, puiser l'eau, purifier en eau de base, embouteiller et stocker, récupérer les recettes"
+example.spec.dna_disk.name,Disquettes génétiques
+example.spec.dna_disk.note,[Extracteur Purification] et [Extracteur Pauvreté nutritive] extraient des traits des graines d'hydroseau et de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Chaque extracteur doit avoir un module d'extraction précise réglé sur son trait
+example.spec.dna_edit.name,Édition génétique
+example.spec.dna_edit.note,Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] jusqu'au rang visé ou au plafond de fragilité
+example.spec.dna_breed.name,Sélection génétique
+example.spec.dna_breed.note,"Le [Graveur de traits] écrit Purification et Pauvreté nutritive ; quand la fragilité est trop haute, la graine part dans l'[Hydroponie de sélection] et la descendance récoltée revient au graveur, jusqu'au rang visé. Les disquettes viennent de Disquettes génétiques"
 example.tidy.rule.food,Ranger nourriture
 example.tidy.rule.medical,Ranger médicaments
 example.tidy.sel.loose_food,Nourriture à ranger
@@ -1398,6 +1458,15 @@ rule.when_arrow,Quand {0} → {1}
 cond.equal,Égal
 cond.not_equal,Non égal
 cond.text_input,Texte
+tagname.genetic_heat_int,Fragilité
+tagname.dna_disk_uses_int,Utilisations restantes
+tagname.qualifier.current,{0} (valeur actuelle)
+tagname.qualifier.base,{0} (valeur de base)
+tagname.qualifier.default,{0} (par défaut)
+tagname.qualifier.max,{0} (max.)
+tagname.qualifier.min,{0} (min.)
+cond.text_empty,(vide)
+cond.text_other,Autre…
 layout.btn_more_width,70
 layout.editor.when_dropdown_width,190
 layout.new_schedule.btn_width,235

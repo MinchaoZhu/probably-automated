@@ -131,6 +131,8 @@ kind.feces_medium,Animal Feces
 kind.feces_small,Animal Feces (Small)
 kind.fillerweed,Fillerweed
 kind.fillerweed_seed,Fillerweed Seed
+kind.hydroreed_seed,Hydroreed Seed
+kind.plant_dna_disk,DNA Data Disk
 kind.fish_scrap,Fish Scrap
 kind.hydroponic,Hydroponic System
 kind.industrial_fish_feed,Industrial Fish Feed
@@ -199,6 +201,9 @@ slot.output,Output
 slot.power,Battery
 slot.recipe,Recipe
 slot.seed,Seed
+slot.input_disk,Trait disk
+slot.output_disk,Blank disk
+slot.eject,Output
 slot.storage,Storage
 slot.tank,Tank
 slot.trap,Trap
@@ -417,6 +422,8 @@ sim.desc.rat,"{0} rat #{1} ({2}g, {3} days{4}{5})"
 sim.duration,Duration
 sim.empty,Empty
 sim.fail.dest_full,{0} is full
+sim.fail.locked,{0} is being processed in a machine and cannot be taken out
+sim.dna.rank,{0} {1}
 sim.fail.no_effect,No change
 sim.fail.simulated,Already processed in preview (effect unknown)
 sim.group_stats,{0} / {1} AP · ×{2}
@@ -446,6 +453,8 @@ sim.run_1_day,1 Day
 sim.run_1_shift,1 Shift
 sim.run_3_days,3 Days
 sim.run_7_days,7 Days
+sim.run_14_days,14 Days
+sim.run_28_days,28 Days
 sim.schedule,Routine
 sim.search_placeholder,Name or ID
 sim.sex.female,Female
@@ -1071,6 +1080,15 @@ handbook.p3.text_param,"Named numerical values, e.g. ""Battery Swap Threshold 30
 handbook.p3.text_range,"Whole shop, specific label, or another filter; multiple can be added. ""Contents"" refers to contained items; ""Itself"" refers to container/machine itself (e.g. [Hydroponics] itself with condition ""has slot"" selects idle hydroponics)."
 handbook.p3.text_scope,"Filters search the whole shop by default (items you own, excluding items for sale). To target specific bays, machines, or containers, name them using the Blue Labeler (e.g. ""Hydro Storage"") or via ""＋ Name..."" in the routine editor. Multiple objects can share the same name."
 handbook.p3.tip_name,You can directly select custom names ([Name]) as filter target without creating a filter!
+handbook.p3.tip_tags,"Game Tags use the game's own names; a tag an item does not have counts as 0, so a seed without a trait has it at rank 0."
+handbook.pdna.banner,Examples: Plant Traits
+handbook.pdna.title_disk,Gene Disks:
+handbook.pdna.text_disk,"Two extractors take Purifying from Hydroreed Seeds and Nutrient-Poor from Fillerweed Seeds; written disks go to [Gene Bank], and extraction stops once enough are in stock. Using a Precision Extraction Module on a written disk locks it to that trait."
+handbook.pdna.title_edit,Gene Editing:
+handbook.pdna.text_edit,Writes Purifying into the seed in the target slot of [Trait Writer] until the target rank or the heat cap. A seed without a trait counts as rank 0.
+handbook.pdna.title_breed,Gene Breeding:
+handbook.pdna.text_breed,"Heat only resets through breeding: after writing, the seed goes to [Breeding Hydroponics], and the harvested offspring returns to the writer with 0 heat. Each rank of Nutrient-Poor lowers complexity by 2, offsetting the +3 per rank of Purifying."
+handbook.pdna.tip,"Success chance = 95 − 5 × (complexity + heat) + machine quality bonus, at least 5%. Every write or extraction raises the heat, success or not."
 handbook.p3.title_filter,Filters:
 handbook.p3.title_param,Parameters:
 handbook.p3.title_range,Scope:
@@ -1248,6 +1266,8 @@ names.kind.water_filter_adv,Advanced Water Filter
 names.kind.water_jug,Water Jug
 names.kind.wire_cutter,Wire Cutter
 names.prop.has,{0} (Presence)
+names.prop.has_yes,Has {0}
+names.prop.has_no,Lacks {0}
 names.prop.liq,Contains {0} (ml)
 names.prop.mark,Mark [{0}]
 names.prop.pct,{0} %
@@ -1323,6 +1343,40 @@ example.hydro.sel.ready,Idle hydroponic units
 example.hydro.sel.seed,One seed
 example.hydro.sel.tablets,Nutrient tablets
 example.hydro.store,Hydroponics Storage
+example.dna.device.extract_pur,Purifying Extractor
+example.dna.device.extract_np,Nutrient-Poor Extractor
+example.dna.device.writer,Trait Writer
+example.dna.device.hydro,Breeding Hydroponics
+example.dna.store,Gene Bank
+example.dna.param.target,Target rank
+example.dna.param.target.hint,Stop writing once Purifying reaches this rank
+example.dna.param.heat,Heat cap
+example.dna.param.heat.hint,Stop writing once the seed's heat reaches this value
+example.dna.prop.eff,Hydroreed effective complexity
+example.dna.sel.output,{0} output
+example.dna.sel.target_slot,{0} target slot
+example.dna.sel.blank_slot,{0} blank disk slot
+example.dna.sel.disk_slot,{0} trait disk slot
+example.dna.sel.seed_slot,{0} seed slot
+example.dna.sel.water_slot,{0} water slot
+example.dna.sel.stock,{0} disks in stock
+example.dna.sel.raw,{1} with {0}
+example.dna.sel.blank,One blank disk
+example.dna.sel.disk,One {0} disk
+example.dna.sel.writable,Writable seed
+example.dna.sel.child,Harvested offspring
+example.dna.sel.first,Starting target
+example.dna.sel.can_write,Seed ready for {0}
+example.dna.sel.breed,Seed ready for breeding
+example.dna.rule.collect,Collect {0} disks
+example.dna.rule.load_seed,Load {0}
+example.dna.rule.load_blank,Load blank disk into {0}
+example.dna.rule.write,Write {0}
+example.dna.rule.child,Load offspring
+example.dna.rule.harvest,Store harvest
+example.dna.rule.first,Load starting target
+example.dna.rule.breed,Send to breed
+example.dna.rule.water,Insert water bottle
 example.ranch.rule.auto_blend,Enable auto-blend
 example.ranch.rule.butcher_dead,Butcher dead rats
 example.ranch.rule.cull,Cull rats
@@ -1357,6 +1411,12 @@ example.spec.tidy.name,Tidy Up
 example.spec.tidy.note,Sort loose medicine and food into [Medicine Storage] and [Food Storage] (multiple storage bays can share the same name)
 example.spec.water.name,Water Vending
 example.spec.water.note,"Print water bottles, collect water, purify to base water, bottle and stock, and collect vending cash"
+example.spec.dna_disk.name,Gene Disks
+example.spec.dna_disk.note,"[Purifying Extractor] and [Nutrient-Poor Extractor] extract traits from Hydroreed Seeds and Fillerweed Seeds; written disks go to [Gene Bank], and extraction stops once enough are in stock. Each extractor needs a Precision Extraction Module set to its trait"
+example.spec.dna_edit.name,Gene Editing
+example.spec.dna_edit.note,Writes Purifying into the seed in the target slot of [Trait Writer] until the target rank or the heat cap is reached
+example.spec.dna_breed.name,Gene Breeding
+example.spec.dna_breed.note,"[Trait Writer] writes Purifying and Nutrient-Poor; when the heat is too high the seed goes to [Breeding Hydroponics], and the harvested offspring returns to the writer, until the target rank. Disks come from Gene Disks"
 example.tidy.rule.food,Sort food
 example.tidy.rule.medical,Sort medicine
 example.tidy.sel.loose_food,Loose food to sort
@@ -1398,6 +1458,15 @@ rule.when_arrow,When {0} → {1}
 cond.equal,Equals
 cond.not_equal,Does not equal
 cond.text_input,Text
+tagname.genetic_heat_int,Heat
+tagname.dna_disk_uses_int,Uses remaining
+tagname.qualifier.current,Current {0}
+tagname.qualifier.base,Base {0}
+tagname.qualifier.default,Default {0}
+tagname.qualifier.max,Max {0}
+tagname.qualifier.min,Min {0}
+cond.text_empty,(empty)
+cond.text_other,Other…
 layout.btn_more_width,78
 layout.editor.when_dropdown_width,180
 layout.new_schedule.btn_width,160

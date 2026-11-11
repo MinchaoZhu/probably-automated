@@ -29,7 +29,7 @@ internal static class FakeGame
         {
             if (key == "item_serum_red_name") return "Translation Error 'item_serum_red_name' in Item";
             if (key == "item_serum_green_name") return "Translation Error 'item_serum_green_name' in Item";
-            if (key == "item_plant_dna_disk_name") return "No translation found for 'item_plant_dna_disk_name' in 'Item'";
+            if (key == "item_test_no_key_item_name") return "No translation found for 'item_test_no_key_item_name' in 'Item'";
             if (key == "husbandry_rat_name") return AutoMod.Domain.L.Locale == "zh" ? "老鼠" : "Rat";
             if (key == "item_water_filter_name") return AutoMod.Domain.L.Locale == "zh" ? "滤芯" : "Water Filter";
             if (key == "item_storage_bay_large_name") return AutoMod.Domain.L.Locale == "zh" ? "储藏区（扩建）" : "Storage (Expansion)";

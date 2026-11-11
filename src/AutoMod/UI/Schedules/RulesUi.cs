@@ -234,5 +234,26 @@ public static class RulesUi
 
     public static string PropName(string id) => AutoMod.Domain.Rules.Text.PropName(D, id);
 
+    private static readonly Dictionary<string, (float at, List<string> values)> TextValueCache = new();
+
+    /// <summary>文字属性在店里出现过的值（条件的下拉选项），按字母排；品质等级名再补上整张等级表。几秒内重复问用缓存。</summary>
+    public static List<string> TextValues(string prop)
+    {
+        if (prop == null || !GameApi.InStore) return new List<string>();
+        float now = UnityEngine.Time.realtimeSinceStartup;
+        if (TextValueCache.TryGetValue(prop, out var hit) && now - hit.at < 3f) return hit.values.ToList();
+        var set = new SortedSet<string>(StringComparer.Ordinal);
+        try
+        {
+            foreach (var it in GameApi.CollectAll())
+                if (PropBindings.Get(it, prop).Str is { } v) set.Add(v);
+            if (prop.StartsWith("qt:") && Quality.Grades("q:" + prop[3..]) is { } grades) set.UnionWith(grades);
+        }
+        catch { }
+        var list = set.ToList();
+        TextValueCache[prop] = (now, list);
+        return list.ToList();
+    }
+
     public static int IndexOf<T>(IList<T> list, Func<T, bool> pred) => Ui.IndexOf(list, pred);
 }

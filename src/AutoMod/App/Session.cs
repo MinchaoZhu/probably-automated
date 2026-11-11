@@ -39,6 +39,10 @@ public static class Session
         Catalog.KindName = k => Names.Kind(k);
         Catalog.FamilyName = TraitBindings.FamilyName;
         Catalog.PropNameHook = GameName.Prop;
+        TagNames.GameText = GameName.Label;
+        TagNames.GameFormat = GameName.Format;
+        TagNames.LiquidName = id => Names.LiquidName(id) is { } n && n != id ? n : null;
+        TagNames.BuiltinName = PropBindings.BuiltinName;
         Catalog.GradeShortNameHook = Quality.GradeShortName;
         Catalog.GradeNames = prop => Quality.Grades(prop) is { Count: > 0 } g ? g : null;
         SlotNames.NamedKinds = name => World.Named(name).Select(x => ((GameItem)x).identifier);

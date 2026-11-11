@@ -41,6 +41,133 @@ internal static class Program
         var en = LocTests.LoadTable("en");
         AutoMod.Domain.L.Use("zh", zh, en);
 
+        Test("游戏标签取名：同名条目、变体、生成的特性、对照表", () =>
+        {
+            var game = new Dictionary<string, string>
+            {
+                ["plant_trait_purifying_name"] = "净化水质",
+                ["mech_gun_firepower"] = "火力",
+                ["plant_stat_harvest_quantity"] = "收获数量",
+                ["mech_container_tooltip"] = "双击以打开",   // 说明句的条目不当名字
+                ["plant_stat_durability"] = "收获物耐久度",
+            };
+            TagNames.GameText = k => game.TryGetValue(k, out var v) ? v : null;
+            TagNames.GameFormat = k => k == "mech_dna_production_name" ? "产出{0}" : null;
+            TagNames.LiquidName = id => id == "dream_cap_mush" ? "梦帽菇糊" : null;
+            TagNames.BuiltinName = k => k == "DURABILITY_TAG" ? "耐久度" : null;
+            TagNames.ClearCache();
+            try
+            {
+                Check(TagNames.Name("PLANT_TRAIT_purifying") == "净化水质", "PLANT_TRAIT_x → plant_trait_x_name");
+                Check(TagNames.Name("GUN_FIREPOWER_TAG") == "火力", "去掉 _TAG 后在 mech_ 下找到");
+                Check(TagNames.Name("HARVEST_QUANTITY") == "收获数量", "plant_stat_ 命名空间");
+                Check(TagNames.Name("GUN_CURRENT_FIREPOWER_TAG") == "当前火力", "去掉 CURRENT 后有名字：当前 + 名字");
+                Check(TagNames.Name("DEFAULT_DURABILITY_TAG") == "默认耐久度", "变体用内置属性的名字，不撞植物属性条目");
+                Check(TagNames.Name("DURABILITY_TAG") == "耐久度", "内置属性的名字优先于游戏条目");
+                Check(TagNames.Name("PLANT_TRAIT_production_dream_cap_mush") == "产出梦帽菇糊", "生成的特性：产出 + 液体名");
+                Check(TagNames.Name("GENETIC_HEAT_INT") == "热度", "游戏只在整句里提到的用 mod 对照表");
+                Check(TagNames.Name("CONTAINER_TOOLTIP_TAG") == null, "说明句（_tooltip）不当名字");
+                Check(TagNames.Name("FISH_KCAL_EATEN_TAG") == null, "找不到为空（显示原始键名）");
+                Check(TagNames.Name("CURRENT_UNKNOWN_TAG") == null, "去掉修饰词后也没名字的变体为空");
+            }
+            finally
+            {
+                TagNames.GameText = TagNames.GameFormat = TagNames.LiquidName = TagNames.BuiltinName = _ => null;
+                TagNames.ClearCache();
+            }
+        });
+
+        Test("游戏标签的数字：物品上没有这个标签按 0 算", () =>
+        {
+            var w = FakeGame.Install(new AutoMod.Domain.Simulation.SimWorld());
+            var bay = w.AddRoot("storage", 1, "种子库");
+            var with = w.Add(bay, "other", x => { x.Kind = "fillerweed_seed"; x.Num["tag:PLANT_TRAIT_nutrient_poor"] = 2; });
+            var without = w.Add(bay, "other", x => x.Kind = "fillerweed_seed");
+            var d = new RulesData();
+            d.Selectors.Add(new SelectorDef { Id = "low", Name = "营养匮乏不到 3", From = { Places.Shop }, Kind = "fillerweed_seed",
+                Where = new CondGroup { Items = { Cond.Cmp("tag:PLANT_TRAIT_nutrient_poor", "<", Expr.Of(3)) } } });
+            d.Selectors.Add(new SelectorDef { Id = "none", Name = "没有营养匮乏", From = { Places.Shop }, Kind = "fillerweed_seed",
+                Where = new CondGroup { Items = { Cond.Cmp("tag:PLANT_TRAIT_nutrient_poor", "=", Expr.Of(0)) } } });
+            Check(Eval.List(new EvalCtx(w, d), "low").Count == 2, "没有标签的种子也满足 < 3");
+            Check(Eval.List(new EvalCtx(w, d), "none").Count == 1, "没有标签 = 0");
+            d.Properties.Add(new PropertyDef { Id = "p", Name = "复杂度", ItemKind = "fillerweed_seed",
+                Formula = new Expr { Terms = { Term.N(-2), Term.Own("tag:PLANT_TRAIT_nutrient_poor") }, Ops = { "*" } } });
+            Check(Eval.Prop(new EvalCtx(w, d), without, "p") == 0, "公式里缺的标签按 0 算，结果不为空");
+        });
+
+        Test("模拟器：DNA 编辑器写入、提取，水培子代继承特性", () =>
+        {
+            var w = new AutoMod.Domain.Simulation.SimWorld(3);
+            var g = w.Genetics;
+            g.Traits.Add(new AutoMod.Domain.Simulation.SimTrait { Id = "purifying", Complexity = 3, MaxRank = int.MaxValue, Exclusive = "water_quality" });
+            g.Traits.Add(new AutoMod.Domain.Simulation.SimTrait { Id = "polluting", Complexity = -2, MaxRank = int.MaxValue, Exclusive = "water_quality", Negative = true });
+            g.Traits.Add(new AutoMod.Domain.Simulation.SimTrait { Id = "nutrient_poor", Complexity = -2, MaxRank = int.MaxValue, Exclusive = "nutrition", Negative = true });
+            g.Traits.Add(new AutoMod.Domain.Simulation.SimTrait { Id = "dense", Complexity = 3, MaxRank = int.MaxValue });
+            g.Innate["hydroreed_seed"] = new() { ["purifying"] = 4, ["dense"] = 1 };
+            AutoMod.Domain.Simulation.SimItem Machine(string kind)
+            {
+                var m = w.AddRoot("other"); m.Kind = kind; m.Capacity = 20; m.HasBatterySlot = true; m.Num["speed"] = 10; m.Num["dnaQuality"] = 100;
+                w.Add(m, "other", x => x.Kind = "current_converter", batterySlot: true, force: true);
+                return m;
+            }
+            AutoMod.Domain.Simulation.SimItem Put(AutoMod.Domain.Simulation.SimItem m, string kind, string slot, System.Action<AutoMod.Domain.Simulation.SimItem> tweak = null)
+            {
+                var x = w.Add(m, "other", y => { y.Kind = kind; tweak?.Invoke(y); }, force: true); x.InSlot = "slot:" + slot; return x;
+            }
+            void Reed(AutoMod.Domain.Simulation.SimItem y) { y.Str["plantId"] = "hydroreed_seed"; y.Num["tag:PLANT_TRAIT_purifying"] = 4; y.Num["tag:PLANT_TRAIT_dense"] = 1; y.Num["tag:GENETIC_HEAT_INT"] = 0; y.TraitsOverride = new() { "seed" }; }
+
+            // 写入：成功率按品质加成拉到 100，复杂度 0 → 进度 20，速度 10 → 两晚
+            var writer = Machine("plant_dna_manipulator");
+            var seed = Put(writer, "hydroreed_seed", "seed", Reed);
+            var disk = Put(writer, "plant_dna_disk", "input_disk", y => { y.Str[AutoMod.Domain.Simulation.SimWorld.DiskTraitTag] = "purifying"; y.Num[AutoMod.Domain.Simulation.SimWorld.DiskUsesTag] = 4; });
+            Check(w.Num(seed, "has:PLANT_TRAIT_purifying") == 1 && w.Num(seed, "has:PLANT_TRAIT_polluting") == 0, "has: 按标签在不在算");
+            w.Night();
+            Check(writer.N("working") == 1 && seed.N("locked") == 1, "第一晚开工，种子锁住");
+            var bay = w.AddRoot("other"); bay.Capacity = 10;
+            Check(!w.Place(seed, bay).Ok, "加工中的种子拿不出来");
+            w.Night();
+            Check(AutoMod.Domain.Simulation.SimWorld.Rank(seed, "purifying") == 5, "第二晚写入完成，净化水质 4 → 5");
+            Check(seed.N("tag:GENETIC_HEAT_INT") == 5, "热度 +2+复杂度 3");
+            Check(disk.N(AutoMod.Domain.Simulation.SimWorld.DiskUsesTag) == 3 && disk.InSlot == "slot:eject", "盘用掉一次、弹到输出格");
+            Check(w.Traits(seed).Contains(AutoMod.Domain.Simulation.SimWorld.ModifiedSeedType), "特性和先天不同 → 改良种子");
+            Check(writer.N("working") == 0 && seed.N("locked") != 1, "做完回到就绪、解锁");
+            Check(w.Complexity(seed) == 3, "复杂度 = 3 ×（5 − 4）");
+            // 下一次写入：复杂度 3 + 热度 5 → 进度 52，6 晚
+            disk.InSlot = "slot:input_disk";
+            for (int i = 0; i < 5; i++) w.Night();
+            Check(AutoMod.Domain.Simulation.SimWorld.Rank(seed, "purifying") == 5 && writer.N("working") == 1, "热度高了进度变长，5 晚还没做完");
+            w.Night();
+            Check(AutoMod.Domain.Simulation.SimWorld.Rank(seed, "purifying") == 6 && seed.N("tag:GENETIC_HEAT_INT") == 10, "第 6 晚做完：净化水质 6、热度 10");
+
+            // 互斥：有净化水质时写不进污染水质，机器不开工
+            var w2 = Put(writer, "plant_dna_disk", "input_disk", y => y.Str[AutoMod.Domain.Simulation.SimWorld.DiskTraitTag] = "polluting");
+            disk.InSlot = "slot:eject";
+            w.Night();
+            Check(writer.N("working") == 0, "互斥的特性写不进去，不开工");
+            w.Remove(w2);
+
+            // 提取：精准模组锁定净化水质，没有稳定模组 → 原料销毁，盘写上净化水质、次数 = 先天等级 4
+            var ex = Machine("plant_dna_manipulator");
+            Put(ex, "dna_manipulator_module_precision", "module", y => y.Str["str:DNA_PRECISION_TRAIT_STRING"] = "purifying");
+            var raw = Put(ex, "hydroreed_seed", "seed", Reed);
+            var blank = Put(ex, "plant_dna_disk", "output_disk", y => y.Str[AutoMod.Domain.Simulation.SimWorld.DiskTraitTag] = "");
+            w.Night(); w.Night();
+            Check(w.Exists(raw) == false, "没有稳定模组，提取后原料种子没了");
+            Check(blank.Str[AutoMod.Domain.Simulation.SimWorld.DiskTraitTag] == "purifying" && blank.N(AutoMod.Domain.Simulation.SimWorld.DiskUsesTag) == 4, "盘写上净化水质，4 次");
+            Check(blank.InSlot == "slot:eject", "写好的盘弹到输出格");
+
+            // 水培：返还种子的作物收获时放一颗子代，继承特性、热度清零
+            var hydro = Machine("hydroponic");
+            seed.Parent.Children.Remove(seed); seed.Parent = null;
+            w.Attach(seed, hydro, false); seed.InSlot = "slot:seed"; seed.Num["growRequired"] = 8; seed.Num["seedReturn"] = 1; seed.Num["harvestQty"] = 1; seed.Str["harvestKind"] = "hydroreed";
+            w.Night();
+            var child = hydro.Children.FirstOrDefault(c => c.Kind == "hydroreed_seed");
+            Check(child != null && child.InSlot == "slot:output", "收获出一颗子代在产出格");
+            Check(child != null && AutoMod.Domain.Simulation.SimWorld.Rank(child, "purifying") == 6 && child.N("tag:GENETIC_HEAT_INT") == 0, "子代继承净化水质 6，热度 0");
+            Check(child != null && w.Traits(child).Contains(AutoMod.Domain.Simulation.SimWorld.ModifiedSeedType), "子代仍是改良种子");
+            Check(!w.Exists(seed), "母株收获后没了");
+        });
+
         Test("槽位：放入指定标签页", () =>
         {
             var w = FakeGame.Install(new AutoMod.Domain.Simulation.SimWorld());

@@ -130,6 +130,7 @@ public static class HandbookPages
             Steps(Domain.L.T("handbook.p3.steps_pick")),
             Entry("handnote", Domain.L.T("handbook.p3.title_param"), Domain.L.T("handbook.p3.text_param")),
             Steps(Domain.L.T("handbook.p3.steps_conds")),
+            Tip(Domain.L.T("handbook.p3.tip_tags")),
         },
         // 4 任务和动作
         new()
@@ -164,6 +165,15 @@ public static class HandbookPages
             Entry("printer", Domain.L.T("handbook.p6.title_print"), Domain.L.T("handbook.p6.text_print")),
             Entry("vending_fountain", Domain.L.T("handbook.p6.title_vending"), Domain.L.T("handbook.p6.text_vending")),
             Tip(Domain.L.T("handbook.p6.tip")),
+        },
+        // 示例：植物特性（DNA 编辑器）
+        new()
+        {
+            Banner(Domain.L.T("handbook.pdna.banner"), Brown),
+            Entry("plant_dna_disk", Domain.L.T("handbook.pdna.title_disk"), Domain.L.T("handbook.pdna.text_disk")),
+            Entry("plant_dna_manipulator", Domain.L.T("handbook.pdna.title_edit"), Domain.L.T("handbook.pdna.text_edit")),
+            Entry("hydroponic", Domain.L.T("handbook.pdna.title_breed"), Domain.L.T("handbook.pdna.text_breed")),
+            Tip(Domain.L.T("handbook.pdna.tip")),
         },
         // 7 预演和报告
         new()
