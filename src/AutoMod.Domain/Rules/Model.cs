@@ -21,11 +21,31 @@ public class RulesData
     public List<Schedule> Schedules { get; set; } = new();
 }
 
-/// <summary>参数：一个有名字的数（换电阈值 30%），条件、数量里引用，排班卡片上直接改。</summary>
+/// <summary>参数的类型：数值（默认）、设备（值是一个设备名）、列表（值是一个筛选器）。</summary>
+public static class ParamType
+{
+    public const string Number = null;
+    public const string Device = "device";
+    public const string List = "list";
+}
+
+/// <summary>
+/// 参数：有名字的值，排班卡片上直接改。数值（换电阈值 30%）在条件、数量里引用；设备（写入机 =【芦苇写入机】）、
+/// 列表（目标基因盘 = 一张净化水质盘）在任务、筛选器里当设备名 / 筛选器用。流程被别的流程执行时，本流程参数可以由调用方覆盖。
+/// </summary>
 public class ObjectDef
 {
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
+
+    /// <summary>类型：为空 = 数值；ParamType.Device / List。</summary>
+    public string Type { get; set; }
+
+    /// <summary>设备、列表参数的值：设备名引用（"#名字"）或筛选器 Id。</summary>
+    public string Ref { get; set; }
+
+    /// <summary>设备或列表参数（值是引用，不是数）。</summary>
+    [Newtonsoft.Json.JsonIgnore] public bool IsRef => Type is ParamType.Device or ParamType.List;
 
     /// <summary>所属排班的 Id；为空 = 共用。</summary>
     public string Owner { get; set; }
@@ -273,7 +293,10 @@ public static class ActVerb
     public const string Unmark = "unmark";
     public const string Note = "note";
 
-    public static readonly string[] All = { Move, Swap, Use, Activate, Toggle, Press, Mark, Unmark, Note };
+    /// <summary>执行流程：把另一个流程的任务按顺序做一遍（子流程），可以覆盖它的子流程参数。</summary>
+    public const string Call = "call";
+
+    public static readonly string[] All = { Move, Swap, Use, Activate, Toggle, Press, Mark, Unmark, Note, Call };
 }
 
 /// <summary>
@@ -310,4 +333,20 @@ public class ActionDef
 
     /// <summary>标记名称。</summary>
     public string Text { get; set; }
+
+    /// <summary>执行流程：被调用的流程 Id。</summary>
+    public string Flow { get; set; }
+
+    /// <summary>执行流程：覆盖的子流程参数（没列的用默认值）。</summary>
+    public List<CallArg> Args { get; set; }
+}
+
+/// <summary>调用时覆盖被调用流程的一个本流程参数：设备、列表换成调用方的设备名、筛选器或参数（Ref），数值换成 Num。</summary>
+public class CallArg
+{
+    /// <summary>被调用流程的本流程参数 Id。</summary>
+    public string Param { get; set; } = "";
+
+    public string Ref { get; set; }
+    public double? Num { get; set; }
 }

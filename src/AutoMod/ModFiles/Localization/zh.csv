@@ -20,6 +20,7 @@ vocab.sys.shift.short,当前班次
 # Placeholders: none.
 # ==============================================================================
 op.activate,激活
+op.call,执行流程
 op.mark,添加标记
 op.move,放入
 op.note,记录
@@ -177,6 +178,7 @@ eval.from.contents,{0}内的物品
 eval.from.self,{0} 本身
 eval.from.slot,{0} 的{1}
 eval.no_named,店内没有【{0}】
+eval.empty_arg,调用方传入的「{0}」为空
 eval.slot.battery,电池槽
 eval.slot.filter,滤芯槽
 slot.backpack,背包
@@ -231,8 +233,10 @@ card.param.toslot,槽位
 card.param.tool,工具
 card.select_button,（选择按钮）
 card.select_param,（选择{0}）
+card.select_flow,（选择流程）
 card.times,（每件 {0} 次）
 card.tpl.apply,用 {tool} {op} {list}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}：
 card.tpl.cond_colon,{cond}：
 card.tpl.mark,为 {list} {op}【{text}】
@@ -248,6 +252,8 @@ card.tpl.when,当 {list} {cond} 时：
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,激活 {0}
+action.call,执行流程【{0}】
+action.call_arg,{0} = {1}
 action.mark,为 {0} 添加标记【{1}】
 action.move,将 {0} 放入 {1}
 action.note.add,将 {0} 累加到 {1}
@@ -314,6 +320,7 @@ text.unset,（未选择）
 # ==============================================================================
 check.err.def_missing,引用的定义不存在
 check.err.expr_const_missing,表达式引用的参数不存在或未选择
+check.err.expr_const_not_number,参数「{0}」不是数值
 check.err.expr_empty,表达式存在空项
 check.err.expr_note_missing,表达式引用的计数器不存在或未选择
 check.err.expr_note_scope,此处不能使用计数器
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,未知的系统变量“{0}”
 check.err.prop_cycle,自定义属性不能引用其他自定义属性
 check.err.prop_prefix,属性“{0}”：{1}
 check.err.rule_mark_empty,未填写标记名称
+check.err.param_no_value,参数「{0}」未选择值
+check.err.call_no_flow,未选择要执行的流程
+check.err.call_missing,要执行的流程已删除
+check.err.call_cycle,「{0}」会再执行回这个流程
+check.err.call_depth,子流程嵌套超过 {0} 层
+check.err.call_arg_missing,子流程参数「{0}」传入的筛选器已删除
 check.err.rule_move_no_to,“放入”未选择目标
 check.err.rule_move_not_box,放入的目标须为容器：「{0}」不是容器
 check.err.rule_no_actions,未设置动作
@@ -352,6 +365,7 @@ check.err.sel_prefix,筛选器“{0}”：{1}
 check.err.sel_preset_missing,用到的预设条件不存在
 check.err.sel_prop_empty,未选择属性
 check.ref.prop,属性 {0}
+check.ref.param,参数 {0}
 check.ref.selector,筛选器 {0}
 check.warn.sel_all_shop,「{0}」是全店的全部物品，将处理店内所有物品（包括机器中的电池）
 check.warn.sel_itself,【{0}】指该容器本身；如需处理其中的物品，请使用来源为【{0}】的筛选器
@@ -455,6 +469,7 @@ sim.run_3_days,3 天
 sim.run_7_days,7 天
 sim.run_14_days,14 天
 sim.run_28_days,28 天
+sim.sub_rule,└ {0}
 sim.schedule,流程
 sim.search_placeholder,名称或 ID
 sim.sex.female,雌
@@ -562,6 +577,8 @@ report.step.moved_to,移至 {0}
 report.summary_override,学徒{0}：{1}
 report.text.no_ap,AP 耗尽
 report.why.no_ap,AP 不足（前面的任务已用 {0} / 共 {1} AP）
+report.sub_rule,{0} › {1}
+report.called,执行了【{0}】
 report.window.deferred,{0} 件因 AP 不足未做
 report.window.done,完成 {0} 件
 report.window.dry_run,（试运行）
@@ -749,6 +766,9 @@ schedule.no_buttons,所选机器没有按钮
 schedule.param_shared,多个流程共用
 schedule.pick_action,选择动作
 schedule.pick_button,选择按钮
+schedule.pick_flow,选择流程
+schedule.no_other_flows,没有其他流程
+schedule.del_called_note,以下流程会执行它：{0}。先在这些流程里改掉“执行流程”。
 schedule.pick_condition,执行条件
 schedule.pick_device_or_selector,选择设备名或筛选器
 schedule.pick_param,选择参数
@@ -757,6 +777,7 @@ schedule.section_devices,设备名
 schedule.section_params,流程参数
 schedule.section_rules,任务列表
 schedule.selector_suffix,（筛选器）
+schedule.param_suffix,{0}（参数）
 schedule.stats_done_items,处理 {0} 件物品
 schedule.stats_empty,暂无记录：此流程尚未执行。
 schedule.stats_issue_count,{1}（{0} 次）
@@ -782,6 +803,11 @@ editor.action_swap_with,与
 editor.action_target,目标
 editor.slot_auto,自动
 editor.action_value,数值
+editor.pick_flow_placeholder,（选择流程）
+editor.call_no_params,「{0}」没有子流程参数
+editor.tip_call_arg,不覆盖时使用默认值（{0}）。
+editor.call_default_num,默认 {0}
+editor.call_default,默认（{0}）
 editor.add_cond_tip,仅统计满足条件的物品
 editor.add_cond_title,添加条件
 editor.advanced_stats,自定义属性 {0} · 计数器 {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,自定义属性
 editor.local_in_tasks,另有 {0} 个筛选器仅用于单个任务，请在该任务中编辑
 editor.menu_device_reuse,为店内其他物品使用此名称…
 editor.menu_device_to_filter,转为筛选器…
+editor.menu_device_to_param,转为参数…
 editor.menu_new_filter,新建筛选器…
 editor.no_actions,暂无动作
 editor.no_devices,暂无。为店内物品命名后，可在筛选器和动作中直接选用。
@@ -935,6 +962,14 @@ object_dlg.scope_owner,仅「{0}」可用
 object_dlg.title_custom_prop,自定义属性
 object_dlg.title_edit,参数 · {0}
 object_dlg.title_new,新建参数
+object_dlg.type,类型
+object_dlg.type_number,数值
+object_dlg.type_device,设备
+object_dlg.type_list,列表
+object_dlg.type_locked,已被引用，不能改类型
+object_dlg.pick_value,（选择值）
+object_dlg.value_missing,请选择值。
+object_dlg.value_ref,值
 object_dlg.unit,单位
 object_dlg.unit_placeholder,g、只、天
 object_dlg.used_by_rules,被 {0} 个任务引用
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,带名称的数值，例如“换电阈值 30”。可供
 handbook.p3.text_range,全店、某个设备名或另一个筛选器，可添加多个。“内的物品”指其中的物品，“本身”指这些容器或机器本身，例如【水培机】本身加上条件“有空位”，即为空闲的水培机。
 handbook.p3.text_scope,筛选器默认在全店范围内查找，即店内归你所有的物品，不含待售商品。如需指定某个储藏区、机器或容器，可用蓝色标签打印机为其命名（例如“水培仓库”），也可在流程编辑器中选择“＋ 命名…”。多个物品可使用同一名称。
 handbook.p3.tip_name,可以直接选中自定义名称（【名称】）作为筛选条件，无需另建筛选器！
-handbook.p3.tip_tags,“游戏标签”组的名称取自游戏；物品上没有的标签按 0 计，例如种子没有某个特性即为 0 级。
+handbook.p3.tip_tags,游戏标签的名称取自游戏；物品上没有的标签按 0 计。
 handbook.pdna.banner,示例：植物特性
 handbook.pdna.title_disk,制作基因盘：
 handbook.pdna.text_disk,两台提取机分别从水培芦苇种子、填料草种子提取净化水质、营养匮乏，写好的数据盘收进【基因库】，库存够了即停。精准提取模组对一张写好的数据盘使用一次，即锁定该特性。
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,执行条件：
 handbook.p4.title_press,按按钮、激活、开关：
 handbook.p4.title_swap,交换：
 handbook.p4.title_use,使用：
+handbook.psub.banner,子流程
+handbook.psub.title_call,执行流程：
+handbook.psub.text_call,把另一个流程的任务按顺序做一遍，做完回到原处继续。本身不消耗 AP，子流程里的任务照常计 AP；AP 用完时调用方也一起停下。流程不能互相执行成环，最多嵌套 {0} 层。
+handbook.psub.title_params,参数：
+handbook.psub.text_params,参数可以是数值、设备或列表。在任务和筛选器里选参数，而不是直接选设备。流程被执行时，调用方可以覆盖它的本流程参数，不覆盖时使用参数本身的值；全局参数不能覆盖。直接指派给学徒时使用参数本身的值。
+handbook.psub.tip,同一套任务用在几组机器上：把设备设为参数，写成一个流程，再在总流程里执行几次，每次换上不同的设备。
 handbook.p5.banner_order,执行顺序
 handbook.p5.banner_swap,自动换电
 handbook.p5.steps_swap,① 交换 低电量电池（电量从低到高）与 满电电池（电量从高到低）：电量最低的换上最满的一块，换下的电池留在原处，通常就在充能器中。\n② 将储藏区中未充满的电池放入有空位的充能器。

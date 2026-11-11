@@ -44,6 +44,14 @@ public static class ExampleSetup
         return sel;
     }
 
+    /// <summary>设备名转为本流程的设备参数（这个流程里引用它的地方都改成引用参数）。</summary>
+    public static ObjectDef DeviceToParam(Schedule s, string name)
+    {
+        var p = Defs.DeviceToParam(Session.D, s, name);
+        Session.Changed();
+        return p;
+    }
+
     /// <summary>店里已经起了的设备名（去重、排序；不含游戏给料斗自动编的“#1”“#2”）。</summary>
     public static List<string> DeviceNames() =>
         GameApi.CollectAll().Select(GameApi.DeviceName).Where(n => n != null && !IsAutoNumber(n)).Distinct().OrderBy(n => n).ToList();

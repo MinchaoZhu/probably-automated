@@ -358,6 +358,7 @@ internal static class Program
         });
 
         RulesTests.Run(Test, Check);
+        SubflowTests.Run(Test, Check);
         LocTests.Run(Test, Check);
         SnapshotTest.Run(Test, Check);
         ArchitectureTests.Run(Test, Check);

@@ -20,6 +20,7 @@ vocab.sys.shift.short,Aktuelle Schicht
 # Placeholders: none.
 # ==============================================================================
 op.activate,Aktivieren
+op.call,Routine ausführen
 op.mark,Markierung hinzufügen
 op.move,Verschieben
 op.note,Erfassen
@@ -177,6 +178,7 @@ eval.from.contents,Inhalt von {0}
 eval.from.self,{0} selbst
 eval.from.slot,{1} von {0}
 eval.no_named,Kein [{0}] im Laden
+eval.empty_arg,Das vom Aufrufer übergebene „{0}“ ist leer
 eval.slot.battery,Batteriefächer
 eval.slot.filter,Filtersteckplätze
 slot.backpack,Rucksack
@@ -231,8 +233,10 @@ card.param.toslot,Slot
 card.param.tool,Werkzeug
 card.select_button,(Taste wählen)
 card.select_param,({0} wählen)
+card.select_flow,(Routine wählen)
 card.times,(je 1-mal)| (je {0}-mal)
 card.tpl.apply,{tool} auf {list} {op}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
 card.tpl.cond_colon,{cond}:
 card.tpl.mark,{op} [{text}] auf {list}
@@ -248,6 +252,8 @@ card.tpl.when,Wenn {list} {cond}:
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,{0} aktivieren
+action.call,Routine [{0}] ausführen
+action.call_arg,{0} = {1}
 action.mark,Markierung [{1}] zu {0} hinzufügen
 action.move,{0} in {1} verschieben
 action.note.add,{0} zu {1} addieren
@@ -314,6 +320,7 @@ text.unset,(nicht ausgewählt)
 # ==============================================================================
 check.err.def_missing,Referenzierte Definition existiert nicht
 check.err.expr_const_missing,Parameter im Ausdruck existiert nicht oder ist nicht ausgewählt
+check.err.expr_const_not_number,Parameter „{0}“ ist keine Zahl
 check.err.expr_empty,Ausdruck enthält leere Elemente
 check.err.expr_note_missing,Zähler im Ausdruck existiert nicht oder ist nicht ausgewählt
 check.err.expr_note_scope,Zähler kann hier nicht verwendet werden
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,Unbekannte Systemvariable „{0}“
 check.err.prop_cycle,Benutzerdefinierte Eigenschaft darf keine andere benutzerdefinierte Eigenschaft referenzieren
 check.err.prop_prefix,Eigenschaft „{0}“: {1}
 check.err.rule_mark_empty,Markierungsname nicht angegeben
+check.err.param_no_value,Für Parameter „{0}“ ist kein Wert gewählt
+check.err.call_no_flow,Keine auszuführende Routine gewählt
+check.err.call_missing,Die auszuführende Routine wurde gelöscht
+check.err.call_cycle,„{0}“ führt diese Routine erneut aus (Schleife)
+check.err.call_depth,Unterroutinen sind tiefer als {0} Ebenen verschachtelt
+check.err.call_arg_missing,Der für den Unterroutinen-Parameter „{0}“ übergebene Filter wurde gelöscht
 check.err.rule_move_no_to,Für „Verschieben“ ist kein Ziel ausgewählt
 check.err.rule_move_not_box,Ziel von Verschieben muss ein Behälter sein: „{0}“ ist kein Behälter
 check.err.rule_no_actions,Keine Aktionen festgelegt
@@ -352,6 +365,7 @@ check.err.sel_prefix,Filter „{0}“: {1}
 check.err.sel_preset_missing,Voreingestellte Bedingung existiert nicht
 check.err.sel_prop_empty,Eigenschaft nicht ausgewählt
 check.ref.prop,Eigenschaft {0}
+check.ref.param,Parameter {0}
 check.ref.selector,Filter {0}
 check.warn.sel_all_shop,„[{0}]“ umfasst alle Gegenstände im gesamten Laden; verarbeitet alles (inkl. Batterien in Maschinen)
 check.warn.sel_itself,"„[{0}]“ bezieht sich auf den Behälter selbst; um seinen Inhalt zu verarbeiten, verwende einen Filter mit Quelle [{0}]"
@@ -455,6 +469,7 @@ sim.run_3_days,3 Tage
 sim.run_7_days,7 Tage
 sim.run_14_days,14 Tage
 sim.run_28_days,28 Tage
+sim.sub_rule,└ {0}
 sim.schedule,Routine
 sim.search_placeholder,Name oder ID
 sim.sex.female,Weibchen
@@ -562,6 +577,8 @@ report.step.moved_to,Verschoben nach {0}
 report.summary_override,Lehrling {0}: {1}
 report.text.no_ap,Keine AP mehr
 report.why.no_ap,Zu wenig AP (vorherige Aufgaben verbrauchten {0} / {1} AP)
+report.sub_rule,{0} › {1}
+report.called,[{0}] ausgeführt
 report.window.deferred,1 Gegenstand übersprungen (zu wenig AP)|{0} Gegenstände übersprungen (zu wenig AP)
 report.window.done,1 Gegenstand erledigt|{0} Gegenstände erledigt
 report.window.dry_run,(Simulation)
@@ -749,6 +766,9 @@ schedule.no_buttons,Gewählte Maschine hat keine Tasten
 schedule.param_shared,Von mehreren Routinen geteilt
 schedule.pick_action,Aktion auswählen
 schedule.pick_button,Taste auswählen
+schedule.pick_flow,Routine auswählen
+schedule.no_other_flows,Keine anderen Routinen
+schedule.del_called_note,Ausgeführt von: {0}. Ändern Sie zuerst die Aktionen „Routine ausführen“ in diesen Routinen.
 schedule.pick_condition,Ausführungsbedingung
 schedule.pick_device_or_selector,Gerätename oder Filter wählen
 schedule.pick_param,Parameter auswählen
@@ -757,6 +777,7 @@ schedule.section_devices,Gerätenamen
 schedule.section_params,Parameter
 schedule.section_rules,Aufgabenliste
 schedule.selector_suffix,(Filter)
+schedule.param_suffix,{0} (Parameter)
 schedule.stats_done_items,1 Gegenstand verarbeitet|{0} Gegenstände verarbeitet
 schedule.stats_empty,Keine Aufzeichnungen: Diese Routine wurde noch nicht ausgeführt.
 schedule.stats_issue_count,{1} 1-mal|{1} {0}-mal
@@ -782,6 +803,11 @@ editor.action_swap_with,Mit
 editor.action_target,Ziel
 editor.slot_auto,Auto
 editor.action_value,Wert
+editor.pick_flow_placeholder,(Routine wählen)
+editor.call_no_params,„{0}“ hat keine Unterroutinen-Parameter
+editor.tip_call_arg,Ohne Überschreiben wird der Standardwert ({0}) verwendet.
+editor.call_default_num,Standard {0}
+editor.call_default,Standard ({0})
 editor.add_cond_tip,"Nur Gegenstände zählen, die der Bedingung entsprechen"
 editor.add_cond_title,Bedingung hinzufügen
 editor.advanced_stats,Eigene Eigenschaften {0} · Zähler {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,Benutzerdefinierte Eigenschaften
 editor.local_in_tasks,Weitere {0} Filter werden nur in einzelnen Aufgaben verwendet
 editor.menu_device_reuse,Diesen Namen für andere Objekte verwenden…
 editor.menu_device_to_filter,In Filter umwandeln…
+editor.menu_device_to_param,In Parameter umwandeln…
 editor.menu_new_filter,Neuer Filter...
 editor.no_actions,Noch keine Aktionen
 editor.no_devices,Noch keine. Benannte Gegenstände können direkt in Filtern und Aktionen gewählt werden.
@@ -935,6 +962,14 @@ object_dlg.scope_owner,Nur für „{0}“
 object_dlg.title_custom_prop,Benutzerdefinierte Eigenschaft
 object_dlg.title_edit,Parameter · {0}
 object_dlg.title_new,Neuer Parameter
+object_dlg.type,Typ
+object_dlg.type_number,Zahl
+object_dlg.type_device,Gerät
+object_dlg.type_list,Liste
+object_dlg.type_locked,In Verwendung; der Typ kann nicht geändert werden
+object_dlg.pick_value,(Wert wählen)
+object_dlg.value_missing,Wählen Sie einen Wert.
+object_dlg.value_ref,Wert
 object_dlg.unit,Einheit
 object_dlg.unit_placeholder,"z. B. g, Stk, Tage"
 object_dlg.used_by_rules,In 1 Aufgabe verwendet|In {0} Aufgaben verwendet
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,"Benannte Zahlenwerte, z. B. ""Batteriewechsel-Schwelle 3
 handbook.p3.text_range,"Gesamter Laden, ein Gerätename oder ein anderer Filter; mehrere hinzufügbar. ""Inhalt"" bezieht sich auf enthaltene Gegenstände; ""Selbst"" auf den Behälter bzw. die Maschine selbst (z. B. [Hydrokultur] selbst mit Bedingung ""hat freien Platz"" wählt freie Hydrokulturen)."
 handbook.p3.text_scope,"Filter durchsuchen standardmäßig den gesamten Laden (eigene Gegenstände, keine Verkaufsware). Um bestimmte Lager, Maschinen oder Behälter anzusprechen, benenne sie mit dem blauen Etikettierer (z. B. ""Hydro-Lager"") oder über ""＋ Benennen…"" im Routinen-Editor. Mehrere Objekte können denselben Namen teilen."
 handbook.p3.tip_name,"Du kannst benutzerdefinierte Namen ([Name]) direkt als Filterziel auswählen, ohne einen Filter zu erstellen!"
-handbook.p3.tip_tags,"Spiel-Tags tragen die Namen aus dem Spiel; ein fehlender Tag zählt als 0, ein Samen ohne Merkmal hat es also auf Stufe 0."
+handbook.p3.tip_tags,Spiel-Tags tragen die Namen aus dem Spiel; ein fehlender Tag zählt als 0.
 handbook.pdna.banner,Beispiele: Pflanzenmerkmale
 handbook.pdna.title_disk,Gen-Disks:
 handbook.pdna.text_disk,"Zwei Extraktoren gewinnen Reinigend aus Hydroschilf-Saatgut und Nährstoffarm aus Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Ein Präzisions-Extraktionsmodul, auf eine beschriebene Disk angewendet, wird auf deren Merkmal eingestellt."
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,Ausführbedingung:
 handbook.p4.title_press,"Taste drücken, Aktivieren, Umschalten:"
 handbook.p4.title_swap,Tauschen:
 handbook.p4.title_use,Verwenden:
+handbook.psub.banner,Unterroutinen
+handbook.psub.title_call,Routine ausführen:
+handbook.psub.text_call,"Führt die Aufgaben einer anderen Routine der Reihe nach aus und macht danach an derselben Stelle weiter. Die Aktion selbst kostet keine AP; Aufgaben der Unterroutine kosten wie gewohnt AP, und gehen die AP aus, stoppt auch der Aufrufer. Routinen können sich nicht im Kreis aufrufen; höchstens {0} Ebenen tief."
+handbook.psub.title_params,Parameter:
+handbook.psub.text_params,"Ein Parameter kann eine Zahl, ein Gerät oder eine Liste sein. In Aufgaben und Filtern den Parameter wählen statt des Geräts selbst. Führt eine andere Routine diese aus, kann der Aufrufer die Parameter dieser Routine überschreiben; ohne Überschreiben gilt der Wert des Parameters. Globale Parameter lassen sich nicht überschreiben. Direkt einem Lehrling zugewiesen, gelten die Werte der Parameter."
+handbook.psub.tip,"Dieselben Aufgaben für mehrere Maschinengruppen: Geräte zu Parametern machen, die Aufgaben als eine Routine anlegen und sie aus einer Hauptroutine mehrmals mit anderen Geräten ausführen."
 handbook.p5.banner_order,Ausführungsreihenfolge
 handbook.p5.banner_swap,Automatischer Batteriewechsel
 handbook.p5.steps_swap,① Tausche leere Batterien (Ladung aufsteigend) gegen volle Batterien (Ladung absteigend): Ersetzt die schwächste Batterie durch die vollste; die entnommene verbleibt in der Ladestation.\n② Lege ungeladene Batterien aus dem Lager in freie Plätze der Ladestation.

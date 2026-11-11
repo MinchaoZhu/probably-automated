@@ -245,6 +245,7 @@ public static class SelectorDialog
     private static void ScopePanel(CustomUIBuilder b, SelectorDef d, List<SelectorDef> otherItems, List<object> source)
     {
         var places = new List<(string id, string name)> { (Places.Shop, Domain.L.T("scope.shop")) };
+        places.AddRange(RulesUi.RefParams());
         places.AddRange(RulesUi.DeviceNames());
         places.AddRange(otherItems.Select(x => (x.Id, x.Name + Domain.L.T("schedule.selector_suffix"))));
         bool ItemList(string f) => SelectorFamily.IsItemList(_data, f, RulesUi.World);

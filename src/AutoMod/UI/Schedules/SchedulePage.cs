@@ -114,10 +114,18 @@ public static class SchedulePage
         var ps = AutoMod.Domain.Rules.Card.Parameters(D, s);
         if (ps.Count == 0) return;
         b.Section(Domain.L.T("schedule.section_params"));
-        for (int k = 0; k < ps.Count; k += 2)
+        // 设备、列表参数一行一个，点值换一个设备名 / 筛选器
+        foreach (var obj in ps.Where(o => o.IsRef))
+        {
+            var o = obj;
+            b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(o.Name).Width(140).Tip(Hint(o))
+                .AddButton(AutoMod.Domain.Rules.Text.ParamValue(D, o), Ui.A(() => PickParamValue(o))).End();
+        }
+        var nums = ps.Where(o => !o.IsRef).ToList();
+        for (int k = 0; k < nums.Count; k += 2)
         {
             b.BeginRow(6);
-            foreach (var obj in ps.Skip(k).Take(2))
+            foreach (var obj in nums.Skip(k).Take(2))
             {
                 var o = obj;
                 b.AddLabel(o.Name).Tip(Hint(o));
@@ -126,6 +134,17 @@ public static class SchedulePage
             }
             b.End();
         }
+    }
+
+    /// <summary>卡片上换设备 / 列表参数的值。</summary>
+    private static void PickParamValue(ObjectDef o)
+    {
+        var opts = o.Type == ParamType.Device ? RulesUi.DeviceNames() : Scope.Selectors(D, o.Owner).Where(x => !x.IsNumber).Select(x => (x.Id, x.Name)).ToList();
+        Pickers.Choose(Domain.L.T("schedule.pick_param", o.Name), opts.Select(x =>
+        {
+            string id = x.Item1;
+            return (x.Item2 + (id == o.Ref ? Current : ""), (Action)(() => { o.Ref = id; RulesUi.Changed(); Rebuild(); }));
+        }));
     }
 
     private static string Hint(ObjectDef o)
@@ -216,6 +235,15 @@ public static class SchedulePage
             case SegKind.List:
             {
                 string cur = a != null ? AutoMod.Domain.Rules.Card.Get(a, sg.Param) : r.Pre.FirstOrDefault()?.Ref;
+                foreach (var (pid, plabel) in RulesUi.RefParams())
+                {
+                    string id = pid;
+                    opts.Add((plabel + (id == cur ? Current : ""), () =>
+                    {
+                        if (a != null) AutoMod.Domain.Rules.Card.Set(a, sg.Param, id); else r.Pre[0].Ref = id;
+                        Rebuild();
+                    }));
+                }
                 foreach (var (nid, label) in RulesUi.DeviceNames())
                 {
                     string id = nid;
@@ -259,6 +287,16 @@ public static class SchedulePage
                     opts.Add((name + (id == a.ToSlot ? Current : ""), () => { a.ToSlot = target; Rebuild(); }));
                 }
                 Pickers.Choose(Domain.L.T("schedule.pick_param", AutoMod.Domain.Rules.Card.ParamName(sg.Param)), opts);
+                break;
+            }
+            case SegKind.Type when sg.Param == "flow":
+            {
+                foreach (var f in D.Schedules.Where(x => x.Id != s.Id))
+                {
+                    string id = f.Id;
+                    opts.Add((f.Name + (id == a.Flow ? Current : ""), () => { AutoMod.Domain.Rules.Card.Set(a, "flow", id); Rebuild(); }));
+                }
+                Pickers.Choose(Domain.L.T("schedule.pick_flow"), opts, opts.Count == 0 ? Tone.Dim(Domain.L.T("schedule.no_other_flows")) : null);
                 break;
             }
             case SegKind.Type when sg.Param == "button":
@@ -347,6 +385,14 @@ public static class SchedulePage
 
     private static void Delete(Schedule s)
     {
+        // 被别的流程调用时不能删：先改掉那些调用（否则那些任务没法执行）
+        var callers = Calls.Callers(D, s).Where(x => x.Id != s.Id).ToList();
+        if (callers.Count > 0)
+        {
+            Pickers.Choose(Domain.L.T("schedule.del_confirm_title", s.Name), new (string, Action)[] { (Domain.L.T("ui.ok"), () => { }) },
+                Domain.L.T("schedule.del_called_note", Domain.L.Join("list", callers.Select(x => x.Name))));
+            return;
+        }
         var runners = Automation.State.Apprentices.Where(a => a.Duties.Any(d => d.ScheduleId == s.Id)).ToList();
         var lines = new List<string>();
         int own = Scope.OwnCount(D, s);

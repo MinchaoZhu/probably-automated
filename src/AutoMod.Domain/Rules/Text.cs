@@ -178,6 +178,13 @@ public static class Text
 
     public static string Object(ObjectDef o) => L.T("text.object_def", L.Num(o.Value), o.Unit);
 
+    /// <summary>参数的定义：数值“参数 = 8级”，设备、列表“参数 = 【芦苇写入机】”。</summary>
+    public static string Object(RulesData d, ObjectDef o) => o.IsRef ? L.T("text.object_def", ParamValue(d, o), "") : Object(o);
+
+    /// <summary>参数的值：数值带单位（“8级”），设备、列表写【名字】（没选写“未选择”）。</summary>
+    public static string ParamValue(RulesData d, ObjectDef o) =>
+        !o.IsRef ? $"{o.Value:0.##}{o.Unit}" : string.IsNullOrEmpty(o.Ref) ? L.T("text.unset") : L.T("text.bracket", Name(d, o.Ref));
+
     /// <summary>
     /// 容器列表的简短写法：不多于 max 个时逐个列出；多了按名字（去掉“#2”编号）归并，最多列 max 种：
     /// “高级涡轮增压器 ×17、清洁机器人 ×4、水分收集器 ×5 等（共 34 个）”。
@@ -264,8 +271,24 @@ public static class Text
             ActVerb.Mark => L.T("action.mark", Lname, a.Text),
             ActVerb.Unmark => L.T("action.unmark", Lname, a.Text),
             ActVerb.Note => L.T(a.NoteMode == "set" ? "action.note.set" : "action.note.add", Expr(d, a.Value, s), s.Notepad.FirstOrDefault(n => n.Id == a.Note)?.Name ?? L.T("text.unset")),
+            ActVerb.Call => CallText(d, a),
             _ => a.Verb,
         };
+    }
+
+    /// <summary>“执行流程【X】（水培机 = 【Y】，目标等级 = 5）”：只写覆盖了的子流程参数。</summary>
+    public static string CallText(RulesData d, ActionDef a)
+    {
+        var callee = Calls.Callee(d, a);
+        if (callee == null) return L.T("action.call", L.T("text.unset"));
+        return L.T("action.call", callee.Name) + CallArgsText(d, callee, a);
+    }
+
+    /// <summary>覆盖了的子流程参数（“（水培机 = 【Y】）”）；都用默认值时为空。</summary>
+    public static string CallArgsText(RulesData d, Schedule callee, ActionDef a)
+    {
+        var args = Calls.Overrides(d, callee, a);
+        return args.Count == 0 ? "" : L.T("text.paren", L.Join("list", args.Select(x => L.T("action.call_arg", Calls.ParamName(d, x.Param), Calls.ArgText(d, callee, x)))));
     }
 
     /// <summary>规则摘要：前提：… → 动作；动作</summary>

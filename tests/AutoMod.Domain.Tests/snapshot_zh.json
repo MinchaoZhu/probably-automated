@@ -681,6 +681,7 @@
   "catalog.op.mark": "添加标记",
   "catalog.op.unmark": "移除标记",
   "catalog.op.note": "记录",
+  "catalog.op.call": "执行流程",
   "text.ap.1": "已用 11 / 共 25 AP",
   "text.ap.2": "已用 0 / 共 40 AP",
   "text.members.short": "箱子1、箱子2",

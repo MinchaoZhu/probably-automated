@@ -20,6 +20,7 @@ vocab.sys.shift.short,Current shift
 # Placeholders: none.
 # ==============================================================================
 op.activate,Activate
+op.call,Run routine
 op.mark,Add mark
 op.move,Move
 op.note,Record
@@ -177,6 +178,7 @@ eval.from.contents,Contents of {0}
 eval.from.self,{0} itself
 eval.from.slot,{1} of {0}
 eval.no_named,No [{0}] in shop
+eval.empty_arg,"""{0}"" passed by the caller is empty"
 eval.slot.battery,Battery slots
 eval.slot.filter,Filter slots
 slot.backpack,Backpack
@@ -231,8 +233,10 @@ card.param.toslot,Slot
 card.param.tool,Tool
 card.select_button,(choose button)
 card.select_param,(choose {0})
+card.select_flow,(choose routine)
 card.times," (once each)| ({0} times each)"
 card.tpl.apply,{op} {tool} on {list}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
 card.tpl.cond_colon,{cond}:
 card.tpl.mark,{op} [{text}] on {list}
@@ -248,6 +252,8 @@ card.tpl.when,When {list} {cond}:
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,Activate {0}
+action.call,Run routine [{0}]
+action.call_arg,{0} = {1}
 action.mark,Add mark [{1}] to {0}
 action.move,Move {0} to {1}
 action.note.add,Add {0} to {1}
@@ -314,6 +320,7 @@ text.unset,(not selected)
 # ==============================================================================
 check.err.def_missing,Referenced definition does not exist
 check.err.expr_const_missing,Parameter in expression does not exist or not selected
+check.err.expr_const_not_number,"Parameter ""{0}"" is not a number"
 check.err.expr_empty,Expression has empty terms
 check.err.expr_note_missing,Counter in expression does not exist or not selected
 check.err.expr_note_scope,Counter cannot be used here
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,"Unknown system variable ""{0}"""
 check.err.prop_cycle,Custom property cannot reference another custom property
 check.err.prop_prefix,"Property ""{0}"": {1}"
 check.err.rule_mark_empty,Mark name not specified
+check.err.param_no_value,"Parameter ""{0}"" has no value selected"
+check.err.call_no_flow,No routine selected to run
+check.err.call_missing,The routine to run has been deleted
+check.err.call_cycle,"""{0}"" runs this routine again (loop)"
+check.err.call_depth,Subroutines nested more than {0} levels deep
+check.err.call_arg_missing,"The filter passed for subroutine parameter ""{0}"" has been deleted"
 check.err.rule_move_no_to,"""Move"" has no target selected"
 check.err.rule_move_not_box,"Target of Move must be a container: ""{0}"" is not a container"
 check.err.rule_no_actions,No actions set
@@ -352,6 +365,7 @@ check.err.sel_prefix,"Filter ""{0}"": {1}"
 check.err.sel_preset_missing,Preset condition does not exist
 check.err.sel_prop_empty,Property not selected
 check.ref.prop,Property {0}
+check.ref.param,Parameter {0}
 check.ref.selector,Filter {0}
 check.warn.sel_all_shop,"""[{0}]"" is all items in the whole shop; will process everything (including batteries in machines)"
 check.warn.sel_itself,"""""""[{0}]"""" refers to the container itself; to process its contents, use a filter whose source is [{0}]"""
@@ -455,6 +469,7 @@ sim.run_3_days,3 Days
 sim.run_7_days,7 Days
 sim.run_14_days,14 Days
 sim.run_28_days,28 Days
+sim.sub_rule,└ {0}
 sim.schedule,Routine
 sim.search_placeholder,Name or ID
 sim.sex.female,Female
@@ -562,6 +577,8 @@ report.step.moved_to,Moved to {0}
 report.summary_override,Apprentice {0}: {1}
 report.text.no_ap,Out of AP
 report.why.no_ap,Low AP (previous tasks used {0} / {1} AP)
+report.sub_rule,{0} › {1}
+report.called,Ran [{0}]
 report.window.deferred,1 item skipped (not enough AP)|{0} items skipped (not enough AP)
 report.window.done,1 item done|{0} items done
 report.window.dry_run," (Simulation)"
@@ -749,6 +766,9 @@ schedule.no_buttons,Selected machine has no buttons
 schedule.param_shared,Shared by multiple routines
 schedule.pick_action,Select Action
 schedule.pick_button,Select Button
+schedule.pick_flow,Select Routine
+schedule.no_other_flows,No other routines
+schedule.del_called_note,"Run by: {0}. Change the ""Run routine"" actions in those routines first."
 schedule.pick_condition,Execution Condition
 schedule.pick_device_or_selector,Select device name or filter
 schedule.pick_param,Select Parameter
@@ -757,6 +777,7 @@ schedule.section_devices,Device Names
 schedule.section_params,Parameters
 schedule.section_rules,Task List
 schedule.selector_suffix," (Filter)"
+schedule.param_suffix,{0} (parameter)
 schedule.stats_done_items,Processed 1 item|Processed {0} items
 schedule.stats_empty,No records: this routine has not run yet.
 schedule.stats_issue_count,{1} 1 time|{1} {0} times
@@ -782,6 +803,11 @@ editor.action_swap_with,"    With"
 editor.action_target,"    Target"
 editor.slot_auto,Auto
 editor.action_value,"    Value"
+editor.pick_flow_placeholder,(choose routine)
+editor.call_no_params,"""{0}"" has no subroutine parameters"
+editor.tip_call_arg,"If not overridden, the default ({0}) is used."
+editor.call_default_num,Default {0}
+editor.call_default,Default ({0})
 editor.add_cond_tip,Only count items matching condition
 editor.add_cond_title,Add Condition
 editor.advanced_stats,Custom Properties {0} · Counters {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,Custom Properties
 editor.local_in_tasks,Another {0} filters used only in single tasks; edit within those tasks
 editor.menu_device_reuse,Use this name for other shop items...
 editor.menu_device_to_filter,Convert to filter...
+editor.menu_device_to_param,Convert to parameter...
 editor.menu_new_filter,New filter...
 editor.no_actions,No actions yet
 editor.no_devices,None yet. Name shop items to select them directly in filters and actions.
@@ -935,6 +962,14 @@ object_dlg.scope_owner,"Only for ""{0}"""
 object_dlg.title_custom_prop,Custom Property
 object_dlg.title_edit,Parameter · {0}
 object_dlg.title_new,New Parameter
+object_dlg.type,Type
+object_dlg.type_number,Number
+object_dlg.type_device,Device
+object_dlg.type_list,List
+object_dlg.type_locked,In use; the type cannot be changed
+object_dlg.pick_value,(choose value)
+object_dlg.value_missing,Choose a value.
+object_dlg.value_ref,Value
 object_dlg.unit,Unit
 object_dlg.unit_placeholder,"e.g. g, pcs, days"
 object_dlg.used_by_rules,Referenced by 1 task|Referenced by {0} tasks
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,"Named numerical values, e.g. ""Battery Swap Threshold 30
 handbook.p3.text_range,"Whole shop, specific label, or another filter; multiple can be added. ""Contents"" refers to contained items; ""Itself"" refers to container/machine itself (e.g. [Hydroponics] itself with condition ""has slot"" selects idle hydroponics)."
 handbook.p3.text_scope,"Filters search the whole shop by default (items you own, excluding items for sale). To target specific bays, machines, or containers, name them using the Blue Labeler (e.g. ""Hydro Storage"") or via ""＋ Name..."" in the routine editor. Multiple objects can share the same name."
 handbook.p3.tip_name,You can directly select custom names ([Name]) as filter target without creating a filter!
-handbook.p3.tip_tags,"Game Tags use the game's own names; a tag an item does not have counts as 0, so a seed without a trait has it at rank 0."
+handbook.p3.tip_tags,Game Tags use the game's own names; a tag an item does not have counts as 0.
 handbook.pdna.banner,Examples: Plant Traits
 handbook.pdna.title_disk,Gene Disks:
 handbook.pdna.text_disk,"Two extractors take Purifying from Hydroreed Seeds and Nutrient-Poor from Fillerweed Seeds; written disks go to [Gene Bank], and extraction stops once enough are in stock. Using a Precision Extraction Module on a written disk locks it to that trait."
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,Run When:
 handbook.p4.title_press,"Press Button, Activate, Toggle:"
 handbook.p4.title_swap,Swap:
 handbook.p4.title_use,Use:
+handbook.psub.banner,Subroutines
+handbook.psub.title_call,Run Routine:
+handbook.psub.text_call,"Runs another routine's tasks in order, then continues where it left off. The action itself costs no AP; tasks in the subroutine cost AP as usual, and when AP runs out the caller stops too. Routines cannot run each other in a loop, and nesting is limited to {0} levels."
+handbook.psub.title_params,Parameters:
+handbook.psub.text_params,"A parameter can be a number, a device or a list. Pick the parameter in tasks and filters instead of the device itself. When another routine runs this one, the caller can override its own-routine parameters; anything not overridden keeps its value. Global parameters cannot be overridden. Assigned directly to an apprentice, the routine uses the parameters' own values."
+handbook.psub.tip,"Same tasks for several sets of machines: make the devices parameters, write the tasks as one routine, then run it several times from a main routine with different devices."
 handbook.p5.banner_order,Execution Order
 handbook.p5.banner_swap,Auto Battery Swap
 handbook.p5.steps_swap,"① Swap Low Battery (charge ascending) with Full Battery (charge descending): replaces lowest battery with fullest, leaving depleted battery in recharger.\n② Put uncharged batteries from storage into rechargers with free slots."

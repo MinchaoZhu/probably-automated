@@ -132,8 +132,8 @@ public static class SimulatorWindow
         b.AddImage(ShapeSprites.White, 520, 1, "am_sp_sim");
         b.AddLabel(Tone.Bold(Domain.L.T("sim.shop_copy")));
         b.BeginScroll(480);
-        // 这个排班会动的设备：用到的设备名、选出机器 / 储藏区的筛选器（最多 30 个）
-        var used = Check.Closure(D, s.Rules.SelectMany(Check.RuleRefs));
+        // 这个排班会动的设备：用到的设备名、选出机器 / 储藏区的筛选器（最多 30 个），连同它执行的子流程用到的
+        var used = Check.Closure(D, Calls.WithCallees(D, s).SelectMany(x => x.Rules).SelectMany(Check.RuleRefs));
         var ctx = new EvalCtx(_world, D);
         var groups = new List<(string title, List<SimItem> boxes)>();
         var shown = new HashSet<SimItem>();
@@ -200,18 +200,20 @@ public static class SimulatorWindow
         if (g.Deferred > 0) b.AddLabel(Tone.Small(Tone.Color(Domain.L.T("sim.deferred_items_warn", g.Deferred), Tone.Warn)));
         b.End();
         Table.Header(b, 0, (Domain.L.T("table.rule"), 220), (Domain.L.T("table.result"), 480), (Domain.L.T("table.ap"), 0));
+        int top = 0; // 序号只数直接指派的流程的任务；子流程的任务接在调用它的任务后面，不编号
         for (int k = 0; k < g.Rules.Count; k++)
         {
             var rr = g.Rules[k];
             string key = $"{r.N}:{gi}:{k}";
             string done = rr.Done.Count > 0 ? Domain.L.Join("list", rr.Done.Select(kv => Domain.L.N("sim.op_done_count", kv.Value, Catalog.Op(kv.Key).Name)))
                 : rr.Pre != PreResult.Pass ? AutoMod.Domain.Rules.Text.Outcome(rr)
+                : rr.Called != null && rr.Issues.Count == 0 && rr.Deferred == 0 ? Domain.L.T("report.called", rr.Called)
                 : rr.Issues.Count > 0 || rr.Deferred > 0 ? "" // 原因写在下面的问题行里
                 : rr.Idle ?? Domain.L.T("sim.no_pending_items");
             bool open = Expanded.Contains(key);
             Table.BeginItem(b, k, open);
             b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft)
-                .AddButton($"{k + 1}. {rr.Name}", Ui.A(() => { if (!Expanded.Remove(key)) Expanded.Add(key); Show(); })).Width(220);
+                .AddButton(rr.Depth > 0 ? Domain.L.T("sim.sub_rule", rr.Name) : $"{++top}. {rr.Name}", Ui.A(() => { if (!Expanded.Remove(key)) Expanded.Add(key); Show(); })).Width(220);
             Table.Cell(b, done, 480, rr.Done.Count > 0 ? null : Tone.Dim);
             b.AddFlexibleSpace()
                 .AddLabel(Tone.Small(Tone.Dim(rr.Ap > 0 ? $"{rr.Ap:0} AP" : "")))

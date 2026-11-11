@@ -20,6 +20,7 @@ vocab.sys.shift.short,Poste actuel
 # Placeholders: none.
 # ==============================================================================
 op.activate,Activer
+op.call,Exécuter la routine
 op.mark,Ajouter un repère
 op.move,Déplacer
 op.note,Noter
@@ -177,6 +178,7 @@ eval.from.contents,Contenu de {0}
 eval.from.self,{0} lui-même
 eval.from.slot,{1} de {0}
 eval.no_named,Aucun [{0}] dans la boutique
+eval.empty_arg,« {0} » transmis par l'appelant est vide
 eval.slot.battery,Emplacements de batterie
 eval.slot.filter,Emplacements de filtre
 slot.backpack,Sac à dos
@@ -231,8 +233,10 @@ card.param.toslot,Emplacement
 card.param.tool,Outil
 card.select_button,(choisir bouton)
 card.select_param,(choisir {0})
+card.select_flow,(choisir une routine)
 card.times,(1 fois chacun)| ({0} fois chacun)
 card.tpl.apply,{op} {tool} sur {list}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex} :
 card.tpl.cond_colon,{cond} :
 card.tpl.mark,{op} [{text}] sur {list}
@@ -248,6 +252,8 @@ card.tpl.when,Quand {list} {cond} :
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,Activer {0}
+action.call,Exécuter la routine [{0}]
+action.call_arg,{0} = {1}
 action.mark,Ajouter le repère [{1}] à {0}
 action.move,Déplacer {0} vers {1}
 action.note.add,Ajouter {0} à {1}
@@ -314,6 +320,7 @@ text.unset,(non sélectionné)
 # ==============================================================================
 check.err.def_missing,La définition référencée n'existe pas
 check.err.expr_const_missing,Le paramètre dans l'expression n'existe pas ou n'est pas sélectionné
+check.err.expr_const_not_number,Le paramètre « {0} » n'est pas un nombre
 check.err.expr_empty,L'expression contient des termes vides
 check.err.expr_note_missing,Le compteur dans l'expression n'existe pas ou n'est pas sélectionné
 check.err.expr_note_scope,Le compteur ne peut pas être utilisé ici
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,Variable système inconnue « {0} »
 check.err.prop_cycle,Une propriété personnalisée ne peut pas faire référence à une autre propriété personnalisée
 check.err.prop_prefix,Propriété « {0} » : {1}
 check.err.rule_mark_empty,Nom du repère non spécifié
+check.err.param_no_value,Aucune valeur choisie pour le paramètre « {0} »
+check.err.call_no_flow,Aucune routine à exécuter sélectionnée
+check.err.call_missing,La routine à exécuter a été supprimée
+check.err.call_cycle,« {0} » exécute de nouveau cette routine (boucle)
+check.err.call_depth,Sous-routines imbriquées sur plus de {0} niveaux
+check.err.call_arg_missing,Le filtre transmis au paramètre de sous-routine « {0} » a été supprimé
 check.err.rule_move_no_to,Aucune cible sélectionnée pour « Déplacer »
 check.err.rule_move_not_box,La cible de Déplacer doit être un contenant : « {0} » n'est pas un contenant
 check.err.rule_no_actions,Aucune action définie
@@ -352,6 +365,7 @@ check.err.sel_prefix,Filtre « {0} » : {1}
 check.err.sel_preset_missing,La condition prédéfinie n'existe pas
 check.err.sel_prop_empty,Propriété non sélectionnée
 check.ref.prop,Propriété {0}
+check.ref.param,Paramètre {0}
 check.ref.selector,Filtre {0}
 check.warn.sel_all_shop,« [{0}] » comprend tous les objets de la boutique ; tout sera traité (y compris les batteries dans les machines)
 check.warn.sel_itself,"« [{0}] » fait référence au contenant lui-même ; pour traiter son contenu, utilisez un filtre dont la source est [{0}]"
@@ -455,6 +469,7 @@ sim.run_3_days,3 jours
 sim.run_7_days,7 jours
 sim.run_14_days,14 jours
 sim.run_28_days,28 jours
+sim.sub_rule,└ {0}
 sim.schedule,Routine
 sim.search_placeholder,Nom ou ID
 sim.sex.female,Femelle
@@ -562,6 +577,8 @@ report.step.moved_to,Déplacé vers {0}
 report.summary_override,Apprenti {0} : {1}
 report.text.no_ap,PA épuisés
 report.why.no_ap,PA insuffisants (les tâches précédentes ont utilisé {0} / {1} PA)
+report.sub_rule,{0} › {1}
+report.called,[{0}] exécutée
 report.window.deferred,1 objet ignoré (PA insuffisants)|{0} objets ignorés (PA insuffisants)
 report.window.done,1 objet traité|{0} objets traités
 report.window.dry_run,(Simulation)
@@ -749,6 +766,9 @@ schedule.no_buttons,La machine choisie n'a pas de bouton
 schedule.param_shared,Partagé par plusieurs routines
 schedule.pick_action,Sélectionner une action
 schedule.pick_button,Sélectionner un bouton
+schedule.pick_flow,Sélectionner une routine
+schedule.no_other_flows,Aucune autre routine
+schedule.del_called_note,Exécutée par : {0}. Modifiez d'abord les actions « Exécuter la routine » de ces routines.
 schedule.pick_condition,Condition d'exécution
 schedule.pick_device_or_selector,Choisir un nom d'appareil ou un filtre
 schedule.pick_param,Sélectionner un paramètre
@@ -757,6 +777,7 @@ schedule.section_devices,Noms d'appareils
 schedule.section_params,Paramètres
 schedule.section_rules,Liste des tâches
 schedule.selector_suffix,(Filtre)
+schedule.param_suffix,{0} (paramètre)
 schedule.stats_done_items,1 objet traité|{0} objets traités
 schedule.stats_empty,Aucun enregistrement : cette routine n'a pas encore été exécutée.
 schedule.stats_issue_count,{1} 1 fois|{1} {0} fois
@@ -782,6 +803,11 @@ editor.action_swap_with,Avec
 editor.action_target,Cible
 editor.slot_auto,Auto
 editor.action_value,Valeur
+editor.pick_flow_placeholder,(choisir une routine)
+editor.call_no_params,« {0} » n'a pas de paramètres de sous-routine
+editor.tip_call_arg,"Sans remplacement, la valeur par défaut ({0}) est utilisée."
+editor.call_default_num,Défaut {0}
+editor.call_default,Défaut ({0})
 editor.add_cond_tip,Compter uniquement les objets correspondant à la condition
 editor.add_cond_title,Ajouter une condition
 editor.advanced_stats,Propriétés personnalisées {0} · Compteurs {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,Propriétés personnalisées
 editor.local_in_tasks,{0} autres filtres ne sont utilisés que dans des tâches individuelles
 editor.menu_device_reuse,Utiliser ce nom pour d'autres objets…
 editor.menu_device_to_filter,Convertir en filtre…
+editor.menu_device_to_param,Convertir en paramètre…
 editor.menu_new_filter,Nouveau filtre...
 editor.no_actions,Aucune action pour l'instant
 editor.no_devices,Aucun pour le moment. Nommez des objets pour les utiliser directement.
@@ -935,6 +962,14 @@ object_dlg.scope_owner,Seulement pour « {0} »
 object_dlg.title_custom_prop,Propriété personnalisée
 object_dlg.title_edit,Paramètre · {0}
 object_dlg.title_new,Nouveau paramètre
+object_dlg.type,Type
+object_dlg.type_number,Nombre
+object_dlg.type_device,Appareil
+object_dlg.type_list,Liste
+object_dlg.type_locked,Utilisé : le type ne peut pas être modifié
+object_dlg.pick_value,(choisir une valeur)
+object_dlg.value_missing,Choisissez une valeur.
+object_dlg.value_ref,Valeur
 object_dlg.unit,Unité
 object_dlg.unit_placeholder,"ex. g, pcs, j"
 object_dlg.used_by_rules,Utilisé par 1 tâche|Utilisé par {0} tâches
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,"Valeurs numériques nommées, ex. « Seuil de remplaceme
 handbook.p3.text_range,"Tout le magasin, un nom d'appareil ou un autre filtre ; plusieurs peuvent être ajoutés. « Contenu » désigne les objets à l'intérieur ; « Lui-même » désigne le conteneur ou la machine (ex. [Hydroponie] lui-même avec la condition « a un emplacement » cible les bacs libres)."
 handbook.p3.text_scope,"Par défaut, les filtres cherchent dans tout le magasin (vos objets, hors articles en vente). Pour cibler des zones de stockage, machines ou conteneurs précis, nommez-les avec l'étiqueteuse bleue (ex. « Stock hydro ») ou via « ＋ Nommer… » dans l'éditeur de routine. Plusieurs objets peuvent porter le même nom."
 handbook.p3.tip_name,Vous pouvez directement choisir un nom personnalisé ([Nom]) comme cible sans créer de filtre !
-handbook.p3.tip_tags,"Les étiquettes portent les noms du jeu ; une étiquette absente vaut 0, une graine sans un trait l'a donc au rang 0."
+handbook.p3.tip_tags,Les étiquettes portent les noms du jeu ; une étiquette absente vaut 0.
 handbook.pdna.banner,Exemples : traits des plantes
 handbook.pdna.title_disk,Disquettes génétiques :
 handbook.pdna.text_disk,Deux extracteurs tirent Purification des graines d'hydroseau et Pauvreté nutritive des graines de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Un module d'extraction précise utilisé sur une disquette écrite se règle sur son trait.
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,Condition d'exécution :
 handbook.p4.title_press,"Appuyer sur un bouton, Activer, Basculer :"
 handbook.p4.title_swap,Échanger :
 handbook.p4.title_use,Utiliser :
+handbook.psub.banner,Sous-routines
+handbook.psub.title_call,Exécuter la routine :
+handbook.psub.text_call,"Exécute dans l'ordre les tâches d'une autre routine, puis reprend là où elle s'était arrêtée. L'action elle-même ne coûte pas de PA ; les tâches de la sous-routine en coûtent normalement, et quand les PA sont épuisés, l'appelant s'arrête aussi. Les routines ne peuvent pas s'appeler en boucle ; {0} niveaux d'imbrication au maximum."
+handbook.psub.title_params,Paramètres :
+handbook.psub.text_params,"Un paramètre peut être un nombre, un appareil ou une liste. Dans les tâches et les filtres, choisissez le paramètre plutôt que l'appareil lui-même. Quand une autre routine exécute celle-ci, l'appelant peut remplacer les paramètres de cette routine ; sans remplacement, la valeur du paramètre s'applique. Les paramètres globaux ne peuvent pas être remplacés. Assignée directement à un apprenti, la routine utilise les valeurs des paramètres."
+handbook.psub.tip,"Mêmes tâches pour plusieurs groupes de machines : faites des appareils des paramètres, regroupez les tâches en une routine, puis exécutez-la plusieurs fois depuis une routine principale avec d'autres appareils."
 handbook.p5.banner_order,Ordre d'exécution
 handbook.p5.banner_swap,Remplacement auto de batterie
 handbook.p5.steps_swap,"① Échangez les batteries faibles (charge croissante) avec les pleines (charge décroissante) : remplace la plus faible par la plus pleine, laissant celle retirée au chargeur.\n② Placez les batteries non chargées du stockage dans les chargeurs ayant des emplacements libres."

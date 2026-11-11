@@ -148,7 +148,7 @@ public class ShiftReport
         {
             r.Groups.Add(new ReportGroup { Schedule = g.ScheduleName, Workers = L.Join("list", g.Workers), ApUsed = g.ApUsed, ApTotal = g.ApTotal,
                 Growth = g.Learned.Concat(g.LevelUps.Select(u => L.T("report.growth.prefix", u))).ToList(),
-                Idle = g.Rules.Where(x => x.Done.Count == 0 && x.Issues.Count == 0 && x.Deferred == 0)
+                Idle = g.Rules.Where(x => x.Done.Count == 0 && x.Issues.Count == 0 && x.Deferred == 0 && x.Called == null)
                     .Select(x => (x.Name, why: x.Pre == PreResult.Pass ? x.Idle : x.Pre == PreResult.Fail ? x.Why : null))
                     .Where(t => t.why != null).Select(t => L.T("fmt.colon", t.Name, t.why)).ToList() });
             foreach (var rule in g.Rules)

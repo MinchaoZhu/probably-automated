@@ -16,7 +16,23 @@ public static class Defs
     /// 按 Id 找筛选器。设备名（"#名字"）自带一个不存档的筛选器：全店叫这个名字的东西本身。
     /// </summary>
     public static SelectorDef Selector(RulesData d, string id) =>
-        string.IsNullOrEmpty(id) ? null : Places.IsName(id) ? NameSelector(id) : d.Selectors.FirstOrDefault(s => s.Id == id);
+        string.IsNullOrEmpty(id) ? null : Places.IsName(id) ? NameSelector(id)
+        : d.Selectors.FirstOrDefault(s => s.Id == id) ?? (d.Objects.FirstOrDefault(o => o.Id == id) is { IsRef: true } p ? ParamSelector(d, p) : null);
+
+    /// <summary>
+    /// 设备、列表参数自带的筛选器（不存档）：从参数取（设备参数取本身，列表参数的类型照它的值），
+    /// 让检查、类型判断把参数当设备名 / 筛选器看。
+    /// </summary>
+    public static SelectorDef ParamSelector(RulesData d, ObjectDef p) =>
+        new()
+        {
+            Id = p.Id, Name = p.Name, From = { p.Id }, Owner = p.Owner,
+            Kind = p.Type == ParamType.Device ? Catalog.Self : d.Selectors.FirstOrDefault(s => s.Id == p.Ref)?.Kind ?? Catalog.Any,
+        };
+
+    /// <summary>设备或列表参数；别的为空。</summary>
+    public static ObjectDef RefParam(RulesData d, string id) =>
+        string.IsNullOrEmpty(id) ? null : d.Objects.FirstOrDefault(o => o.Id == id && o.IsRef);
 
     /// <summary>设备名自带的筛选器：从【名字】选本身。</summary>
     public static SelectorDef NameSelector(string id) =>
@@ -44,6 +60,23 @@ public static class Defs
             }
         }
         return sel;
+    }
+
+    /// <summary>
+    /// 设备名转为参数：在排班 s 里新建一个设备参数（名字同设备名，值是这个设备名），s 的任务和本排班筛选器里
+    /// 直接引用这个设备名的地方都改成引用参数。
+    /// </summary>
+    public static ObjectDef DeviceToParam(RulesData d, Schedule s, string name)
+    {
+        string id = Places.Ref(name);
+        string pname = name;
+        for (int i = 2; Scope.NameConflict(d, false, pname, s.Id) != null; i++) pname = L.T("transfer.dup_suffix", name, i);
+        var p = new ObjectDef { Id = NewId("o"), Name = pname, Owner = s.Id, Type = ParamType.Device, Ref = id };
+        d.Objects.Add(p);
+        string M(string x) => x == id ? p.Id : x;
+        foreach (var r in s.Rules) MapRule(r, M);
+        foreach (var x in d.Selectors.Where(x => x.Owner == s.Id)) MapSelector(x, M);
+        return p;
     }
 
     /// <summary>新排班的建立时间。</summary>
@@ -96,6 +129,7 @@ public static class Defs
     {
         a.List = m(a.List); a.To = m(a.To); a.Tool = m(a.Tool); a.Note = m(a.Note);
         MapExpr(a.Value, m);
+        if (a.Args != null) foreach (var x in a.Args) x.Ref = m(x.Ref); // 参数 id 是被调用流程的，不在这里换
     }
 
     public static void MapRule(WorkRule r, Func<string, string> m)

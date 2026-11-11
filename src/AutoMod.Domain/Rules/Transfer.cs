@@ -23,6 +23,10 @@ public class SchedulePack
     public string Version { get; set; }
 
     public Schedule Schedule { get; set; }
+
+    /// <summary>Schedule 调用的子流程（连同子流程再调用的），没有为空。</summary>
+    public List<Schedule> Subflows { get; set; }
+
     public List<ObjectDef> Objects { get; set; } = new();
     public List<SelectorDef> Selectors { get; set; } = new();
     public List<PropertyDef> Properties { get; set; } = new();
@@ -42,10 +46,15 @@ public static class Transfer
     /// <summary>导出排班 s。</summary>
     public static string Export(RulesData d, Schedule s, string version)
     {
-        var used = Check.Closure(d, s.Rules.SelectMany(Check.RuleRefs));
-        bool Take(string id, string owner) => used.Contains(id) || owner == s.Id;
+        var flows = Calls.WithCallees(d, s);
+        var subs = flows.Skip(1).ToList();
+        var owners = flows.Select(x => x.Id).ToHashSet();
+        var used = Check.Closure(d, flows.SelectMany(x => x.Rules).SelectMany(Check.RuleRefs));
+        bool Take(string id, string owner) => used.Contains(id) || owner != null && owners.Contains(owner);
         var pack = new SchedulePack { Version = version, Schedule = Defs.Clone(s) };
         pack.Schedule.Profile = null;
+        if (subs.Count > 0)
+            pack.Subflows = subs.Select(x => { var c = Defs.Clone(x); c.Profile = null; return c; }).ToList();
         pack.Objects.AddRange(d.Objects.Where(o => Take(o.Id, o.Owner)).Select(Defs.Clone));
         pack.Selectors.AddRange(d.Selectors.Where(x => Take(x.Id, x.Owner)).Select(Defs.Clone));
         pack.Properties.AddRange(d.Properties.Where(p => used.Contains(p.Id)).Select(Defs.Clone));
@@ -60,9 +69,18 @@ public static class Transfer
     {
         var pack = Parse(text);
         var s = pack.Schedule;
+        var subs = pack.Subflows ?? new List<Schedule>();
         var map = new Dictionary<string, string>();
         string M(string x) => x != null && map.TryGetValue(x, out var y) ? y : x;
         string newSch = Defs.NewId("sch");
+        map[s.Id ?? ""] = newSch;
+        foreach (var x in subs) map[x.Id] = Defs.NewId("sch");
+        var subIds = subs.Select(x => x.Id).ToHashSet();
+        // 原来是共用的、又被子流程用到的定义：仍然共用（归了导入的流程，子流程就引用不到了）
+        var subUsed = Check.Closure(new RulesData { Objects = pack.Objects, Selectors = pack.Selectors, Properties = pack.Properties },
+            subs.SelectMany(x => x.Rules).SelectMany(Check.RuleRefs));
+        string Owner(string oldOwner, string id) =>
+            oldOwner != null && subIds.Contains(oldOwner) ? map[oldOwner] : oldOwner == null && subUsed.Contains(id) ? null : newSch;
         foreach (var o in pack.Objects) map[o.Id] = Defs.NewId("o");
         foreach (var x in pack.Selectors) map[x.Id] = Defs.NewId("s");
         foreach (var p in pack.Properties) map[p.Id] = Defs.NewId("p");
@@ -70,11 +88,12 @@ public static class Transfer
         foreach (var o in pack.Objects)
         {
             string old = o.Id;
-            // 已有同名同值的共用参数：直接用
-            if (d.Objects.FirstOrDefault(x => x.Owner == null && x.Name == o.Name && x.Value == o.Value) is { } same) { map[old] = same.Id; continue; }
+            // 已有同名同值的共用数值参数：直接用（子流程的参数不合并，调用时要按它覆盖）
+            if (!o.IsRef && !(o.Owner != null && subIds.Contains(o.Owner))
+                && d.Objects.FirstOrDefault(x => x.Owner == null && !x.IsRef && x.Name == o.Name && x.Value == o.Value) is { } same) { map[old] = same.Id; continue; }
             o.Id = map[old];
-            o.Owner = newSch;
-            o.Name = Unique(d, false, o.Name, newSch);
+            o.Owner = Owner(o.Owner, old);
+            o.Name = Unique(d, false, o.Name, o.Owner);
             d.Objects.Add(o);
         }
         foreach (var p in pack.Properties)
@@ -95,20 +114,33 @@ public static class Transfer
             // 已有同名、定义一样（引用换算之后）的共用筛选器：直接用
             if (d.Selectors.FirstOrDefault(y => y.Owner == null && y.Name == x.Name && Same(y, x)) is { } same) { map[old] = same.Id; continue; }
             x.Id = map[old];
-            x.Owner = newSch;
-            x.Name = Unique(d, true, x.Name, newSch);
+            x.Owner = Owner(x.Owner, old);
+            x.Name = Unique(d, true, x.Name, x.Owner);
             d.Selectors.Add(x);
         }
-        s.Id = newSch;
-        s.Name = Defs.UniqueName(d.Schedules.Select(x => x.Name), s.Name);
-        s.Profile = null;
-        s.Created = Defs.Now();
-        foreach (var r in s.Rules)
+        // 设备、列表参数的值：筛选器换算完（可能合并成已有的）之后再换
+        foreach (var o in pack.Objects.Where(o => o.IsRef)) o.Ref = M(o.Ref);
+        // 子流程在前（导入的流程调用它们）
+        foreach (var f in subs.Append(s))
         {
-            r.Id = Defs.NewId("r");
-            Defs.MapRule(r, M);
+            f.Id = M(f.Id);
+            f.Name = Defs.UniqueName(d.Schedules.Select(x => x.Name), f.Name);
+            f.Profile = null;
+            f.Created = Defs.Now();
+            f.Rules ??= new List<WorkRule>();
+            f.Notepad ??= new List<NoteDef>();
+            foreach (var r in f.Rules)
+            {
+                r.Id = Defs.NewId("r");
+                Defs.MapRule(r, M);
+                foreach (var a in r.Actions.Where(a => a.Verb == ActVerb.Call))
+                {
+                    a.Flow = M(a.Flow);
+                    if (a.Args != null) foreach (var x in a.Args) x.Param = M(x.Param);
+                }
+            }
+            d.Schedules.Add(f);
         }
-        d.Schedules.Add(s);
         Scope.Normalize(d);
         return s;
     }

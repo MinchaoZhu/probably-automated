@@ -20,6 +20,7 @@ vocab.sys.shift.short,Turno actual
 # Placeholders: none.
 # ==============================================================================
 op.activate,Activar
+op.call,Ejecutar rutina
 op.mark,Añadir marca
 op.move,Mover
 op.note,Registrar
@@ -177,6 +178,7 @@ eval.from.contents,Contenido de {0}
 eval.from.self,{0} en sí
 eval.from.slot,{1} de {0}
 eval.no_named,No hay [{0}] en la tienda
+eval.empty_arg,«{0}» pasado por el llamador está vacío
 eval.slot.battery,Ranuras de batería
 eval.slot.filter,Ranuras de filtro
 slot.backpack,Mochila
@@ -231,8 +233,10 @@ card.param.toslot,Ranura
 card.param.tool,Herramienta
 card.select_button,(elegir botón)
 card.select_param,(elegir {0})
+card.select_flow,(elegir rutina)
 card.times,(1 vez cada uno)| ({0} veces cada uno)
 card.tpl.apply,{op} {tool} en {list}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
 card.tpl.cond_colon,{cond}:
 card.tpl.mark,{op} [{text}] en {list}
@@ -248,6 +252,8 @@ card.tpl.when,Cuando {list} {cond}:
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,Activar {0}
+action.call,Ejecutar rutina [{0}]
+action.call_arg,{0} = {1}
 action.mark,Añadir marca [{1}] a {0}
 action.move,Mover {0} a {1}
 action.note.add,Sumar {0} a {1}
@@ -314,6 +320,7 @@ text.unset,(no seleccionado)
 # ==============================================================================
 check.err.def_missing,La definición referenciada no existe
 check.err.expr_const_missing,El parámetro de la expresión no existe o no se ha seleccionado
+check.err.expr_const_not_number,El parámetro «{0}» no es un número
 check.err.expr_empty,La expresión contiene términos vacíos
 check.err.expr_note_missing,El contador de la expresión no existe o no se ha seleccionado
 check.err.expr_note_scope,No se puede usar el contador aquí
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,Variable del sistema desconocida «{0}»
 check.err.prop_cycle,Una propiedad personalizada no puede hacer referencia a otra propiedad personalizada
 check.err.prop_prefix,Propiedad «{0}»: {1}
 check.err.rule_mark_empty,Nombre de marca no especificado
+check.err.param_no_value,El parámetro «{0}» no tiene valor elegido
+check.err.call_no_flow,No se ha elegido la rutina que ejecutar
+check.err.call_missing,La rutina que ejecutar se ha eliminado
+check.err.call_cycle,«{0}» vuelve a ejecutar esta rutina (bucle)
+check.err.call_depth,Subrutinas anidadas en más de {0} niveles
+check.err.call_arg_missing,El filtro pasado al parámetro de subrutina «{0}» se ha eliminado
 check.err.rule_move_no_to,«Mover» no tiene ningún destino seleccionado
 check.err.rule_move_not_box,El destino de Mover debe ser un contenedor: «{0}» no es un contenedor
 check.err.rule_no_actions,No se han establecido acciones
@@ -352,6 +365,7 @@ check.err.sel_prefix,Filtro «{0}»: {1}
 check.err.sel_preset_missing,La condición preestablecida no existe
 check.err.sel_prop_empty,Propiedad no seleccionada
 check.ref.prop,Propiedad {0}
+check.ref.param,Parámetro {0}
 check.ref.selector,Filtro {0}
 check.warn.sel_all_shop,«[{0}]» abarca todos los objetos de la tienda; procesará todo (incluidas las baterías de las máquinas)
 check.warn.sel_itself,"«[{0}]» se refiere al contenedor en sí; para procesar su contenido, usa un filtro cuyo origen sea [{0}]"
@@ -455,6 +469,7 @@ sim.run_3_days,3 días
 sim.run_7_days,7 días
 sim.run_14_days,14 días
 sim.run_28_days,28 días
+sim.sub_rule,└ {0}
 sim.schedule,Rutina
 sim.search_placeholder,Nombre o ID
 sim.sex.female,Hembra
@@ -562,6 +577,8 @@ report.step.moved_to,Movido a {0}
 report.summary_override,Aprendiz {0}: {1}
 report.text.no_ap,Sin PA
 report.why.no_ap,PA insuficientes (las tareas anteriores usaron {0} / {1} PA)
+report.sub_rule,{0} › {1}
+report.called,Se ejecutó [{0}]
 report.window.deferred,1 objeto omitido (PA insuficientes)|{0} objetos omitidos (PA insuficientes)
 report.window.done,1 objeto terminado|{0} objetos terminados
 report.window.dry_run,(Simulación)
@@ -749,6 +766,9 @@ schedule.no_buttons,La máquina seleccionada no tiene botones
 schedule.param_shared,Compartido por varias rutinas
 schedule.pick_action,Seleccionar acción
 schedule.pick_button,Seleccionar botón
+schedule.pick_flow,Seleccionar rutina
+schedule.no_other_flows,No hay otras rutinas
+schedule.del_called_note,La ejecutan: {0}. Cambia primero las acciones «Ejecutar rutina» de esas rutinas.
 schedule.pick_condition,Condición de ejecución
 schedule.pick_device_or_selector,Elegir nombre de dispositivo o filtro
 schedule.pick_param,Seleccionar параметр
@@ -757,6 +777,7 @@ schedule.section_devices,Nombres de dispositivo
 schedule.section_params,Parámetros
 schedule.section_rules,Lista de tareas
 schedule.selector_suffix,(Filtro)
+schedule.param_suffix,{0} (parámetro)
 schedule.stats_done_items,1 objeto procesado|{0} objetos procesados
 schedule.stats_empty,Sin registros: esta rutina aún no se ha ejecutado.
 schedule.stats_issue_count,{1} 1 vez|{1} {0} veces
@@ -782,6 +803,11 @@ editor.action_swap_with,Con
 editor.action_target,Objetivo
 editor.slot_auto,Auto
 editor.action_value,Valor
+editor.pick_flow_placeholder,(elegir rutina)
+editor.call_no_params,«{0}» no tiene parámetros de subrutina
+editor.tip_call_arg,"Si no se sobrescribe, se usa el valor predeterminado ({0})."
+editor.call_default_num,Predet. {0}
+editor.call_default,Predet. ({0})
 editor.add_cond_tip,Solo contar objetos que cumplan la condición
 editor.add_cond_title,Añadir condición
 editor.advanced_stats,Propiedades personalizadas {0} · Contadores {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,Propiedades personalizadas
 editor.local_in_tasks,Otros {0} filtros solo se usan en tareas individuales
 editor.menu_device_reuse,Usar este nombre para otros objetos…
 editor.menu_device_to_filter,Convertir en filtro…
+editor.menu_device_to_param,Convertir en parámetro…
 editor.menu_new_filter,Nuevo filtro...
 editor.no_actions,Aún no hay acciones
 editor.no_devices,Ninguno aún. Nombra objetos para usarlos directamente en filtros y acciones.
@@ -935,6 +962,14 @@ object_dlg.scope_owner,Solo para «{0}»
 object_dlg.title_custom_prop,Propiedad personalizada
 object_dlg.title_edit,Parámetro · {0}
 object_dlg.title_new,Nuevo parámetro
+object_dlg.type,Tipo
+object_dlg.type_number,Número
+object_dlg.type_device,Dispositivo
+object_dlg.type_list,Lista
+object_dlg.type_locked,En uso; no se puede cambiar el tipo
+object_dlg.pick_value,(elegir valor)
+object_dlg.value_missing,Elige un valor.
+object_dlg.value_ref,Valor
 object_dlg.unit,Unidad
 object_dlg.unit_placeholder,"ej. g, uds, días"
 object_dlg.used_by_rules,Utilizado en 1 tarea|Utilizado en {0} tareas
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,"Valores numéricos con nombre, ej. «Umbral de cambio de
 handbook.p3.text_range,"Toda la tienda, un nombre de dispositivo u otro filtro; se pueden añadir varios. «Contenido» se refiere a los objetos dentro; «Mismo» al contenedor o máquina en sí (ej. [Hidroponía] mismo con condición «tiene ranura» selecciona hidroponías libres)."
 handbook.p3.text_scope,"Los filtros buscan por defecto en toda la tienda (objetos propios, no a la venta). Para asignar zonas de almacenamiento, máquinas o contenedores específicos, nómbralos con la rotuladora azul (ej. «Almacén hidro») o mediante «＋ Nombrar…» en el editor de rutinas. Varios objetos pueden compartir el mismo nombre."
 handbook.p3.tip_name,¡Puedes seleccionar directamente nombres personalizados ([Nombre]) como objetivo de filtro sin crear uno!
-handbook.p3.tip_tags,"Las etiquetas usan los nombres del juego; una etiqueta ausente cuenta como 0, así una semilla sin un atributo lo tiene en rango 0."
+handbook.p3.tip_tags,Las etiquetas usan los nombres del juego; una etiqueta ausente cuenta como 0.
 handbook.pdna.banner,Ejemplos: atributos de plantas
 handbook.pdna.title_disk,Disquetes genéticos:
 handbook.pdna.text_disk,Dos extractores sacan Purificante de semillas de hidrojunco y Deficiente en nutrientes de semillas de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Un módulo de precisión usado sobre un disquete escrito queda ajustado a su atributo.
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,Condición de ejecución:
 handbook.p4.title_press,"Pulsar botón, activar, alternar:"
 handbook.p4.title_swap,Intercambiar:
 handbook.p4.title_use,Usar:
+handbook.psub.banner,Subrutinas
+handbook.psub.title_call,Ejecutar rutina:
+handbook.psub.text_call,"Ejecuta en orden las tareas de otra rutina y luego sigue donde lo dejó. La acción en sí no gasta PA; las tareas de la subrutina gastan PA como siempre y, cuando se agotan los PA, también se detiene quien la llamó. Las rutinas no pueden llamarse en bucle; como máximo {0} niveles de anidación."
+handbook.psub.title_params,Parámetros:
+handbook.psub.text_params,"Un parámetro puede ser un número, un dispositivo o una lista. En tareas y filtros, elige el parámetro en vez del dispositivo. Cuando otra rutina ejecuta esta, quien la llama puede sobrescribir los parámetros de esta rutina; lo que no se sobrescribe conserva su valor. Los parámetros globales no se pueden sobrescribir. Asignada directamente a un aprendiz, usa los valores de los parámetros."
+handbook.psub.tip,"Las mismas tareas para varios grupos de máquinas: convierte los dispositivos en parámetros, reúne las tareas en una rutina y ejecútala varias veces desde una rutina principal con otros dispositivos."
 handbook.p5.banner_order,Orden de ejecución
 handbook.p5.banner_swap,Cambio automático de batería
 handbook.p5.steps_swap,"① Intercambia baterías bajas (carga ascendente) por baterías llenas (carga descendente): reemplaza la más baja por la más llena, dejando la retirada en el cargador.\n② Pon baterías descargadas del almacén en cargadores con ranuras libres."

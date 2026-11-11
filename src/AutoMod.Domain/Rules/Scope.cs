@@ -51,6 +51,7 @@ public static class Scope
         var ids = d.Schedules.Select(s => s.Id).ToHashSet();
         foreach (var o in d.Objects) if (o.Owner != null && !ids.Contains(o.Owner)) o.Owner = null;
         foreach (var x in d.Selectors) if (x.Owner != null && !ids.Contains(x.Owner)) x.Owner = null;
+        Calls.DropStaleArgs(d); // 执行流程里覆盖的参数：去掉已经删除、改成全局、类型对不上的
         var ordered = d.Selectors.Where(x => x.Owner == null).Concat(d.Selectors.Where(x => x.Owner != null)).ToList();
         d.Selectors.Clear();
         d.Selectors.AddRange(ordered);
@@ -131,6 +132,7 @@ public static class Scope
             var c = Defs.Clone(o);
             c.Id = map[o.Id];
             c.Owner = copy.Id;
+            c.Ref = M(c.Ref); // 列表参数的值是本流程筛选器时，改成复制出的那个
             d.Objects.Add(c);
         }
         foreach (var x in sels)

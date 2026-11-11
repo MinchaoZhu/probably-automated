@@ -33,7 +33,7 @@ public static class SelectorFamily
     public static bool IsItemList(RulesData d, string src, IWorld w)
     {
         if (string.IsNullOrEmpty(src) || Places.IsShop(src) || Places.IsName(src)) return false;
-        var s = d.Selectors.FirstOrDefault(x => x.Id == src);
+        var s = Defs.Selector(d, src); // 设备参数是容器，列表参数看它的值
         return s != null && !s.IsNumber && !Eval.YieldsBoxes(s, w);
     }
 }

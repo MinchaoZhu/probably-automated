@@ -127,6 +127,7 @@ public static class Card
                 }),
                 Mechanism.Trigger => Fill("card.tpl.trigger", new() { ["op"] = O, ["list"] = S("list", a.List, SegKind.List) }),
                 Mechanism.Annotate => Fill(a.Verb == ActVerb.Unmark ? "card.tpl.unmark" : "card.tpl.mark", new() { ["list"] = S("list", a.List, SegKind.List), ["op"] = O, ["text"] = new Seg { Text = a.Text } }),
+                Mechanism.Call => CallLine(d, a, i, O),
                 _ => new List<Seg> { new Seg { Text = Text.Action(d, s, a), Kind = SegKind.Complex } },
             };
             if (!string.IsNullOrEmpty(times)) line.Add(new Seg { Text = times });
@@ -135,6 +136,19 @@ public static class Card
             lines.Add(line);
         }
         return lines;
+    }
+
+    /// <summary>“执行流程【X】（水培机 = 【Y】）”：流程名可点（换流程），覆盖的参数是普通文字（在编辑器里改）。</summary>
+    private static List<Seg> CallLine(RulesData d, ActionDef a, int i, Seg op)
+    {
+        var callee = Calls.Callee(d, a);
+        var line = Fill("card.tpl.call", new()
+        {
+            ["op"] = op,
+            ["flow"] = new Seg { Text = callee == null ? L.T("card.select_flow") : L.T("text.bracket", callee.Name), Kind = SegKind.Type, Action = i, Param = "flow", Empty = callee == null },
+        });
+        if (callee != null && Text.CallArgsText(d, callee, a) is { Length: > 0 } args) line.Add(new Seg { Text = args });
+        return line;
     }
 
     private static List<Seg> Fill(string key, Dictionary<string, Seg> slots) =>
@@ -164,7 +178,7 @@ public static class Card
             {
                 // 用到的常量带上当前值（卡片上改了参数，这里马上看得到）
                 var consts = Check.Closure(d, new[] { x.Id }).Select(c => d.Objects.FirstOrDefault(o => o.Id == c)).Where(o => o != null).ToList();
-                string vals = consts.Count == 0 ? "" : L.T("text.paren", L.Join("list2", consts.Select(o => $"{o.Name} {o.Value:0.##}{o.Unit}")));
+                string vals = consts.Count == 0 ? "" : L.T("text.paren", L.Join("list2", consts.Select(o => $"{o.Name} {Text.ParamValue(d, o)}")));
                 return L.T("text.pair", x.Name, Text.SelectorShort(d, x)) + vals;
             }).ToList();
     }
@@ -174,7 +188,7 @@ public static class Card
     /// <summary>读写动作的某个参数（list / to / tool / button）。</summary>
     public static string Get(ActionDef a, string param) => param switch
     {
-        "list" => a.List, "to" => a.To, "toslot" => a.ToSlot, "tool" => a.Tool, "button" => a.Button, _ => null,
+        "list" => a.List, "to" => a.To, "toslot" => a.ToSlot, "tool" => a.Tool, "button" => a.Button, "flow" => a.Flow, _ => null,
     };
 
     public static void Set(ActionDef a, string param, string value)
@@ -189,6 +203,10 @@ public static class Card
             case "toslot": a.ToSlot = value; break;
             case "tool": a.Tool = value; break;
             case "button": a.Button = value; break;
+            case "flow":
+                if (a.Flow != value) a.Args = null; // 参数是那个流程的，换了流程就不算数了
+                a.Flow = value;
+                break;
         }
     }
 
@@ -198,6 +216,7 @@ public static class Card
         var op = Catalog.Op(verb);
         var n = new ActionDef { Verb = verb };
         if (op.Mechanism == Mechanism.Note) { n.Note = a.Note; n.Value = a.Value; return n; }
+        if (op.Mechanism == Mechanism.Call) { n.Flow = a.Flow; n.Args = a.Args; return n; }
         n.List = a.List;
         if (op.Mechanism is Mechanism.Place or Mechanism.Swap) n.To = a.To;
         if (op.Mechanism == Mechanism.Place) n.ToSlot = a.ToSlot;

@@ -118,14 +118,22 @@ public static class Proficiency
     {
         if (s.Profile != null && s.Profile.Count > 0) return Normalize(s.Profile);
         var work = new Dictionary<string, double>();
-        foreach (var r in s.Rules.Where(r => r.Enabled))
-            foreach (var a in r.Actions)
-            {
-                var op = Catalog.Op(a.Verb);
-                if (op.Cost <= 0) continue;
-                string kind = Defs.Selector(d, a.List)?.Kind;
-                Add(work, op.Dim ?? op.Id, op.Skill ?? DomainOfKind(kind, w), op.Cost);
-            }
+        var seen = new HashSet<string>();
+        void Collect(Schedule x)
+        {
+            if (!seen.Add(x.Id)) return;
+            foreach (var r in x.Rules.Where(r => r.Enabled))
+                foreach (var a in r.Actions)
+                {
+                    // 子流程里干的活算进调用它的流程
+                    if (Calls.Callee(d, a) is { } callee) { Collect(callee); continue; }
+                    var op = Catalog.Op(a.Verb);
+                    if (op.Cost <= 0) continue;
+                    string kind = Defs.Selector(d, a.List)?.Kind;
+                    Add(work, op.Dim ?? op.Id, op.Skill ?? DomainOfKind(kind, w), op.Cost);
+                }
+        }
+        Collect(s);
         return Normalize(work);
     }
 

@@ -20,6 +20,7 @@ vocab.sys.shift.short,Bieżąca zmiana
 # Placeholders: none.
 # ==============================================================================
 op.activate,Aktywuj
+op.call,Wykonaj procedurę
 op.mark,Dodaj znacznik
 op.move,Przenieś
 op.note,Zapisz
@@ -177,6 +178,7 @@ eval.from.contents,Zawartość {0}
 eval.from.self,{0} sam w sobie
 eval.from.slot,{1} z {0}
 eval.no_named,Brak [{0}] w sklepie
+eval.empty_arg,„{0}” przekazane przez wywołującego jest puste
 eval.slot.battery,Komory baterii
 eval.slot.filter,Gniazda filtrów
 slot.backpack,Plecak
@@ -231,8 +233,10 @@ card.param.toslot,Slot
 card.param.tool,Narzędzie
 card.select_button,(wybierz przycisk)
 card.select_param,(wybierz {0})
+card.select_flow,(wybierz procedurę)
 card.times,(po 1 razie)| (po {0} razy)| (po {0} razy)
 card.tpl.apply,{op} {tool} na {list}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
 card.tpl.cond_colon,{cond}:
 card.tpl.mark,{op} [{text}] na {list}
@@ -248,6 +252,8 @@ card.tpl.when,Gdy {list} {cond}:
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,Aktywuj {0}
+action.call,Wykonaj procedurę [{0}]
+action.call_arg,{0} = {1}
 action.mark,Dodaj znacznik [{1}] do {0}
 action.move,Przenieś {0} do {1}
 action.note.add,Dodaj {0} do {1}
@@ -314,6 +320,7 @@ text.unset,(nie wybrano)
 # ==============================================================================
 check.err.def_missing,Wskazana definicja nie istnieje
 check.err.expr_const_missing,Parametr w wyrażeniu nie istnieje lub nie został wybrany
+check.err.expr_const_not_number,Parametr „{0}” nie jest liczbą
 check.err.expr_empty,Wyrażenie zawiera puste elementy
 check.err.expr_note_missing,Licznik w wyrażeniu nie istnieje lub nie został wybrany
 check.err.expr_note_scope,Nie można tutaj użyć licznika
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,Nieznana zmienna systemowa „{0}”
 check.err.prop_cycle,Właściwość niestandardowa nie może odwoływać się do innej właściwości niestandardowej
 check.err.prop_prefix,Właściwość „{0}”: {1}
 check.err.rule_mark_empty,Nie określono nazwy znacznika
+check.err.param_no_value,Parametr „{0}” nie ma wybranej wartości
+check.err.call_no_flow,Nie wybrano procedury do wykonania
+check.err.call_missing,Procedura do wykonania została usunięta
+check.err.call_cycle,„{0}” ponownie wykonuje tę procedurę (pętla)
+check.err.call_depth,Podprocedury zagnieżdżone głębiej niż {0} poziomy
+check.err.call_arg_missing,Filtr przekazany do parametru podprocedury „{0}” został usunięty
 check.err.rule_move_no_to,Dla „Przenieś” nie wybrano celu
 check.err.rule_move_not_box,Cel przeniesienia musi być pojemnikiem: „{0}” nie jest pojemnikiem
 check.err.rule_no_actions,Nie ustawiono żadnych akcji
@@ -352,6 +365,7 @@ check.err.sel_prefix,Filtr „{0}”: {1}
 check.err.sel_preset_missing,Warunek wstępny nie istnieje
 check.err.sel_prop_empty,Właściwość nie została wybrana
 check.ref.prop,Właściwość {0}
+check.ref.param,Parametr {0}
 check.ref.selector,Filtr {0}
 check.warn.sel_all_shop,„[{0}]” obejmuje wszystkie przedmioty w sklepie; przetworzy wszystko (w tym baterie w maszynach)
 check.warn.sel_itself,"„[{0}]” odnosi się do samego pojemnika; aby przetworzyć jego zawartość, użyj filtra ze źródłem [{0}]"
@@ -455,6 +469,7 @@ sim.run_3_days,3 dni
 sim.run_7_days,7 dni
 sim.run_14_days,14 dni
 sim.run_28_days,28 dni
+sim.sub_rule,└ {0}
 sim.schedule,Procedura
 sim.search_placeholder,Nazwa lub ID
 sim.sex.female,Samica
@@ -562,6 +577,8 @@ report.step.moved_to,Przeniesiono do {0}
 report.summary_override,Praktykant {0}: {1}
 report.text.no_ap,Brak AP
 report.why.no_ap,Za mało AP (poprzednie zadania zużyły {0} / {1} AP)
+report.sub_rule,{0} › {1}
+report.called,Wykonano [{0}]
 report.window.deferred,1 przedmiot pominięty (brak AP)|{0} przedmioty pominięte (brak AP)|{0} przedmiotów pominiętych (brak AP)
 report.window.done,1 przedmiot wykonany|{0} przedmioty wykonane|{0} przedmiotów wykonanych
 report.window.dry_run,(Symulacja)
@@ -749,6 +766,9 @@ schedule.no_buttons,Wybrana maszyna nie ma przycisków
 schedule.param_shared,Współdzielony przez wiele procedur
 schedule.pick_action,Wybierz akcję
 schedule.pick_button,Wybierz przycisk
+schedule.pick_flow,Wybierz procedurę
+schedule.no_other_flows,Brak innych procedur
+schedule.del_called_note,Wykonują ją: {0}. Najpierw zmień akcje „Wykonaj procedurę” w tych procedurach.
 schedule.pick_condition,Warunek wykonania
 schedule.pick_device_or_selector,Wybierz nazwę urządzenia lub filtr
 schedule.pick_param,Wybierz parametr
@@ -757,6 +777,7 @@ schedule.section_devices,Nazwy urządzeń
 schedule.section_params,Parametry
 schedule.section_rules,Lista zadań
 schedule.selector_suffix,(Filtr)
+schedule.param_suffix,{0} (parametr)
 schedule.stats_done_items,Przetworzono 1 przedmiot|Przetworzono {0} przedmioty|Przetworzono {0} przedmiotów
 schedule.stats_empty,Brak zapisów: ta procedura jeszcze się nie wykonała.
 schedule.stats_issue_count,{1} 1 raz|{1} {0} razy|{1} {0} razy
@@ -782,6 +803,11 @@ editor.action_swap_with,Z
 editor.action_target,Cel
 editor.slot_auto,Auto
 editor.action_value,Wartość
+editor.pick_flow_placeholder,(wybierz procedurę)
+editor.call_no_params,„{0}” nie ma parametrów podprocedury
+editor.tip_call_arg,Bez nadpisania używana jest wartość domyślna ({0}).
+editor.call_default_num,Domyślnie {0}
+editor.call_default,Domyślnie ({0})
 editor.add_cond_tip,Licz tylko przedmioty spełniające warunek
 editor.add_cond_title,Dodaj warunek
 editor.advanced_stats,Własne właściwości {0} · Liczniki {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,Własne właściwości
 editor.local_in_tasks,Inne {0} filtry są używane tylko w pojedynczych zadaniach
 editor.menu_device_reuse,Użyj tej nazwy dla innych przedmiotów…
 editor.menu_device_to_filter,Przekształć w filtr…
+editor.menu_device_to_param,Przekształć w parametr…
 editor.menu_new_filter,Nowy filtr...
 editor.no_actions,Brak akcji
 editor.no_devices,"Brak. Nazwij przedmioty, aby wybierać je bezpośrednio w selektorach i akcjach."
@@ -935,6 +962,14 @@ object_dlg.scope_owner,Tylko dla „{0}”
 object_dlg.title_custom_prop,Własna właściwość
 object_dlg.title_edit,Parametr · {0}
 object_dlg.title_new,Nowy parametr
+object_dlg.type,Typ
+object_dlg.type_number,Liczba
+object_dlg.type_device,Urządzenie
+object_dlg.type_list,Lista
+object_dlg.type_locked,W użyciu; nie można zmienić typu
+object_dlg.pick_value,(wybierz wartość)
+object_dlg.value_missing,Wybierz wartość.
+object_dlg.value_ref,Wartość
 object_dlg.unit,Jednostka
 object_dlg.unit_placeholder,"np. g, szt., dni"
 object_dlg.used_by_rules,Używane w 1 zadaniu|Używane w {0} zadaniach|Używane w {0} zadaniach
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,"Nazwane wartości liczbowe, np. ""Próg wymiany baterii 
 handbook.p3.text_range,"Cały sklep, nazwa urządzenia lub inny filtr; można dodać wiele. ""Zawartość"" oznacza przedmioty wewnątrz; ""Samo"" oznacza sam pojemnik lub maszynę (np. [Hydroponika] samo z warunkiem ""ma wolne miejsce"" wybiera wolną hydroponikę)."
 handbook.p3.text_scope,"Filtry domyślnie przeszukują cały sklep (twoje przedmioty, z wyłączeniem towarów na sprzedaż). Aby wskazać konkretne magazyny, maszyny lub pojemniki, nazwij je za pomocą niebieskiej etykieciarki (np. ""Magazyn hydro"") lub przycisku ""＋ Nazwij…"" w edytorze procedury. Wiele obiektów może dzielić tę samą nazwę."
 handbook.p3.tip_name,Możesz bezpośrednio wybrać własną nazwę ([Nazwa]) jako cel filtra bez tworzenia osobnego filtra!
-handbook.p3.tip_tags,"Tagi gry mają nazwy z gry; brakujący tag liczy się jako 0, więc nasiono bez cechy ma ją na poziomie 0."
+handbook.p3.tip_tags,Tagi gry mają nazwy z gry; brakujący tag liczy się jako 0.
 handbook.pdna.banner,Przykłady: cechy roślin
 handbook.pdna.title_disk,Dyski genowe:
 handbook.pdna.text_disk,"Dwa ekstraktory wyodrębniają Oczyszczające z nasion hydrotrzciny i Słabą odżywczość z nasion zapchwasta; zapisane dyski trafiają do [Bank genów], a przy wystarczającym zapasie wyodrębnianie ustaje. Moduł precyzyjnego wyodrębniania użyty na zapisanym dysku ustawia się na jego cechę."
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,Warunek wykonania:
 handbook.p4.title_press,"Naciśnij przycisk, aktywuj, przełącz:"
 handbook.p4.title_swap,Zamień:
 handbook.p4.title_use,Użyj:
+handbook.psub.banner,Podprocedury
+handbook.psub.title_call,Wykonaj procedurę:
+handbook.psub.text_call,"Wykonuje po kolei zadania innej procedury, a potem wraca do miejsca wywołania. Sama akcja nie zużywa AP; zadania podprocedury zużywają AP jak zwykle, a gdy AP się skończą, zatrzymuje się także procedura wywołująca. Procedury nie mogą wywoływać się w pętli; zagnieżdżenie najwyżej {0} poziomy."
+handbook.psub.title_params,Parametry:
+handbook.psub.text_params,"Parametr może być liczbą, urządzeniem lub listą. W zadaniach i filtrach wybieraj parametr zamiast samego urządzenia. Gdy inna procedura wykonuje tę, wywołujący może nadpisać parametry tej procedury; bez nadpisania obowiązuje wartość parametru. Parametrów globalnych nie można nadpisać. Przypisana bezpośrednio praktykantowi procedura używa wartości parametrów."
+handbook.psub.tip,"Te same zadania dla kilku grup maszyn: ustaw urządzenia jako parametry, zapisz zadania jako jedną procedurę i wykonaj ją kilka razy z procedury głównej z innymi urządzeniami."
 handbook.p5.banner_order,Kolejność wykonywania
 handbook.p5.banner_swap,Automatyczna wymiana baterii
 handbook.p5.steps_swap,"① Wymień słabe baterie (rosnąco według ładunku) na pełne (malejąco): najsłabsza trafia na najpełniejszą, a wyjęta bateria zostaje w ładowarce.\n② Włóż niepełne baterie z magazynu do wolnych miejsc w ładowarce."

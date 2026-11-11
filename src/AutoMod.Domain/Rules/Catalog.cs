@@ -53,6 +53,9 @@ public static class Mechanism
 
     /// <summary>“记录”：程序语句（写记事本），不改变世界；放在动作列表里方便界面。</summary>
     public const string Note = "note";
+
+    /// <summary>执行流程：把另一个流程的任务做一遍；本身不花 AP，子流程里的任务照常算。</summary>
+    public const string Call = "call";
 }
 
 /// <summary>
@@ -483,6 +486,7 @@ public static class Catalog
         new() { Id = ActVerb.Mark, Mechanism = Mechanism.Annotate },
         new() { Id = ActVerb.Unmark, Mechanism = Mechanism.Annotate },
         new() { Id = ActVerb.Note, Mechanism = Mechanism.Note },
+        new() { Id = ActVerb.Call, Mechanism = Mechanism.Call },
     };
 
     public static OpDef Op(string id) => Ops.FirstOrDefault(o => o.Id == id) ?? Ops[0];

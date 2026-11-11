@@ -58,6 +58,7 @@ public static class Check
             foreach (var id in new[] { a.List, a.To, a.Tool })
                 if (!string.IsNullOrEmpty(id) && !Fixtures.Is(id)) yield return id;
             foreach (var x in ExprRefs(a.Value)) yield return x;
+            foreach (var x in Calls.ArgRefs(a)) yield return x;
         }
     }
 
@@ -74,6 +75,7 @@ public static class Check
             if (s != null) foreach (var x in SelectorRefs(s)) if (!string.IsNullOrEmpty(x)) stack.Push(x);
             var p = d.Properties.FirstOrDefault(x => x.Id == id);
             if (p != null) foreach (var x in ExprRefs(p.Formula)) if (!string.IsNullOrEmpty(x)) stack.Push(x);
+            if (d.Objects.FirstOrDefault(x => x.Id == id) is { IsRef: true, Ref: { Length: > 0 } r }) stack.Push(r); // 设备 / 列表参数的值
         }
         return seen;
     }
@@ -92,6 +94,7 @@ public static class Check
             if (a.Verb != ActVerb.Note && !string.IsNullOrEmpty(a.List)) yield return a.List;
             if (a.Verb is ActVerb.Move or ActVerb.Swap && !string.IsNullOrEmpty(a.To)) yield return a.To;
             if (a.Verb == ActVerb.Use && !string.IsNullOrEmpty(a.Tool) && !Fixtures.Is(a.Tool)) yield return a.Tool;
+            if (a.Verb == ActVerb.Call) foreach (var x in Calls.ArgRefs(a)) yield return x;
         }
     }
 
@@ -106,6 +109,8 @@ public static class Check
             if (x.Id != id && SelectorRefs(x).Contains(id)) list.Add(L.T("check.ref.selector", x.Name));
         foreach (var p in d.Properties)
             if (p.Id != id && ExprRefs(p.Formula).Contains(id)) list.Add(L.T("check.ref.prop", p.Name));
+        foreach (var o in d.Objects)
+            if (o.Id != id && o.IsRef && o.Ref == id) list.Add(L.T("check.ref.param", o.Name));
         return list;
     }
 
@@ -139,7 +144,9 @@ public static class Check
             {
                 case TermKind.Num: break;
                 case TermKind.Const:
-                    if (d.Objects.All(o => o.Id != t.Ref)) errs.Add(L.T("check.err.expr_const_missing"));
+                    var o = d.Objects.FirstOrDefault(x => x.Id == t.Ref);
+                    if (o == null) errs.Add(L.T("check.err.expr_const_missing"));
+                    else if (o.IsRef) errs.Add(L.T("check.err.expr_const_not_number", o.Name));
                     break;
                 case TermKind.Own:
                     if (scope is ExprScope.Take or ExprScope.Runtime) errs.Add(L.T("check.err.expr_own_scope"));
@@ -180,7 +187,7 @@ public static class Check
         if (s.From.Count == 0) e.Add(L.T("check.err.sel_from_empty"));
         foreach (var f in s.From)
         {
-            if (Places.IsShop(f) || Places.IsName(f)) continue;
+            if (Places.IsShop(f) || Places.IsName(f) || Defs.RefParam(d, f) != null) continue;
             if (d.Objects.Any(o => o.Id == f)) { e.Add(L.T("check.err.sel_from_param")); continue; }
             int j = d.Selectors.FindIndex(x => x.Id == f);
             if (j < 0) e.Add(L.T("check.err.sel_from_missing"));
@@ -188,7 +195,7 @@ public static class Check
         }
         if (!string.IsNullOrEmpty(s.Minus))
         {
-            if (d.Selectors.All(x => x.Id != s.Minus)) e.Add(L.T("check.err.sel_minus_missing"));
+            if (Defs.Selector(d, s.Minus) is not { IsNumber: false }) e.Add(L.T("check.err.sel_minus_missing"));
         }
         // 筛选器之间可以按任意顺序引用，只是不能绕回自己
         if (Closure(d, SelectorRefs(s).Where(x => x != null)).Contains(s.Id)) e.Add(L.T("check.err.sel_cycle"));
@@ -222,8 +229,9 @@ public static class Check
         if (string.IsNullOrEmpty(id)) return false;
         // 设备名：店里有叫这个名字的东西时，要是容器（给鼠、水桶起的名字不能当放入的目标）
         if (Places.IsName(id)) return w == null || w.Named(Places.NameOf(id)) is not { Count: > 0 } named || named.All(x => Catalog.Matches(w, x, Catalog.Container));
-        var s = d.Selectors.FirstOrDefault(x => x.Id == id);
+        var s = Defs.Selector(d, id);
         if (s == null || s.IsNumber) return false;
+        if (Defs.RefParam(d, id) is { } param) return Defs.RefParam(d, param.Ref) == null && IsContainerRef(d, param.Ref, w); // 看它的值
         // 没有世界时（新建示例、单元测试）具体种类认不出是不是容器，不当错误
         return Eval.YieldsBoxes(s, w) || w == null && !string.IsNullOrEmpty(s.Kind) && !Catalog.IsTrait(s.Kind) && s.Kind != Catalog.Any;
     }
@@ -287,6 +295,11 @@ public static class Check
                 e.AddRange(ExprErrors(d, a.Value, ExprScope.Runtime, s));
                 continue;
             }
+            if (a.Verb == ActVerb.Call)
+            {
+                e.AddRange(Calls.Errors(d, s, a));
+                continue;
+            }
             var list = Defs.Selector(d, a.List);
             if (list == null || list.IsNumber) { e.Add(L.T("check.err.rule_target_missing", spec.Name)); continue; }
             if (a.Verb == ActVerb.Move && string.IsNullOrEmpty(a.To)) e.Add(L.T("check.err.rule_move_no_to"));
@@ -312,6 +325,11 @@ public static class Check
         // 连带引用的定义
         foreach (var id in Closure(d, RuleRefs(r)))
         {
+            if (d.Objects.FirstOrDefault(o => o.Id == id) is { IsRef: true } param)
+            {
+                foreach (var x in ParamErrors(d, param)) e.Add(x);
+                continue;
+            }
             if (Places.IsBuiltin(id) || d.Objects.Any(o => o.Id == id)) continue;
             if (d.Selectors.FirstOrDefault(x => x.Id == id) is { } sel)
             {
@@ -327,6 +345,17 @@ public static class Check
             e.Add(L.T("check.err.def_missing"));
         }
         return e.Distinct().ToList();
+    }
+
+    /// <summary>设备、列表参数的错误：没选值、值的类型不对、值越出作用域（全局参数用了本流程筛选器）。</summary>
+    public static List<string> ParamErrors(RulesData d, ObjectDef p)
+    {
+        var e = new List<string>();
+        if (!p.IsRef) return e;
+        bool ok = p.Type == ParamType.Device ? Places.IsName(p.Ref) : d.Selectors.FirstOrDefault(x => x.Id == p.Ref) is { IsNumber: false };
+        if (!ok) e.Add(L.T("check.err.param_no_value", p.Name));
+        else e.AddRange(Scope.BadRefs(d, p.Owner, new[] { p.Ref }));
+        return e;
     }
 
     /// <summary>未列在词表里、但游戏能读的属性（mark:、原始标签等）。</summary>

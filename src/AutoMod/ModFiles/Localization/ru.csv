@@ -20,6 +20,7 @@ vocab.sys.shift.short,Текущая смена
 # Placeholders: none.
 # ==============================================================================
 op.activate,Активировать
+op.call,Выполнить процесс
 op.mark,Добавить метку
 op.move,Переместить
 op.note,Записать
@@ -177,6 +178,7 @@ eval.from.contents,Содержимое {0}
 eval.from.self,Сам {0}
 eval.from.slot,{1} объекта {0}
 eval.no_named,В магазине нет [{0}]
+eval.empty_arg,"«{0}», переданный вызывающим процессом, пуст"
 eval.slot.battery,Батарейные отсеки
 eval.slot.filter,Слоты фильтра
 slot.backpack,Рюкзак
@@ -231,8 +233,10 @@ card.param.toslot,Слот
 card.param.tool,Инструмент
 card.select_button,(выберите кнопку)
 card.select_param,(выберите {0})
+card.select_flow,(выбрать процесс)
 card.times,(по 1 разу)| (по {0} раза)| (по {0} раз)
 card.tpl.apply,{op} {tool} на {list}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
 card.tpl.cond_colon,{cond}:
 card.tpl.mark,{op} [{text}] на {list}
@@ -248,6 +252,8 @@ card.tpl.when,Когда {list} {cond}:
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,Активировать {0}
+action.call,Выполнить процесс [{0}]
+action.call_arg,{0} = {1}
 action.mark,Пометить {0} меткой [{1}]
 action.move,Переместить {0} в {1}
 action.note.add,Прибавить {0} к {1}
@@ -314,6 +320,7 @@ text.unset,(не выбрано)
 # ==============================================================================
 check.err.def_missing,Указанное определение не существует
 check.err.expr_const_missing,Параметр в выражении не существует или не выбран
+check.err.expr_const_not_number,Параметр «{0}» не число
 check.err.expr_empty,Выражение содержит пустые элементы
 check.err.expr_note_missing,Счётчик в выражении не существует или не выбран
 check.err.expr_note_scope,Счётчик нельзя использовать здесь
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,Неизвестная системная переме
 check.err.prop_cycle,Пользовательское свойство не может ссылаться на другое пользовательское свойство
 check.err.prop_prefix,Свойство «{0}»: {1}
 check.err.rule_mark_empty,Имя метки не указано
+check.err.param_no_value,У параметра «{0}» не выбрано значение
+check.err.call_no_flow,Не выбран процесс для выполнения
+check.err.call_missing,Процесс для выполнения удалён
+check.err.call_cycle,«{0}» снова выполняет этот процесс (цикл)
+check.err.call_depth,Подпроцессы вложены глубже {0} уровней
+check.err.call_arg_missing,"Фильтр, переданный в параметр подпроцесса «{0}», удалён"
 check.err.rule_move_no_to,В «Переместить» не выбрана цель
 check.err.rule_move_not_box,Цель перемещения должна быть контейнером: «{0}» не контейнер
 check.err.rule_no_actions,Действия не настроены
@@ -352,6 +365,7 @@ check.err.sel_prefix,Фильтр «{0}»: {1}
 check.err.sel_preset_missing,Предустановленное условие не существует
 check.err.sel_prop_empty,Свойство не выбрано
 check.ref.prop,Свойство {0}
+check.ref.param,Параметр {0}
 check.ref.selector,Фильтр {0}
 check.warn.sel_all_shop,«[{0}]» охватывает все предметы в магазине; будут обработаны все предметы (включая батареи в машинах)
 check.warn.sel_itself,"«[{0}]» указывает на сам контейнер; чтобы обработать содержимое, используйте фильтр с источником [{0}]"
@@ -455,6 +469,7 @@ sim.run_3_days,3 дня
 sim.run_7_days,7 дней
 sim.run_14_days,14 дней
 sim.run_28_days,28 дней
+sim.sub_rule,└ {0}
 sim.schedule,Процесс
 sim.search_placeholder,Имя или ID
 sim.sex.female,Самка
@@ -562,6 +577,8 @@ report.step.moved_to,Перемещено в {0}
 report.summary_override,Ученик {0}: {1}
 report.text.no_ap,Закончились AP
 report.why.no_ap,Мало AP (предыдущие задачи использовали {0} / {1} AP)
+report.sub_rule,{0} › {1}
+report.called,Выполнен [{0}]
 report.window.deferred,Отложен 1 предмет (не хватило AP)|Отложено {0} предмета (не хватило AP)|Отложено {0} предметов (не хватило AP)
 report.window.done,Выполнен 1 предмет|Выполнено {0} предмета|Выполнено {0} предметов
 report.window.dry_run,(Симуляция)
@@ -749,6 +766,9 @@ schedule.no_buttons,У выбранного станка нет кнопок
 schedule.param_shared,Используется несколькими процессами
 schedule.pick_action,Выбрать действие
 schedule.pick_button,Выбрать кнопку
+schedule.pick_flow,Выбрать процесс
+schedule.no_other_flows,Других процессов нет
+schedule.del_called_note,Его выполняют: {0}. Сначала измените действия «Выполнить процесс» в этих процессах.
 schedule.pick_condition,Условие выполнения
 schedule.pick_device_or_selector,Выберите имя оборудования или фильтр
 schedule.pick_param,Выбрать параметр
@@ -757,6 +777,7 @@ schedule.section_devices,Имена устройств
 schedule.section_params,Параметры
 schedule.section_rules,Список задач
 schedule.selector_suffix,(фильтр)
+schedule.param_suffix,{0} (параметр)
 schedule.stats_done_items,Обработан 1 предмет|Обработано {0} предмета|Обработано {0} предметов
 schedule.stats_empty,Нет записей: этот процесс ещё не выполнялся.
 schedule.stats_issue_count,{1} 1 раз|{1} {0} раза|{1} {0} раз
@@ -782,6 +803,11 @@ editor.action_swap_with,С
 editor.action_target,Цель
 editor.slot_auto,Авто
 editor.action_value,Значение
+editor.pick_flow_placeholder,(выбрать процесс)
+editor.call_no_params,У «{0}» нет параметров подпроцесса
+editor.tip_call_arg,"Если не переопределить, используется значение по умолчанию ({0})."
+editor.call_default_num,По умолч. {0}
+editor.call_default,По умолч. ({0})
 editor.add_cond_tip,"Учитывать только предметы, удовлетворяющие условию"
 editor.add_cond_title,Добавить условие
 editor.advanced_stats,Пользовательские свойства: {0} · Счётчики: {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,Пользовательские свойства
 editor.local_in_tasks,Ещё {0} фильтров используются только в отдельных задачах
 editor.menu_device_reuse,Присвоить это имя другим предметам…
 editor.menu_device_to_filter,Преобразовать в фильтр…
+editor.menu_device_to_param,Преобразовать в параметр…
 editor.menu_new_filter,Новый фильтр...
 editor.no_actions,Действий пока нет
 editor.no_devices,"Пока нет. Назовите предметы в магазине, чтобы выбирать их в фильтрах и действиях."
@@ -935,6 +962,14 @@ object_dlg.scope_owner,Только для «{0}»
 object_dlg.title_custom_prop,Пользовательское свойство
 object_dlg.title_edit,Параметр · {0}
 object_dlg.title_new,Новый параметр
+object_dlg.type,Тип
+object_dlg.type_number,Число
+object_dlg.type_device,Устройство
+object_dlg.type_list,Список
+object_dlg.type_locked,"Используется, тип изменить нельзя"
+object_dlg.pick_value,(выбрать значение)
+object_dlg.value_missing,Выберите значение.
+object_dlg.value_ref,Значение
 object_dlg.unit,Единица
 object_dlg.unit_placeholder,"напр. г, шт, дн"
 object_dlg.used_by_rules,Используется в 1 задаче|Используется в {0} задачах|Используется в {0} задачах
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,"Именованные числовые значения
 handbook.p3.text_range,"Весь магазин, имя устройства или другой фильтр; можно добавить несколько. «Содержимое» указывает на предметы внутри; «Само» — на сам контейнер или машину (например, [Гидропоника] сама с условием «есть слот» выбирает свободную гидропонику)."
 handbook.p3.text_scope,"По умолчанию фильтры ищут по всему магазину (ваши предметы, кроме товаров на продажу). Чтобы указать конкретные склады, машины или контейнеры, назовите их с помощью синего маркиратора (например, «Склад гидропоники») или через «＋ Назвать…» в редакторе процесса. Несколько объектов могут иметь одинаковое имя."
 handbook.p3.tip_name,Пользовательские имена ([Имя]) можно сразу выбирать как цель фильтра без создания отдельного фильтра!
-handbook.p3.tip_tags,"Теги игры называются так же, как в игре; отсутствующий тег считается равным 0, например у семени без черты она на уровне 0."
+handbook.p3.tip_tags,"Теги игры называются так же, как в игре; отсутствующий тег считается равным 0."
 handbook.pdna.banner,Примеры: черты растений
 handbook.pdna.title_disk,Генные диски:
 handbook.pdna.text_disk,"Два экстрактора извлекают очищение из семян гидротростника и низкую питательность из семян набей-травы; записанные диски идут в [Генный банк], при достаточном запасе извлечение прекращается. Модуль точного извлечения, применённый к записанному диску, настраивается на его черту."
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,Условие запуска:
 handbook.p4.title_press,"Нажатие кнопки, активация, переключение:"
 handbook.p4.title_swap,Обменять:
 handbook.p4.title_use,Использовать:
+handbook.psub.banner,Подпроцессы
+handbook.psub.title_call,Выполнить процесс:
+handbook.psub.text_call,"Выполняет задачи другого процесса по порядку и затем продолжает с того же места. Само действие не тратит AP; задачи подпроцесса тратят AP как обычно, а когда AP заканчиваются, останавливается и вызывающий процесс. Процессы не могут вызывать друг друга по кругу, вложенность — не более {0} уровней."
+handbook.psub.title_params,Параметры:
+handbook.psub.text_params,"Параметр может быть числом, устройством или списком. В задачах и фильтрах выбирайте параметр, а не само устройство. Когда этот процесс выполняет другой, вызывающий может переопределить параметры этого процесса; без переопределения действует значение самого параметра. Глобальные параметры не переопределяются. При прямом назначении ученику используются значения самих параметров."
+handbook.psub.tip,"Одни и те же задачи для нескольких групп машин: сделайте устройства параметрами, оформите задачи одним процессом и выполните его несколько раз из главного процесса с другими устройствами."
 handbook.p5.banner_order,Порядок выполнения
 handbook.p5.banner_swap,Автозамена батарей
 handbook.p5.steps_swap,"① Обменяйте разряженные батареи (по возрастанию заряда) на полные (по убыванию): самая слабая меняется на самую полную, а снятая остаётся в заряднике.\n② Положите незаряженные батареи со склада в свободные слоты зарядников."

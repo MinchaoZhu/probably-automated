@@ -232,9 +232,11 @@ public static class ScheduleEditor
     /// </summary>
     private static (string text, string tone) LastResult(Schedule s, WorkRule r)
     {
-        var rr = Automation.LastRun?.Groups.FirstOrDefault(g => g.ScheduleId == s.Id)?.Rules.FirstOrDefault(x => x.RuleId == r.Id);
+        var rr = Automation.LastRun?.Groups.FirstOrDefault(g => g.ScheduleId == s.Id)?.Rules.FirstOrDefault(x => x.RuleId == r.Id)
+                 ?? Automation.LastRun?.Groups.SelectMany(g => g.Rules).FirstOrDefault(x => x.RuleId == r.Id); // 作为子流程执行时记在调用方那一组里
         if (rr != null)
         {
+            if (rr.Called != null && rr.Issues.Count == 0 && rr.Deferred == 0 && rr.Pre == PreResult.Pass) return (Domain.L.T("report.called", rr.Called), Tone.Ok);
             if (rr.Issues.Count > 0) return (rr.Issues[0].Text, Tone.Warn);
             if (rr.Done.Count > 0) return (Domain.L.Join("list", rr.Done.Select(kv => $"{Catalog.Op(kv.Key).Name} " + Domain.L.N("schedule.count_items", kv.Value))), Tone.Ok);
             if (rr.Deferred > 0) return (Domain.L.N("editor.deferred_ap", rr.Deferred), Tone.Warn);
@@ -259,6 +261,7 @@ public static class ScheduleEditor
         Action EditOf(string id)
         {
             if (D.Selectors.FirstOrDefault(x => x.Id == id) is { } x) return () => SelectorDialog.Edit(x);
+            if (Defs.RefParam(D, id) is { } p) return () => ObjectDialog.Edit(p);
             return Places.NameOf(id) is { } name ? () => DeviceMenu(s, name) : null;
         }
         var sel = D.Selectors.FirstOrDefault(x => x.Id == current);
@@ -310,9 +313,9 @@ public static class ScheduleEditor
         foreach (var o in objs)
         {
             var obj = o;
-            string def = AutoMod.Domain.Rules.Text.Object(obj) + (string.IsNullOrEmpty(obj.Hint) ? "" : "\n" + obj.Hint);
-            Entry(b, obj.Name, def, null, closure.Contains(obj.Id), Check.UsedBy(D, obj.Id).Count,
-                () => ObjectDialog.Edit(obj), null, $"{obj.Value:0.##}{obj.Unit}");
+            string def = AutoMod.Domain.Rules.Text.Object(D, obj) + (string.IsNullOrEmpty(obj.Hint) ? "" : "\n" + obj.Hint);
+            Entry(b, obj.Name, def, Check.ParamErrors(D, obj).FirstOrDefault(), closure.Contains(obj.Id), Check.UsedBy(D, obj.Id).Count,
+                () => ObjectDialog.Edit(obj), null, AutoMod.Domain.Rules.Text.ParamValue(D, obj));
         }
         foreach (var x in sels)
         {
@@ -331,6 +334,12 @@ public static class ScheduleEditor
         Pickers.Choose(RulesUi.DeviceLabel(name), new (string, Action)[]
         {
             (Domain.L.T("editor.menu_device_reuse"), () => { Hide(); DeviceNameDialog.Pick(name, Show); }),
+            (Domain.L.T("editor.menu_device_to_param"), () =>
+            {
+                var p = ExampleSetup.DeviceToParam(s, name);
+                Refresh();
+                ObjectDialog.Edit(p);
+            }),
             (Domain.L.T("editor.menu_device_to_filter"), () =>
             {
                 var sel = ExampleSetup.ExpandName(s, name);
@@ -677,6 +686,9 @@ public static class ScheduleEditor
             })).Searchable();
         // 第一行和句子的开头一致：“使用 [工具]”“放入 [对象]”“交换 [对象]”……
         if (a.Verb == ActVerb.Use) RefPicker(b, s, RulesUi.ToolSources(), Domain.L.T("editor.pick_tool_placeholder"), a.Tool, v => a.Tool = v);
+        else if (a.Verb == ActVerb.Call)
+            Pick(b, WithNone(D.Schedules.Where(x => x.Id != s.Id).Select(x => (x.Id, x.Name)).ToList(), Domain.L.T("editor.pick_flow_placeholder")), a.Flow,
+                v => AutoMod.Domain.Rules.Card.Set(a, "flow", v));
         else if (a.Verb != ActVerb.Note) ListPicker(b, s, a.List, v => a.List = v);
         b.AddButton(Domain.L.T("ui.move_up"), Ui.A(() => { if (i > 0) { r.Actions.RemoveAt(i); r.Actions.Insert(i - 1, a); Refresh(); } }))
             .AddButton("×", Ui.A(() => { r.Actions.RemoveAt(i); Refresh(); }))
@@ -724,6 +736,9 @@ public static class ScheduleEditor
             case ActVerb.Unmark:
                 b.BeginRow(4, TextAnchor.MiddleLeft).AddLabel(Domain.L.T("editor.action_mark")).AddInput(Domain.L.T("editor.input_mark_name"), a.Text ?? "", Ui.AS(v => a.Text = v.Trim())).End();
                 break;
+            case ActVerb.Call:
+                CallArgs(b, s, a);
+                break;
             case ActVerb.Note:
                 b.BeginRow(4).AddLabel(Domain.L.T("editor.action_value")).End();
                 ExprEditor.Build(b, a.Value ??= Expr.Of(0), new ExprEditor.Options { Stats = RulesUi.VisibleSelectors.Select(x => x.Id).ToList(), Notes = s, Sys = true, PerRow = 1 }, Refresh);
@@ -732,6 +747,48 @@ public static class ScheduleEditor
                 Pick(b, WithNone(s.Notepad.Select(n => (n.Id, n.Name)).ToList(), Domain.L.T("editor.pick_counter_placeholder")), a.Note, v => a.Note = v);
                 b.End();
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 执行流程：被调用流程的每个子流程参数一行。列表、设备在下拉里选调用方的筛选器或设备名，数值填数；
+    /// 第一项 / 留空是默认值（不覆盖）。
+    /// </summary>
+    private static void CallArgs(CustomUIBuilder b, Schedule s, ActionDef a)
+    {
+        var callee = Calls.Callee(D, a);
+        if (callee == null) return;
+        var ps = Calls.Params(D, callee);
+        if (ps.Count == 0)
+        {
+            b.BeginRow(4, TextAnchor.MiddleLeft).AddLabel("    ").AddLabel(Tone.Small(Tone.Dim(Domain.L.T("editor.call_no_params", callee.Name)))).End();
+            return;
+        }
+        foreach (var p in ps)
+        {
+            string param = p;
+            var kind = Calls.KindOf(D, callee, param);
+            string def = Calls.DefaultText(D, callee, param);
+            var arg = Calls.ArgOf(a, param);
+            b.BeginRow(4, TextAnchor.MiddleLeft).AddLabel("    ")
+                .AddLabel(Calls.ParamName(D, param)).Width(130).Tip(Domain.L.T("editor.tip_call_arg", def));
+            if (kind == Calls.ParamKind.Number)
+            {
+                b.AddInput(def, arg?.Num is { } n ? n.ToString("0.##") : "", Ui.AS(v =>
+                {
+                    if (string.IsNullOrWhiteSpace(v)) Calls.SetArg(a, param, null, null);
+                    else if (double.TryParse(v, out var x)) Calls.SetArg(a, param, null, x);
+                    RulesUi.Changed();
+                })).Width(80).Tip(Domain.L.T("editor.tip_call_arg", def));
+                b.AddLabel(Tone.Small(Tone.Dim(Domain.L.T("editor.call_default_num", def))));
+            }
+            else
+            {
+                var opts = kind == Calls.ParamKind.Device ? RulesUi.Destinations() : RulesUi.ItemSelectors;
+                RefPicker(b, s, opts, Domain.L.T("editor.call_default", def), arg?.Ref, v => Calls.SetArg(a, param, v, null), 300,
+                    kind == Calls.ParamKind.Device ? Catalog.Container : null);
+            }
+            b.End();
         }
     }
 

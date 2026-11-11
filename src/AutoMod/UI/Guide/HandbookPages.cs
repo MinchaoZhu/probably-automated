@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AutoMod.Domain.Rules;
 using AutoMod.Domain.Workforce;
 
 namespace AutoMod.UI.Guide;
@@ -46,7 +47,7 @@ public static class HandbookPages
     public static string Title => Domain.L.T("handbook.title");
 
     /// <summary>页码（从 0 开始），界面上的“?”按钮按主题跳转。</summary>
-    public const int Apprentices = 0, Ap = 0, Proficiency = 1, Schedules = 2, Definitions = 2, Tasks = 3, Rotation = 4, Examples = 5, Results = 6;
+    public const int Apprentices = 0, Ap = 0, Proficiency = 1, Schedules = 2, Definitions = 2, Tasks = 3, Subflows = 4, Rotation = 5, Examples = 6, Results = 8;
 
     // 横幅颜色取自游戏的手册：绿（快速入门）、棕（工具与机器）；提示句是橙色
     public static readonly Color Green = new(0.478f, 0.604f, 0.306f), Brown = new(0.722f, 0.518f, 0.345f);
@@ -143,6 +144,14 @@ public static class HandbookPages
             Entry("bottle_printer", Domain.L.T("handbook.p4.title_press"), Domain.L.T("handbook.p4.text_press")),
             Tip(Domain.L.T("handbook.p4.tip")),
             Tip(Domain.L.T("handbook.p4.tip_sub")),
+        },
+        // 子流程：执行流程、子流程参数
+        new()
+        {
+            Banner(Domain.L.T("handbook.psub.banner"), Green),
+            Entry("toolbox", Domain.L.T("handbook.psub.title_call"), Domain.L.T("handbook.psub.text_call", Calls.MaxDepth)),
+            Entry("handnote", Domain.L.T("handbook.psub.title_params"), Domain.L.T("handbook.psub.text_params")),
+            Tip(Domain.L.T("handbook.psub.tip")),
         },
         // 5 自动换电、执行顺序
         new()

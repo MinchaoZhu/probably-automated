@@ -14,6 +14,20 @@ public class SelVal
     public static readonly SelVal Empty = new() { Items = new List<object>() };
 }
 
+/// <summary>调用方传给子流程参数的值：物品列表（调用那一刻求的值）或数值。</summary>
+public class ArgVal
+{
+    public List<object> Items;
+
+    /// <summary>列表里是容器（设备名、选出容器的筛选器）：作来源时在它们里面找。</summary>
+    public bool Boxes;
+
+    public double? Num;
+
+    /// <summary>调用方传的是什么（设备名或筛选器 Id），报告里写它的名字。</summary>
+    public string Ref;
+}
+
 /// <summary>
 /// 求值上下文：一条规则内的快照。挑选器、自定义属性首次求值后缓存，
 /// 规则开始时新建或 Clear()。记事本、系统变量只在执行前提和记录里可用。
@@ -24,6 +38,12 @@ public class EvalCtx
     public RulesData D;
     public Dictionary<string, double> Memo;
     public Func<string, double?> Sys;
+
+    /// <summary>子流程参数 → 调用方传入的值（被调用时才有；没列的参数用默认值）。</summary>
+    public Dictionary<string, ArgVal> Args;
+
+    /// <summary>传入的值；没有传入为空。</summary>
+    public ArgVal Arg(string id) => Args != null && id != null && Args.TryGetValue(id, out var v) ? v : null;
 
     internal readonly Dictionary<string, SelVal> SelCache = new();
     internal readonly HashSet<string> Evaluating = new();
@@ -83,7 +103,8 @@ public static class Eval
         {
             case TermKind.Num: return t.Num;
             case TermKind.Const:
-                return c.D.Objects.FirstOrDefault(x => x.Id == t.Ref)?.Value;
+                if (c.Arg(t.Ref)?.Num is { } passed) return passed;
+                return c.D.Objects.FirstOrDefault(x => x.Id == t.Ref) is { IsRef: false } o ? o.Value : null;
             case TermKind.Own: return item == null ? null : Prop(c, item, t.Ref);
             case TermKind.Stat: return Number(c, t.Ref);
             case TermKind.Note: return c.Memo != null && t.Ref != null && c.Memo.TryGetValue(t.Ref, out var m) ? m : null;
@@ -169,7 +190,15 @@ public static class Eval
     public static SelVal Selector(EvalCtx c, string id)
     {
         if (id == null) return SelVal.Empty;
+        if (c.Arg(id)?.Items is { } passed) return new SelVal { Items = passed.Where(c.W.Exists).ToList() };
         if (c.SelCache.TryGetValue(id, out var cached)) return cached;
+        if (Defs.RefParam(c.D, id) is { } param)
+        {
+            // 设备 / 列表参数：它的值（设备名的东西本身、筛选器的结果）
+            if (!c.Evaluating.Add(id)) return SelVal.Empty;
+            try { return c.SelCache[id] = new SelVal { Items = (param.Type == ParamType.Device ? Boxes(c, param.Ref) : List(c, param.Ref)).ToList() }; }
+            finally { c.Evaluating.Remove(id); }
+        }
         var s = Sel(c, id);
         if (s == null || !c.Evaluating.Add(id)) return SelVal.Empty; // 不存在，或意外的循环引用
         try
@@ -186,6 +215,8 @@ public static class Eval
     /// </summary>
     public static string Explain(EvalCtx c, string id)
     {
+        if (c.Arg(id)?.Items != null) return L.T("eval.empty_arg", Text.Name(c.D, id));
+        if (Defs.RefParam(c.D, id) is { } param) return Explain(c, param.Ref);
         if (Places.IsName(id)) return L.T("eval.no_named", Places.NameOf(id));
         var s = Sel(c, id);
         if (s == null || s.IsNumber) return null;
@@ -210,6 +241,8 @@ public static class Eval
     /// <summary>目标容器：起了这个设备名的东西，或筛选器的结果。</summary>
     public static IReadOnlyList<object> Boxes(EvalCtx c, string id)
     {
+        if (c.Arg(id)?.Items is { } passed) return passed.Where(c.W.Exists).ToList();
+        if (Defs.RefParam(c.D, id) != null) return List(c, id);
         if (string.IsNullOrEmpty(id) || Obj(c, id) != null || Places.IsShop(id)) return Array.Empty<object>();
         if (Places.IsName(id)) return c.W.Named(Places.NameOf(id));
         return List(c, id);
@@ -285,10 +318,22 @@ public static class Eval
                     foreach (var x in c.W.Contents(box, s.Slot)) yield return x;
             yield break;
         }
-        if (Places.IsName(src))
+        if (c.Arg(src) is { Items: { } passed } arg)
+        {
+            source = passed.Where(c.W.Exists).ToList();
+            containers = arg.Boxes;
+        }
+        else if (Places.IsName(src))
         {
             source = c.W.Named(Places.NameOf(src));
             containers = true;
+        }
+        else if (Defs.RefParam(c.D, src) is { } param)
+        {
+            // 设备 / 列表参数：按它的值展开（值不会再是参数）
+            if (param.Ref == null || Defs.RefParam(c.D, param.Ref) != null) yield break;
+            foreach (var x in Expand(c, s, param.Ref)) yield return x;
+            yield break;
         }
         else if (Obj(c, src) != null) yield break;
         else
@@ -327,7 +372,7 @@ public static class Eval
     {
         var slot = s.Slot == "battery" ? L.T("eval.slot.battery") : s.Slot == "filter" ? L.T("eval.slot.filter") : s.Slot != null && s.Slot.StartsWith(SlotNames.Prefix) ? SlotNames.Name(s.Slot, d, s.From) : null;
         if (Places.IsShop(src)) return slot == null ? (ExpandKind.None, null) : (ExpandKind.Slot, slot);
-        if (!Places.IsName(src) && !YieldsBoxes(d.Selectors.FirstOrDefault(x => x.Id == src))) return (ExpandKind.None, null);
+        if (!Places.IsName(src) && !YieldsBoxes(Defs.Selector(d, src))) return (ExpandKind.None, null);
         return slot != null ? (ExpandKind.Slot, slot) : s.Kind == Catalog.Self ? (ExpandKind.Self, null) : (ExpandKind.Contents, null);
     }
 

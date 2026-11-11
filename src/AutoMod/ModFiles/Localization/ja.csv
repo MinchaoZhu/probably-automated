@@ -20,6 +20,7 @@ vocab.sys.shift.short,現在のシフト
 # Placeholders: none.
 # ==============================================================================
 op.activate,作動
+op.call,ルーチンを実行
 op.mark,マーク追加
 op.move,入れる
 op.note,記録
@@ -177,6 +178,7 @@ eval.from.contents,{0}の内容物
 eval.from.self,{0}自体
 eval.from.slot,{0}の{1}
 eval.no_named,店内に[{0}]がありません
+eval.empty_arg,呼び出し元から渡された「{0}」が空です
 eval.slot.battery,バッテリー枠
 eval.slot.filter,フィルター枠
 slot.backpack,リュック
@@ -231,8 +233,10 @@ card.param.toslot,スロット
 card.param.tool,道具
 card.select_button,（ボタンを選択）
 card.select_param,（{0}を選択）
+card.select_flow,（ルーチンを選択）
 card.times,（各{0}回）
 card.tpl.apply,{tool}を{list}に{op}
+card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}：
 card.tpl.cond_colon,{cond}：
 card.tpl.mark,{list}に[{text}]を{op}
@@ -248,6 +252,8 @@ card.tpl.when,{list}が{cond}のとき：
 # Placeholders: {0} = name/count, {1} = operator/target, {2} = value/expression.
 # ==============================================================================
 action.activate,{0}を作動
+action.call,ルーチン[{0}]を実行
+action.call_arg,{0} = {1}
 action.mark,{0}にマーク[{1}]を追加
 action.move,{0}を{1}に入れる
 action.note.add,{0}を{1}に加算
@@ -314,6 +320,7 @@ text.unset,（未選択）
 # ==============================================================================
 check.err.def_missing,参照された定義が存在しません
 check.err.expr_const_missing,式内のパラメータが存在しないか未選択です
+check.err.expr_const_not_number,パラメータ「{0}」は数値ではありません
 check.err.expr_empty,式に空の項目があります
 check.err.expr_note_missing,式内のカウンターが存在しないか未選択です
 check.err.expr_note_scope,ここではカウンターを使用できません
@@ -329,6 +336,12 @@ check.err.pre_sys_missing,未分類のシステム変数「{0}」
 check.err.prop_cycle,カスタムプロパティは他のカスタムプロパティを参照できません
 check.err.prop_prefix,プロパティ「{0}」：{1}
 check.err.rule_mark_empty,マーク名が未入力です
+check.err.param_no_value,パラメータ「{0}」の値が選択されていません
+check.err.call_no_flow,実行するルーチンが選択されていません
+check.err.call_missing,実行するルーチンは削除されています
+check.err.call_cycle,「{0}」がこのルーチンを再び実行します（ループ）
+check.err.call_depth,サブルーチンの入れ子が{0}段を超えています
+check.err.call_arg_missing,サブルーチンパラメータ「{0}」に渡したフィルターは削除されています
 check.err.rule_move_no_to,「入れる」の移動先が未選択です
 check.err.rule_move_not_box,入れる対象は容器である必要があります：「{0}」は容器ではありません
 check.err.rule_no_actions,アクションが設定されていません
@@ -352,6 +365,7 @@ check.err.sel_prefix,フィルター「{0}」：{1}
 check.err.sel_preset_missing,プリセット条件が存在しません
 check.err.sel_prop_empty,プロパティが未選択です
 check.ref.prop,プロパティ {0}
+check.ref.param,パラメータ {0}
 check.ref.selector,フィルター {0}
 check.warn.sel_all_shop,「[{0}]」は店全体の全アイテムを対象とし、機械内のバッテリーを含むすべてを処理します
 check.warn.sel_itself,「[{0}]」は容器自体を指しています。内容物を処理するには、元の場所を[{0}]にしたフィルターを使用してください
@@ -455,6 +469,7 @@ sim.run_3_days,3日
 sim.run_7_days,7日
 sim.run_14_days,14日
 sim.run_28_days,28日
+sim.sub_rule,└ {0}
 sim.schedule,ルーチン
 sim.search_placeholder,名前またはID
 sim.sex.female,メス
@@ -562,6 +577,8 @@ report.step.moved_to,{0}へ移動
 report.summary_override,見習い{0}：{1}
 report.text.no_ap,AP切れ
 report.why.no_ap,AP不足（前のタスクが {0} / 全 {1} APを使用）
+report.sub_rule,{0} › {1}
+report.called,[{0}]を実行
 report.window.deferred,AP不足で{0}件未処理
 report.window.done,{0}件完了
 report.window.dry_run,（シミュレーション）
@@ -749,6 +766,9 @@ schedule.no_buttons,選択した機器にボタンがありません
 schedule.param_shared,複数のルーチンで共有
 schedule.pick_action,アクションを選択
 schedule.pick_button,ボタンを選択
+schedule.pick_flow,ルーチンを選択
+schedule.no_other_flows,ほかのルーチンはありません
+schedule.del_called_note,実行元：{0}。先にそれらのルーチンの「ルーチンを実行」を変更してください。
 schedule.pick_condition,実行条件
 schedule.pick_device_or_selector,機器名またはフィルターを選択
 schedule.pick_param,パラメータを選択
@@ -757,6 +777,7 @@ schedule.section_devices,機器名
 schedule.section_params,パラメータ
 schedule.section_rules,タスク一覧
 schedule.selector_suffix,(フィルター)
+schedule.param_suffix,{0}（パラメータ）
 schedule.stats_done_items,{0}件処理済み
 schedule.stats_empty,記録なし: このルーチンはまだ実行されていません。
 schedule.stats_issue_count,{1} {0}回
@@ -782,6 +803,11 @@ editor.action_swap_with,対象
 editor.action_target,移動先
 editor.slot_auto,自動
 editor.action_value,値
+editor.pick_flow_placeholder,（ルーチンを選択）
+editor.call_no_params,「{0}」にはサブルーチンパラメータがありません
+editor.tip_call_arg,上書きしない場合は既定値（{0}）を使います。
+editor.call_default_num,既定 {0}
+editor.call_default,既定（{0}）
 editor.add_cond_tip,条件を満たすアイテムのみをカウント
 editor.add_cond_title,条件を追加
 editor.advanced_stats,カスタムプロパティ {0} · カウンター {1}
@@ -820,6 +846,7 @@ editor.label_custom_props,カスタムプロパティ
 editor.local_in_tasks,他に {0} 個のフィルターが単一タスクでのみ使用されています
 editor.menu_device_reuse,店内の他のアイテムにこの名前を使用…
 editor.menu_device_to_filter,フィルターに変換…
+editor.menu_device_to_param,パラメータに変換…
 editor.menu_new_filter,新規フィルター...
 editor.no_actions,アクションがまだありません
 editor.no_devices,なし。店内のアイテムに名前を付けると、フィルターやアクションで直接選択できます。
@@ -935,6 +962,14 @@ object_dlg.scope_owner,「{0}」専用
 object_dlg.title_custom_prop,カスタムプロパティ
 object_dlg.title_edit,パラメータ · {0}
 object_dlg.title_new,新規パラメータ
+object_dlg.type,種類
+object_dlg.type_number,数値
+object_dlg.type_device,設備
+object_dlg.type_list,リスト
+object_dlg.type_locked,使用中のため種類は変更できません
+object_dlg.pick_value,（値を選択）
+object_dlg.value_missing,値を選択してください。
+object_dlg.value_ref,値
 object_dlg.unit,単位
 object_dlg.unit_placeholder,例: g、個、日
 object_dlg.used_by_rules,{0}個のタスクから参照
@@ -1080,7 +1115,7 @@ handbook.p3.text_param,名前付きの数値（例: 「バッテリー交換し�
 handbook.p3.text_range,店全体、特定の機器名、または別のフィルターを指定でき、複数追加も可能です。「中身」は内部のアイテムを指し、「自身」は容器や機器自体を指します（例: [水耕栽培機] 自身に条件「空きスロットあり」を指定すると空き機器を抽出）。
 handbook.p3.text_scope,フィルターは標準で店全体（販売用商品を除く所有アイテム）を検索します。特定の保管エリア、機器、コンテナを対象にするには、青いラベラーで名前を付けるか（例: 「水培倉庫」）、ルーチンエディターの「＋ 命名…」を使用します。複数のオブジェクトに同じ名前を付けられます。
 handbook.p3.tip_name,フィルターを新規作成しなくても、カスタム名（[名前]）をフィルター対象として直接選択できます！
-handbook.p3.tip_tags,ゲームタグの名前はゲームのものです。アイテムにないタグは0として扱われ、ある特性を持たない種はその特性が0レベルです。
+handbook.p3.tip_tags,ゲームタグの名前はゲームのものです。アイテムにないタグは0として扱われます。
 handbook.pdna.banner,例：植物の特性
 handbook.pdna.title_disk,遺伝子ディスク作成：
 handbook.pdna.text_disk,浄化用と低栄養価用の抽出機が、それぞれハイドロリードの種とフィラーウィードの種から特性を取り出し、書き込んだディスクを【遺伝子バンク】へ入れます。在庫が足りれば停止します。精密取り出しモジュールを書き込み済みのディスクに使うと、その特性に設定されます。
@@ -1106,6 +1141,12 @@ handbook.p4.title_pre,実行条件:
 handbook.p4.title_press,ボタンを押す、作動、切替:
 handbook.p4.title_swap,交換:
 handbook.p4.title_use,使用:
+handbook.psub.banner,サブルーチン
+handbook.psub.title_call,ルーチンを実行:
+handbook.psub.text_call,別のルーチンのタスクを順番に実行し、終わったら元の位置から続けます。この動作自体はAPを消費せず、サブルーチン内のタスクは通常どおりAPを消費します。APが尽きると呼び出し元も止まります。ルーチン同士をループで呼び出すことはできず、入れ子は最大{0}段です。
+handbook.psub.title_params,パラメーター:
+handbook.psub.text_params,パラメーターは数値・設備・リストのいずれかです。タスクやフィルターでは設備そのものではなくパラメーターを選びます。ほかのルーチンから実行されるとき、呼び出し元はこのルーチンのパラメーターを上書きできます。上書きしない値はパラメーター自身の値を使います。グローバルパラメーターは上書きできません。見習いに直接割り当てたときはパラメーター自身の値を使います。
+handbook.psub.tip,同じタスクを複数の機械グループで使うには、設備をパラメーターにして一つのルーチンにまとめ、メインのルーチンから設備を変えて何回か実行します。
 handbook.p5.banner_order,実行順序
 handbook.p5.banner_swap,バッテリー自動交換
 handbook.p5.steps_swap,① 残量の少ないバッテリー（昇順）を満充電バッテリー（降順）と交換: 最も残量の少ないものに満充電のものを載せ替え、外したバッテリーはその場（通常は充電器内）に残します。\n② 保管エリアの未充電バッテリーを空きスロットのある充電器へ入れます。

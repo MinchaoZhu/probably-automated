@@ -41,13 +41,22 @@ public static class RulesUi
 
     public static string DeviceLabel(string name) => Domain.L.T("schedule.device_label", name);
 
+    /// <summary>当前视角能看到的设备 / 列表参数（“写入机（参数）”），排在下拉的最前面。type 为空 = 两种都要。</summary>
+    public static List<(string id, string name)> RefParams(string type = null) =>
+        Constants.Where(o => o.IsRef && (type == null || o.Type == type)).Select(o => (o.Id, Domain.L.T("schedule.param_suffix", o.Name))).ToList();
+
+    /// <summary>设备参数，加上值是容器的列表参数（当放入的目标）。</summary>
+    private static List<(string id, string name)> BoxParams() =>
+        RefParams().Where(p => Eval.YieldsBoxes(Defs.Selector(D, p.id), World)).ToList();
+
     /// <summary>可作为目标的：容器的设备名（店里还没有的也列上）+ 选出容器的筛选器。</summary>
     public static List<(string id, string name)> Destinations() =>
-        DeviceNames().Where(x => World.Named(Places.NameOf(x.id)) is not { Count: > 0 } named || named.All(o => Catalog.Matches(World, o, Catalog.Container))).Concat(VisibleSelectors.Where(s => Eval.YieldsBoxes(s, World)).Select(s => (s.Id, s.Name + Domain.L.T("schedule.selector_suffix")))).ToList();
+        BoxParams().Concat(DeviceNames()).Where(x => World.Named(Places.NameOf(x.id)) is not { Count: > 0 } named || named.All(o => Catalog.Matches(World, o, Catalog.Container))).Concat(VisibleSelectors.Where(s => Eval.YieldsBoxes(s, World)).Select(s => (s.Id, s.Name + Domain.L.T("schedule.selector_suffix")))).ToList();
 
     /// <summary>工具：水龙头这类固定设施、设备名（它本身和它里面的）、筛选器（它选出的）。</summary>
     public static List<(string id, string name)> ToolSources() =>
         Fixtures.All.Select(f => (f.id, f.name))
+            .Concat(RefParams())
             .Concat(DeviceNames())
             .Concat(VisibleSelectors.Where(s => !s.IsNumber).Select(s => (s.Id, s.Name + Domain.L.T("schedule.selector_suffix"))))
             .ToList();
@@ -85,7 +94,7 @@ public static class RulesUi
     }
 
     /// <summary>可作为物品列表的：设备名（叫这个名字的东西本身）+ 物品筛选器。</summary>
-    public static List<(string id, string name)> ItemSelectors => DeviceNames().Concat(VisibleSelectors.Where(s => !s.IsNumber).Select(s => (s.Id, s.Name))).ToList();
+    public static List<(string id, string name)> ItemSelectors => RefParams().Concat(DeviceNames()).Concat(VisibleSelectors.Where(s => !s.IsNumber).Select(s => (s.Id, s.Name))).ToList();
 
     public static string Name(string id) => AutoMod.Domain.Rules.Text.Name(D, id);
 

@@ -38,6 +38,15 @@ public class RuleRunReport
     public List<RunIssue> Issues { get; set; } = new();
     public List<string> Details { get; set; } = new();
 
+    /// <summary>子流程的第几层（0 = 直接指派的流程的任务）。</summary>
+    public int Depth { get; set; }
+
+    /// <summary>任务所在的流程。</summary>
+    public string FlowId { get; set; }
+
+    /// <summary>这条任务执行了哪个流程（名字），没有为空。子流程的任务报告接在后面。</summary>
+    public string Called { get; set; }
+
     /// <summary>物品处理事件，按发生顺序。</summary>
     public List<ItemHandled> Items { get; set; } = new();
 
@@ -173,30 +182,72 @@ public class Interpreter
 
     // ================= 执行一个排班 =================
 
+    /// <summary>一次班次里执行一个直接指派的流程（连同它调用的子流程）共用的状态。</summary>
+    private sealed class Frame
+    {
+        public Apprentice A;
+        public string Shift;
+        public GroupRunReport Gr;
+        public double StartUsed;
+        public int Effective;
+        public readonly Dictionary<string, double> Work = new();
+        public double Xp;
+
+        /// <summary>AP 用完：整条调用链都停。</summary>
+        public bool Stopped;
+
+        public int Spent() => ApMath.Ceil(A.ApUsed) - ApMath.Ceil(StartUsed);
+    }
+
     /// <summary>一名学徒执行一个流程：AP 从他当天剩下的里扣（小数累计，显示的整数是累计值向上取整之差）。</summary>
     public GroupRunReport RunSchedule(Schedule s, Apprentice a, string shift, bool applyXp = true)
     {
         var gr = new GroupRunReport { ScheduleId = s.Id, ScheduleName = s.Name, Workers = { a.Name } };
-        double startUsed = a.ApUsed;
-        int Spent() => ApMath.Ceil(a.ApUsed) - ApMath.Ceil(startUsed);
         gr.ApTotal = a.ApLeft;
         var profile = Proficiency.ProfileOf(_d, s, _w);
         int effective = Proficiency.Effective(a, profile);
         gr.Proficiency[a.Name] = effective;
         gr.Mult = Proficiency.CostMult(effective);
-        var work = new Dictionary<string, double>();
+        var f = new Frame { A = a, Shift = shift, Gr = gr, StartUsed = a.ApUsed, Effective = effective };
+        var memo = RunRules(s, f, null, 0);
+        var work = f.Work;
+        double xp = f.Xp;
 
+        gr.ApUsed = f.Spent();
+        gr.Memo = memo;
+        if (applyXp)
+        {
+            if (SkillMath.AddXp(a, Scales.Xp(xp)) > 0) gr.LevelUps.Add(L.T("report.growth.levelup", a.Name, a.Level, a.DailyAp));
+            // 熟练度：学徒往这一班的实际工作靠近
+            if (work.Count > 0)
+            {
+                int was = Proficiency.Score(a.Proficiency, profile);
+                Proficiency.Learn(a, work, gr.ApUsed);
+                int now = Proficiency.Score(a.Proficiency, profile);
+                if (now != was) gr.Learned.Add(L.T("report.growth.learned", a.Name, was, now));
+            }
+        }
+        if (UpdateProfiles && work.Count > 0) s.Profile = Proficiency.Blend(profile, work);
+        return gr;
+    }
+
+
+    /// <summary>
+    /// 按顺序执行流程 s 的任务。子流程（depth &gt; 0）的任务报告接在调用它的任务后面；args 是调用方传入的参数。
+    /// 返回记事本（每次调用都从初始值开始）。
+    /// </summary>
+    private Dictionary<string, double> RunRules(Schedule s, Frame f, Dictionary<string, ArgVal> args, int depth)
+    {
+        var a = f.A;
         var memo = s.Notepad.ToDictionary(n => n.Id, n => n.Init);
-        double xp = 0;
-        bool stopped = false;
         // 筛选器的求值结果按任务快照；上一条任务什么都没动（条件不成立、没东西可做）时店里没变，接着用，不重新筛一遍全店
         EvalCtx ctx = null;
         bool touched = true;
 
         foreach (var rule in s.Rules)
         {
-            var rr = new RuleRunReport { RuleId = rule.Id, Name = rule.Name };
-            gr.Rules.Add(rr);
+            var rr = new RuleRunReport { RuleId = rule.Id, Name = depth == 0 ? rule.Name : L.T("report.sub_rule", s.Name, rule.Name), Depth = depth, FlowId = s.Id };
+            f.Gr.Rules.Add(rr);
             if (!rule.Enabled) { rr.Pre = PreResult.Disabled; continue; }
             var errs = Errors?.Invoke(s, rule) ?? new List<string>();
             if (errs.Count > 0)
@@ -207,25 +258,25 @@ public class Interpreter
             }
             if (touched)
             {
-                ctx = new EvalCtx(_w, _d) { Memo = memo, Sys = v => v switch
+                ctx = new EvalCtx(_w, _d) { Memo = memo, Args = args, Sys = v => v switch
                 {
-                    SysVar.ApLeft => a.ApLeft, SysVar.Shift => shift == Shift.Morning ? 1 : 2, SysVar.Day => _w.Day, _ => null,
+                    SysVar.ApLeft => a.ApLeft, SysVar.Shift => f.Shift == Shift.Morning ? 1 : 2, SysVar.Day => _w.Day, _ => null,
                 } };
                 touched = false;
             }
-            if (stopped)
+            if (f.Stopped)
             {
                 // AP 已在前面的任务里用完：只挑不做，把会处理的物品记成“留到下次”，让界面能写出原因
                 if (!PreHolds(ctx, rule)) { rr.Pre = PreResult.Fail; rr.Why = PreFailText(ctx, s, rule); continue; }
                 rr.Pre = PreResult.NotRun;
-                rr.Why = L.T("report.why.no_ap", Text.Ap(Spent(), gr.ApTotal));
+                rr.Why = L.T("report.why.no_ap", Text.Ap(f.Spent(), f.Gr.ApTotal));
                 var seen = new HashSet<int>();
-                foreach (var act in rule.Actions.Where(a => a.Verb != ActVerb.Note))
+                foreach (var act in rule.Actions.Where(a => a.Verb is not (ActVerb.Note or ActVerb.Call)))
                     foreach (var x in Eval.List(ctx, act.List))
                         if (seen.Add(_w.Uid(x)))
                             rr.Items.Add(new ItemHandled { Op = act.Verb, Uid = _w.Uid(x), Item = _w.Describe(x), Outcome = Outcomes.Deferred, Text = rr.Why });
                 rr.Deferred = seen.Count;
-                gr.Deferred += seen.Count;
+                f.Gr.Deferred += seen.Count;
                 continue;
             }
             if (!PreHolds(ctx, rule)) { rr.Pre = PreResult.Fail; rr.Why = PreFailText(ctx, s, rule); continue; }
@@ -233,6 +284,7 @@ public class Interpreter
 
             bool walked = false;
             int ruleStart = ApMath.Ceil(a.ApUsed);
+            int callAp = 0;
             bool Pay(double cost)
             {
                 double need = cost + (walked ? 0 : Walk);
@@ -258,6 +310,19 @@ public class Interpreter
                         memo[act.Note] = act.NoteMode == "set" ? v : memo.GetValueOrDefault(act.Note) + v;
                         rr.Details.Add(L.T("report.details.record", s.Notepad.FirstOrDefault(n => n.Id == act.Note)?.Name, memo[act.Note].ToString("0.##")));
                     }
+                    continue;
+                }
+                if (act.Verb == ActVerb.Call)
+                {
+                    var callee = Calls.Callee(_d, act);
+                    if (callee == null || depth >= Calls.MaxDepth) { rr.Issue("broken", L.T("report.error.broken", L.Join("semi", Calls.Errors(_d, s, act)))); continue; }
+                    // 子流程的任务接在这条任务后面记进报告，各算各的 AP；这条只记自己（0 AP）
+                    rr.Called = callee.Name;
+                    int callStart = ApMath.Ceil(a.ApUsed);
+                    RunRules(callee, f, Calls.Bind(ctx, callee, act), depth + 1);
+                    callAp += ApMath.Ceil(a.ApUsed) - callStart;
+                    touched = true;
+                    if (f.Stopped) break;
                     continue;
                 }
                 var op = Catalog.Op(act.Verb);
@@ -307,7 +372,7 @@ public class Interpreter
                     }
 
                     string cat = op.Skill ?? Catalog.SkillOf(_w, item);
-                    double cost = op.Cost * times * gr.Mult;
+                    double cost = op.Cost * times * f.Gr.Mult;
                     bool firstPaid = !walked;
                     int before = ApMath.Ceil(a.ApUsed);
                     if (!Pay(cost))
@@ -317,8 +382,8 @@ public class Interpreter
                         foreach (var x in rest)
                             rr.Items.Add(new ItemHandled { Op = op.Id, Uid = _w.Uid(x), Item = _w.Describe(x), Outcome = Outcomes.Deferred, Text = L.T("report.text.no_ap") });
                         rr.Deferred += left;
-                        gr.Deferred += left;
-                        stopped = true;
+                        f.Gr.Deferred += left;
+                        f.Stopped = true;
                         break;
                     }
 
@@ -327,7 +392,7 @@ public class Interpreter
                     touched = true;
                     StepResult res = op.Mechanism switch
                     {
-                        Mechanism.Place => PlaceInto(item, dest, act),
+                        Mechanism.Place => PlaceInto(item, dest, act, ctx),
                         Mechanism.Swap => _w.Swap(item, other),
                         Mechanism.Apply => UseTool(tool, item, tools, times),
                         Mechanism.Trigger => TriggerTimes(item, how, times),
@@ -359,8 +424,8 @@ public class Interpreter
                     int itemAp = ApMath.Ceil(a.ApUsed) - before; // 这一件让整数 AP 多了几点（含启动开销）
                     rr.Details.Add($"{op.Name} {desc}：{res.Text} · {itemAp} AP");
                     rr.Items.Add(new ItemHandled { Op = op.Id, Uid = uid, Item = desc, Text = res.Text, Ap = itemAp, Effects = res.Effects });
-                    Proficiency.Add(work, op.Dim ?? op.Id, cat, cost);
-                    xp += SkillMath.XpGain(op.Cost * times, effective);
+                    Proficiency.Add(f.Work, op.Dim ?? op.Id, cat, cost);
+                    f.Xp += SkillMath.XpGain(op.Cost * times, f.Effective);
                 }
 
                 // 工具集合此刻是空的：有对象要处理就报缺少工具（不想报就在执行条件里写“工具 不为空”）
@@ -371,11 +436,12 @@ public class Interpreter
                 }
                 if (notAllowed > 0) rr.Issue(FailCode.NotAllowed, L.N("report.issue.not_allowed", notAllowed, op.Name, notAllowed));
                 if (noEffect > 0) rr.Issue(FailCode.NoEffect, L.N("report.issue.no_effect", noEffect, op.Name, noEffect));
-                if (full > 0) rr.Issue(FailCode.DestFull, NoSlot(act, targets) ? L.T("gameworld.box_no_slot", NameOf(act.To), SlotNames.Name(act.ToSlot, _d, new[] { act.To })) : L.N("report.issue.dest_full", full, NameOf(act.To), full));
+                string toName = NameOf(ctx.Arg(act.To)?.Ref ?? act.To); // 子流程里的目标被调用方换掉了：写调用方给的
+                if (full > 0) rr.Issue(FailCode.DestFull, NoSlot(act, targets) ? L.T("gameworld.box_no_slot", toName, SlotNames.Name(act.ToSlot, _d, new[] { act.To })) : L.N("report.issue.dest_full", full, toName, full));
                 if (doneHere > ManyThreshold)
                     rr.Issue(FailCode.Many, L.T("report.issue.many", op.Name, doneHere, NameOf(act.List)));
                 // 一件也没做、也没有别的问题：记下原因（报告、策略模拟器显示）
-                if (doneHere == 0 && !stopped && rr.Idle == null)
+                if (doneHere == 0 && !f.Stopped && rr.Idle == null)
                     rr.Idle = list.Count == 0 ? Eval.Explain(ctx, act.List)
                         : notOk == list.Count ? (op.Mechanism switch
                         {
@@ -385,27 +451,12 @@ public class Interpreter
                         })
                         : noPartner > 0 && partners != null ? (partners.Count == 0 ? Eval.Explain(ctx, act.To) : L.T("report.idle.same_place", NameOf(act.List), NameOf(act.To)))
                         : null;
-                if (stopped) break;
+                if (f.Stopped) break;
             }
-            rr.Ap = ApMath.Ceil(a.ApUsed) - ruleStart;
+            rr.Ap = ApMath.Ceil(a.ApUsed) - ruleStart - callAp;
         }
 
-        gr.ApUsed = Spent();
-        gr.Memo = memo;
-        if (applyXp)
-        {
-            if (SkillMath.AddXp(a, Scales.Xp(xp)) > 0) gr.LevelUps.Add(L.T("report.growth.levelup", a.Name, a.Level, a.DailyAp));
-            // 熟练度：学徒往这一班的实际工作靠近
-            if (work.Count > 0)
-            {
-                int was = Proficiency.Score(a.Proficiency, profile);
-                Proficiency.Learn(a, work, gr.ApUsed);
-                int now = Proficiency.Score(a.Proficiency, profile);
-                if (now != was) gr.Learned.Add(L.T("report.growth.learned", a.Name, was, now));
-            }
-        }
-        if (UpdateProfiles && work.Count > 0) s.Profile = Proficiency.Blend(profile, work);
-        return gr;
+        return memo;
     }
 
     private string NameOf(string id) => Text.Name(_d, id);
@@ -422,9 +473,9 @@ public class Interpreter
     }
 
     /// <summary>放进选好的目标。结果文字写排班里的名字：目标是设备名写设备名（“移至 满电架”），是筛选器写“移至 充能器#3（空闲充能器）”。</summary>
-    private StepResult PlaceInto(object item, object box, ActionDef act)
+    private StepResult PlaceInto(object item, object box, ActionDef act, EvalCtx ctx)
     {
-        string toId = act.To;
+        string toId = ctx.Arg(act.To)?.Ref ?? act.To; // 子流程里的目标被调用方换掉了：写调用方给的名字
         var res = _w.Place(item, box, act.ToSlot);
         if (res.Ok && toId != null)
         {
@@ -444,7 +495,7 @@ public class Interpreter
         if (string.IsNullOrEmpty(source)) return Array.Empty<object>();
         if (Fixtures.Is(source)) return ctx.W.Fixture(source) is { } f ? new[] { f } : Array.Empty<object>();
         if (Places.IsShop(source)) return ctx.W.Shop();
-        if (Places.IsName(source))
+        if (Places.IsName(source) || ctx.D.Objects.Any(o => o.Id == source && o.Type == ParamType.Device))
         {
             var named = Eval.Boxes(ctx, source);
             return named.Concat(named.SelectMany(b => ctx.W.Contents(b, null)));
