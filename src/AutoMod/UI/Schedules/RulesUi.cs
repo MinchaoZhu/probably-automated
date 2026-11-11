@@ -68,7 +68,7 @@ public static class RulesUi
         try
         {
             if (!string.IsNullOrEmpty(target))
-                foreach (var box in Eval.Boxes(new EvalCtx(World, D), target).Take(40))
+                foreach (var box in Eval.Boxes(new EvalCtx(World, D), target))
                     foreach (var sl in World.Slots(box))
                         if (list.All(x => x.id != sl.id)) list.Add(sl);
         }
@@ -108,22 +108,25 @@ public static class RulesUi
         ItemGroups.OfTraitOption(id) ?? (id != null && KindGroups.TryGetValue(id, out var g) ? g : null);
 
     /// <summary>
-    /// 某类型可用的属性：内置 + 适用的自定义属性 + 游戏标签（排在最后）。给了来源里的东西时，游戏标签取自它们
-    /// （“全部物品”也能列出来源里水瓶的含水量）；没给时取店里这类物品。
+    /// 某类型可用的属性：内置 + 适用的自定义属性 + 游戏标签（排在最后）。来源里有这类物品时，游戏标签取自来源里的全部这类物品
+    /// （“全部物品”也能列出来源里水瓶的含水量）；来源里此刻没有（例如机器的槽位空着）时取店里全部这类物品。
     /// </summary>
     public static List<string> PropsFor(string kind, IReadOnlyList<object> sourceItems = null) =>
         Catalog.PropsFor(kind, World).Concat(D.Properties.Where(p => kind == Catalog.Any || kind == null || p.ItemKind == kind || p.ItemKind == Catalog.Any
             || Catalog.Satisfies(kind, p.ItemKind, World)).Select(p => p.Id))
-            .Concat(sourceItems != null && sourceItems.Count > 0 ? SourceTagProps(kind, sourceItems) : GameTagProps(kind)).Distinct().ToList();
+            .Concat(SourceTagProps(kind, sourceItems) ?? GameTagProps(kind)).Distinct().ToList();
 
     /// <summary>
-    /// 筛选器的来源里此刻有的东西（来源是设备名：里面的东西，或只取某个槽位的，选“本身”时是它们自己；来源是筛选器：它选出的），最多 40 件。
+    /// 筛选器的来源里此刻有的全部东西（来源是设备名：里面的东西，或只取某个槽位的，选“本身”时是它们自己；来源是筛选器：它选出的）。
+    /// 不截断：条件里列的属性、游戏标签要取自全集，否则排在后面的物品身上的标签会漏掉。
     /// </summary>
     /// <param name="data">求值用的数据（对话框的草稿）；为空 = 规则数据。</param>
     public static List<object> SourceItems(SelectorDef d, RulesData data = null)
     {
         var list = new List<object>();
+        var seen = new HashSet<object>();
         data ??= D;
+        void Add(IEnumerable<object> xs) { foreach (var x in xs) if (seen.Add(x)) list.Add(x); }
         try
         {
             var ctx = new EvalCtx(World, data);
@@ -131,24 +134,19 @@ public static class RulesUi
             {
                 if (Places.IsShop(src))
                 {
-                    list.AddRange(string.IsNullOrEmpty(d.Slot) ? World.Shop().Take(40)
-                        : World.Shop().Where(x => Catalog.Matches(World, x, Catalog.Container)).SelectMany(x => World.Contents(x, d.Slot)).Take(40));
-                    if (list.Count >= 40) break;
+                    Add(string.IsNullOrEmpty(d.Slot) ? World.Shop()
+                        : World.Shop().Where(x => Catalog.Matches(World, x, Catalog.Container)).SelectMany(x => World.Contents(x, d.Slot)));
                     continue;
                 }
                 var sel = data.Selectors.FirstOrDefault(x => x.Id == src);
                 bool boxes = Places.IsDevice(src) || (sel != null && Eval.YieldsBoxes(sel, World));
                 bool self = d.Kind == Catalog.Self && string.IsNullOrEmpty(d.Slot); // 选本身：来源里的就是它们自己
                 foreach (var x in Eval.Boxes(ctx, src))
-                {
-                    list.AddRange(boxes && !self ? World.Contents(x, d.Slot) : new[] { x });
-                    if (list.Count >= 40) break;
-                }
-                if (list.Count >= 40) break;
+                    Add(boxes && !self ? World.Contents(x, d.Slot) : new[] { x });
             }
         }
         catch { }
-        return list.Take(40).ToList();
+        return list;
     }
 
     // ---------- 当前结果 ----------
@@ -211,15 +209,17 @@ public static class RulesUi
     public static HashSet<string> TraitsOf(IEnumerable<object> items) =>
         new(items.SelectMany(i => Catalog.Closure(World.Traits(i))));
 
+    /// <summary>来源里这类物品（全部）身上的游戏标签；来源里没有这类物品时为 null。</summary>
     private static IEnumerable<string> SourceTagProps(string kind, IReadOnlyList<object> items)
     {
+        if (items == null || items.Count == 0) return null;
         try
         {
             var gw = World;
-            var match = items.Where(i => string.IsNullOrEmpty(kind) || kind == Catalog.Any || kind == Catalog.Self || Catalog.Matches(gw, i, kind)).OfType<GameItem>().Take(12);
-            return PropBindings.RawTagProps(match, ShowAllTags);
+            var match = items.Where(i => string.IsNullOrEmpty(kind) || kind == Catalog.Any || kind == Catalog.Self || Catalog.Matches(gw, i, kind)).OfType<GameItem>().ToList();
+            return match.Count == 0 ? null : PropBindings.RawTagProps(match, ShowAllTags);
         }
-        catch { return Enumerable.Empty<string>(); }
+        catch { return null; }
     }
 
     /// <summary>品质等级属性的等级名（从好到差）；不是等级属性为空。</summary>
@@ -228,14 +228,14 @@ public static class RulesUi
     /// <summary>条件里列不列内部标签（类别标记、编号、贴图……）；对话框里的开关，默认看配置。</summary>
     public static bool ShowAllTags = Settings.ShowAllTags;
 
-    /// <summary>店里这类物品（最多看 8 件）身上的游戏标签；“全部物品”不列（太多）。</summary>
+    /// <summary>店里这类物品（全部）身上的游戏标签：来源里此刻没有东西时用。</summary>
     private static IEnumerable<string> GameTagProps(string kind)
     {
-        if (string.IsNullOrEmpty(kind) || kind == Catalog.Any || kind == Catalog.Self || !GameApi.InStore) return Enumerable.Empty<string>();
+        if (!GameApi.InStore) return Enumerable.Empty<string>();
         try
         {
             var gw = new GameWorld();
-            var items = GameApi.CollectAll().Where(i => Catalog.Matches(gw, i, kind)).Take(8);
+            var items = GameApi.CollectAll().Where(i => string.IsNullOrEmpty(kind) || kind == Catalog.Any || kind == Catalog.Self || Catalog.Matches(gw, i, kind));
             return PropBindings.RawTagProps(items, ShowAllTags);
         }
         catch { return Enumerable.Empty<string>(); }

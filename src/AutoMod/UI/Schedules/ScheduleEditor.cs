@@ -621,10 +621,10 @@ public static class ScheduleEditor
         }
     }
 
-    /// <summary>前提列表此刻有的东西（取属性、常用条件用），最多 40 件。</summary>
+    /// <summary>前提列表此刻有的全部东西（取属性、常用条件用）。</summary>
     private static List<object> PreItems(PreCond p)
     {
-        try { return Eval.List(new EvalCtx(RulesUi.World, D), p.Ref).Take(40).ToList(); }
+        try { return Eval.List(new EvalCtx(RulesUi.World, D), p.Ref).ToList(); }
         catch { return new List<object>(); }
     }
 

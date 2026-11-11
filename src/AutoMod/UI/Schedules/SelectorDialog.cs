@@ -256,7 +256,7 @@ public static class SelectorDialog
         int mode = d.Kind == Catalog.Self ? 1 : d.Slot == null ? 0 : modes.FindIndex(m => m.slot == d.Slot);
         b.BeginPanel(-1, -1, UnityEngine.TextAnchor.UpperLeft, 8, 4);
         b.BeginRow(6, UnityEngine.TextAnchor.MiddleLeft).AddLabel(Tone.Bold(Domain.L.T("selector.section_scope")))
-            .AddFlexibleSpace().AddLabel(Tone.Small(Tone.Dim(source.Count == 0 ? Domain.L.T("selector.scope_empty") : Domain.L.N("selector.scope_count", source.Count, source.Count >= 40 ? "+" : "")))).End();
+            .AddFlexibleSpace().AddLabel(Tone.Small(Tone.Dim(source.Count == 0 ? Domain.L.T("selector.scope_empty") : Domain.L.N("selector.scope_count", source.Count, "")))).End();
         for (int k = 0; k < d.From.Count; k++)
         {
             int at = k;
