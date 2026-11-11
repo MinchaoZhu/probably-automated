@@ -821,6 +821,7 @@ editor.btn_enable,Включить
 editor.btn_name_device,＋ Назвать…
 editor.btn_new_rule,＋ Новая задача
 editor.btn_only_refs,Только для этой задачи
+editor.btn_description,Описание…
 editor.btn_return,Назад
 editor.btn_show_all,Показать всё
 editor.btn_simple_when,Простой режим

@@ -821,6 +821,7 @@ editor.btn_enable,启用
 editor.btn_name_device,＋ 命名…
 editor.btn_new_rule,＋ 新建任务
 editor.btn_only_refs,仅显示此任务引用的项
+editor.btn_description,说明…
 editor.btn_return,返回
 editor.btn_show_all,显示全部
 editor.btn_simple_when,简单写法

@@ -91,6 +91,22 @@ public static class Pickers
             .End().Show();
     }
 
+    /// <summary>输入一段文字的小窗（单行输入框）；确定时把文字交给 onDone，留空也交。</summary>
+    public static void Text(string title, string initial, Action<string> onDone)
+    {
+        string text = initial ?? "";
+        Ui.Window(Id, title, 720, 150)
+            .BeginRow(6).AddInput("", text, Ui.AS(v => text = v)).Width(680).End()
+            .BeginRow(8).AddFlexibleSpace()
+            .AddButton(Domain.L.T("ui.cancel"), Ui.A(() => Ui.Close(Id)))
+            .AddButton(Domain.L.T("ui.confirm"), Ui.A(() =>
+            {
+                Ui.Close(Id);
+                onDone(text);
+            }))
+            .End().Show();
+    }
+
     /// <summary>确认小窗：标题是问题，下面几行说明，右下角按钮（no 为 default 时只有一个按钮）。</summary>
     public static void Confirm(string question, IEnumerable<string> reasons, (string label, Action act) yes, (string label, Action act) no)
     {

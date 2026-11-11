@@ -81,15 +81,17 @@ public static class ScheduleEditor
         // ---- 顶栏 ----
         b.BeginRow(8, TextAnchor.MiddleLeft)
             .AddLabel(Domain.L.T("ui.name")).AddInput(Domain.L.T("editor.input_name"), s.Name, Ui.AS(v => { if (!string.IsNullOrWhiteSpace(v)) s.Name = v.Trim(); })).Width(260)
+            // 说明：悬停看，点开编辑
+            .AddButton(Domain.L.T("editor.btn_description"), Ui.A(() => Pickers.Text(Domain.L.T("ui.hint"), s.Description, v =>
+            {
+                s.Description = string.IsNullOrWhiteSpace(v) ? null : v.Trim();
+                RulesUi.Changed();
+                Show();
+            }))).Tip(string.IsNullOrEmpty(s.Description) ? null : s.Description)
             .AddFlexibleSpace()
             .AddButton(Domain.L.T("schedule.btn_simulator"), Ui.A(() => SimulatorWindow.Open(s)))
             .AddButton(Domain.L.T("editor.btn_return"), Ui.A(() => { Hide(); MainWindow.Show("schedules"); }))
             .AddButton(Domain.L.T("ui.close"), Ui.A(Hide))
-            .End();
-        // 说明单独一行，输入框占满宽度
-        b.BeginRow(8, TextAnchor.MiddleLeft)
-            .AddLabel(Domain.L.T("ui.hint"))
-            .AddInput("", s.Description ?? "", Ui.AS(v => s.Description = string.IsNullOrWhiteSpace(v) ? null : v.Trim())).Width(LeftW + RightW - 60)
             .End();
 
         var closure = rule == null ? new HashSet<string>() : Check.Closure(D, Check.RuleRefs(rule));

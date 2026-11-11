@@ -821,6 +821,7 @@ editor.btn_enable,Enable
 editor.btn_name_device,＋ Name...
 editor.btn_new_rule,＋ New Task
 editor.btn_only_refs,Referenced only
+editor.btn_description,Description…
 editor.btn_return,Back
 editor.btn_show_all,Show All
 editor.btn_simple_when,Simple Mode

@@ -821,6 +821,7 @@ editor.btn_enable,有効化
 editor.btn_name_device,＋ 命名…
 editor.btn_new_rule,＋ 新規タスク
 editor.btn_only_refs,このタスクで使われる項目のみ
+editor.btn_description,説明…
 editor.btn_return,戻る
 editor.btn_show_all,すべて表示
 editor.btn_simple_when,シンプル
