@@ -49,9 +49,9 @@ public static class RulesUi
     private static List<(string id, string name)> BoxParams() =>
         RefParams().Where(p => Eval.YieldsBoxes(Defs.Selector(D, p.id), World)).ToList();
 
-    /// <summary>可作为目标的：容器的设备名（店里还没有的也列上）+ 选出容器的筛选器。</summary>
+    /// <summary>可作为目标的：垃圾桶、容器的设备名（店里还没有的也列上）+ 选出容器的筛选器。</summary>
     public static List<(string id, string name)> Destinations() =>
-        BoxParams().Concat(DeviceNames()).Where(x => World.Named(Places.NameOf(x.id)) is not { Count: > 0 } named || named.All(o => Catalog.Matches(World, o, Catalog.Container))).Concat(VisibleSelectors.Where(s => Eval.YieldsBoxes(s, World)).Select(s => (s.Id, s.Name + Domain.L.T("schedule.selector_suffix")))).ToList();
+        Fixtures.Boxes.Concat(BoxParams()).Concat(DeviceNames()).Where(x => World.Named(Places.NameOf(x.id)) is not { Count: > 0 } named || named.All(o => Catalog.Matches(World, o, Catalog.Container))).Concat(VisibleSelectors.Where(s => Eval.YieldsBoxes(s, World)).Select(s => (s.Id, s.Name + Domain.L.T("schedule.selector_suffix")))).ToList();
 
     /// <summary>工具：水龙头这类固定设施、设备名（它本身和它里面的）、筛选器（它选出的）。</summary>
     public static List<(string id, string name)> ToolSources() =>
@@ -137,7 +137,7 @@ public static class RulesUi
                     continue;
                 }
                 var sel = data.Selectors.FirstOrDefault(x => x.Id == src);
-                bool boxes = Places.IsName(src) || (sel != null && Eval.YieldsBoxes(sel, World));
+                bool boxes = Places.IsDevice(src) || (sel != null && Eval.YieldsBoxes(sel, World));
                 bool self = d.Kind == Catalog.Self && string.IsNullOrEmpty(d.Slot); // 选本身：来源里的就是它们自己
                 foreach (var x in Eval.Boxes(ctx, src))
                 {

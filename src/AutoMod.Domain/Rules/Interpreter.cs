@@ -479,7 +479,7 @@ public class Interpreter
         var res = _w.Place(item, box, act.ToSlot);
         if (res.Ok && toId != null)
         {
-            if (Places.IsName(toId)) res.Text = L.T("report.step.moved_to", NameOf(toId));
+            if (Places.IsDevice(toId)) res.Text = L.T("report.step.moved_to", NameOf(toId));
             else if (_d.Selectors.Any(x => x.Id == toId)) res.Text += L.T("text.paren", NameOf(toId));
             if (act.ToSlot != null) res.Text += L.T("text.paren", SlotNames.Name(act.ToSlot, _d, new[] { toId }));
         }
@@ -488,14 +488,14 @@ public class Interpreter
 
     /// <summary>
     /// 工具集合：设备名 = 起了这个名字的东西本身和它们里面的；全店 = 店里所有的；筛选器 = 它选出的；
-    /// 水龙头这类固定设施 = 它自己。
+    /// 水龙头这类固定设施 = 它自己；垃圾桶和设备名一样，是它和它里面的。
     /// </summary>
     public static IEnumerable<object> ToolPool(EvalCtx ctx, string source)
     {
         if (string.IsNullOrEmpty(source)) return Array.Empty<object>();
-        if (Fixtures.Is(source)) return ctx.W.Fixture(source) is { } f ? new[] { f } : Array.Empty<object>();
+        if (Fixtures.Is(source) && !Fixtures.IsBox(source)) return ctx.W.Fixture(source) is { } f ? new[] { f } : Array.Empty<object>();
         if (Places.IsShop(source)) return ctx.W.Shop();
-        if (Places.IsName(source) || ctx.D.Objects.Any(o => o.Id == source && o.Type == ParamType.Device))
+        if (Places.IsDevice(source) || ctx.D.Objects.Any(o => o.Id == source && o.Type == ParamType.Device))
         {
             var named = Eval.Boxes(ctx, source);
             return named.Concat(named.SelectMany(b => ctx.W.Contents(b, null)));

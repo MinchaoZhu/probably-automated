@@ -1269,6 +1269,7 @@ fish.female,雌，
 fish.male,雄，
 fixture.drain,下水道
 fixture.faucet,水龙头
+fixture.trash,垃圾桶
 fmt.arrow_prop,{0} {1} → {2}
 fmt.colon,{0}：{1}
 fmt.copy_suffix,{0}（副本）

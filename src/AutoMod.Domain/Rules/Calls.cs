@@ -146,7 +146,7 @@ public static class Calls
             if (x.Num is { } n) { args[x.Param] = new ArgVal { Num = n }; continue; }
             if (caller.Arg(x.Ref) is { Items: not null } passed) { args[x.Param] = passed; continue; }
             if (Defs.Selector(caller.D, x.Ref) is not { IsNumber: false } sel) continue;
-            bool boxes = Places.IsName(x.Ref) || Eval.YieldsBoxes(sel, caller.W);
+            bool boxes = Places.IsDevice(x.Ref) || Eval.YieldsBoxes(sel, caller.W);
             args[x.Param] = new ArgVal { Items = (boxes ? Eval.Boxes(caller, x.Ref) : Eval.List(caller, x.Ref)).ToList(), Boxes = boxes, Ref = x.Ref };
         }
         return args;

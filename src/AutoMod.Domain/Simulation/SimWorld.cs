@@ -20,6 +20,9 @@ public partial class SimWorld : IWorld
     /// <summary>夜间是否有饲料（学徒不喂，模拟器假设玩家会喂）。</summary>
     public bool Fed = true;
 
+    /// <summary>夜里清空垃圾桶（游戏：开通并支付了清洁服务）。从游戏复制。</summary>
+    public bool TrashCleared;
+
     public SimWorld(int seed = 1) => _rng = new Random(seed);
 
     public int Day { get; set; } = 1;
@@ -323,7 +326,19 @@ public partial class SimWorld : IWorld
     public Func<SimItem, SimItem, IReadOnlyList<object>, StepResult> ApplyRule;
 
     public bool CanApply(object tool, object target) =>
-        Exists(target) && (CanApplyRule == null || CanApplyRule((SimItem)tool, (SimItem)target));
+        Exists(target) && (DrainAllowed((SimItem)tool, (SimItem)target) ?? (CanApplyRule == null || CanApplyRule((SimItem)tool, (SimItem)target)));
+
+    /// <summary>
+    /// 容器和下水道：游戏只在容器里有液体时允许（WaterHelper.IsDrain 那条）。按模拟里的水量判断，不问游戏：
+    /// 同一班先接水再倒掉时，店里真实的桶此刻还是空的。不是这种组合返回 null。
+    /// </summary>
+    private bool? DrainAllowed(SimItem tool, SimItem target)
+    {
+        if (Fixture(Fixtures.Drain) is not SimItem drain) return null;
+        var other = ReferenceEquals(tool, drain) ? target : ReferenceEquals(target, drain) ? tool : null;
+        if (other == null || !other.Num.ContainsKey("capacityMl")) return null;
+        return other.N("volumeMl") > 0;
+    }
 
     public StepResult Apply(object tool, object target, IReadOnlyList<object> outputs) =>
         ApplyRule?.Invoke((SimItem)tool, (SimItem)target, outputs)
@@ -463,7 +478,20 @@ public partial class SimWorld : IWorld
         foreach (var seed in All().Where(s => Has(s, "seed") && s.Parent != null && s.InSlot == SlotNames.Prefix + "seed" && !IsDnaEditor(s.Parent)).ToList()) SeedNight(seed);
         foreach (var m in All().Where(IsDnaEditor).ToList()) DnaNight(m);
         foreach (var m in All().Where(m => m.N("working") == 1 && m.N("progressMax") > 0 && !IsDnaEditor(m) && !m.Children.Any(c => Has(c, "seed"))).ToList()) MachineNight(m);
+        if (TrashCleared && Fixture(Fixtures.Trash) is SimItem trash) TrashNight(trash);
         Day++;
+    }
+
+    /// <summary>垃圾桶：照游戏 PlayerStore.ClearTrash 移除里面的东西，危险废物、走私舱改装件（连同里面的）留下。</summary>
+    private static void TrashNight(SimItem box)
+    {
+        static bool Keeps(SimItem x) => x.KeepInTrash || x.Children.Any(Keeps);
+        foreach (var c in box.Children.ToList())
+        {
+            if (c.Kind == "smuggler_bay_mod") continue;
+            if (Keeps(c)) TrashNight(c);
+            else { c.Parent = null; box.Children.Remove(c); }
+        }
     }
 
     /// <summary>鱼：每晚饿一些；低于 75% 时吃同一容器里的饲料（吃到 85%，热量从饲料扣）；吃饱（≥ 37.5%）才长一天；饿到 0 先挨饿，下一晚死。</summary>

@@ -32,7 +32,7 @@ public static class SelectorFamily
     /// <summary>来源是结果为物品列表的筛选器：范围方式和槽位都不起作用，只在列表内筛选（见 Eval.Expand）。</summary>
     public static bool IsItemList(RulesData d, string src, IWorld w)
     {
-        if (string.IsNullOrEmpty(src) || Places.IsShop(src) || Places.IsName(src)) return false;
+        if (string.IsNullOrEmpty(src) || Places.IsShop(src) || Places.IsDevice(src)) return false;
         var s = Defs.Selector(d, src); // 设备参数是容器，列表参数看它的值
         return s != null && !s.IsNumber && !Eval.YieldsBoxes(s, w);
     }

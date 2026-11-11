@@ -798,6 +798,39 @@ internal static class RulesTests
             Check(g2.Rules[0].Issues.Any(i => i.Code == FailCode.NoEffect) && g2.ApUsed == 0, "已满：没有变化，不扣 AP");
         });
 
+        test("规则·垃圾桶：放入的目标、筛选器的范围，不用命名；全店不含垃圾桶；夜里清空", () =>
+        {
+            var w = FakeGame.Install(new SimWorld());
+            var box = w.AddRoot("storage", 1, "仓库");
+            w.Add(box, "battery_empty");
+            w.Add(box, "rat");
+            var trash = new SimItem { Id = 902, Kind = "trashcan", Name = "垃圾桶", Capacity = 20 };
+            w.FixtureItems[Fixtures.Trash] = trash;
+            var kept = new SimItem { Id = 903, Kind = "toxic", Name = "危险废物", KeepInTrash = true };
+            w.Attach(kept, trash, false);
+            var d = new RulesData();
+            Named(w, "box", 1);
+            Sel(d, "empties", "#box", "battery");
+            Sel(d, "inTrash", Fixtures.Trash, "battery");
+            var sch = new Schedule { Id = "s", Name = "s" };
+            sch.Rules.Add(new WorkRule { Id = "t", Name = "扔", Actions = { new ActionDef { Verb = ActVerb.Move, List = "empties", To = Fixtures.Trash } } });
+            d.Schedules.Add(sch);
+            Check(AutoMod.Domain.Rules.Check.RuleErrors(d, sch, sch.Rules[0], w).Count == 0, "目标写垃圾桶不算结构错误：" + string.Join("；", AutoMod.Domain.Rules.Check.RuleErrors(d, sch, sch.Rules[0], w)));
+            Check(AutoMod.Domain.Rules.Check.SelectorErrors(d, d.Selectors.First(x => x.Id == "inTrash")).Count == 0, "范围写垃圾桶不算结构错误");
+            new Interpreter(w, d).RunShift(Shift.Morning, new[] { App("甲", 200, 5, sch.Id) });
+            Check(trash.Children.Count == 2 && box.Children.Count == 1, "电池放进了垃圾桶");
+            var ctx = new EvalCtx(w, d);
+            Check(Eval.List(ctx, "inTrash").Count == 1, "筛选器从垃圾桶里选出电池");
+            Check(!w.Shop().Contains(trash) && w.Shop().All(x => ((SimItem)x).Parent != trash), "全店不含垃圾桶和里面的东西");
+            var line = string.Concat(AutoMod.Domain.Rules.Card.Sentence(d, sch, sch.Rules[0]).SelectMany(l => l).Select(sg => sg.Text));
+            Check(line.Contains("垃圾桶"), $"卡片写垃圾桶：{line}");
+            w.Night();
+            Check(trash.Children.Count == 2, "未付清洁服务：夜里不清");
+            w.TrashCleared = true;
+            w.Night();
+            Check(trash.Children.Count == 1 && trash.Children[0] == kept, "付了清洁服务：清空，危险废物留下");
+        });
+
         test("执行顺序：按学徒列表的顺序；后面的流程看到前面处理后的状态", () =>
         {
             var w = new SimWorld();
@@ -915,6 +948,8 @@ internal static class RulesTests
             var r2 = w.Apply(jug, pitcher, new List<object>());
             Check(r2.Ok && pitcher.N("volumeMl") == Math.Min(had, pitcher.N("capacityMl")) && jug.N("volumeMl") == had - pitcher.N("volumeMl"), $"倒进水罐：{r2.Text}");
             Check(w.Apply(pitcher, drain, new List<object>()).Ok && pitcher.N("volumeMl") == 0, "倒进下水道：倒空");
+            w.CanApplyRule = (_, _) => false; // 店里真实的容器还是空的，游戏不让倒
+            Check(w.CanApply(jug, drain) && !w.CanApply(pitcher, drain), "能不能倒进下水道按模拟里的水量：有水的能倒，倒空的不能");
             var merged = AutoMod.Domain.Rules.Text.MergeSteps(new[] { "桶 → 水箱：水量 (ml) 0 → 6000，水质 (%) 0 → 90", "桶 → 水箱：水量 (ml) 6000 → 12000，水质 (%) 90 → 90" });
             Check(merged == "桶 → 水箱：水量 (ml) 0 → 12000，水质 (%) 0 → 90", $"连做两次合成一句：{merged}");
         });

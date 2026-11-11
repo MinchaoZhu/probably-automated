@@ -137,7 +137,7 @@ public static class SimulatorWindow
         var ctx = new EvalCtx(_world, D);
         var groups = new List<(string title, List<SimItem> boxes)>();
         var shown = new HashSet<SimItem>();
-        foreach (var id in used.Where(x => Places.IsName(x) || D.Selectors.FirstOrDefault(y => y.Id == x) is { } sel && Eval.YieldsBoxes(sel, _world)))
+        foreach (var id in used.Where(x => Places.IsDevice(x) || D.Selectors.FirstOrDefault(y => y.Id == x) is { } sel && Eval.YieldsBoxes(sel, _world)))
         {
             var boxes = Eval.Boxes(ctx, id).Cast<SimItem>().Where(shown.Add).Take(30 - shown.Count + 1).ToList();
             groups.Add((Places.IsName(id) ? Domain.L.T("text.bracket", Places.NameOf(id)) : AutoMod.Domain.Rules.Text.Name(D, id), boxes));

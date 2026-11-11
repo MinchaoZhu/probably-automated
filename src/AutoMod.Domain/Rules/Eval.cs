@@ -244,9 +244,15 @@ public static class Eval
         if (c.Arg(id)?.Items is { } passed) return passed.Where(c.W.Exists).ToList();
         if (Defs.RefParam(c.D, id) != null) return List(c, id);
         if (string.IsNullOrEmpty(id) || Obj(c, id) != null || Places.IsShop(id)) return Array.Empty<object>();
-        if (Places.IsName(id)) return c.W.Named(Places.NameOf(id));
+        if (Places.IsDevice(id)) return Device(c.W, id);
         return List(c, id);
     }
+
+    /// <summary>设备（Places.IsDevice）指的东西：设备名 = 叫这个名字的东西，容器设施 = 它自己。</summary>
+    public static IReadOnlyList<object> Device(IWorld w, string id) =>
+        Places.IsName(id) ? w.Named(Places.NameOf(id))
+        : Fixtures.IsBox(id) && w.Fixture(id) is { } f ? new[] { f }
+        : Array.Empty<object>();
 
     private static SelVal Compute(EvalCtx c, SelectorDef s)
     {
@@ -323,9 +329,9 @@ public static class Eval
             source = passed.Where(c.W.Exists).ToList();
             containers = arg.Boxes;
         }
-        else if (Places.IsName(src))
+        else if (Places.IsDevice(src))
         {
-            source = c.W.Named(Places.NameOf(src));
+            source = Device(c.W, src);
             containers = true;
         }
         else if (Defs.RefParam(c.D, src) is { } param)
@@ -372,7 +378,7 @@ public static class Eval
     {
         var slot = s.Slot == "battery" ? L.T("eval.slot.battery") : s.Slot == "filter" ? L.T("eval.slot.filter") : s.Slot != null && s.Slot.StartsWith(SlotNames.Prefix) ? SlotNames.Name(s.Slot, d, s.From) : null;
         if (Places.IsShop(src)) return slot == null ? (ExpandKind.None, null) : (ExpandKind.Slot, slot);
-        if (!Places.IsName(src) && !YieldsBoxes(Defs.Selector(d, src))) return (ExpandKind.None, null);
+        if (!Places.IsDevice(src) && !YieldsBoxes(Defs.Selector(d, src))) return (ExpandKind.None, null);
         return slot != null ? (ExpandKind.Slot, slot) : s.Kind == Catalog.Self ? (ExpandKind.Self, null) : (ExpandKind.Contents, null);
     }
 

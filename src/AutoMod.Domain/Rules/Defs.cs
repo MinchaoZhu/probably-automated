@@ -16,7 +16,7 @@ public static class Defs
     /// 按 Id 找筛选器。设备名（"#名字"）自带一个不存档的筛选器：全店叫这个名字的东西本身。
     /// </summary>
     public static SelectorDef Selector(RulesData d, string id) =>
-        string.IsNullOrEmpty(id) ? null : Places.IsName(id) ? NameSelector(id)
+        string.IsNullOrEmpty(id) ? null : Places.IsDevice(id) ? NameSelector(id)
         : d.Selectors.FirstOrDefault(s => s.Id == id) ?? (d.Objects.FirstOrDefault(o => o.Id == id) is { IsRef: true } p ? ParamSelector(d, p) : null);
 
     /// <summary>
@@ -36,7 +36,7 @@ public static class Defs
 
     /// <summary>设备名自带的筛选器：从【名字】选本身。</summary>
     public static SelectorDef NameSelector(string id) =>
-        new() { Id = id, Name = $"【{Places.NameOf(id)}】", From = { id }, Kind = Catalog.Self };
+        new() { Id = id, Name = Places.IsName(id) ? $"【{Places.NameOf(id)}】" : Fixtures.Name(id), From = { id }, Kind = Catalog.Self };
 
     /// <summary>
     /// 设备名展开成筛选器：新建一个属于排班 s 的筛选器（从【名字】选本身），s 里直接用【名字】当物品列表的地方

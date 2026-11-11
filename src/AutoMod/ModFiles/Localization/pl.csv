@@ -1269,6 +1269,7 @@ fish.female,"Samica, "
 fish.male,"Samiec, "
 fixture.drain,Odpływ
 fixture.faucet,Kran
+fixture.trash,Kosz na śmieci
 fmt.arrow_prop,{0} {1} → {2}
 fmt.colon,{0}: {1}
 fmt.copy_suffix,{0} (kopia)

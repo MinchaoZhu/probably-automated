@@ -99,7 +99,7 @@ public interface IWorld
     /// </summary>
     StepResult Apply(object tool, object target, IReadOnlyList<object> outputs);
 
-    /// <summary>店里的固定设施（水龙头、下水道：不在任何容器里，只能当工具来源）；没有返回 null。name 见 Fixtures。</summary>
+    /// <summary>店里的固定设施（水龙头、下水道、垃圾桶：不在任何容器里）；没有返回 null。name 见 Fixtures。</summary>
     object Fixture(string name);
 
     /// <summary>容器（机器）窗口里的格子：(id, 名称)，id 形如 "slot:seed"，可作挑选器的“取自”。没有分格的为空。</summary>
@@ -136,24 +136,36 @@ public static class Triggers
     };
 }
 
-/// <summary>固定设施：工具来源可以直接写这些 id。</summary>
+/// <summary>
+/// 固定设施：店里本来就有、不在任何容器里的东西（水龙头、下水道、垃圾桶），可以直接写这些 id。
+/// 都能当工具来源；垃圾桶是容器，还能当放入的目标、筛选器的范围（用法和设备名一样，不用命名，读档也不会丢）。
+/// </summary>
 public static class Fixtures
 {
     public const string Faucet = "@faucet";
     public const string Drain = "@drain";
+    public const string Trash = "@trash";
 
     public static (string id, string name)[] All => new[]
     {
         (Faucet, Name(Faucet)),
         (Drain, Name(Drain)),
+        (Trash, Name(Trash)),
     };
 
-    public static bool Is(string id) => id != null && (id == Faucet || id == Drain);
+    /// <summary>容器设施（垃圾桶）。</summary>
+    public static (string id, string name)[] Boxes => new[] { (Trash, Name(Trash)) };
+
+    public static bool Is(string id) => id != null && (id == Faucet || id == Drain || id == Trash);
+
+    /// <summary>是容器的设施：和设备名一样当容器用。</summary>
+    public static bool IsBox(string id) => id == Trash;
 
     public static string Name(string id) => id switch
     {
         Faucet => L.T("fixture.faucet"),
         Drain => L.T("fixture.drain"),
+        Trash => L.T("fixture.trash"),
         _ => null,
     };
 }
@@ -171,6 +183,9 @@ public static class Places
     public static bool IsName(string id) => id != null && id.Length > 1 && id.StartsWith(NamePrefix);
     public static string NameOf(string id) => IsName(id) ? id[NamePrefix.Length..] : null;
     public static string Ref(string name) => NamePrefix + name;
+
+    /// <summary>当容器用的设备：设备名，或垃圾桶这类容器设施。东西见 Eval.Device。</summary>
+    public static bool IsDevice(string id) => IsName(id) || Fixtures.IsBox(id);
 
     /// <summary>不是定义的引用（全店、设备名、水龙头这类固定设施）。</summary>
     public static bool IsBuiltin(string id) => IsShop(id) || IsName(id) || Fixtures.Is(id);

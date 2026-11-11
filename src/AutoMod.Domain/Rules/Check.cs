@@ -187,7 +187,7 @@ public static class Check
         if (s.From.Count == 0) e.Add(L.T("check.err.sel_from_empty"));
         foreach (var f in s.From)
         {
-            if (Places.IsShop(f) || Places.IsName(f) || Defs.RefParam(d, f) != null) continue;
+            if (Places.IsShop(f) || Places.IsDevice(f) || Defs.RefParam(d, f) != null) continue;
             if (d.Objects.Any(o => o.Id == f)) { e.Add(L.T("check.err.sel_from_param")); continue; }
             int j = d.Selectors.FindIndex(x => x.Id == f);
             if (j < 0) e.Add(L.T("check.err.sel_from_missing"));
@@ -228,7 +228,7 @@ public static class Check
     {
         if (string.IsNullOrEmpty(id)) return false;
         // 设备名：店里有叫这个名字的东西时，要是容器（给鼠、水桶起的名字不能当放入的目标）
-        if (Places.IsName(id)) return w == null || w.Named(Places.NameOf(id)) is not { Count: > 0 } named || named.All(x => Catalog.Matches(w, x, Catalog.Container));
+        if (Places.IsDevice(id)) return w == null || Eval.Device(w, id) is not { Count: > 0 } named || named.All(x => Catalog.Matches(w, x, Catalog.Container));
         var s = Defs.Selector(d, id);
         if (s == null || s.IsNumber) return false;
         if (Defs.RefParam(d, id) is { } param) return Defs.RefParam(d, param.Ref) == null && IsContainerRef(d, param.Ref, w); // 看它的值
@@ -252,10 +252,10 @@ public static class Check
                 && sel.Where.Items.Count == 0 && sel.Take == null)
                 list.Add(L.T("check.warn.sel_all_shop", sel.Name));
             if (w == null) continue;
-            bool Boxes(string id) => Places.IsName(id) && w.Named(Places.NameOf(id)) is { Count: > 0 } n && n.All(x => Catalog.Matches(w, x, Catalog.Container));
+            bool Boxes(string id) => Places.IsDevice(id) && Eval.Device(w, id) is { Count: > 0 } n && n.All(x => Catalog.Matches(w, x, Catalog.Container));
             if (a.Verb is ActVerb.Move or ActVerb.Swap && Boxes(a.List))
-                list.Add(L.T("check.warn.sel_itself", Places.NameOf(a.List), Places.NameOf(a.List)));
-            if (a.Verb == ActVerb.Use && !string.IsNullOrEmpty(a.Tool) && (Boxes(a.Tool) || Defs.Selector(d, a.Tool) is { } ts && !Places.IsName(ts.Id) && Eval.YieldsBoxes(ts, w)))
+                list.Add(L.T("check.warn.sel_itself", Text.Name(d, a.List), Text.Name(d, a.List)));
+            if (a.Verb == ActVerb.Use && !string.IsNullOrEmpty(a.Tool) && (Boxes(a.Tool) || Defs.Selector(d, a.Tool) is { } ts && !Places.IsDevice(ts.Id) && Eval.YieldsBoxes(ts, w)))
                 list.Add(L.T("check.warn.tool_is_box", Text.Name(d, a.Tool)));
         }
         return list.Distinct().ToList();

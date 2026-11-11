@@ -63,12 +63,12 @@ public class GameWorld : IWorld
 
     public object Fixture(string name) => FixtureItem(name);
 
-    /// <summary>水龙头、下水道（EmporiumEntry 上的固定物品，不在店铺物品树里）。</summary>
+    /// <summary>水龙头、下水道、垃圾桶（EmporiumEntry 上的固定物品，每次进店新建；前两个不在店铺物品树里）。</summary>
     public static GameItem FixtureItem(string name)
     {
         var e = EmporiumEntry.Instance;
         if (e == null) return null;
-        var f = name switch { Fixtures.Faucet => e.faucet, Fixtures.Drain => e.drain, _ => null };
+        var f = name switch { Fixtures.Faucet => e.faucet, Fixtures.Drain => e.drain, Fixtures.Trash => e.trashcan, _ => null };
         if (f != null) Names.LearnKind(f);
         return f;
     }

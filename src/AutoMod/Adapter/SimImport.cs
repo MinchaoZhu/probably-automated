@@ -44,12 +44,15 @@ public static class SimImport
         // 复制进来但不算全店的（售货机里的货）照样在，只是全店找不到
         foreach (var x in sim.All()) x.OffShop = !inShop.Contains(x.GameUid);
         // 能不能作用由游戏回答：按复制时的 uid 找回真实物品来问
+        // 垃圾桶连里面的东西一起复制（不在 Roots 里，不算全店）
         foreach (var (id, _) in Fixtures.All)
             if (GameWorld.FixtureItem(id) is { } f)
             {
-                var x = Copy(sim, gw, f, 99, have);
+                var x = Copy(sim, gw, f, Fixtures.IsBox(id) ? 0 : 99, have);
                 sim.FixtureItems[id] = x;
             }
+        try { var janitor = StoreService.GetJanitorialService(); sim.TrashCleared = janitor != null && janitor.unlocked && janitor.isUsing; }
+        catch { }
         // 能不能作用、激活由游戏回答：按复制时记下的 uid 找回真实物品来问；没有对应实物的（从原型添加的）当作允许，执行时才知道
         GameItem Real(SimItem x) => x.GameUid == 0 ? null : gw.ByUid(x.GameUid) ?? gw.AnyOfKind(x.Kind);
         sim.CanApplyRule = (tool, target) => Real(tool) is not { } a || Real(target) is not { } t || gw.CanApply(a, t);
@@ -143,6 +146,7 @@ public static class SimImport
                 x.Num["adultAge"] = sp.stageStartDays[(int)FishStage.Adult];
         }
         catch { }
+        try { x.KeepInTrash = GeneralHelper.IsHazardousWaste(it); } catch { }
         var sex = PropBindings.Get(it, "sex").Str;
         if (!string.IsNullOrEmpty(sex)) x.Str["sex"] = sex;
         if (TraitBindings.IsContainer(it))

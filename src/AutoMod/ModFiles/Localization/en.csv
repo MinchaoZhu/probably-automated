@@ -1269,6 +1269,7 @@ fish.female,"Female, "
 fish.male,"Male, "
 fixture.drain,Drain
 fixture.faucet,Faucet
+fixture.trash,Trash Can
 fmt.arrow_prop,{0} {1} → {2}
 fmt.colon,{0}: {1}
 fmt.copy_suffix,{0} (Copy)

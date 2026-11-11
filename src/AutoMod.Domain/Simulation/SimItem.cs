@@ -40,6 +40,9 @@ public class SimItem
     /// <summary>不算在“全店”里（待售的、垃圾、文件）。从游戏复制。</summary>
     public bool OffShop;
 
+    /// <summary>夜里清垃圾桶时留下（游戏的危险废物、走私舱改装件）。从游戏复制。</summary>
+    public bool KeepInTrash;
+
     /// <summary>能装几件（不含电池槽）；0 = 不是容器。</summary>
     public int Capacity;
 
