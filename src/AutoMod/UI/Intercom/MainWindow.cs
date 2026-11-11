@@ -127,6 +127,7 @@ public static class MainWindow
                 Session.Changed();
                 Show();
             })).Searchable().Width(270);
+            DescriptionInfo(b, i => i == 0 ? null : schedules[i - 1]);
         }
         else Table.Cell(b, Domain.L.Join("list", duties.Select(d => $"{st.Rules.Schedules.First(x => x.Id == d.ScheduleId).Name}" + Domain.L.T("text.paren", ShortShift(d.Shift)))), 270,
             tip: Domain.L.T("intercom.duty_tip"));
@@ -155,6 +156,14 @@ public static class MainWindow
         Table.EndItem(b);
     }
 
+    /// <summary>刚加的选流程下拉：悬停某一行时在旁边显示该流程的说明。</summary>
+    private static void DescriptionInfo(CustomUIBuilder b, Func<int, AutoMod.Domain.Rules.Schedule> at) =>
+        DropdownRowInfo.Attach(b.Last?.dropdown, () => i =>
+        {
+            var s = i >= 0 ? at(i) : null;
+            return string.IsNullOrEmpty(s?.Description) ? null : s.Description;
+        });
+
     private static string ShortShift(string shift) => shift == Shift.Night
         ? Domain.L.T("shift.short.night")
         : Domain.L.T("shift.short.morning");
@@ -175,6 +184,7 @@ public static class MainWindow
             b.AddLabel(Tone.Small($"{i + 1}.")).Width(24)
                 .AddDropdown(Ui.L(names), curSched, Ui.AI(k => { d.ScheduleId = schedules[k].Id; Session.Changed(); Show(); })).Searchable().Width(200);
             if (curSched < schedules.Count) b.Tip(schedules[curSched].Name);
+            DescriptionInfo(b, k => schedules[k]);
             b.AddDropdown(Ui.L(new[] { ShortShift(Shift.Morning), ShortShift(Shift.Night) }), d.Shift == Shift.Night ? 1 : 0, Ui.AI(k => { d.Shift = k == 1 ? Shift.Night : Shift.Morning; Show(); })).Width(Domain.L.Int("layout.intercom.shift_width", 80))
                 .Tip(Domain.L.T("intercom.duty_shift_tip"));
             Table.Cell(b, p == null ? Domain.L.T("intercom.prof_empty") : Domain.L.T("intercom.prof_score", p.Value.score), Domain.L.Int("layout.intercom.prof_width", 90),

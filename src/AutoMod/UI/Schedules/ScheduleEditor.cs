@@ -86,6 +86,11 @@ public static class ScheduleEditor
             .AddButton(Domain.L.T("editor.btn_return"), Ui.A(() => { Hide(); MainWindow.Show("schedules"); }))
             .AddButton(Domain.L.T("ui.close"), Ui.A(Hide))
             .End();
+        // 说明单独一行，输入框占满宽度
+        b.BeginRow(8, TextAnchor.MiddleLeft)
+            .AddLabel(Domain.L.T("ui.hint"))
+            .AddInput("", s.Description ?? "", Ui.AS(v => s.Description = string.IsNullOrWhiteSpace(v) ? null : v.Trim())).Width(LeftW + RightW - 60)
+            .End();
 
         var closure = rule == null ? new HashSet<string>() : Check.Closure(D, Check.RuleRefs(rule));
         var usedHere = Check.Closure(D, s.Rules.SelectMany(Check.RuleRefs));

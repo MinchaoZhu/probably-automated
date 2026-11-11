@@ -78,7 +78,7 @@ public static class SchedulePage
             : Table.Status(Domain.L.T("schedule.status_ready"), Tone.Ok);
         Table.BeginItem(b, index, open);
         b.BeginRow(8, UnityEngine.TextAnchor.MiddleLeft);
-        b.AddLabel(Tone.Bold(s.Name))
+        b.AddLabel(Tone.Bold(s.Name)).Tip(s.Description)
             .AddFlexibleSpace()
             .AddLabel(status).Tip(notes.Count > 1 ? string.Join("\n", notes) : null)
             .End();
@@ -94,6 +94,7 @@ public static class SchedulePage
             .End();
         if (open)
         {
+            if (!string.IsNullOrEmpty(s.Description)) b.AddLabel(Tone.Small(Tone.Dim(s.Description)));
             Parameters(b, s);
             Containers(b, s);
             Rules(b, s);

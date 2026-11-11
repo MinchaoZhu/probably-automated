@@ -16,7 +16,7 @@ public static class Examples
     public static Schedule BatteryRotation(RulesData d)
     {
         string schName = BatteryName;
-        var s = new Schedule { Id = Defs.NewId("sch"), Created = Defs.Now(), Name = Defs.UniqueName(d.Schedules.Select(x => x.Name), schName) };
+        var s = new Schedule { Id = Defs.NewId("sch"), Created = Defs.Now(), Name = Defs.UniqueName(d.Schedules.Select(x => x.Name), schName), Description = L.T("handbook.p6.text_battery") };
         d.Schedules.Add(s);
 
         string Name(bool selector, string name)

@@ -930,6 +930,23 @@ internal static class RulesTests
             Check(bad, "不是排班的文字：报错，不改数据");
         });
 
+        test("流程说明：导出导入、复制都带上；示例建出来就有", () =>
+        {
+            var d = new RulesData();
+            var sch = new Schedule { Id = "sch", Name = "水培", Description = "收获、补种" };
+            d.Schedules.Add(sch);
+            var s1 = Transfer.Import(new RulesData(), Transfer.Export(d, sch, "test"));
+            Check(s1.Description == "收获、补种", "导入后说明不变：" + s1.Description);
+            var c = Scope.CopySchedule(d, sch, "水培（2）");
+            Check(c.Description == "收获、补种", "复制的流程带说明");
+            var old = Transfer.Import(new RulesData(), Transfer.Export(d, new Schedule { Id = "x", Name = "旧" }, "test"));
+            Check(old.Description == null, "没写说明的为空");
+            var ex = new RulesData();
+            Check(!string.IsNullOrEmpty(Examples.BatteryRotation(ex).Description), "自动换电示例有说明");
+            foreach (var spec in ProfessionExamples.All)
+                Check(ProfessionExamples.Build(ex, spec.Id).Description == spec.Note, $"示例 {spec.Id} 的说明 = 新建流程里的介绍");
+        });
+
         test("模拟·液体：接水龙头、倒进别的容器、倒进下水道", () =>
         {
             var w = new SimWorld();

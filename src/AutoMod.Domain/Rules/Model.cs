@@ -220,6 +220,10 @@ public class Schedule
 {
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
+
+    /// <summary>说明：玩家写的一段话（做什么、要准备什么）。流程页悬停名称和“详情”里显示；可为空。</summary>
+    public string Description { get; set; }
+
     public List<NoteDef> Notepad { get; set; } = new();
     public List<WorkRule> Rules { get; set; } = new();
 

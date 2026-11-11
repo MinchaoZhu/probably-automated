@@ -178,6 +178,7 @@ public static class ProfessionExamples
     {
         var spec = All.First(x => x.Id == id);
         var b = new B(d, spec.Name);
+        b.S.Description = spec.Note;
         switch (id)
         {
             case "aqua":

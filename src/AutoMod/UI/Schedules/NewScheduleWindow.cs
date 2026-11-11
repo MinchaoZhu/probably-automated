@@ -21,12 +21,13 @@ internal static class NewScheduleWindow
         b.BeginGrid(2, colW, 44, 8);
         // 第一行：空白、最简单的自动换电
         Item(b, null, Domain.L.T("schedule.new_blank"), Domain.L.T("schedule.new_blank_tip"), blank, btnW);
-        Item(b, "recharger", Examples.BatteryName, Flow(Examples.BatteryRotation(new RulesData())), battery, btnW);
+        var bat = Examples.BatteryRotation(new RulesData());
+        Item(b, "recharger", Examples.BatteryName, bat.Description + "\n" + Flow(bat), battery, btnW);
         foreach (var spec in ProfessionExamples.All)
         {
             string id = spec.Id;
             var s = ProfessionExamples.Build(new RulesData(), id);
-            Item(b, spec.MachineKinds[0], spec.Name, spec.Note + "\n" + Flow(s), () => profession(id), btnW);
+            Item(b, spec.MachineKinds[0], spec.Name, s.Description + "\n" + Flow(s), () => profession(id), btnW);
         }
         b.End();
         b.AddFlexibleSpace();
