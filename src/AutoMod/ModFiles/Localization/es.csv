@@ -134,6 +134,7 @@ kind.fillerweed,Borrajilla
 kind.fillerweed_seed,Semilla de borrajilla
 kind.hydroreed_seed,Semilla de hidrojunco
 kind.plant_dna_disk,Disquete de ADN
+kind.turbo_booster_hypertech,Instaturbo Hypertech
 kind.fish_scrap,Despojos de pescado
 kind.hydroponic,Sistema hidropónico
 kind.industrial_fish_feed,Alimento industrial para peces
@@ -235,6 +236,8 @@ card.select_button,(elegir botón)
 card.select_param,(elegir {0})
 card.select_flow,(elegir rutina)
 card.times,(1 vez cada uno)| ({0} veces cada uno)
+card.loop_times," (bucle 1 vez)| (bucle {0} veces)"
+card.loop_forever," (bucle infinito)"
 card.tpl.apply,{op} {tool} en {list}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
@@ -261,6 +264,8 @@ action.note.set,Escribir {0} en {1}
 action.press,Pulsar [{1}] en {0}
 action.swap,Intercambiar {0} con {1}
 action.times,", 1 vez cada uno|, {0} veces cada uno"
+action.loop_times,", bucle 1 vez|, bucle {0} veces"
+action.loop_forever,", bucle infinito"
 action.toggle,Alternar {0}
 action.unmark,Quitar marca [{1}] de {0}
 action.use,Usar {0} en {1}
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,«Pulsar botón» no tiene ningún botón selecci
 check.err.rule_swap_no_to,«Intercambiar» no tiene otro grupo de objetos seleccionado
 check.err.rule_target_missing,«{0}» no tiene ningún objeto seleccionado
 check.err.rule_times_invalid,El recuento de «{0}» no puede ser menor que 1
+check.err.loop_times,El número de rondas del bucle debe estar entre 1 y {0}
 check.err.rule_unknown_verb,Acción desconocida «{0}» (vuelve a seleccionar)
 check.err.rule_use_no_tool,«Usar» no tiene ninguna herramienta seleccionada
 check.err.rule_use_times_invalid,El recuento de «Usar» no puede ser menor que 1
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0} está lleno
 sim.fail.locked,{0} se está procesando en una máquina y no se puede sacar
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,Sin cambios
+sim.fail.boost,El turbo no está listo o el objetivo no es una máquina que se pueda acelerar
 sim.fail.simulated,Ya procesado en vista previa (efecto desconocido)
 sim.group_stats,{0} / {1} PA · ×{2}
 sim.in_shop_count,En la tienda: {0}
@@ -487,6 +494,7 @@ sim.step.swapped,Posición intercambiada con {0}
 sim.step.trigger_unknown,{0} (efecto conocido solo al ejecutar)
 sim.step.unknown,{0} → {1} (efecto conocido solo al ejecutar)
 sim.step.water_change,{0} agua {1} → {2} ml
+sim.step.boosted,{0} termina al instante su ciclo actual
 sim.sub_summary,{0} ×{1} ({2})
 sim.tip,"Se ejecuta en una copia de la tienda sin afectar a la tienda real.\nLa noche avanza según las reglas del juego: baterías, recolectores, purificadores, ratas, peces, hidroponía y máquinas con progreso (solo progreso, sin producción).\nRecogida, vaciado y desecho de agua se calculan con precisión; otras acciones («usar», «activar», «alternar», «botón») solo calculan PA, los efectos reales dependen de la ejecución real."
 sim.tip_prof,Pericia: {0}
@@ -536,6 +544,10 @@ report.detail.levelup,", ¡subió de nivel!"
 report.detail.run,Ejecución
 report.details.record,Escribir en el bloc
 report.details.walk_cost,(coste de inicio {0} PA)
+report.details.loop_done,Bucle: 1 ronda|Bucle: {0} rondas
+report.details.loop_cond,La condición de ejecución dejó de cumplirse tras 1 ronda|La condición de ejecución dejó de cumplirse tras {0} rondas
+report.details.loop_idle,Bucle: 1 ronda; nada hecho en la última ronda|Bucle: {0} rondas; nada hecho en la última ronda
+report.details.loop_ap,PA agotados tras 1 ronda|PA agotados tras {0} rondas
 report.error.broken,Error
 report.fail.dest_full,Destino lleno
 report.fail.no_tool,Falta herramienta
@@ -550,6 +562,7 @@ report.idle.none_marked,Ningún objeto tiene esta marca
 report.idle.same_place,"Ya están en el mismo contenedor, no hace falta intercambiar"
 report.issue.dest_full,"Destino lleno: {1}, {2} objeto no colocado|Destino lleno: {1}, {2} objetos no colocados"
 report.issue.many,"Múltiples intentos sin efecto, tarea detenida"
+report.issue.loop_cap,El bucle infinito llegó a {0} rondas y se detuvo
 report.issue.no_effect,"Sin cambios tras {1}, {2} objeto omitido|Sin cambios tras {1}, {2} objetos omitidos"
 report.issue.no_tool,"Falta herramienta: no hay {1} en la tienda, {2} objeto no se pudo procesar ({3})|Falta herramienta: no hay {1} en la tienda, {2} objetos no se pudieron procesar ({3})"
 report.issue.not_allowed,"El juego no permite {1}, {2} objeto omitido|El juego no permite {1}, {2} objetos omitidos"
@@ -578,6 +591,7 @@ report.summary_override,Aprendiz {0}: {1}
 report.text.no_ap,Sin PA
 report.why.no_ap,PA insuficientes (las tareas anteriores usaron {0} / {1} PA)
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1} (ronda {2})
 report.called,Se ejecutó [{0}]
 report.window.deferred,1 objeto omitido (PA insuficientes)|{0} objetos omitidos (PA insuficientes)
 report.window.done,1 objeto terminado|{0} objetos terminados
@@ -883,6 +897,12 @@ editor.test_empty,Vacío
 editor.test_not_empty,No vacío
 editor.times_each,Veces por objeto:
 editor.times_unit,
+editor.loop,Bucle:
+editor.loop_once,Una vez
+editor.loop_times,Varias
+editor.loop_forever,Infinito
+editor.loop_unit,veces
+editor.tip_loop,"Una vez: una ronda. Varias: el número de rondas indicado, sin comprobar la condición de ejecución. Infinito: comprueba la condición de ejecución antes de cada ronda y se detiene cuando no se cumple. Las listas se vuelven a filtrar en cada ronda; el bucle también se detiene cuando se agotan los PA, cuando una ronda no hace nada o tras {0} rondas."
 editor.tip_action_apply,"Para cada objeto destino, prueba las herramientas en orden; se aplica la primera eficaz.\nLa dirección la determina el juego: p. ej., aplicar grifo al cubo vacío lo llena de agua."
 editor.tip_action_swap,"Empareja dos grupos de objetos en orden e intercambia sus posiciones. Si los recuentos difieren, los sobrantes se quedan."
 editor.tip_action_target,"Coloca cada objeto en el primer destino adecuado. Si hay varios destinos, pruébalos en orden."
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,Disquetes genéticos:
 handbook.pdna.text_disk,Dos extractores sacan Purificante de semillas de hidrojunco y Deficiente en nutrientes de semillas de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Un módulo de precisión usado sobre un disquete escrito queda ajustado a su atributo.
 handbook.pdna.title_edit,Edición genética:
 handbook.pdna.text_edit,Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos] hasta el rango objetivo o el tope de riesgo. Una semilla sin un atributo lo tiene en rango 0.
+handbook.pdna.title_boost,Edición acelerada:
+handbook.pdna.text_boost,"El Instaturbo Hypertech se carga cada noche y puede almacenar varias aceleraciones. Usado sobre el [Grabador de atributos] en bucle infinito, termina un ciclo cada vez y se detiene cuando la escritura termina."
 handbook.pdna.title_breed,Cría genética:
 handbook.pdna.text_breed,"El riesgo solo baja criando: tras escribir, la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador con riesgo 0. Cada rango de Deficiente en nutrientes baja la complejidad en 2 y compensa el +3 por rango de Purificante."
 handbook.pdna.tip,"Probabilidad de éxito = 95 − 5 × (complejidad + riesgo) + bonificación de calidad de la máquina, mínimo 5 %. Cada escritura o extracción aumenta el riesgo, salga bien o no."
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,Ejecutar rutina:
 handbook.psub.text_call,"Ejecuta en orden las tareas de otra rutina y luego sigue donde lo dejó. La acción en sí no gasta PA; las tareas de la subrutina gastan PA como siempre y, cuando se agotan los PA, también se detiene quien la llamó. Las rutinas no pueden llamarse en bucle; como máximo {0} niveles de anidación."
 handbook.psub.title_params,Parámetros:
 handbook.psub.text_params,"Un parámetro puede ser un número, un dispositivo o una lista. En tareas y filtros, elige el parámetro en vez del dispositivo. Cuando otra rutina ejecuta esta, quien la llama puede sobrescribir los parámetros de esta rutina; lo que no se sobrescribe conserva su valor. Los parámetros globales no se pueden sobrescribir. Asignada directamente a un aprendiz, usa los valores de los parámetros."
+handbook.psub.title_loop,Bucles:
+handbook.psub.text_loop,"Cada acción puede ejecutarse una vez, varias veces o en bucle infinito; las listas se vuelven a filtrar en cada ronda. Varias ejecuta el número de rondas indicado; Infinito comprueba la condición de ejecución antes de cada ronda y se detiene cuando no se cumple. Un bucle también se detiene cuando se agotan los PA, cuando una ronda no hace nada o tras {0} rondas. Para repetir varias acciones, ponlas en una rutina y repite Ejecutar rutina en bucle."
 handbook.psub.tip,"Las mismas tareas para varios grupos de máquinas: convierte los dispositivos en parámetros, reúne las tareas en una rutina y ejecútala varias veces desde una rutina principal con otros dispositivos."
 handbook.p5.banner_order,Orden de ejecución
 handbook.p5.banner_swap,Cambio automático de batería
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,Guardar cosecha
 example.dna.rule.first,Cargar objetivo inicial
 example.dna.rule.breed,Enviar a cría
 example.dna.rule.water,Colocar botella de agua
+example.boost.sel.ready,Turbos listos
+example.boost.prop.stored,Impulsos guardados
+example.boost.sel.powered,{0} con energía
+example.boost.rule.boost,Acelerar
 example.ranch.rule.auto_blend,Habilitar mezcla automática
 example.ranch.rule.butcher_dead,Despiezar ratas muertas
 example.ranch.rule.cull,Sacrificar ratas
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,Disquetes genéticos
 example.spec.dna_disk.note,[Extractor Purificante] y [Extractor Deficiente en nutrientes] extraen atributos de semillas de hidrojunco y de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Cada extractor necesita un módulo de precisión ajustado a su atributo
 example.spec.dna_edit.name,Edición genética
 example.spec.dna_edit.note,Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos] hasta el rango objetivo o el tope de riesgo
+example.spec.dna_boost.name,Edición acelerada
+example.spec.dna_boost.note,"Como Edición genética, y además un Instaturbo Hypertech hace que el [Grabador de atributos] termine al instante su ciclo actual, así que una escritura se completa en un turno; se detiene cuando la escritura termina, no hay ningún turbo listo o se alcanza el rango objetivo"
 example.spec.dna_breed.name,Cría genética
 example.spec.dna_breed.note,"El [Grabador de atributos] escribe Purificante y Deficiente en nutrientes; con riesgo demasiado alto la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador, hasta el rango objetivo. Los disquetes los prepara Disquetes genéticos"
 example.tidy.rule.food,Ordenar comida

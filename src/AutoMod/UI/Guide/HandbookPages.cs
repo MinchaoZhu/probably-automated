@@ -145,12 +145,13 @@ public static class HandbookPages
             Tip(Domain.L.T("handbook.p4.tip")),
             Tip(Domain.L.T("handbook.p4.tip_sub")),
         },
-        // 子流程：执行流程、子流程参数
+        // 子流程：执行流程、子流程参数、循环
         new()
         {
             Banner(Domain.L.T("handbook.psub.banner"), Green),
             Entry("toolbox", Domain.L.T("handbook.psub.title_call"), Domain.L.T("handbook.psub.text_call", Calls.MaxDepth)),
             Entry("handnote", Domain.L.T("handbook.psub.title_params"), Domain.L.T("handbook.psub.text_params")),
+            Entry("recharger", Domain.L.T("handbook.psub.title_loop"), Domain.L.T("handbook.psub.text_loop", LoopMode.Cap)),
             Tip(Domain.L.T("handbook.psub.tip")),
         },
         // 5 自动换电、执行顺序
@@ -181,6 +182,7 @@ public static class HandbookPages
             Banner(Domain.L.T("handbook.pdna.banner"), Brown),
             Entry("plant_dna_disk", Domain.L.T("handbook.pdna.title_disk"), Domain.L.T("handbook.pdna.text_disk")),
             Entry("plant_dna_manipulator", Domain.L.T("handbook.pdna.title_edit"), Domain.L.T("handbook.pdna.text_edit")),
+            Entry("turbo_booster_hypertech", Domain.L.T("handbook.pdna.title_boost"), Domain.L.T("handbook.pdna.text_boost")),
             Entry("hydroponic", Domain.L.T("handbook.pdna.title_breed"), Domain.L.T("handbook.pdna.text_breed")),
             Tip(Domain.L.T("handbook.pdna.tip")),
         },

@@ -359,6 +359,8 @@ internal static class Program
 
         RulesTests.Run(Test, Check);
         SubflowTests.Run(Test, Check);
+        LoopTests.Run(Test, Check);
+        BoostExampleTests.Run(Test, Check);
         LocTests.Run(Test, Check);
         SnapshotTest.Run(Test, Check);
         ArchitectureTests.Run(Test, Check);

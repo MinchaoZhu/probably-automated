@@ -239,7 +239,7 @@ public partial class SimWorld : IWorld
                 return it.Num.TryGetValue("mature", out var m) ? m : it.Kind == "rat" ? (it.N("age") >= 3 ? 1 : 0) : null;
             case "neutered": case "dead": return it.Num.TryGetValue(prop, out var f) ? (f > 0 ? 1 : 0) : it.Kind == "rat" ? 0 : null;
             case "freeMl": return it.Num.ContainsKey("capacityMl") ? it.N("capacityMl") - it.N("volumeMl") : null;
-            case "powered": return it.HasBatterySlot ? (it.Children.Any(c => c.InBatterySlot && c.N("energy") > 0) ? 1 : 0) : null;
+            case "powered": return it.HasBatterySlot ? (PowerOk(it) ? 1 : 0) : null; // 和夜里推进机器的判断一致：电流转换器算有电
             case "matingCount": return it.Kind == "rat" ? it.N("matingCount") : null;
         }
         // 液体成分：模拟只记总量，水按总量算（夜里用水、接水都改总量）；其他成分用导入时的值，没有就是 0
@@ -326,7 +326,7 @@ public partial class SimWorld : IWorld
     public Func<SimItem, SimItem, IReadOnlyList<object>, StepResult> ApplyRule;
 
     public bool CanApply(object tool, object target) =>
-        Exists(target) && (DrainAllowed((SimItem)tool, (SimItem)target) ?? (CanApplyRule == null || CanApplyRule((SimItem)tool, (SimItem)target)));
+        Exists(target) && (BoostAllowed((SimItem)tool, (SimItem)target) ?? DrainAllowed((SimItem)tool, (SimItem)target) ?? (CanApplyRule == null || CanApplyRule((SimItem)tool, (SimItem)target)));
 
     /// <summary>
     /// 容器和下水道：游戏只在容器里有液体时允许（WaterHelper.IsDrain 那条）。按模拟里的水量判断，不问游戏：
@@ -341,7 +341,8 @@ public partial class SimWorld : IWorld
     }
 
     public StepResult Apply(object tool, object target, IReadOnlyList<object> outputs) =>
-        ApplyRule?.Invoke((SimItem)tool, (SimItem)target, outputs)
+        Boost((SimItem)tool, (SimItem)target) // 增压器照游戏规则模拟，和能不能用（BoostAllowed）一样不经过 ApplyRule
+        ?? ApplyRule?.Invoke((SimItem)tool, (SimItem)target, outputs)
         ?? Liquid((SimItem)tool, (SimItem)target)
         ?? Unknown(target, ((SimItem)tool).Kind, L.T("sim.step.unknown", ((SimItem)tool).Name, ((SimItem)target).Name));
 
@@ -441,7 +442,7 @@ public partial class SimWorld : IWorld
     /// <summary>
     /// 推进一夜：充电、耗电、产水、净化、鼠生长与繁殖。天数 +1。
     /// 模拟这几类（按类别认）：充能器、水分收集器、净水器、笼子里的鼠、鱼、水培机里的种子（返还种子的作物收获时放一颗子代）、
-    /// DNA 编辑器（写入 / 提取，见 SimWorld.Dna）、带进度的机器（只推进度，不知道产物）；
+    /// DNA 编辑器（写入 / 提取，见 SimWorld.Dna）、超科技涡轮增压器充能（SimWorld.Boost）、带进度的机器（只推进度，不知道产物）；
     /// 数值是对游戏规则的近似（从游戏导入时带上物种的成年天数、种子的所需进度和收成等）。其他物品夜里不变。
     /// </summary>
     public void Night()
@@ -477,6 +478,7 @@ public partial class SimWorld : IWorld
         foreach (var fish in All().Where(f => Has(f, "fish") && f.N("dead") == 0).ToList()) FishNight(fish);
         foreach (var seed in All().Where(s => Has(s, "seed") && s.Parent != null && s.InSlot == SlotNames.Prefix + "seed" && !IsDnaEditor(s.Parent)).ToList()) SeedNight(seed);
         foreach (var m in All().Where(IsDnaEditor).ToList()) DnaNight(m);
+        foreach (var b in All().Where(IsHypertechBooster).ToList()) BoosterNight(b);
         foreach (var m in All().Where(m => m.N("working") == 1 && m.N("progressMax") > 0 && !IsDnaEditor(m) && !m.Children.Any(c => Has(c, "seed"))).ToList()) MachineNight(m);
         if (TrashCleared && Fixture(Fixtures.Trash) is SimItem trash) TrashNight(trash);
         Day++;

@@ -755,6 +755,33 @@ public static class ScheduleEditor
                 b.End();
                 break;
         }
+        LoopRow(b, a);
+    }
+
+    private static readonly string[] LoopModes = { LoopMode.Once, LoopMode.Times, LoopMode.Forever };
+
+    /// <summary>动作的最后一行：“循环 〔单次 / 多次 / 无限〕”，多次时后面填次数。</summary>
+    private static void LoopRow(CustomUIBuilder b, ActionDef a)
+    {
+        var names = new[] { Domain.L.T("editor.loop_once"), Domain.L.T("editor.loop_times"), Domain.L.T("editor.loop_forever") };
+        b.BeginRow(4, TextAnchor.MiddleLeft).AddLabel(Domain.L.T("editor.loop")).WithTooltip(Domain.L.T("editor.tip_loop", LoopMode.Cap))
+            .AddDropdown(Ui.L(names), Math.Max(0, Array.IndexOf(LoopModes, a.Loop)), Ui.AI(k =>
+            {
+                a.Loop = LoopModes[k];
+                if (a.Loop != LoopMode.Times) a.LoopTimes = null;
+                Refresh();
+            })).Width(110);
+        if (a.Loop == LoopMode.Times)
+        {
+            b.AddInput(LoopMode.DefaultTimes.ToString(), LoopMode.TimesOf(a).ToString(), Ui.AS(v =>
+            {
+                if (int.TryParse(v, out var x) && x >= 1) a.LoopTimes = Math.Min(x, LoopMode.Cap);
+                RulesUi.Changed();
+            })).Width(50);
+            string u = Domain.L.T("editor.loop_unit");
+            if (!string.IsNullOrEmpty(u)) b.AddLabel(u);
+        }
+        b.End();
     }
 
     /// <summary>

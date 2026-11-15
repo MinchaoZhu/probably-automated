@@ -343,6 +343,38 @@ public class ActionDef
 
     /// <summary>执行流程：覆盖的子流程参数（没列的用默认值）。</summary>
     public List<CallArg> Args { get; set; }
+
+    /// <summary>循环：为空 = 单次；LoopMode.Times / Forever。</summary>
+    public string Loop { get; set; }
+
+    /// <summary>多次循环的次数；为空 = LoopMode.DefaultTimes。</summary>
+    public int? LoopTimes { get; set; }
+}
+
+/// <summary>
+/// 动作的循环：单次（默认）、多次（固定 N 轮，不检查执行条件）、无限（每轮前检查所在任务的执行条件）。
+/// 每轮重新筛选；AP 用完、一轮里没有任何动作或满 Cap 轮时停。
+/// </summary>
+public static class LoopMode
+{
+    public const string Once = null;
+    public const string Times = "times";
+    public const string Forever = "forever";
+
+    /// <summary>最多几轮（多次的次数上限，也是无限循环的保底）。</summary>
+    public const int Cap = 100;
+
+    public const int DefaultTimes = 2;
+
+    public static int TimesOf(ActionDef a) => a.LoopTimes ?? DefaultTimes;
+
+    /// <summary>这个动作最多做几轮。</summary>
+    public static int Rounds(ActionDef a) => a.Loop switch
+    {
+        Times => System.Math.Clamp(TimesOf(a), 1, Cap),
+        Forever => Cap,
+        _ => 1,
+    };
 }
 
 /// <summary>调用时覆盖被调用流程的一个本流程参数：设备、列表换成调用方的设备名、筛选器或参数（Ref），数值换成 Num。</summary>

@@ -128,9 +128,10 @@ public static class Card
                 Mechanism.Trigger => Fill("card.tpl.trigger", new() { ["op"] = O, ["list"] = S("list", a.List, SegKind.List) }),
                 Mechanism.Annotate => Fill(a.Verb == ActVerb.Unmark ? "card.tpl.unmark" : "card.tpl.mark", new() { ["list"] = S("list", a.List, SegKind.List), ["op"] = O, ["text"] = new Seg { Text = a.Text } }),
                 Mechanism.Call => CallLine(d, a, i, O),
-                _ => new List<Seg> { new Seg { Text = Text.Action(d, s, a), Kind = SegKind.Complex } },
+                _ => new List<Seg> { new Seg { Text = Text.ActionOnly(d, s, a), Kind = SegKind.Complex } },
             };
             if (!string.IsNullOrEmpty(times)) line.Add(new Seg { Text = times });
+            if (a.Loop != LoopMode.Once) line.Add(new Seg { Text = Text.Loop(a, card: true) });
             if (op.Mechanism == Mechanism.Place && !string.IsNullOrEmpty(a.ToSlot))
                 line.Insert(line.FindIndex(x => x.Param == "to") + 1, new Seg { Text = L.T("text.paren", SlotNames.Name(a.ToSlot, d, new[] { a.To })), Kind = SegKind.Type, Action = i, Param = "toslot" });
             lines.Add(line);
@@ -214,7 +215,7 @@ public static class Card
     public static ActionDef SwitchOp(RulesData d, ActionDef a, string verb, IWorld w = null)
     {
         var op = Catalog.Op(verb);
-        var n = new ActionDef { Verb = verb };
+        var n = new ActionDef { Verb = verb, Loop = a.Loop, LoopTimes = a.LoopTimes }; // 循环和动作无关，换动作时保留
         if (op.Mechanism == Mechanism.Note) { n.Note = a.Note; n.Value = a.Value; return n; }
         if (op.Mechanism == Mechanism.Call) { n.Flow = a.Flow; n.Args = a.Args; return n; }
         n.List = a.List;

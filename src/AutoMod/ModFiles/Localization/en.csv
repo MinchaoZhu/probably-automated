@@ -134,6 +134,7 @@ kind.fillerweed,Fillerweed
 kind.fillerweed_seed,Fillerweed Seed
 kind.hydroreed_seed,Hydroreed Seed
 kind.plant_dna_disk,DNA Data Disk
+kind.turbo_booster_hypertech,Hypertech Turbo Booster
 kind.fish_scrap,Fish Scrap
 kind.hydroponic,Hydroponic System
 kind.industrial_fish_feed,Industrial Fish Feed
@@ -235,6 +236,8 @@ card.select_button,(choose button)
 card.select_param,(choose {0})
 card.select_flow,(choose routine)
 card.times," (once each)| ({0} times each)"
+card.loop_times," (loop once)| (loop {0} times)"
+card.loop_forever," (loop forever)"
 card.tpl.apply,{op} {tool} on {list}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
@@ -261,6 +264,8 @@ action.note.set,Write {0} to {1}
 action.press,Press [{1}] on {0}
 action.swap,Swap {0} with {1}
 action.times,", once each|, {0} times each"
+action.loop_times,", loop once|, loop {0} times"
+action.loop_forever,", loop forever"
 action.toggle,Toggle {0}
 action.unmark,Remove mark [{1}] from {0}
 action.use,Use {0} on {1}
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,"""Press button"" has no button selected"
 check.err.rule_swap_no_to,"""Swap"" has no other item group selected"
 check.err.rule_target_missing,"""{0}"" has no item selected"
 check.err.rule_times_invalid,"""{0}"" count cannot be less than 1"
+check.err.loop_times,Loop count must be between 1 and {0}
 check.err.rule_unknown_verb,"Unknown action ""{0}"" (please reselect)"
 check.err.rule_use_no_tool,"""Use"" has no tool selected"
 check.err.rule_use_times_invalid,"""Use"" count cannot be less than 1"
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0} is full
 sim.fail.locked,{0} is being processed in a machine and cannot be taken out
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,No change
+sim.fail.boost,"Booster not ready, or the target is not a machine that can be boosted"
 sim.fail.simulated,Already processed in preview (effect unknown)
 sim.group_stats,{0} / {1} AP · ×{2}
 sim.in_shop_count,In shop: {0}
@@ -487,6 +494,7 @@ sim.step.swapped,Swapped position with {0}
 sim.step.trigger_unknown,{0} (effect only known at execution)
 sim.step.unknown,{0} → {1} (effect only known at execution)
 sim.step.water_change,{0} water {1} → {2} ml
+sim.step.boosted,{0} finished its current cycle at once
 sim.sub_summary,{0} ×{1} ({2})
 sim.tip,"Runs on a shop copy without affecting the actual shop.\nNight advances per game mechanics: batteries, collectors, purifiers, rats, fish, hydroponics, and machines with progress (advances progress only, no output).\nWater collection, pouring, and disposal are calculated; other ""use"", ""activate"", ""toggle"", and ""button"" actions only compute AP; actual effects depend on real execution."
 sim.tip_prof,Proficiency: {0}
@@ -536,6 +544,10 @@ report.detail.levelup,", Leveled up!"
 report.detail.run,Run
 report.details.record,Write to notepad
 report.details.walk_cost,(startup cost {0} AP)
+report.details.loop_done,Looped 1 round|Looped {0} rounds
+report.details.loop_cond,Run When no longer met after 1 round|Run When no longer met after {0} rounds
+report.details.loop_idle,Looped 1 round; nothing done in the last round|Looped {0} rounds; nothing done in the last round
+report.details.loop_ap,AP ran out after 1 round|AP ran out after {0} rounds
 report.error.broken,Error
 report.fail.dest_full,Target full
 report.fail.no_tool,Missing tool
@@ -550,6 +562,7 @@ report.idle.none_marked,No items have this mark
 report.idle.same_place,"Already in the same container, no swap needed"
 report.issue.dest_full,"Target full: {1}, {2} item not put|Target full: {1}, {2} items not put"
 report.issue.many,"Repeated failures with no effect, stopping task"
+report.issue.loop_cap,Infinite loop reached {0} rounds and stopped
 report.issue.no_effect,"No change after {1}, {2} item skipped|No change after {1}, {2} items skipped"
 report.issue.no_tool,"Missing tool: no {1} in shop, {2} item could not be processed ({3})|Missing tool: no {1} in shop, {2} items could not be processed ({3})"
 report.issue.not_allowed,"Game does not allow {1}, {2} item skipped|Game does not allow {1}, {2} items skipped"
@@ -578,6 +591,7 @@ report.summary_override,Apprentice {0}: {1}
 report.text.no_ap,Out of AP
 report.why.no_ap,Low AP (previous tasks used {0} / {1} AP)
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1} (round {2})
 report.called,Ran [{0}]
 report.window.deferred,1 item skipped (not enough AP)|{0} items skipped (not enough AP)
 report.window.done,1 item done|{0} items done
@@ -883,6 +897,12 @@ editor.test_empty,Empty
 editor.test_not_empty,Not empty
 editor.times_each,Times per item:
 editor.times_unit,
+editor.loop,Loop:
+editor.loop_once,Once
+editor.loop_times,Multiple
+editor.loop_forever,Infinite
+editor.loop_unit,times
+editor.tip_loop,"Once: one round. Multiple: the given number of rounds, without checking Run When. Infinite: checks Run When before each round and stops when it is not met. Lists are filtered again every round; the loop also stops when AP runs out, when a round does nothing, or after {0} rounds."
 editor.tip_action_apply,"For each target item, try tool items in order; the first effective one applies to it.\nDirection is determined by the game: e.g. applying tap to empty bucket fills the bucket with water."
 editor.tip_action_swap,"Pair two groups of items in order and swap their positions. If counts differ, excess items remain in place."
 editor.tip_action_target,"Place each item into the first destination that fits. If multiple destinations exist, try them in order."
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,Gene Disks:
 handbook.pdna.text_disk,"Two extractors take Purifying from Hydroreed Seeds and Nutrient-Poor from Fillerweed Seeds; written disks go to [Gene Bank], and extraction stops once enough are in stock. Using a Precision Extraction Module on a written disk locks it to that trait."
 handbook.pdna.title_edit,Gene Editing:
 handbook.pdna.text_edit,Writes Purifying into the seed in the target slot of [Trait Writer] until the target rank or the heat cap. A seed without a trait counts as rank 0.
+handbook.pdna.title_boost,Boosted Editing:
+handbook.pdna.text_boost,"The Hypertech Turbo Booster charges every night and can store several boosts. Used on [Trait Writer] in an infinite loop, it finishes one cycle each time and stops when the write is done."
 handbook.pdna.title_breed,Gene Breeding:
 handbook.pdna.text_breed,"Heat only resets through breeding: after writing, the seed goes to [Breeding Hydroponics], and the harvested offspring returns to the writer with 0 heat. Each rank of Nutrient-Poor lowers complexity by 2, offsetting the +3 per rank of Purifying."
 handbook.pdna.tip,"Success chance = 95 − 5 × (complexity + heat) + machine quality bonus, at least 5%. Every write or extraction raises the heat, success or not."
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,Run Routine:
 handbook.psub.text_call,"Runs another routine's tasks in order, then continues where it left off. The action itself costs no AP; tasks in the subroutine cost AP as usual, and when AP runs out the caller stops too. Routines cannot run each other in a loop, and nesting is limited to {0} levels."
 handbook.psub.title_params,Parameters:
 handbook.psub.text_params,"A parameter can be a number, a device or a list. Pick the parameter in tasks and filters instead of the device itself. When another routine runs this one, the caller can override its own-routine parameters; anything not overridden keeps its value. Global parameters cannot be overridden. Assigned directly to an apprentice, the routine uses the parameters' own values."
+handbook.psub.title_loop,Loops:
+handbook.psub.text_loop,"Each action can run once, multiple times or in an infinite loop; lists are filtered again every round. Multiple runs the given number of rounds; Infinite checks Run When before each round and stops when it is not met. A loop also stops when AP runs out, when a round does nothing, or after {0} rounds. To loop several actions, put them in a routine and loop Run Routine."
 handbook.psub.tip,"Same tasks for several sets of machines: make the devices parameters, write the tasks as one routine, then run it several times from a main routine with different devices."
 handbook.p5.banner_order,Execution Order
 handbook.p5.banner_swap,Auto Battery Swap
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,Store harvest
 example.dna.rule.first,Load starting target
 example.dna.rule.breed,Send to breed
 example.dna.rule.water,Insert water bottle
+example.boost.sel.ready,Ready boosters
+example.boost.prop.stored,Stored boosts
+example.boost.sel.powered,{0} with power
+example.boost.rule.boost,Boost
 example.ranch.rule.auto_blend,Enable auto-blend
 example.ranch.rule.butcher_dead,Butcher dead rats
 example.ranch.rule.cull,Cull rats
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,Gene Disks
 example.spec.dna_disk.note,"[Purifying Extractor] and [Nutrient-Poor Extractor] extract traits from Hydroreed Seeds and Fillerweed Seeds; written disks go to [Gene Bank], and extraction stops once enough are in stock. Each extractor needs a Precision Extraction Module set to its trait"
 example.spec.dna_edit.name,Gene Editing
 example.spec.dna_edit.note,Writes Purifying into the seed in the target slot of [Trait Writer] until the target rank or the heat cap is reached
+example.spec.dna_boost.name,Boosted Editing
+example.spec.dna_boost.note,"Like Gene Editing, plus a Hypertech Turbo Booster that makes [Trait Writer] finish its current cycle at once, so one write is done within a shift; stops when the write is done, no booster is ready, or the target rank is reached"
 example.spec.dna_breed.name,Gene Breeding
 example.spec.dna_breed.note,"[Trait Writer] writes Purifying and Nutrient-Poor; when the heat is too high the seed goes to [Breeding Hydroponics], and the harvested offspring returns to the writer, until the target rank. Disks come from Gene Disks"
 example.tidy.rule.food,Sort food

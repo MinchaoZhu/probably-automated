@@ -134,6 +134,7 @@ kind.fillerweed,Pâlaitue
 kind.fillerweed_seed,Graine de pâlaitue
 kind.hydroreed_seed,Graine d'hydroseau
 kind.plant_dna_disk,Disquette de données ADN
+kind.turbo_booster_hypertech,Accélérateur Hypertech
 kind.fish_scrap,Déchets de poisson
 kind.hydroponic,Système hydroponique
 kind.industrial_fish_feed,Nourriture industrielle pour poisson
@@ -235,6 +236,8 @@ card.select_button,(choisir bouton)
 card.select_param,(choisir {0})
 card.select_flow,(choisir une routine)
 card.times,(1 fois chacun)| ({0} fois chacun)
+card.loop_times," (boucle 1 fois)| (boucle {0} fois)"
+card.loop_forever," (boucle infinie)"
 card.tpl.apply,{op} {tool} sur {list}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex} :
@@ -261,6 +264,8 @@ action.note.set,Écrire {0} dans {1}
 action.press,Appuyer sur [{1}] sur {0}
 action.swap,Échanger {0} avec {1}
 action.times,", 1 fois chacun|, {0} fois chacun"
+action.loop_times,", boucle 1 fois|, boucle {0} fois"
+action.loop_forever,", boucle infinie"
 action.toggle,Basculer {0}
 action.unmark,Retirer le repère [{1}] de {0}
 action.use,Utiliser {0} sur {1}
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,Aucun bouton sélectionné pour « Appuyer sur bo
 check.err.rule_swap_no_to,Aucun autre groupe d'objets sélectionné pour « Échanger »
 check.err.rule_target_missing,Aucun objet sélectionné pour « {0} »
 check.err.rule_times_invalid,Le nombre pour « {0} » ne peut pas être inférieur à 1
+check.err.loop_times,Le nombre de tours de boucle doit être compris entre 1 et {0}
 check.err.rule_unknown_verb,Action inconnue « {0} » (veuillez resélectionner)
 check.err.rule_use_no_tool,Aucun outil sélectionné pour « Utiliser »
 check.err.rule_use_times_invalid,Le nombre pour « Utiliser » ne peut pas être inférieur à 1
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0} est plein
 sim.fail.locked,{0} est en cours de traitement dans une machine et ne peut pas être retiré
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,Aucun changement
+sim.fail.boost,"Accélérateur pas prêt, ou la cible n'est pas une machine accélérable"
 sim.fail.simulated,Déjà traité dans l'aperçu (effet inconnu)
 sim.group_stats,{0} / {1} PA · ×{2}
 sim.in_shop_count,Dans la boutique : {0}
@@ -487,6 +494,7 @@ sim.step.swapped,Position échangée avec {0}
 sim.step.trigger_unknown,{0} (effet connu uniquement à l'exécution)
 sim.step.unknown,{0} → {1} (effet connu uniquement à l'exécution)
 sim.step.water_change,{0} eau {1} → {2} ml
+sim.step.boosted,{0} termine aussitôt son cycle en cours
 sim.sub_summary,{0} ×{1} ({2})
 sim.tip,"Fonctionne sur une copie de la boutique sans affecter la boutique réelle.\nLa nuit progresse selon les règles du jeu : batteries, collecteurs, purificateurs, rats, poissons, hydroponie et machines avec progression (progression uniquement, pas de production).\nCollecte, transvasement et vidange d'eau sont calculés ; les autres actions (« utiliser », « activer », « basculer », « bouton ») calculent uniquement les PA, les effets réels dépendant de l'exécution."
 sim.tip_prof,Maîtrise : {0}
@@ -536,6 +544,10 @@ report.detail.levelup,", niveau supérieur !"
 report.detail.run,Exécution
 report.details.record,Écrire dans le carnet
 report.details.walk_cost,(coût de démarrage {0} PA)
+report.details.loop_done,Boucle : 1 tour|Boucle : {0} tours
+report.details.loop_cond,Condition d'exécution plus remplie après 1 tour|Condition d'exécution plus remplie après {0} tours
+report.details.loop_idle,Boucle : 1 tour ; rien fait au dernier tour|Boucle : {0} tours ; rien fait au dernier tour
+report.details.loop_ap,PA épuisés après 1 tour|PA épuisés après {0} tours
 report.error.broken,Erreur
 report.fail.dest_full,Cible pleine
 report.fail.no_tool,Outil manquant
@@ -550,6 +562,7 @@ report.idle.none_marked,Aucun objet n'a ce repère
 report.idle.same_place,"Déjà dans le même contenant, échange inutile"
 report.issue.dest_full,"Cible pleine : {1}, {2} objet non placé|Cible pleine : {1}, {2} objets non placés"
 report.issue.many,"Échecs répétés sans effet, tâche arrêtée"
+report.issue.loop_cap,La boucle infinie a atteint {0} tours et s'est arrêtée
 report.issue.no_effect,"Aucun changement après {1}, {2} objet ignoré|Aucun changement après {1}, {2} objets ignorés"
 report.issue.no_tool,"Outil manquant : pas de {1} dans la boutique, {2} objet n'a pas pu être traité ({3})|Outil manquant : pas de {1} dans la boutique, {2} objets n'ont pas pu être traités ({3})"
 report.issue.not_allowed,"Le jeu n'autorise pas {1}, {2} objet ignoré|Le jeu n'autorise pas {1}, {2} objets ignorés"
@@ -578,6 +591,7 @@ report.summary_override,Apprenti {0} : {1}
 report.text.no_ap,PA épuisés
 report.why.no_ap,PA insuffisants (les tâches précédentes ont utilisé {0} / {1} PA)
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1} (tour {2})
 report.called,[{0}] exécutée
 report.window.deferred,1 objet ignoré (PA insuffisants)|{0} objets ignorés (PA insuffisants)
 report.window.done,1 objet traité|{0} objets traités
@@ -883,6 +897,12 @@ editor.test_empty,Vide
 editor.test_not_empty,Non vide
 editor.times_each,Fois par objet :
 editor.times_unit,
+editor.loop,Boucle :
+editor.loop_once,Une fois
+editor.loop_times,Plusieurs
+editor.loop_forever,Infinie
+editor.loop_unit,fois
+editor.tip_loop,"Une fois : un tour. Plusieurs : le nombre de tours indiqué, sans vérifier la condition d'exécution. Infinie : vérifie la condition d'exécution avant chaque tour et s'arrête quand elle n'est pas remplie. Les listes sont refiltrées à chaque tour ; la boucle s'arrête aussi quand les PA sont épuisés, quand un tour ne fait rien, ou après {0} tours."
 editor.tip_action_apply,"Pour chaque objet cible, tester les outils dans l'ordre ; le premier efficace est appliqué.\nLa direction est déterminée par le jeu : p. ex. robinet sur seau vide remplit le seau."
 editor.tip_action_swap,"Associer deux groupes d'objets dans l'ordre et échanger leurs positions. Si les nombres diffèrent, le surplus reste en place."
 editor.tip_action_target,"Placer chaque objet dans la première destination adaptée. Si plusieurs existent, essayer dans l'ordre."
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,Disquettes génétiques :
 handbook.pdna.text_disk,Deux extracteurs tirent Purification des graines d'hydroseau et Pauvreté nutritive des graines de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Un module d'extraction précise utilisé sur une disquette écrite se règle sur son trait.
 handbook.pdna.title_edit,Édition génétique :
 handbook.pdna.text_edit,Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] jusqu'au rang visé ou au plafond de fragilité. Une graine sans un trait l'a au rang 0.
+handbook.pdna.title_boost,Édition accélérée :
+handbook.pdna.text_boost,"L'Accélérateur Hypertech se recharge chaque nuit et peut stocker plusieurs accélérations. Utilisé sur le [Graveur de traits] en boucle infinie, il termine un cycle à chaque fois et s'arrête quand l'écriture est finie."
 handbook.pdna.title_breed,Sélection génétique :
 handbook.pdna.text_breed,"La fragilité ne retombe qu'en sélectionnant : après l'écriture, la graine part dans l'[Hydroponie de sélection], et la descendance récoltée revient au graveur avec une fragilité de 0. Chaque rang de Pauvreté nutritive baisse la complexité de 2 et compense les +3 par rang de Purification."
 handbook.pdna.tip,"Chance de réussite = 95 − 5 × (complexité + fragilité) + bonus de qualité de la machine, au moins 5 %. Chaque écriture ou extraction augmente la fragilité, réussie ou non."
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,Exécuter la routine :
 handbook.psub.text_call,"Exécute dans l'ordre les tâches d'une autre routine, puis reprend là où elle s'était arrêtée. L'action elle-même ne coûte pas de PA ; les tâches de la sous-routine en coûtent normalement, et quand les PA sont épuisés, l'appelant s'arrête aussi. Les routines ne peuvent pas s'appeler en boucle ; {0} niveaux d'imbrication au maximum."
 handbook.psub.title_params,Paramètres :
 handbook.psub.text_params,"Un paramètre peut être un nombre, un appareil ou une liste. Dans les tâches et les filtres, choisissez le paramètre plutôt que l'appareil lui-même. Quand une autre routine exécute celle-ci, l'appelant peut remplacer les paramètres de cette routine ; sans remplacement, la valeur du paramètre s'applique. Les paramètres globaux ne peuvent pas être remplacés. Assignée directement à un apprenti, la routine utilise les valeurs des paramètres."
+handbook.psub.title_loop,Boucles :
+handbook.psub.text_loop,"Chaque action peut s'exécuter une fois, plusieurs fois ou en boucle infinie ; les listes sont refiltrées à chaque tour. Plusieurs exécute le nombre de tours indiqué ; Infinie vérifie la condition d'exécution avant chaque tour et s'arrête quand elle n'est pas remplie. Une boucle s'arrête aussi quand les PA sont épuisés, quand un tour ne fait rien, ou après {0} tours. Pour répéter plusieurs actions, placez-les dans une routine et mettez Exécuter la routine en boucle."
 handbook.psub.tip,"Mêmes tâches pour plusieurs groupes de machines : faites des appareils des paramètres, regroupez les tâches en une routine, puis exécutez-la plusieurs fois depuis une routine principale avec d'autres appareils."
 handbook.p5.banner_order,Ordre d'exécution
 handbook.p5.banner_swap,Remplacement auto de batterie
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,Ranger la récolte
 example.dna.rule.first,Charger la cible de départ
 example.dna.rule.breed,Envoyer en sélection
 example.dna.rule.water,Placer une bouteille d'eau
+example.boost.sel.ready,Accélérateurs prêts
+example.boost.prop.stored,Accélérations en réserve
+example.boost.sel.powered,{0} alimenté
+example.boost.rule.boost,Accélérer
 example.ranch.rule.auto_blend,Activer mélange auto
 example.ranch.rule.butcher_dead,Dépecer rats morts
 example.ranch.rule.cull,Abattre les rats
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,Disquettes génétiques
 example.spec.dna_disk.note,[Extracteur Purification] et [Extracteur Pauvreté nutritive] extraient des traits des graines d'hydroseau et de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Chaque extracteur doit avoir un module d'extraction précise réglé sur son trait
 example.spec.dna_edit.name,Édition génétique
 example.spec.dna_edit.note,Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] jusqu'au rang visé ou au plafond de fragilité
+example.spec.dna_boost.name,Édition accélérée
+example.spec.dna_boost.note,"Comme Édition génétique, avec en plus un Accélérateur Hypertech qui fait terminer aussitôt son cycle en cours au [Graveur de traits], pour finir une écriture en un seul poste ; s'arrête quand l'écriture est finie, qu'aucun accélérateur n'est prêt ou que le rang visé est atteint"
 example.spec.dna_breed.name,Sélection génétique
 example.spec.dna_breed.note,"Le [Graveur de traits] écrit Purification et Pauvreté nutritive ; quand la fragilité est trop haute, la graine part dans l'[Hydroponie de sélection] et la descendance récoltée revient au graveur, jusqu'au rang visé. Les disquettes viennent de Disquettes génétiques"
 example.tidy.rule.food,Ranger nourriture

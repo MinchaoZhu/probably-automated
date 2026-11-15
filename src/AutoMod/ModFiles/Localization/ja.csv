@@ -134,6 +134,7 @@ kind.fillerweed,フィラーウィード
 kind.fillerweed_seed,フィラーウィードの種
 kind.hydroreed_seed,ハイドロリードの種
 kind.plant_dna_disk,DNAデータディスク
+kind.turbo_booster_hypertech,ハイパーテック・ターボブースター
 kind.fish_scrap,魚の内臓
 kind.hydroponic,水耕システム
 kind.industrial_fish_feed,産業用の魚のエサ
@@ -235,6 +236,8 @@ card.select_button,（ボタンを選択）
 card.select_param,（{0}を選択）
 card.select_flow,（ルーチンを選択）
 card.times,（各{0}回）
+card.loop_times,（{0}回ループ）
+card.loop_forever,（無限ループ）
 card.tpl.apply,{tool}を{list}に{op}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}：
@@ -261,6 +264,8 @@ action.note.set,{0}を{1}に記録
 action.press,{0}の[{1}]を押す
 action.swap,{0}と{1}を交換
 action.times,、各{0}回
+action.loop_times,、{0}回ループ
+action.loop_forever,、無限ループ
 action.toggle,{0}を切り替え
 action.unmark,{0}からマーク[{1}]を削除
 action.use,{0}を{1}に使用
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,「ボタンを押す」のボタンが未選択�
 check.err.rule_swap_no_to,「交換」の対象グループが未選択です
 check.err.rule_target_missing,「{0}」のアイテムが未選択です
 check.err.rule_times_invalid,「{0}」の回数は1未満にできません
+check.err.loop_times,ループ回数は1〜{0}の範囲で指定してください
 check.err.rule_unknown_verb,不明なアクション「{0}」（再選択してください）
 check.err.rule_use_no_tool,「使用」の道具が未選択です
 check.err.rule_use_times_invalid,「使用」の回数は1未満にできません
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0}は満杯
 sim.fail.locked,{0}は機械で処理中のため取り出せません
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,変化なし
+sim.fail.boost,ブースターの準備ができていないか、対象がブーストできる機械ではありません
 sim.fail.simulated,シミュレーションで処理済み（実際の影響は不明）
 sim.group_stats,{0} / {1} AP · ×{2}
 sim.in_shop_count,店内: {0}
@@ -487,6 +494,7 @@ sim.step.swapped,{0}と位置を交換
 sim.step.trigger_unknown,{0}（実際の実行時にのみ効果判明）
 sim.step.unknown,{0} → {1}（実際の実行時にのみ効果判明）
 sim.step.water_change,{0} 水量 {1} → {2} ml
+sim.step.boosted,{0} が現在のサイクルを即座に完了
 sim.sub_summary,{0} ×{1} ({2})
 sim.tip,店舗のコピー上で実行され、実際の店舗には影響しません。\n夜間はゲームのルールに従って進行します：バッテリー、集水器、浄水器、ネズミ、魚、水耕栽培、および進捗のある機械（進捗のみ進行、生成なし）。\n水の回収、注ぎ、廃棄は計算されますが、その他の「使用」「作動」「切り替え」「ボタン」はAPのみ計算され、実際の影響は実行結果に依存します。
 sim.tip_prof,熟練度: {0}
@@ -536,6 +544,10 @@ report.detail.levelup,、レベルアップ！
 report.detail.run,実行
 report.details.record,メモに記録
 report.details.walk_cost,（開始コスト {0} AP）
+report.details.loop_done,ループ {0}周
+report.details.loop_cond,ループ {0}周後、実行条件を満たさなくなりました
+report.details.loop_idle,ループ {0}周、最後の周では何も行われませんでした
+report.details.loop_ap,ループ {0}周後、APが尽きました
 report.error.broken,エラー
 report.fail.dest_full,目標満杯
 report.fail.no_tool,道具不足
@@ -550,6 +562,7 @@ report.idle.none_marked,マークが付いているものはありません
 report.idle.same_place,すでに同じ容器内にあるため交換不要です
 report.issue.dest_full,目標満杯：{1}、{2}個入れられず
 report.issue.many,連続して効果が得られないため、タスクを中止しました
+report.issue.loop_cap,無限ループが{0}周に達したため停止しました
 report.issue.no_effect,{1}後に変化なし、{2}個スキップ
 report.issue.no_tool,道具不足：店内に{1}がなく、{2}個{3}できず
 report.issue.not_allowed,ゲーム制限により{1}不可、{2}個スキップ
@@ -578,6 +591,7 @@ report.summary_override,見習い{0}：{1}
 report.text.no_ap,AP切れ
 report.why.no_ap,AP不足（前のタスクが {0} / 全 {1} APを使用）
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1}（{2}周目）
 report.called,[{0}]を実行
 report.window.deferred,AP不足で{0}件未処理
 report.window.done,{0}件完了
@@ -883,6 +897,12 @@ editor.test_empty,空
 editor.test_not_empty,空でない
 editor.times_each,各個
 editor.times_unit,回
+editor.loop,ループ
+editor.loop_once,1回
+editor.loop_times,複数回
+editor.loop_forever,無限
+editor.loop_unit,回
+editor.tip_loop,1回：1周だけ実行します。複数回：指定した周回数を実行し、実行条件は確認しません。無限：各周の前に実行条件を確認し、満たされなければ止まります。リストは周ごとに絞り込み直します。APが尽きたとき、ある周で何も行われなかったとき、{0}周に達したときにも止まります。
 editor.tip_action_apply,対象の各アイテムに対して道具を順番に試行し、最初に有効なものが適用されます。\n作用の向きはゲームが判断します：例として蛇口を空のバケツに使用するとバケツに水が入ります。
 editor.tip_action_swap,2つのグループのアイテムを順番にペアにして位置を交換します。数量が異なる場合、余分なアイテムは移動しません。
 editor.tip_action_target,各アイテムを最初に入る移動先に入れます。移動先が複数ある場合は順に試します。
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,遺伝子ディスク作成：
 handbook.pdna.text_disk,浄化用と低栄養価用の抽出機が、それぞれハイドロリードの種とフィラーウィードの種から特性を取り出し、書き込んだディスクを【遺伝子バンク】へ入れます。在庫が足りれば停止します。精密取り出しモジュールを書き込み済みのディスクに使うと、その特性に設定されます。
 handbook.pdna.title_edit,遺伝子編集：
 handbook.pdna.text_edit,【書き込み機】の対象スロットの種に浄化を書き込み、目標レベルか熱の上限で停止します。ある特性を持たない種はその特性が0レベルです。
+handbook.pdna.title_boost,ブースト編集：
+handbook.pdna.text_boost,ハイパーテック・ターボブースターは毎晩充電され、複数回分を蓄えられます。【書き込み機】に無限ループで使うと毎回サイクルを一つ完了し、書き込みが終わると止まります。
 handbook.pdna.title_breed,遺伝子育種：
 handbook.pdna.text_breed,熱は育種でしか下がりません。書き込んだ種を【育種用水耕機】で育て、収穫した子孫は熱0で書き込み機に戻ります。低栄養価はレベルごとに複雑さを2下げ、浄化のレベルごとの+3を打ち消します。
 handbook.pdna.tip,成功率 = 95 − 5 ×（複雑さ + 熱）+ 機械の品質ボーナス、最低5%。書き込みや取り出しのたびに、成否にかかわらず熱が上がります。
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,ルーチンを実行:
 handbook.psub.text_call,別のルーチンのタスクを順番に実行し、終わったら元の位置から続けます。この動作自体はAPを消費せず、サブルーチン内のタスクは通常どおりAPを消費します。APが尽きると呼び出し元も止まります。ルーチン同士をループで呼び出すことはできず、入れ子は最大{0}段です。
 handbook.psub.title_params,パラメーター:
 handbook.psub.text_params,パラメーターは数値・設備・リストのいずれかです。タスクやフィルターでは設備そのものではなくパラメーターを選びます。ほかのルーチンから実行されるとき、呼び出し元はこのルーチンのパラメーターを上書きできます。上書きしない値はパラメーター自身の値を使います。グローバルパラメーターは上書きできません。見習いに直接割り当てたときはパラメーター自身の値を使います。
+handbook.psub.title_loop,ループ：
+handbook.psub.text_loop,"各アクションは一度だけ、複数回、無限ループのいずれかで実行でき、周ごとにリストを絞り込み直します。複数回は指定した周回数を実行し、無限は各周の前に実行条件を確認して、満たされなければ止まります。APが尽きたとき、ある周で何も行われなかったとき、{0}周に達したときにも止まります。複数のアクションを繰り返すには、それらを一つのルーチンにまとめ、ルーチンを実行するアクションをループさせます。"
 handbook.psub.tip,同じタスクを複数の機械グループで使うには、設備をパラメーターにして一つのルーチンにまとめ、メインのルーチンから設備を変えて何回か実行します。
 handbook.p5.banner_order,実行順序
 handbook.p5.banner_swap,バッテリー自動交換
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,収穫を保管
 example.dna.rule.first,最初の対象を入れる
 example.dna.rule.breed,育種へ送る
 example.dna.rule.water,水ボトルを入れる
+example.boost.sel.ready,準備完了のブースター
+example.boost.prop.stored,ストック中のブースト
+example.boost.sel.powered,電源のある{0}
+example.boost.rule.boost,ブースト
 example.ranch.rule.auto_blend,自動混合を有効化
 example.ranch.rule.butcher_dead,死んだネズミを処理
 example.ranch.rule.cull,ネズミを出荷
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,遺伝子ディスク作成
 example.spec.dna_disk.note,【浄化抽出機】【低栄養価抽出機】がハイドロリードの種とフィラーウィードの種から特性を抽出し、書き込んだディスクを【遺伝子バンク】へ入れます。在庫が足りれば停止します。各抽出機には対応する特性を設定した精密取り出しモジュールが必要です
 example.spec.dna_edit.name,遺伝子編集
 example.spec.dna_edit.note,【書き込み機】の対象スロットの種に浄化を書き込み、目標レベルか熱の上限に達したら停止します
+example.spec.dna_boost.name,ブースト編集
+example.spec.dna_boost.note,遺伝子編集と同じ内容に加え、ハイパーテック・ターボブースターで【書き込み機】に現在のサイクルを即座に完了させ、1回の書き込みを1つのシフト内で終えます。書き込みが終わる、準備完了のブースターがない、または目標レベルに達すると停止します
 example.spec.dna_breed.name,遺伝子育種
 example.spec.dna_breed.note,【書き込み機】で浄化と低栄養価を書き込み、熱が高くなった種を【育種用水耕機】で育て、収穫した子孫を書き込み機に戻して目標レベルまで続けます。ディスクは「遺伝子ディスク作成」で用意します
 example.tidy.rule.food,食品を整理

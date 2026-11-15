@@ -134,6 +134,7 @@ kind.fillerweed,fillerweed
 kind.fillerweed_seed,fillerweed_seed
 kind.hydroreed_seed,hydroreed_seed
 kind.plant_dna_disk,plant_dna_disk
+kind.turbo_booster_hypertech,超科技涡轮增压器
 kind.fish_scrap,fish_scrap
 kind.hydroponic,hydroponic
 kind.industrial_fish_feed,industrial_fish_feed
@@ -235,6 +236,8 @@ card.select_button,（选择按钮）
 card.select_param,（选择{0}）
 card.select_flow,（选择流程）
 card.times,（每件 {0} 次）
+card.loop_times,（循环 {0} 次）
+card.loop_forever,（无限循环）
 card.tpl.apply,用 {tool} {op} {list}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}：
@@ -261,6 +264,8 @@ action.note.set,将 {0} 写入 {1}
 action.press,按 {0} 的【{1}】
 action.swap,交换 {0} 与 {1}
 action.times,，每件 {0} 次
+action.loop_times,，循环 {0} 次
+action.loop_forever,，无限循环
 action.toggle,开关 {0}
 action.unmark,移除 {0} 的标记【{1}】
 action.use,用 {0} 作用于 {1}
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,“按按钮”未选择按钮
 check.err.rule_swap_no_to,“交换”未选择另一组物品
 check.err.rule_target_missing,“{0}”未选择对象
 check.err.rule_times_invalid,“{0}”的次数不能小于 1
+check.err.loop_times,循环次数须在 1 到 {0} 之间
 check.err.rule_unknown_verb,未知动作“{0}”（请重新选择）
 check.err.rule_use_no_tool,“使用”未选择工具
 check.err.rule_use_times_invalid,“使用”的次数不能小于 1
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0} 已满
 sim.fail.locked,{0}正在机器里加工，拿不出来
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,无变化
+sim.fail.boost,增压器未就绪，或目标不是可增压的机器
 sim.fail.simulated,预演中已处理过（实际效果未知）
 sim.group_stats,{0} / {1} AP · ×{2}
 sim.in_shop_count,店内 {0} 件
@@ -487,6 +494,7 @@ sim.step.swapped,与 {0} 交换位置
 sim.step.trigger_unknown,{0}（效果在实际执行时才知道）
 sim.step.unknown,{0} → {1}（效果在实际执行时才知道）
 sim.step.water_change,{0} 水量 {1} → {2} ml
+sim.step.boosted,{0} 立即完成当前周期
 sim.sub_summary,{0} ×{1}（{2}）
 sim.tip,在店铺副本上运行，不影响实际店铺。\n夜间按游戏规则推进：电池、收集器、净水器、鼠、鱼、水培及带进度的机器（仅推进进度，不产出物品）。\n接水、倒水和倒入下水道按实际计算；其他“使用”“激活”“开关”“按按钮”仅计算 AP，实际效果以执行结果为准。
 sim.tip_prof,熟练度：{0}
@@ -536,6 +544,10 @@ report.detail.levelup,，升级！
 report.detail.run,执行
 report.details.record,写入记事本
 report.details.walk_cost,（启动耗费 {0} AP）
+report.details.loop_done,循环 {0} 轮
+report.details.loop_cond,循环 {0} 轮后执行条件不再成立
+report.details.loop_idle,循环 {0} 轮，最后一轮没有动作
+report.details.loop_ap,循环 {0} 轮后 AP 用完
 report.error.broken,出错
 report.fail.dest_full,目标已满
 report.fail.no_tool,缺少工具
@@ -550,6 +562,7 @@ report.idle.none_marked,都没有该标记
 report.idle.same_place,都在同一个容器里，无需交换
 report.issue.dest_full,目标已满：{1}，{2} 件未放入
 report.issue.many,连试多次均无效果，中止本任务
+report.issue.loop_cap,无限循环已满 {0} 轮，停止
 report.issue.no_effect,{1}后无变化，{2} 件已跳过
 report.issue.no_tool,缺少工具：店内没有{1}，{2} 件未能{3}
 report.issue.not_allowed,游戏暂不允许{1}，{2} 件已跳过
@@ -578,6 +591,7 @@ report.summary_override,学徒{0}：{1}
 report.text.no_ap,AP 耗尽
 report.why.no_ap,AP 不足（前面的任务已用 {0} / 共 {1} AP）
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1}（第 {2} 轮）
 report.called,执行了【{0}】
 report.window.deferred,{0} 件因 AP 不足未做
 report.window.done,完成 {0} 件
@@ -883,6 +897,12 @@ editor.test_empty,为空
 editor.test_not_empty,不为空
 editor.times_each,每件
 editor.times_unit,次
+editor.loop,循环
+editor.loop_once,单次
+editor.loop_times,多次
+editor.loop_forever,无限
+editor.loop_unit,次
+editor.tip_loop,单次：做一轮。多次：做指定的轮数，不检查执行条件。无限：每轮前检查执行条件，不成立时停止。每轮重新筛选；AP 用完、某一轮没有任何动作或满 {0} 轮时也会停止。
 editor.tip_action_apply,对象的每一件按顺序尝试工具中的物品，第一件生效的作用于它。\n方向由游戏判断：例如用水龙头作用于空桶，即为空桶接水。
 editor.tip_action_swap,两组物品按各自的顺序一一配对，互换位置。数量不等时，多出的物品不动。
 editor.tip_action_target,逐件放入目标中第一个放得下的。目标有多个时按其顺序依次尝试。
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,制作基因盘：
 handbook.pdna.text_disk,两台提取机分别从水培芦苇种子、填料草种子提取净化水质、营养匮乏，写好的数据盘收进【基因库】，库存够了即停。精准提取模组对一张写好的数据盘使用一次，即锁定该特性。
 handbook.pdna.title_edit,优化基因：
 handbook.pdna.text_edit,为【写入机】目标格里的种子写入净化水质，到目标等级或热度上限即停。没有某个特性的种子按 0 级计。
+handbook.pdna.title_boost,增压优化：
+handbook.pdna.text_boost,超科技涡轮增压器每晚充能，可储存多次。用它无限循环作用于【写入机】，每次立即完成一个周期，写完一次即停。
 handbook.pdna.title_breed,基因培育：
 handbook.pdna.text_breed,热度只在繁殖时清零：写入后送进【育种水培机】，收获的子代热度为 0，回到写入机继续。营养匮乏每级使复杂度 −2，抵消净化水质每级 +3。
 handbook.pdna.tip,成功率 = 95 − 5 ×（复杂度 + 热度）+ 机器品质加成，最低 5%。每次写入或提取，无论成败，热度都会增加。
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,执行流程：
 handbook.psub.text_call,把另一个流程的任务按顺序做一遍，做完回到原处继续。本身不消耗 AP，子流程里的任务照常计 AP；AP 用完时调用方也一起停下。流程不能互相执行成环，最多嵌套 {0} 层。
 handbook.psub.title_params,参数：
 handbook.psub.text_params,参数可以是数值、设备或列表。在任务和筛选器里选参数，而不是直接选设备。流程被执行时，调用方可以覆盖它的本流程参数，不覆盖时使用参数本身的值；全局参数不能覆盖。直接指派给学徒时使用参数本身的值。
+handbook.psub.title_loop,循环：
+handbook.psub.text_loop,每个动作可以单次、多次或无限循环，每轮重新筛选。多次做指定的轮数；无限在每轮前检查执行条件，不成立时停止。AP 用完、某一轮没有任何动作或满 {0} 轮时也会停止。要循环几个动作，把它们写成一个流程，再循环执行它。
 handbook.psub.tip,同一套任务用在几组机器上：把设备设为参数，写成一个流程，再在总流程里执行几次，每次换上不同的设备。
 handbook.p5.banner_order,执行顺序
 handbook.p5.banner_swap,自动换电
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,收获入库
 example.dna.rule.first,放入初始目标
 example.dna.rule.breed,送去繁殖
 example.dna.rule.water,放水瓶
+example.boost.sel.ready,就绪的增压器
+example.boost.prop.stored,已储存加速
+example.boost.sel.powered,有电的{0}
+example.boost.rule.boost,增压
 example.ranch.rule.auto_blend,开启自动混合
 example.ranch.rule.butcher_dead,分解死鼠
 example.ranch.rule.cull,出栏
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,制作基因盘
 example.spec.dna_disk.note,【净化提取机】【营养匮乏提取机】分别从水培芦苇种子、填料草种子提取特性，写好的数据盘收进【基因库】，库存够了即停。提取机需装好设定了对应特性的精准提取模组
 example.spec.dna_edit.name,优化基因
 example.spec.dna_edit.note,为【写入机】目标格里的种子写入净化水质，达到目标等级或热度达到上限即停
+example.spec.dna_boost.name,增压优化
+example.spec.dna_boost.note,同优化基因，另用超科技涡轮增压器让【写入机】立即完成当前周期，一个班里写完一次；写完、增压器没有就绪或达到目标等级即停
 example.spec.dna_breed.name,基因培育
 example.spec.dna_breed.note,在【写入机】中写入净化水质和营养匮乏，热度过高时送进【育种水培机】繁殖，收获的子代回到写入机，直至目标等级。数据盘由“制作基因盘”准备
 example.tidy.rule.food,整理食品

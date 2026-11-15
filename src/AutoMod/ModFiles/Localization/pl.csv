@@ -134,6 +134,7 @@ kind.fillerweed,Zapchwast
 kind.fillerweed_seed,Nasiono zapchwasta
 kind.hydroreed_seed,Nasiono hydrotrzciny
 kind.plant_dna_disk,Dysk danych DNA
+kind.turbo_booster_hypertech,Turbowzmacniacz Hypertech
 kind.fish_scrap,Odpady rybne
 kind.hydroponic,System hydroponiczny
 kind.industrial_fish_feed,Przemysłowa karma dla ryb
@@ -235,6 +236,8 @@ card.select_button,(wybierz przycisk)
 card.select_param,(wybierz {0})
 card.select_flow,(wybierz procedurę)
 card.times,(po 1 razie)| (po {0} razy)| (po {0} razy)
+card.loop_times," (pętla 1 raz)| (pętla {0} razy)| (pętla {0} razy)"
+card.loop_forever," (pętla bez końca)"
 card.tpl.apply,{op} {tool} na {list}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
@@ -261,6 +264,8 @@ action.note.set,Zapisz {0} w {1}
 action.press,Naciśnij [{1}] na {0}
 action.swap,Zamień {0} z {1}
 action.times,", po 1 razie|, po {0} razy|, po {0} razy"
+action.loop_times,", pętla 1 raz|, pętla {0} razy|, pętla {0} razy"
+action.loop_forever,", pętla bez końca"
 action.toggle,Przełącz {0}
 action.unmark,Usuń znacznik [{1}] z {0}
 action.use,Użyj {0} na {1}
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,Dla „Naciśnij przycisk” nie wybrano przycisk
 check.err.rule_swap_no_to,Dla „Zamień” nie wybrano innej grupy przedmiotów
 check.err.rule_target_missing,Dla „{0}” nie wybrano przedmiotu
 check.err.rule_times_invalid,Liczba dla „{0}” nie może być mniejsza niż 1
+check.err.loop_times,Liczba powtórzeń pętli musi wynosić od 1 do {0}
 check.err.rule_unknown_verb,Nieznana akcja „{0}” (wybierz ponownie)
 check.err.rule_use_no_tool,Dla „Użyj” nie wybrano narzędzia
 check.err.rule_use_times_invalid,Liczba dla „Użyj” nie może być mniejsza niż 1
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0} jest pełny
 sim.fail.locked,{0} jest właśnie przetwarzany w maszynie i nie można go wyjąć
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,Bez zmian
+sim.fail.boost,"Wzmacniacz nie jest gotowy lub cel nie jest maszyną, którą można przyspieszyć"
 sim.fail.simulated,Przetworzono w podglądzie (efekt nieznany)
 sim.group_stats,{0} / {1} AP · ×{2}
 sim.in_shop_count,W sklepie: {0}
@@ -487,6 +494,7 @@ sim.step.swapped,Zamieniono pozycję z {0}
 sim.step.trigger_unknown,{0} (efekt znany dopiero przy wykonaniu)
 sim.step.unknown,{0} → {1} (efekt znany dopiero przy wykonaniu)
 sim.step.water_change,{0} woda {1} → {2} ml
+sim.step.boosted,{0} od razu kończy bieżący cykl
 sim.sub_summary,{0} ×{1} ({2})
 sim.tip,"Działa na kopii sklepu bez wpływu na właściwy sklep.\nNoc przebiega według zasad gry: baterie, kolektory, oczyszczacze, szczury, ryby, hydroponika i maszyny z postępem (tylko postęp, bez produktów).\nZbieranie, przelewanie i usuwanie wody są obliczane dokładnie; inne akcje („użyj”, „aktywuj”, „przełącz”, „przycisk”) liczą tylko AP, a rzeczywiste efekty zależą od prawdziwego wykonania."
 sim.tip_prof,Biegłość: {0}
@@ -536,6 +544,10 @@ report.detail.levelup,", awans!"
 report.detail.run,Wykonanie
 report.details.record,Zapisz w notatniku
 report.details.walk_cost,(koszt startowy {0} AP)
+report.details.loop_done,Pętla: 1 runda|Pętla: {0} rundy|Pętla: {0} rund
+report.details.loop_cond,Warunek wykonania przestał być spełniony po 1 rundzie|Warunek wykonania przestał być spełniony po {0} rundach|Warunek wykonania przestał być spełniony po {0} rundach
+report.details.loop_idle,Pętla: 1 runda; w ostatniej rundzie nic nie zrobiono|Pętla: {0} rundy; w ostatniej rundzie nic nie zrobiono|Pętla: {0} rund; w ostatniej rundzie nic nie zrobiono
+report.details.loop_ap,AP skończyły się po 1 rundzie|AP skończyły się po {0} rundach|AP skończyły się po {0} rundach
 report.error.broken,Błąd
 report.fail.dest_full,Cel pełny
 report.fail.no_tool,Brak narzędzia
@@ -550,6 +562,7 @@ report.idle.none_marked,Żaden przedmiot nie ma tego znacznika
 report.idle.same_place,"Już w tym samym pojemniku, wymiana zbędna"
 report.issue.dest_full,"Cel pełny: {1}, nie umieszczono {2} przedm.|Cel pełny: {1}, nie umieszczono {2} przedm.|Cel pełny: {1}, nie umieszczono {2} przedm."
 report.issue.many,"Wielokrotne próby bez efektu, zadanie przerwane"
+report.issue.loop_cap,Pętla bez końca osiągnęła {0} rund i została zatrzymana
 report.issue.no_effect,"Brak zmian po {1}, pominięto {2} przedm.|Brak zmian po {1}, pominięto {2} przedm.|Brak zmian po {1}, pominięto {2} przedm."
 report.issue.no_tool,"Brak narzędzia: brak {1} w sklepie, nie udało się przetworzyć {2} przedm. ({3})|Brak narzędzia: brak {1} w sklepie, nie udało się przetworzyć {2} przedm. ({3})|Brak narzędzia: brak {1} w sklepie, nie udało się przetworzyć {2} przedm. ({3})"
 report.issue.not_allowed,"Gra nie pozwala na {1}, pominięto {2} przedm.|Gra nie pozwala na {1}, pominięto {2} przedm.|Gra nie pozwala na {1}, pominięto {2} przedm."
@@ -578,6 +591,7 @@ report.summary_override,Praktykant {0}: {1}
 report.text.no_ap,Brak AP
 report.why.no_ap,Za mało AP (poprzednie zadania zużyły {0} / {1} AP)
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1} (runda {2})
 report.called,Wykonano [{0}]
 report.window.deferred,1 przedmiot pominięty (brak AP)|{0} przedmioty pominięte (brak AP)|{0} przedmiotów pominiętych (brak AP)
 report.window.done,1 przedmiot wykonany|{0} przedmioty wykonane|{0} przedmiotów wykonanych
@@ -883,6 +897,12 @@ editor.test_empty,Pusty
 editor.test_not_empty,Niepusty
 editor.times_each,Razy na przedmiot:
 editor.times_unit,
+editor.loop,Pętla:
+editor.loop_once,Raz
+editor.loop_times,Kilka razy
+editor.loop_forever,Bez końca
+editor.loop_unit,razy
+editor.tip_loop,"Raz: jedna runda. Kilka razy: podana liczba rund bez sprawdzania warunku wykonania. Bez końca: przed każdą rundą sprawdza warunek wykonania i zatrzymuje się, gdy nie jest spełniony. Listy są filtrowane od nowa w każdej rundzie; pętla zatrzymuje się też, gdy skończą się AP, gdy w rundzie nic nie zostało zrobione, lub po {0} rundach."
 editor.tip_action_apply,Dla każdego obiektu docelowego sprawdzaj narzędzia po kolei; pierwsze skuteczne zostanie użyte.\nKierunek ustala gra: np. użycie kranu na pustym wiadrze napełnia je wodą.
 editor.tip_action_swap,Połącz dwie grupy przedmiotów w pary i zamień ich pozycje. W przypadku różnej liczby nadmiarowe przedmioty zostają.
 editor.tip_action_target,"Umieść każdy przedmiot w pierwszym pasującym celu. Jeśli jest kilka celów, próbuj po kolei."
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,Dyski genowe:
 handbook.pdna.text_disk,"Dwa ekstraktory wyodrębniają Oczyszczające z nasion hydrotrzciny i Słabą odżywczość z nasion zapchwasta; zapisane dyski trafiają do [Bank genów], a przy wystarczającym zapasie wyodrębnianie ustaje. Moduł precyzyjnego wyodrębniania użyty na zapisanym dysku ustawia się na jego cechę."
 handbook.pdna.title_edit,Edycja genów:
 handbook.pdna.text_edit,Zapisuje Oczyszczające w nasieniu w slocie docelowym [Zapisywacz cech] do poziomu docelowego lub limitu obciążenia. Nasiono bez cechy ma ją na poziomie 0.
+handbook.pdna.title_boost,Przyspieszona edycja:
+handbook.pdna.text_boost,"Turbowzmacniacz Hypertech ładuje się co noc i może przechować kilka przyspieszeń. Użyty na [Zapisywacz cech] w pętli bez końca za każdym razem kończy jeden cykl i zatrzymuje się, gdy zapis jest gotowy."
 handbook.pdna.title_breed,Hodowla genów:
 handbook.pdna.text_breed,"Obciążenie spada tylko przez hodowlę: po zapisie nasiono trafia do [Hydroponika hodowlana], a zebrane potomstwo wraca do zapisywacza z obciążeniem 0. Każdy poziom Słabej odżywczości obniża złożoność o 2, równoważąc +3 za poziom Oczyszczającego."
 handbook.pdna.tip,"Szansa na powodzenie = 95 − 5 × (złożoność + obciążenie) + premia jakości maszyny, co najmniej 5%. Każdy zapis lub wyodrębnienie zwiększa obciążenie, niezależnie od wyniku."
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,Wykonaj procedurę:
 handbook.psub.text_call,"Wykonuje po kolei zadania innej procedury, a potem wraca do miejsca wywołania. Sama akcja nie zużywa AP; zadania podprocedury zużywają AP jak zwykle, a gdy AP się skończą, zatrzymuje się także procedura wywołująca. Procedury nie mogą wywoływać się w pętli; zagnieżdżenie najwyżej {0} poziomy."
 handbook.psub.title_params,Parametry:
 handbook.psub.text_params,"Parametr może być liczbą, urządzeniem lub listą. W zadaniach i filtrach wybieraj parametr zamiast samego urządzenia. Gdy inna procedura wykonuje tę, wywołujący może nadpisać parametry tej procedury; bez nadpisania obowiązuje wartość parametru. Parametrów globalnych nie można nadpisać. Przypisana bezpośrednio praktykantowi procedura używa wartości parametrów."
+handbook.psub.title_loop,Pętle:
+handbook.psub.text_loop,"Każdą akcję można wykonać raz, kilka razy lub w pętli bez końca; listy są filtrowane od nowa w każdej rundzie. Tryb Kilka razy wykonuje podaną liczbę rund; tryb Bez końca przed każdą rundą sprawdza warunek wykonania i zatrzymuje się, gdy nie jest spełniony. Pętla zatrzymuje się też, gdy skończą się AP, gdy w rundzie nic nie zostało zrobione, lub po {0} rundach. Aby powtarzać kilka akcji, umieść je w procedurze i zapętl akcję Wykonaj procedurę."
 handbook.psub.tip,"Te same zadania dla kilku grup maszyn: ustaw urządzenia jako parametry, zapisz zadania jako jedną procedurę i wykonaj ją kilka razy z procedury głównej z innymi urządzeniami."
 handbook.p5.banner_order,Kolejność wykonywania
 handbook.p5.banner_swap,Automatyczna wymiana baterii
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,Odłóż plon
 example.dna.rule.first,Załaduj cel startowy
 example.dna.rule.breed,Wyślij do hodowli
 example.dna.rule.water,Wstaw butelkę wody
+example.boost.sel.ready,Gotowe wzmacniacze
+example.boost.prop.stored,Zgromadzone przyspieszenia
+example.boost.sel.powered,{0} z zasilaniem
+example.boost.rule.boost,Przyspiesz
 example.ranch.rule.auto_blend,Włącz automatyczne mieszanie
 example.ranch.rule.butcher_dead,Opraw martwe szczury
 example.ranch.rule.cull,Ubij szczury
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,Dyski genowe
 example.spec.dna_disk.note,"[Ekstraktor Oczyszczające] i [Ekstraktor Słaba odżywczość] wyodrębniają cechy z nasion hydrotrzciny i zapchwasta; zapisane dyski trafiają do [Bank genów], a przy wystarczającym zapasie wyodrębnianie ustaje. Każdy ekstraktor potrzebuje modułu precyzyjnego wyodrębniania ustawionego na swoją cechę"
 example.spec.dna_edit.name,Edycja genów
 example.spec.dna_edit.note,"Zapisuje Oczyszczające w nasieniu w slocie docelowym [Zapisywacz cech], aż do poziomu docelowego lub limitu obciążenia"
+example.spec.dna_boost.name,Przyspieszona edycja
+example.spec.dna_boost.note,"Jak Edycja genów, a do tego Turbowzmacniacz Hypertech sprawia, że [Zapisywacz cech] od razu kończy bieżący cykl, więc jeden zapis mieści się w jednej zmianie; zatrzymuje się, gdy zapis jest gotowy, żaden wzmacniacz nie jest gotowy lub osiągnięto poziom docelowy"
 example.spec.dna_breed.name,Hodowla genów
 example.spec.dna_breed.note,"[Zapisywacz cech] zapisuje Oczyszczające i Słabą odżywczość; przy zbyt wysokim obciążeniu nasiono trafia do [Hydroponika hodowlana], a zebrane potomstwo wraca do zapisywacza, aż do poziomu docelowego. Dyski przygotowuje Dyski genowe"
 example.tidy.rule.food,Uporządkuj żywność

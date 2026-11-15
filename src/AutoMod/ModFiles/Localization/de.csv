@@ -134,6 +134,7 @@ kind.fillerweed,Füllkraut
 kind.fillerweed_seed,Füllkrautsamen
 kind.hydroreed_seed,Hydroschilf-Saatgut
 kind.plant_dna_disk,DNA-Datendisk
+kind.turbo_booster_hypertech,Hypertech-Turbobooster
 kind.fish_scrap,Fischrest
 kind.hydroponic,Hydrokultursystem
 kind.industrial_fish_feed,Industrielles Fischfutter
@@ -235,6 +236,8 @@ card.select_button,(Taste wählen)
 card.select_param,({0} wählen)
 card.select_flow,(Routine wählen)
 card.times,(je 1-mal)| (je {0}-mal)
+card.loop_times," (Schleife 1-mal)| (Schleife {0}-mal)"
+card.loop_forever," (Endlosschleife)"
 card.tpl.apply,{tool} auf {list} {op}
 card.tpl.call,{op} {flow}
 card.tpl.complex_colon,{complex}:
@@ -261,6 +264,8 @@ action.note.set,{0} in {1} schreiben
 action.press,[{1}] an {0} drücken
 action.swap,{0} mit {1} austauschen
 action.times,", je 1-mal|, je {0}-mal"
+action.loop_times,", Schleife 1-mal|, Schleife {0}-mal"
+action.loop_forever,", Endlosschleife"
 action.toggle,{0} umschalten
 action.unmark,Markierung [{1}] von {0} entfernen
 action.use,{0} auf {1} anwenden
@@ -350,6 +355,7 @@ check.err.rule_press_no_button,Für „Taste drücken“ ist keine Taste ausgew�
 check.err.rule_swap_no_to,Für „Austauschen“ ist keine andere Gegenstandsgruppe ausgewählt
 check.err.rule_target_missing,Für „{0}“ ist kein Gegenstand ausgewählt
 check.err.rule_times_invalid,Anzahl für „{0}“ darf nicht kleiner als 1 sein
+check.err.loop_times,Die Anzahl der Schleifenrunden muss zwischen 1 und {0} liegen
 check.err.rule_unknown_verb,Unbekannte Aktion „{0}“ (bitte erneut auswählen)
 check.err.rule_use_no_tool,Für „Anwenden“ ist kein Werkzeug ausgewählt
 check.err.rule_use_times_invalid,Anzahl für „Anwenden“ darf nicht kleiner als 1 sein
@@ -439,6 +445,7 @@ sim.fail.dest_full,{0} ist voll
 sim.fail.locked,{0} wird gerade in einer Maschine bearbeitet und kann nicht entnommen werden
 sim.dna.rank,{0} {1}
 sim.fail.no_effect,Keine Änderung
+sim.fail.boost,"Booster nicht bereit oder das Ziel ist keine Maschine, die sich boosten lässt"
 sim.fail.simulated,Bereits in Vorschau verarbeitet (Wirkung unbekannt)
 sim.group_stats,{0} / {1} AP · ×{2}
 sim.in_shop_count,Im Laden: {0}
@@ -487,6 +494,7 @@ sim.step.swapped,Platz mit {0} getauscht
 sim.step.trigger_unknown,{0} (Wirkung erst bei Ausführung bekannt)
 sim.step.unknown,{0} → {1} (Wirkung erst bei Ausführung bekannt)
 sim.step.water_change,{0} Wasser {1} → {2} ml
+sim.step.boosted,{0} schließt den aktuellen Zyklus sofort ab
 sim.sub_summary,{0} ×{1} ({2})
 sim.tip,"Läuft auf einer Ladenkopie, ohne den eigentlichen Laden zu beeinflussen.\nNachtschaltung nach Spielregeln: Batterien, Sammler, Reiniger, Ratten, Fische, Hydrokultur und Maschinen mit Fortschritt (nur Fortschritt, keine Ausgabe).\nWasser sammeln, umfüllen und entsorgen werden exakt berechnet; andere Aktionen („Anwenden“, „Aktivieren“, „Umschalten“, „Taste“) berechnen nur AP, tatsächliche Effekte hängen von realer Ausführung ab."
 sim.tip_prof,Kompetenz: {0}
@@ -536,6 +544,10 @@ report.detail.levelup,", Stufe aufgestiegen!"
 report.detail.run,Ausführung
 report.details.record,In Notizblock schreiben
 report.details.walk_cost,(Anlaufkosten {0} AP)
+report.details.loop_done,Schleife: 1 Runde|Schleife: {0} Runden
+report.details.loop_cond,Ausführbedingung nach 1 Runde nicht mehr erfüllt|Ausführbedingung nach {0} Runden nicht mehr erfüllt
+report.details.loop_idle,Schleife: 1 Runde; in der letzten Runde nichts getan|Schleife: {0} Runden; in der letzten Runde nichts getan
+report.details.loop_ap,AP nach 1 Runde aufgebraucht|AP nach {0} Runden aufgebraucht
 report.error.broken,Fehler
 report.fail.dest_full,Ziel voll
 report.fail.no_tool,Fehlendes Werkzeug
@@ -550,6 +562,7 @@ report.idle.none_marked,Kein Gegenstand hat diese Markierung
 report.idle.same_place,"Bereits im selben Behälter, kein Tausch nötig"
 report.issue.dest_full,"Ziel voll: {1}, {2} Gegenstand nicht abgelegt|Ziel voll: {1}, {2} Gegenstände nicht abgelegt"
 report.issue.many,"Wiederholte Fehlversuche ohne Wirkung, Aufgabe abgebrochen"
+report.issue.loop_cap,Endlosschleife hat {0} Runden erreicht und wurde gestoppt
 report.issue.no_effect,"Keine Änderung nach {1}, {2} Gegenstand übersprungen|Keine Änderung nach {1}, {2} Gegenstände übersprungen"
 report.issue.no_tool,"Fehlendes Werkzeug: kein {1} im Laden, {2} Gegenstand konnte nicht verarbeitet werden ({3})|Fehlendes Werkzeug: kein {1} im Laden, {2} Gegenstände konnten nicht verarbeitet werden ({3})"
 report.issue.not_allowed,"Spiel erlaubt {1} nicht, {2} Gegenstand übersprungen|Spiel erlaubt {1} nicht, {2} Gegenstände übersprungen"
@@ -578,6 +591,7 @@ report.summary_override,Lehrling {0}: {1}
 report.text.no_ap,Keine AP mehr
 report.why.no_ap,Zu wenig AP (vorherige Aufgaben verbrauchten {0} / {1} AP)
 report.sub_rule,{0} › {1}
+report.sub_rule_round,{0} › {1} (Runde {2})
 report.called,[{0}] ausgeführt
 report.window.deferred,1 Gegenstand übersprungen (zu wenig AP)|{0} Gegenstände übersprungen (zu wenig AP)
 report.window.done,1 Gegenstand erledigt|{0} Gegenstände erledigt
@@ -883,6 +897,12 @@ editor.test_empty,Leer
 editor.test_not_empty,Nicht leer
 editor.times_each,Häufigkeit pro Gegenstand:
 editor.times_unit,
+editor.loop,Schleife:
+editor.loop_once,Einmal
+editor.loop_times,Mehrmals
+editor.loop_forever,Endlos
+editor.loop_unit,-mal
+editor.tip_loop,"Einmal: eine Runde. Mehrmals: die angegebene Zahl von Runden, ohne die Ausführbedingung zu prüfen. Endlos: prüft vor jeder Runde die Ausführbedingung und stoppt, wenn sie nicht erfüllt ist. Listen werden in jeder Runde neu gefiltert; die Schleife stoppt auch, wenn die AP ausgehen, wenn eine Runde nichts tut, oder nach {0} Runden."
 editor.tip_action_apply,Für jeden Zielgegenstand Werkzeuge der Reihe nach testen; das erste wirksame wird angewendet.\nRichtung wird vom Spiel bestimmt: z. B. Hahn auf leeren Eimer füllt ihn mit Wasser.
 editor.tip_action_swap,Zwei Gruppen von Gegenständen der Reihe nach paaren und Positionen tauschen. Bei ungleicher Anzahl bleiben überschüssige liegen.
 editor.tip_action_target,Jeden Gegenstand in das erste passende Ziel legen. Bei mehreren Zielen der Reihe nach versuchen.
@@ -1122,6 +1142,8 @@ handbook.pdna.title_disk,Gen-Disks:
 handbook.pdna.text_disk,"Zwei Extraktoren gewinnen Reinigend aus Hydroschilf-Saatgut und Nährstoffarm aus Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Ein Präzisions-Extraktionsmodul, auf eine beschriebene Disk angewendet, wird auf deren Merkmal eingestellt."
 handbook.pdna.title_edit,Gen-Bearbeitung:
 handbook.pdna.text_edit,Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber] bis zur Zielstufe oder Risiko-Grenze. Ein Samen ohne ein Merkmal hat es auf Stufe 0.
+handbook.pdna.title_boost,Turbo-Bearbeitung:
+handbook.pdna.text_boost,"Der Hypertech-Turbobooster lädt sich jede Nacht auf und kann mehrere Boosts speichern. In einer Endlosschleife auf den [Merkmal-Schreiber] angewendet, schließt er jedes Mal einen Zyklus ab und stoppt, wenn der Schreibvorgang fertig ist."
 handbook.pdna.title_breed,Gen-Zucht:
 handbook.pdna.text_breed,"Risiko sinkt nur durch Zucht: Nach dem Schreiben kommt der Samen in die [Zucht-Hydrokultur], der geerntete Nachwuchs kehrt mit Risiko 0 zum Schreiber zurück. Jede Stufe Nährstoffarm senkt die Komplexität um 2 und gleicht +3 je Stufe Reinigend aus."
 handbook.pdna.tip,"Erfolgschance = 95 − 5 × (Komplexität + Risiko) + Qualitätsbonus der Maschine, mindestens 5 %. Jedes Schreiben oder Extrahieren erhöht das Risiko, ob erfolgreich oder nicht."
@@ -1147,6 +1169,8 @@ handbook.psub.title_call,Routine ausführen:
 handbook.psub.text_call,"Führt die Aufgaben einer anderen Routine der Reihe nach aus und macht danach an derselben Stelle weiter. Die Aktion selbst kostet keine AP; Aufgaben der Unterroutine kosten wie gewohnt AP, und gehen die AP aus, stoppt auch der Aufrufer. Routinen können sich nicht im Kreis aufrufen; höchstens {0} Ebenen tief."
 handbook.psub.title_params,Parameter:
 handbook.psub.text_params,"Ein Parameter kann eine Zahl, ein Gerät oder eine Liste sein. In Aufgaben und Filtern den Parameter wählen statt des Geräts selbst. Führt eine andere Routine diese aus, kann der Aufrufer die Parameter dieser Routine überschreiben; ohne Überschreiben gilt der Wert des Parameters. Globale Parameter lassen sich nicht überschreiben. Direkt einem Lehrling zugewiesen, gelten die Werte der Parameter."
+handbook.psub.title_loop,Schleifen:
+handbook.psub.text_loop,"Jede Aktion kann einmal, mehrmals oder endlos laufen; Listen werden in jeder Runde neu gefiltert. Mehrmals läuft die angegebene Zahl von Runden; Endlos prüft vor jeder Runde die Ausführbedingung und stoppt, wenn sie nicht erfüllt ist. Eine Schleife stoppt auch, wenn die AP ausgehen, wenn eine Runde nichts tut, oder nach {0} Runden. Um mehrere Aktionen zu wiederholen, schreibe sie in eine Routine und lass die Aktion Routine ausführen als Schleife laufen."
 handbook.psub.tip,"Dieselben Aufgaben für mehrere Maschinengruppen: Geräte zu Parametern machen, die Aufgaben als eine Routine anlegen und sie aus einer Hauptroutine mehrmals mit anderen Geräten ausführen."
 handbook.p5.banner_order,Ausführungsreihenfolge
 handbook.p5.banner_swap,Automatischer Batteriewechsel
@@ -1420,6 +1444,10 @@ example.dna.rule.harvest,Ernte einlagern
 example.dna.rule.first,Startziel einsetzen
 example.dna.rule.breed,Zur Zucht schicken
 example.dna.rule.water,Wasserflasche einsetzen
+example.boost.sel.ready,Bereite Booster
+example.boost.prop.stored,Gespeicherte Boosts
+example.boost.sel.powered,{0} mit Strom
+example.boost.rule.boost,Boosten
 example.ranch.rule.auto_blend,Automatisches Mischen aktivieren
 example.ranch.rule.butcher_dead,Tote Ratten zerlegen
 example.ranch.rule.cull,Ratten schlachten
@@ -1458,6 +1486,8 @@ example.spec.dna_disk.name,Gen-Disks
 example.spec.dna_disk.note,"[Extraktor Reinigend] und [Extraktor Nährstoffarm] extrahieren Merkmale aus Hydroschilf-Saatgut und Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Jeder Extraktor braucht ein Präzisions-Extraktionsmodul, das auf sein Merkmal eingestellt ist"
 example.spec.dna_edit.name,Gen-Bearbeitung
 example.spec.dna_edit.note,"Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber], bis die Zielstufe oder die Risiko-Grenze erreicht ist"
+example.spec.dna_boost.name,Turbo-Bearbeitung
+example.spec.dna_boost.note,"Wie Gen-Bearbeitung, dazu lässt ein Hypertech-Turbobooster den [Merkmal-Schreiber] den aktuellen Zyklus sofort abschließen, sodass ein Schreibvorgang in einer Schicht fertig wird; stoppt, wenn der Schreibvorgang fertig ist, kein Booster bereit ist oder die Zielstufe erreicht ist"
 example.spec.dna_breed.name,Gen-Zucht
 example.spec.dna_breed.note,"Der [Merkmal-Schreiber] schreibt Reinigend und Nährstoffarm; ist das Risiko zu hoch, kommt der Samen in die [Zucht-Hydrokultur], und der geerntete Nachwuchs kehrt zum Schreiber zurück, bis zur Zielstufe. Die Disks liefert Gen-Disks"
 example.tidy.rule.food,Essen sortieren

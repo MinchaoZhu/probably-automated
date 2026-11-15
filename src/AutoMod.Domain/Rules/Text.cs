@@ -256,7 +256,18 @@ public static class Text
     public static string ButtonName(string id) =>
         string.IsNullOrEmpty(id) ? "" : L.Has("btn." + id) ? L.T("btn." + id) : L.Has(id) ? L.T(id) : id;
 
-    public static string Action(RulesData d, Schedule s, ActionDef a)
+    public static string Action(RulesData d, Schedule s, ActionDef a) => ActionOnly(d, s, a) + Loop(a);
+
+    /// <summary>循环的写法：句子里“，循环 5 次”“，无限循环”，卡片上“（循环 5 次）”；单次为空。</summary>
+    public static string Loop(ActionDef a, bool card = false) => a.Loop switch
+    {
+        LoopMode.Times => L.N(card ? "card.loop_times" : "action.loop_times", LoopMode.TimesOf(a)),
+        LoopMode.Forever => L.T(card ? "card.loop_forever" : "action.loop_forever"),
+        _ => "",
+    };
+
+    /// <summary>动作本身的句子，不含循环。</summary>
+    public static string ActionOnly(RulesData d, Schedule s, ActionDef a)
     {
         string Lname = Name(d, a.List);
         string times = a.Times > 1 ? L.N("action.times", a.Times) : "";

@@ -196,6 +196,9 @@ public class Interpreter
         /// <summary>AP 用完：整条调用链都停。</summary>
         public bool Stopped;
 
+        /// <summary>做成的动作数（处理了一件物品、记了一次计数器），含子流程里的：循环据此判断一轮里有没有动作。</summary>
+        public int Acts;
+
         public int Spent() => ApMath.Ceil(A.ApUsed) - ApMath.Ceil(StartUsed);
     }
 
@@ -233,10 +236,11 @@ public class Interpreter
 
 
     /// <summary>
-    /// 按顺序执行流程 s 的任务。子流程（depth &gt; 0）的任务报告接在调用它的任务后面；args 是调用方传入的参数。
+    /// 按顺序执行流程 s 的任务。子流程（depth &gt; 0）的任务报告接在调用它的任务后面；args 是调用方传入的参数；
+    /// callRound 是调用它的“执行流程”循环到第几轮（不循环为 0），写进任务名。
     /// 返回记事本（每次调用都从初始值开始）。
     /// </summary>
-    private Dictionary<string, double> RunRules(Schedule s, Frame f, Dictionary<string, ArgVal> args, int depth)
+    private Dictionary<string, double> RunRules(Schedule s, Frame f, Dictionary<string, ArgVal> args, int depth, int callRound = 0)
     {
         var a = f.A;
         var memo = s.Notepad.ToDictionary(n => n.Id, n => n.Init);
@@ -246,7 +250,8 @@ public class Interpreter
 
         foreach (var rule in s.Rules)
         {
-            var rr = new RuleRunReport { RuleId = rule.Id, Name = depth == 0 ? rule.Name : L.T("report.sub_rule", s.Name, rule.Name), Depth = depth, FlowId = s.Id };
+            string name = depth == 0 ? rule.Name : callRound > 0 ? L.T("report.sub_rule_round", s.Name, rule.Name, callRound) : L.T("report.sub_rule", s.Name, rule.Name);
+            var rr = new RuleRunReport { RuleId = rule.Id, Name = name, Depth = depth, FlowId = s.Id };
             f.Gr.Rules.Add(rr);
             if (!rule.Enabled) { rr.Pre = PreResult.Disabled; continue; }
             var errs = Errors?.Invoke(s, rule) ?? new List<string>();
@@ -301,159 +306,186 @@ public class Interpreter
 
             foreach (var act in rule.Actions)
             {
-                if (act.Verb == ActVerb.Note)
+                // 循环：每轮重新筛选（第一轮用任务的快照）；无限循环每轮前检查执行条件。一轮里没有任何动作就停：再做一轮也一样
+                int rounds = LoopMode.Rounds(act), round = 0;
+                string end = null;
+                while (round < rounds)
                 {
-                    double v = Eval.Expr(ctx, act.Value) ?? 0;
-                    if (act.Note != null)
+                    if (round > 0)
                     {
-                        touched = true;
-                        memo[act.Note] = act.NoteMode == "set" ? v : memo.GetValueOrDefault(act.Note) + v;
-                        rr.Details.Add(L.T("report.details.record", s.Notepad.FirstOrDefault(n => n.Id == act.Note)?.Name, memo[act.Note].ToString("0.##")));
+                        ctx.Clear();
+                        if (act.Loop == LoopMode.Forever && !PreHolds(ctx, rule)) { end = "report.details.loop_cond"; break; }
                     }
-                    continue;
+                    round++;
+                    int acts = f.Acts;
+                    RunAct(act, act.Loop == LoopMode.Once ? 0 : round);
+                    if (f.Stopped) { end = "report.details.loop_ap"; break; }
+                    if (f.Acts == acts) { end = "report.details.loop_idle"; break; }
                 }
-                if (act.Verb == ActVerb.Call)
+                if (act.Loop != LoopMode.Once)
                 {
-                    var callee = Calls.Callee(_d, act);
-                    if (callee == null || depth >= Calls.MaxDepth) { rr.Issue("broken", L.T("report.error.broken", L.Join("semi", Calls.Errors(_d, s, act)))); continue; }
-                    // 子流程的任务接在这条任务后面记进报告，各算各的 AP；这条只记自己（0 AP）
-                    rr.Called = callee.Name;
-                    int callStart = ApMath.Ceil(a.ApUsed);
-                    RunRules(callee, f, Calls.Bind(ctx, callee, act), depth + 1);
-                    callAp += ApMath.Ceil(a.ApUsed) - callStart;
-                    touched = true;
-                    if (f.Stopped) break;
-                    continue;
+                    if (end == null && act.Loop == LoopMode.Forever) rr.Issue(FailCode.Many, L.T("report.issue.loop_cap", LoopMode.Cap));
+                    rr.Details.Add(L.N(end ?? "report.details.loop_done", round));
                 }
-                var op = Catalog.Op(act.Verb);
-                var list = Eval.List(ctx, act.List);
-                bool use = op.Mechanism == Mechanism.Apply;
-                bool trigger = op.Mechanism == Mechanism.Trigger;
-                bool toggle = op.Id == ActVerb.Toggle;
-                string how = trigger ? Triggers.Of(act) : null;
-                // 使用：工具就是 Tool 这个集合（按顺序试）；放入：目标容器按顺序试；交换：和 To 按顺序一一配对
-                var tools = use ? ToolPool(ctx, act.Tool).ToList() : null;
-                var targets = op.Mechanism == Mechanism.Place ? Eval.Boxes(ctx, act.To) : null;
-                var partners = op.Mechanism == Mechanism.Swap ? Eval.List(ctx, act.To) : null;
-                int times = toggle || !(use || trigger) ? 1 : Math.Max(1, act.Times);
-                var paired = new HashSet<object>();
-                int full = 0, notAllowed = 0, noEffect = 0, notOk = 0, noPartner = 0, doneHere = 0;
-                bool toolMissing = use && tools.Count == 0;
-                bool Ok(object x) => Applicable(op, act, x, targets);
-
-                for (int k = 0; k < list.Count && !toolMissing; k++)
-                {
-                    var item = list[k];
-                    if (!Ok(item)) { notOk++; continue; }
-
-                    object tool = null, other = null, dest = null;
-                    switch (op.Mechanism)
-                    {
-                        case Mechanism.Apply:
-                            tool = tools.FirstOrDefault(t => !Equals(_w.Key(t), _w.Key(item)) && _w.Exists(t) && CanUse(t, item));
-                            if (tool == null) { notAllowed++; continue; }
-                            break;
-                        case Mechanism.Trigger:
-                            if (!_w.CanTrigger(item, how)) { notAllowed++; continue; }
-                            break;
-                        case Mechanism.Place:
-                            // 目标里第一个放得下的（目标的顺序就是优先顺序）；问一次游戏，下面直接往它里面放
-                            foreach (var b in targets)
-                                if (_w.Fits(b, item, act.ToSlot)) { dest = b; break; }
-                            if (dest == null) { full++; continue; }
-                            break;
-                        case Mechanism.Swap:
-                            // 按顺序取下一件还没配对的；同一处的两件互换没有意义，跳过
-                            var parent = _w.Parent(item);
-                            other = partners.FirstOrDefault(x => !paired.Contains(_w.Key(x)) && !Equals(_w.Key(x), _w.Key(item)) && _w.Exists(x)
-                                                                 && !Equals(_w.Key(_w.Parent(x) ?? x), _w.Key(parent ?? item)));
-                            if (other == null) { noPartner++; continue; }
-                            break;
-                    }
-
-                    string cat = op.Skill ?? Catalog.SkillOf(_w, item);
-                    double cost = op.Cost * times * f.Gr.Mult;
-                    bool firstPaid = !walked;
-                    int before = ApMath.Ceil(a.ApUsed);
-                    if (!Pay(cost))
-                    {
-                        var rest = list.Skip(k).Where(Ok).ToList();
-                        int left = rest.Count;
-                        foreach (var x in rest)
-                            rr.Items.Add(new ItemHandled { Op = op.Id, Uid = _w.Uid(x), Item = _w.Describe(x), Outcome = Outcomes.Deferred, Text = L.T("report.text.no_ap") });
-                        rr.Deferred += left;
-                        f.Gr.Deferred += left;
-                        f.Stopped = true;
-                        break;
-                    }
-
-                    string desc = _w.Describe(item);
-                    int uid = _w.Uid(item);
-                    touched = true;
-                    StepResult res = op.Mechanism switch
-                    {
-                        Mechanism.Place => PlaceInto(item, dest, act, ctx),
-                        Mechanism.Swap => _w.Swap(item, other),
-                        Mechanism.Apply => UseTool(tool, item, tools, times),
-                        Mechanism.Trigger => TriggerTimes(item, how, times),
-                        Mechanism.Annotate => _w.Annotate(item, act.Text ?? "", op.Id == ActVerb.Mark),
-                        _ => StepResult.Fail(L.T("report.fail.unknown_action"), FailCode.Error),
-                    };
-                    if (!res.Ok)
-                    {
-                        // 没做成不消耗 AP：退回刚扣的；这是这条任务第一次动手的话，启动开销也退回
-                        a.ApUsed -= cost;
-                        if (firstPaid)
-                        {
-                            walked = false;
-                            a.ApUsed -= Walk;
-                            rr.Details.Remove(L.T("report.details.walk_cost", Walk));
-                        }
-                        if (res.Code == FailCode.DestFull) full++;
-                        else if (res.Code == FailCode.NoEffect) noEffect++;
-                        else
-                        {
-                            rr.Issue(res.Code ?? FailCode.NotAllowed, L.T("report.issue.op_failed", op.Name, res.Reason));
-                            rr.Items.Add(new ItemHandled { Op = op.Id, Uid = uid, Item = desc, Outcome = Outcomes.Issue, Text = res.Reason });
-                        }
-                        continue;
-                    }
-                    if (op.Mechanism == Mechanism.Swap) paired.Add(_w.Key(other));
-                    doneHere++;
-                    rr.Done[act.Verb] = rr.Done.GetValueOrDefault(act.Verb) + 1;
-                    int itemAp = ApMath.Ceil(a.ApUsed) - before; // 这一件让整数 AP 多了几点（含启动开销）
-                    rr.Details.Add($"{op.Name} {desc}：{res.Text} · {itemAp} AP");
-                    rr.Items.Add(new ItemHandled { Op = op.Id, Uid = uid, Item = desc, Text = res.Text, Ap = itemAp, Effects = res.Effects });
-                    Proficiency.Add(f.Work, op.Dim ?? op.Id, cat, cost);
-                    f.Xp += SkillMath.XpGain(op.Cost * times, f.Effective);
-                }
-
-                // 工具集合此刻是空的：有对象要处理就报缺少工具（不想报就在执行条件里写“工具 不为空”）
-                if (toolMissing)
-                {
-                    int n = list.Count(Ok);
-                    if (n > 0) rr.Issue(FailCode.NoTool, L.N("report.issue.no_tool", n, NameOf(act.Tool), n, op.Name), 1);
-                }
-                if (notAllowed > 0) rr.Issue(FailCode.NotAllowed, L.N("report.issue.not_allowed", notAllowed, op.Name, notAllowed));
-                if (noEffect > 0) rr.Issue(FailCode.NoEffect, L.N("report.issue.no_effect", noEffect, op.Name, noEffect));
-                string toName = NameOf(ctx.Arg(act.To)?.Ref ?? act.To); // 子流程里的目标被调用方换掉了：写调用方给的
-                if (full > 0) rr.Issue(FailCode.DestFull, NoSlot(act, targets) ? L.T("gameworld.box_no_slot", toName, SlotNames.Name(act.ToSlot, _d, new[] { act.To })) : L.N("report.issue.dest_full", full, toName, full));
-                if (doneHere > ManyThreshold)
-                    rr.Issue(FailCode.Many, L.T("report.issue.many", op.Name, doneHere, NameOf(act.List)));
-                // 一件也没做、也没有别的问题：记下原因（报告、策略模拟器显示）
-                if (doneHere == 0 && !f.Stopped && rr.Idle == null)
-                    rr.Idle = list.Count == 0 ? Eval.Explain(ctx, act.List)
-                        : notOk == list.Count ? (op.Mechanism switch
-                        {
-                            Mechanism.Place => L.T("report.idle.all_in_dest", NameOf(act.List)),
-                            Mechanism.Annotate => op.Id == ActVerb.Mark ? L.T("report.idle.all_marked", NameOf(act.List)) : L.T("report.idle.none_marked", NameOf(act.List)),
-                            _ => L.T("report.idle.no_items", NameOf(act.List)),
-                        })
-                        : noPartner > 0 && partners != null ? (partners.Count == 0 ? Eval.Explain(ctx, act.To) : L.T("report.idle.same_place", NameOf(act.List), NameOf(act.To)))
-                        : null;
                 if (f.Stopped) break;
             }
             rr.Ap = ApMath.Ceil(a.ApUsed) - ruleStart - callAp;
+
+            // 一个动作做一轮。round：循环的第几轮（不循环为 0）：子流程的任务报告写上轮次，“没做的原因”只看第一轮
+            void RunAct(ActionDef act, int round)
+            {
+                    if (act.Verb == ActVerb.Note)
+                    {
+                        double v = Eval.Expr(ctx, act.Value) ?? 0;
+                        if (act.Note != null)
+                        {
+                            touched = true;
+                            f.Acts++;
+                            memo[act.Note] = act.NoteMode == "set" ? v : memo.GetValueOrDefault(act.Note) + v;
+                            rr.Details.Add(L.T("report.details.record", s.Notepad.FirstOrDefault(n => n.Id == act.Note)?.Name, memo[act.Note].ToString("0.##")));
+                        }
+                        return;
+                    }
+                    if (act.Verb == ActVerb.Call)
+                    {
+                        var callee = Calls.Callee(_d, act);
+                        if (callee == null || depth >= Calls.MaxDepth) { rr.Issue("broken", L.T("report.error.broken", L.Join("semi", Calls.Errors(_d, s, act)))); return; }
+                        // 子流程的任务接在这条任务后面记进报告，各算各的 AP；这条只记自己（0 AP）
+                        rr.Called = callee.Name;
+                        int callStart = ApMath.Ceil(a.ApUsed);
+                        RunRules(callee, f, Calls.Bind(ctx, callee, act), depth + 1, round);
+                        callAp += ApMath.Ceil(a.ApUsed) - callStart;
+                        touched = true;
+                        return;
+                    }
+                    var op = Catalog.Op(act.Verb);
+                    var list = Eval.List(ctx, act.List);
+                    bool use = op.Mechanism == Mechanism.Apply;
+                    bool trigger = op.Mechanism == Mechanism.Trigger;
+                    bool toggle = op.Id == ActVerb.Toggle;
+                    string how = trigger ? Triggers.Of(act) : null;
+                    // 使用：工具就是 Tool 这个集合（按顺序试）；放入：目标容器按顺序试；交换：和 To 按顺序一一配对
+                    var tools = use ? ToolPool(ctx, act.Tool).ToList() : null;
+                    var targets = op.Mechanism == Mechanism.Place ? Eval.Boxes(ctx, act.To) : null;
+                    var partners = op.Mechanism == Mechanism.Swap ? Eval.List(ctx, act.To) : null;
+                    int times = toggle || !(use || trigger) ? 1 : Math.Max(1, act.Times);
+                    var paired = new HashSet<object>();
+                    int full = 0, notAllowed = 0, noEffect = 0, notOk = 0, noPartner = 0, doneHere = 0;
+                    bool toolMissing = use && tools.Count == 0;
+                    bool Ok(object x) => Applicable(op, act, x, targets);
+
+                    for (int k = 0; k < list.Count && !toolMissing; k++)
+                    {
+                        var item = list[k];
+                        if (!Ok(item)) { notOk++; continue; }
+
+                        object tool = null, other = null, dest = null;
+                        switch (op.Mechanism)
+                        {
+                            case Mechanism.Apply:
+                                tool = tools.FirstOrDefault(t => !Equals(_w.Key(t), _w.Key(item)) && _w.Exists(t) && CanUse(t, item));
+                                if (tool == null) { notAllowed++; continue; }
+                                break;
+                            case Mechanism.Trigger:
+                                if (!_w.CanTrigger(item, how)) { notAllowed++; continue; }
+                                break;
+                            case Mechanism.Place:
+                                // 目标里第一个放得下的（目标的顺序就是优先顺序）；问一次游戏，下面直接往它里面放
+                                foreach (var b in targets)
+                                    if (_w.Fits(b, item, act.ToSlot)) { dest = b; break; }
+                                if (dest == null) { full++; continue; }
+                                break;
+                            case Mechanism.Swap:
+                                // 按顺序取下一件还没配对的；同一处的两件互换没有意义，跳过
+                                var parent = _w.Parent(item);
+                                other = partners.FirstOrDefault(x => !paired.Contains(_w.Key(x)) && !Equals(_w.Key(x), _w.Key(item)) && _w.Exists(x)
+                                                                     && !Equals(_w.Key(_w.Parent(x) ?? x), _w.Key(parent ?? item)));
+                                if (other == null) { noPartner++; continue; }
+                                break;
+                        }
+
+                        string cat = op.Skill ?? Catalog.SkillOf(_w, item);
+                        double cost = op.Cost * times * f.Gr.Mult;
+                        bool firstPaid = !walked;
+                        int before = ApMath.Ceil(a.ApUsed);
+                        if (!Pay(cost))
+                        {
+                            var rest = list.Skip(k).Where(Ok).ToList();
+                            int left = rest.Count;
+                            foreach (var x in rest)
+                                rr.Items.Add(new ItemHandled { Op = op.Id, Uid = _w.Uid(x), Item = _w.Describe(x), Outcome = Outcomes.Deferred, Text = L.T("report.text.no_ap") });
+                            rr.Deferred += left;
+                            f.Gr.Deferred += left;
+                            f.Stopped = true;
+                            break;
+                        }
+
+                        string desc = _w.Describe(item);
+                        int uid = _w.Uid(item);
+                        touched = true;
+                        StepResult res = op.Mechanism switch
+                        {
+                            Mechanism.Place => PlaceInto(item, dest, act, ctx),
+                            Mechanism.Swap => _w.Swap(item, other),
+                            Mechanism.Apply => UseTool(tool, item, tools, times),
+                            Mechanism.Trigger => TriggerTimes(item, how, times),
+                            Mechanism.Annotate => _w.Annotate(item, act.Text ?? "", op.Id == ActVerb.Mark),
+                            _ => StepResult.Fail(L.T("report.fail.unknown_action"), FailCode.Error),
+                        };
+                        if (!res.Ok)
+                        {
+                            // 没做成不消耗 AP：退回刚扣的；这是这条任务第一次动手的话，启动开销也退回
+                            a.ApUsed -= cost;
+                            if (firstPaid)
+                            {
+                                walked = false;
+                                a.ApUsed -= Walk;
+                                rr.Details.Remove(L.T("report.details.walk_cost", Walk));
+                            }
+                            if (res.Code == FailCode.DestFull) full++;
+                            else if (res.Code == FailCode.NoEffect) noEffect++;
+                            else
+                            {
+                                rr.Issue(res.Code ?? FailCode.NotAllowed, L.T("report.issue.op_failed", op.Name, res.Reason));
+                                rr.Items.Add(new ItemHandled { Op = op.Id, Uid = uid, Item = desc, Outcome = Outcomes.Issue, Text = res.Reason });
+                            }
+                            continue;
+                        }
+                        if (op.Mechanism == Mechanism.Swap) paired.Add(_w.Key(other));
+                        doneHere++;
+                        f.Acts++;
+                        rr.Done[act.Verb] = rr.Done.GetValueOrDefault(act.Verb) + 1;
+                        int itemAp = ApMath.Ceil(a.ApUsed) - before; // 这一件让整数 AP 多了几点（含启动开销）
+                        rr.Details.Add($"{op.Name} {desc}：{res.Text} · {itemAp} AP");
+                        rr.Items.Add(new ItemHandled { Op = op.Id, Uid = uid, Item = desc, Text = res.Text, Ap = itemAp, Effects = res.Effects });
+                        Proficiency.Add(f.Work, op.Dim ?? op.Id, cat, cost);
+                        f.Xp += SkillMath.XpGain(op.Cost * times, f.Effective);
+                    }
+
+                    // 工具集合此刻是空的：有对象要处理就报缺少工具（不想报就在执行条件里写“工具 不为空”）
+                    if (toolMissing)
+                    {
+                        int n = list.Count(Ok);
+                        if (n > 0) rr.Issue(FailCode.NoTool, L.N("report.issue.no_tool", n, NameOf(act.Tool), n, op.Name), 1);
+                    }
+                    if (notAllowed > 0) rr.Issue(FailCode.NotAllowed, L.N("report.issue.not_allowed", notAllowed, op.Name, notAllowed));
+                    if (noEffect > 0) rr.Issue(FailCode.NoEffect, L.N("report.issue.no_effect", noEffect, op.Name, noEffect));
+                    string toName = NameOf(ctx.Arg(act.To)?.Ref ?? act.To); // 子流程里的目标被调用方换掉了：写调用方给的
+                    if (full > 0) rr.Issue(FailCode.DestFull, NoSlot(act, targets) ? L.T("gameworld.box_no_slot", toName, SlotNames.Name(act.ToSlot, _d, new[] { act.To })) : L.N("report.issue.dest_full", full, toName, full));
+                    if (doneHere > ManyThreshold)
+                        rr.Issue(FailCode.Many, L.T("report.issue.many", op.Name, doneHere, NameOf(act.List)));
+                    // 一件也没做、也没有别的问题：记下原因（报告、策略模拟器显示）
+                    if (doneHere == 0 && !f.Stopped && rr.Idle == null && round <= 1)
+                        rr.Idle = list.Count == 0 ? Eval.Explain(ctx, act.List)
+                            : notOk == list.Count ? (op.Mechanism switch
+                            {
+                                Mechanism.Place => L.T("report.idle.all_in_dest", NameOf(act.List)),
+                                Mechanism.Annotate => op.Id == ActVerb.Mark ? L.T("report.idle.all_marked", NameOf(act.List)) : L.T("report.idle.none_marked", NameOf(act.List)),
+                                _ => L.T("report.idle.no_items", NameOf(act.List)),
+                            })
+                            : noPartner > 0 && partners != null ? (partners.Count == 0 ? Eval.Explain(ctx, act.To) : L.T("report.idle.same_place", NameOf(act.List), NameOf(act.To)))
+                            : null;
+            }
         }
 
         return memo;

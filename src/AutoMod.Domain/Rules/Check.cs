@@ -289,6 +289,7 @@ public static class Check
         {
             if (Catalog.Ops.All(o => o.Id != a.Verb)) { e.Add(L.T("check.err.rule_unknown_verb", a.Verb)); continue; }
             var spec = Catalog.Op(a.Verb);
+            if (a.Loop == LoopMode.Times && LoopMode.TimesOf(a) is < 1 or > LoopMode.Cap) e.Add(L.T("check.err.loop_times", LoopMode.Cap));
             if (a.Verb == ActVerb.Note)
             {
                 if (s.Notepad.All(n => n.Id != a.Note)) e.Add(L.T("check.err.rule_note_missing"));

@@ -36,6 +36,7 @@ public static class ProfessionExamples
         new("dna_disk", new[] { "plant_dna_manipulator" }),
         new("dna_edit", new[] { "plant_dna_manipulator" }),
         new("dna_breed", new[] { "plant_dna_manipulator", "hydroponic" }),
+        new("dna_boost", new[] { "turbo_booster_hypertech", "plant_dna_manipulator" }),
     };
 
     private static string T(string key) => L.T(key);
@@ -296,6 +297,36 @@ public static class ProfessionExamples
                 D(b).Selectors.First(x => x.Id == disk).Sort = new SortSpec { Prop = DiskUses, Desc = false };
                 b.Rule(L.T("example.dna.rule.collect", writer), b.ToStore(output, T("example.dna.store")));
                 b.Rule(L.T("example.dna.rule.write", TraitName(Pur)), Move(disk, dev, "input_disk"), notEmpty: writable, empty: diskSlot);
+                break;
+            }
+            case "dna_boost":
+            {
+                // 同优化基因，另加一个任务：用就绪的超科技涡轮增压器作用于有电的【写入机】，无限循环。每次让写入机立即完成一个周期，
+                // 写完（盘弹出）、达到目标等级、热度到上限或增压器电量不足（没有就绪的）时停。和优化基因共用【写入机】，不要同时用
+                string writer = T("example.dna.device.writer"), dev = Places.Ref(writer);
+                var level = b.Param(T("example.dna.param.target"), 8, "", T("example.dna.param.target.hint"));
+                var heatCap = b.Param(T("example.dna.param.heat"), 10, "", T("example.dna.param.heat.hint"));
+                var output = b.Sel(L.T("example.dna.sel.output", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "eject");
+                var diskSlot = b.Sel(L.T("example.dna.sel.disk_slot", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "input_disk");
+                var writable = b.Sel(T("example.dna.sel.writable"), dev, "seed", slot: SlotNames.Prefix + "seed", where: new[] { LtParam(TraitTag(Pur), level), LtParam(Heat, heatCap) });
+                var disk = b.Idle(L.T("example.dna.sel.disk", TraitName(Pur)), "plant_dna_disk", take: 1, Text(DiskTrait, Pur));
+                D(b).Selectors.First(x => x.Id == disk).Sort = new SortSpec { Prop = DiskUses, Desc = false };
+                var powered = b.Sel(L.T("example.boost.sel.powered", writer), dev, Catalog.Self, where: Cond.Cmp("powered", "=", Expr.Of(1)));
+                // 已储存加速 = 充能 ÷ 15（游戏提示框里的“已储存加速：N次”；满 15 即就绪）
+                var stored = b.Property(T("example.boost.prop.stored"), "turbo_booster_hypertech", new Expr
+                {
+                    Terms = { Term.Own("tag:CURRENT_CHARGE_TAG"), Term.N(15) },
+                    Ops = { "/" },
+                });
+                var ready = b.Sel(T("example.boost.sel.ready"), Places.Shop, "turbo_booster_hypertech", where: Ge(stored, 1));
+                b.Rule(L.T("example.dna.rule.collect", writer), b.ToStore(output, T("example.dna.store")));
+                b.Rule(L.T("example.dna.rule.write", TraitName(Pur)), Move(disk, dev, "input_disk"), notEmpty: writable, empty: diskSlot);
+                var boost = Use(ready, powered);
+                boost.Loop = LoopMode.Forever;
+                b.Rule(T("example.boost.rule.boost"), boost, notEmpty: writable);
+                var r = b.S.Rules.Last();
+                r.Pre.Add(new PreCond { Ref = diskSlot, Test = PreTest.NotEmpty });
+                r.Pre.Add(new PreCond { Ref = ready, Test = PreTest.NotEmpty });
                 break;
             }
             case "dna_breed":
