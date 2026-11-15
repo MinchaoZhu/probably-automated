@@ -159,59 +159,63 @@ internal static class LoopTests
     }
 }
 
-// 示例“增压优化”：超科技涡轮增压器无限循环作用于写入机（模拟器照游戏规则模拟增压器）
+// 示例“自动增压基因改造”：写入 → 热度到上限送去繁殖 → 子代回写入机；有超科技涡轮增压器时最后两个任务无限循环增压（模拟器照游戏规则模拟增压器）
 internal static class BoostExampleTests
 {
     public static void Run(Action<string, Action> test, Action<bool, string> check)
     {
-        test("示例·增压优化：增压器让写入机一个班里写完一次，写完即停；夜里充能", () =>
+        test("示例·自动增压基因改造：一个班写完一次，下个班繁殖，再下个班子代回写入机；没有增压器时只走不靠增压的任务", () =>
         {
             var w = FakeGame.Install(new SimWorld(3));
             w.Genetics.Traits.Add(new SimTrait { Id = "purifying", Complexity = 3, MaxRank = int.MaxValue });
             w.Genetics.Innate["hydroreed_seed"] = new() { ["purifying"] = 4 };
-            SimItem Thing(SimItem parent, string kind, string slot = null, Action<SimItem> tweak = null)
+            SimItem Machine(string kind, string name, double speed, params string[] slots)
             {
-                var x = parent == null ? w.AddRoot("other") : w.Add(parent, "other", force: true);
-                x.Kind = kind; tweak?.Invoke(x);
-                if (slot != null) x.InSlot = "slot:" + slot;
-                return x;
+                var m = w.AddRoot("other"); m.Kind = kind; m.Capacity = 20; m.HasBatterySlot = true; m.Num["speed"] = speed; m.Num["dnaQuality"] = 100; m.Num["has:STANDARD_MACHINE_TAG"] = 1; m.DeviceName = name;
+                w.Add(m, "other", x => x.Kind = "current_converter", batterySlot: true, force: true);
+                foreach (var role in slots) m.SlotList.Add(("slot:" + role, role));
+                return m;
             }
-            var writer = Thing(null, "plant_dna_manipulator", tweak: m => { m.Capacity = 20; m.HasBatterySlot = true; m.Num["speed"] = 10; m.Num["dnaQuality"] = 100; m.DeviceName = "写入机"; });
-            w.Add(writer, "other", x => x.Kind = "current_converter", batterySlot: true, force: true);
-            foreach (var role in new[] { "seed", "input_disk", "output_disk", "eject" }) writer.SlotList.Add(("slot:" + role, role));
-            var seed = Thing(writer, "hydroreed_seed", "seed", y => { y.Str["plantId"] = "hydroreed_seed"; y.Num["tag:PLANT_TRAIT_purifying"] = 4; y.Num["tag:GENETIC_HEAT_INT"] = 0; y.TraitsOverride = new() { "seed" }; });
+            var writer = Machine("plant_dna_manipulator", "写入机", 10, "seed", "input_disk", "output_disk", "eject");
+            var hydro = Machine("hydroponic", "育种水培机", 8, "seed", "water", "output");
+            var seed = w.Add(writer, "other", y =>
+            {
+                y.Kind = "hydroreed_seed"; y.Str["plantId"] = "hydroreed_seed"; y.Num["tag:PLANT_TRAIT_purifying"] = 4; y.Num["tag:GENETIC_HEAT_INT"] = 0;
+                y.Num["growRequired"] = 8; y.Num["seedReturn"] = 1; y.Num["harvestQty"] = 1; y.Str["harvestKind"] = "hydroreed"; y.TraitsOverride = new() { "seed" };
+            }, force: true);
+            seed.InSlot = "slot:seed";
             var bay = w.AddRoot("storage", 50, "基因库"); bay.DeviceName = "基因库";
-            var disk = w.Add(bay, "other", y => { y.Kind = "plant_dna_disk"; y.Str[SimWorld.DiskTraitTag] = "purifying"; y.Num[SimWorld.DiskUsesTag] = 4; }, force: true);
-            var booster = Thing(null, "turbo_booster_hypertech", tweak: b => { b.HasBatterySlot = true; b.Capacity = 1; b.Num[SimWorld.BoostChargeTag] = 45; b.Num[SimWorld.BoostReadyTag] = 1; });
-            var cell = w.Add(booster, "battery_full", batterySlot: true);
+            var disk = w.Add(bay, "other", y => { y.Kind = "plant_dna_disk"; y.Str[SimWorld.DiskTraitTag] = "purifying"; y.Num[SimWorld.DiskUsesTag] = 2; }, force: true);
+            w.Add(bay, "other", y => { y.Kind = "plant_dna_disk"; y.Str[SimWorld.DiskTraitTag] = "purifying"; y.Num[SimWorld.DiskUsesTag] = 2; }, force: true);
+            var booster = w.AddRoot("other"); booster.Kind = "turbo_booster_hypertech"; booster.Num[SimWorld.BoostChargeTag] = 15000;
 
             var d = new RulesData();
             var s = ProfessionExamples.Build(d, "dna_boost");
-            var boost = s.Rules.Last();
-            check(boost.Actions[0].Verb == ActVerb.Use && boost.Actions[0].Loop == LoopMode.Forever, "最后一个任务：用就绪的增压器作用于有电的写入机，无限循环");
+            check(s.Rules.Count == 5 && s.Rules.Skip(3).All(r => r.Actions[0].Verb == ActVerb.Use && r.Actions[0].Loop == LoopMode.Forever)
+                  && s.Rules.Take(3).All(r => r.Actions[0].Verb == ActVerb.Move), "五个任务：前三个放入，最后两个增压（无限循环）");
             check(s.Rules.All(r => Check.RuleErrors(d, s, r, w).Count == 0), "示例没有结构错误");
 
-            var a = new Apprentice { Name = "甲", MaxAp = 80, Level = 2, Duties = { new Duty { ScheduleId = s.Id, Shift = Shift.Morning } } };
-            var g = new Interpreter(w, d).RunShift(Shift.Morning, new[] { a }).Groups[0];
-            var rr = g.Rules.Last();
-            check(SimWorld.Rank(seed, "purifying") == 5, $"进度 20、速度 10：增压两次写完，净化水质 4 → 5（{SimWorld.Rank(seed, "purifying")}）");
-            check(rr.Done.GetValueOrDefault(ActVerb.Use) == 2 && rr.Details.Contains("循环 3 轮后执行条件不再成立") == false && rr.Details.Any(x => x.Contains("执行条件不再成立")),
-                string.Join(" | ", rr.Details));
-            check(booster.N(SimWorld.BoostChargeTag) == 15 && booster.N(SimWorld.BoostReadyTag) == 1, $"电量 45 → 15，还剩一次（{booster.N(SimWorld.BoostChargeTag)}）");
-            check(disk.InSlot == "slot:eject", "写完盘弹到输出格，特性数据盘格空了，循环停");
+            var a = new Apprentice { Name = "甲", MaxAp = 200, Level = 2, Duties = { new Duty { ScheduleId = s.Id, Shift = Shift.Morning } } };
+            GroupRunReport Shift1() => new Interpreter(w, d).RunShift(Shift.Morning, new[] { a }).Groups[0];
+            SimItem Child() => hydro.Children.FirstOrDefault(c => c.Kind == "hydroreed_seed" && c.InSlot == "slot:output");
 
-            // 只剩一次：下一个班收回盘、再放进去，增压一次后没有就绪的增压器，停
-            g = new Interpreter(w, d).RunShift(Shift.Morning, new[] { a }).Groups[0];
-            rr = g.Rules.Last();
-            check(rr.Done.GetValueOrDefault(ActVerb.Use) == 1 && booster.N(SimWorld.BoostReadyTag) == 0, $"增压一次，电量用完（{booster.N(SimWorld.BoostChargeTag)}）");
+            var g = Shift1();
+            check(SimWorld.Rank(seed, "purifying") == 5 && seed.N(SimWorld.HeatTag) == 5, $"第一个班：增压两次写完，净化水质 5、热度 5（{SimWorld.Rank(seed, "purifying")}，{seed.N(SimWorld.HeatTag)}）");
+            check(disk.InSlot == "slot:eject" && g.Rules[3].Done.GetValueOrDefault(ActVerb.Use) == 2, "写完盘弹出，热度到上限，增压写入停");
+            check(booster.N(SimWorld.BoostChargeTag) == 15000 - 2 * SimWorld.BoostCost, "用了两次加速");
 
-            // 夜里充能：电池电量够充能速度（默认 5）就取 5
-            double e = cell.N("energy");
-            w.Night();
-            check(booster.N(SimWorld.BoostChargeTag) == 5 && cell.N("energy") == e - 5, $"一夜充 5（{booster.N(SimWorld.BoostChargeTag)}，电池 {e} → {cell.N("energy")}）");
-            w.Night(); w.Night();
-            check(booster.N(SimWorld.BoostReadyTag) == 1, "三夜充满 15，就绪");
-            check(!w.CanApply(writer, booster) && w.CanApply(booster, writer), "方向：增压器作用于写入机，反过来不行");
+            Shift1();
+            var child = Child();
+            check(disk.InSlot == "slot:eject" && seed.Parent == null && child != null, "第二个班：盘留在输出格，种子送去繁殖，增压催熟收获出子代");
+            check(child != null && SimWorld.Rank(child, "purifying") == 5 && child.N(SimWorld.HeatTag) == 0, "子代继承净化水质 5，热度 0");
+
+            Shift1();
+            check(child != null && child.Parent == writer && SimWorld.Rank(child, "purifying") == 6, $"第三个班：子代回写入机，写到 6（{(child == null ? -1 : SimWorld.Rank(child, "purifying"))}）");
+
+            // 没有增压器：增压的两个任务执行条件不成立，不报缺少工具；机器夜里自己做一个周期
+            w.Remove(booster);
+            g = Shift1();
+            check(g.Rules.Skip(3).All(r => r.Pre == PreResult.Fail && r.Issues.Count == 0), "没有增压器：最后两个任务不执行，也不报问题");
         });
     }
 }

@@ -1140,12 +1140,8 @@ handbook.p3.tip_tags,Les étiquettes portent les noms du jeu ; une étiquette ab
 handbook.pdna.banner,Exemples : traits des plantes
 handbook.pdna.title_disk,Disquettes génétiques :
 handbook.pdna.text_disk,Deux extracteurs tirent Purification des graines d'hydroseau et Pauvreté nutritive des graines de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Un module d'extraction précise utilisé sur une disquette écrite se règle sur son trait.
-handbook.pdna.title_edit,Édition génétique :
-handbook.pdna.text_edit,Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] jusqu'au rang visé ou au plafond de fragilité. Une graine sans un trait l'a au rang 0.
-handbook.pdna.title_boost,Édition accélérée :
-handbook.pdna.text_boost,"L'Accélérateur Hypertech se recharge chaque nuit et peut stocker plusieurs accélérations. Utilisé sur le [Graveur de traits] en boucle infinie, il termine un cycle à chaque fois et s'arrête quand l'écriture est finie."
-handbook.pdna.title_breed,Sélection génétique :
-handbook.pdna.text_breed,"La fragilité ne retombe qu'en sélectionnant : après l'écriture, la graine part dans l'[Hydroponie de sélection], et la descendance récoltée revient au graveur avec une fragilité de 0. Chaque rang de Pauvreté nutritive baisse la complexité de 2 et compense les +3 par rang de Purification."
+handbook.pdna.title_boost,Modification génétique auto-accélérée :
+handbook.pdna.text_boost,"Écrit Purification dans la graine du [Graveur de traits] ; au plafond de fragilité, la graine part dans l'[Hydroponie de sélection], et la descendance récoltée revient au graveur avec une fragilité de 0. Chaque machine fait un cycle par nuit ; avec un Accélérateur Hypertech, les deux dernières tâches l'utilisent en boucle infinie sur les deux machines et finissent en un seul poste."
 handbook.pdna.tip,"Chance de réussite = 95 − 5 × (complexité + fragilité) + bonus de qualité de la machine, au moins 5 %. Chaque écriture ou extraction augmente la fragilité, réussie ou non."
 handbook.p3.title_filter,Filtres :
 handbook.p3.title_param,Paramètres :
@@ -1418,36 +1414,28 @@ example.dna.store,Banque de gènes
 example.dna.param.target,Rang visé
 example.dna.param.target.hint,L'écriture s'arrête quand Purification atteint ce rang
 example.dna.param.heat,Plafond de fragilité
-example.dna.param.heat.hint,L'écriture s'arrête quand la fragilité de la graine atteint cette valeur
-example.dna.prop.eff,Complexité effective de l'hydroseau
+example.dna.param.heat.hint,Les graines à partir de cette fragilité partent en sélection
 example.dna.sel.output,{0} : résultat
 example.dna.sel.target_slot,{0} : emplacement cible
 example.dna.sel.blank_slot,{0} : emplacement disquette vierge
 example.dna.sel.disk_slot,{0} : emplacement disquette de trait
 example.dna.sel.seed_slot,{0} : emplacement de graine
-example.dna.sel.water_slot,{0} : emplacement d'eau
 example.dna.sel.stock,Disquettes {0} en stock
 example.dna.sel.raw,{1} avec {0}
 example.dna.sel.blank,Une disquette vierge
 example.dna.sel.disk,Une disquette {0}
 example.dna.sel.writable,Graine à écrire
 example.dna.sel.child,Descendance récoltée
-example.dna.sel.first,Cible de départ
-example.dna.sel.can_write,Graine prête pour {0}
 example.dna.sel.breed,Graine prête pour la sélection
 example.dna.rule.collect,Récupérer les disquettes de {0}
 example.dna.rule.load_seed,Charger {0}
 example.dna.rule.load_blank,Disquette vierge dans {0}
 example.dna.rule.write,Écrire {0}
 example.dna.rule.child,Charger la descendance
-example.dna.rule.harvest,Ranger la récolte
-example.dna.rule.first,Charger la cible de départ
 example.dna.rule.breed,Envoyer en sélection
-example.dna.rule.water,Placer une bouteille d'eau
-example.boost.sel.ready,Accélérateurs prêts
-example.boost.prop.stored,Accélérations en réserve
-example.boost.sel.powered,{0} alimenté
-example.boost.rule.boost,Accélérer
+example.boost.sel.booster,Accélérateur
+example.boost.rule.write,Accélérer l'écriture
+example.boost.rule.grow,Accélérer la pousse
 example.ranch.rule.auto_blend,Activer mélange auto
 example.ranch.rule.butcher_dead,Dépecer rats morts
 example.ranch.rule.cull,Abattre les rats
@@ -1484,12 +1472,8 @@ example.spec.water.name,Vente d'eau
 example.spec.water.note,"Imprimer bouteilles, puiser l'eau, purifier en eau de base, embouteiller et stocker, récupérer les recettes"
 example.spec.dna_disk.name,Disquettes génétiques
 example.spec.dna_disk.note,[Extracteur Purification] et [Extracteur Pauvreté nutritive] extraient des traits des graines d'hydroseau et de pâlaitue ; les disquettes écrites vont dans la [Banque de gènes] et l'extraction s'arrête quand le stock suffit. Chaque extracteur doit avoir un module d'extraction précise réglé sur son trait
-example.spec.dna_edit.name,Édition génétique
-example.spec.dna_edit.note,Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] jusqu'au rang visé ou au plafond de fragilité
-example.spec.dna_boost.name,Édition accélérée
-example.spec.dna_boost.note,"Comme Édition génétique, avec en plus un Accélérateur Hypertech qui fait terminer aussitôt son cycle en cours au [Graveur de traits], pour finir une écriture en un seul poste ; s'arrête quand l'écriture est finie, qu'aucun accélérateur n'est prêt ou que le rang visé est atteint"
-example.spec.dna_breed.name,Sélection génétique
-example.spec.dna_breed.note,"Le [Graveur de traits] écrit Purification et Pauvreté nutritive ; quand la fragilité est trop haute, la graine part dans l'[Hydroponie de sélection] et la descendance récoltée revient au graveur, jusqu'au rang visé. Les disquettes viennent de Disquettes génétiques"
+example.spec.dna_boost.name,Modification génétique auto-accélérée
+example.spec.dna_boost.note,"Écrit Purification dans la graine de l'emplacement cible du [Graveur de traits] ; au plafond de fragilité, la graine part dans l'[Hydroponie de sélection] et la descendance récoltée revient au graveur, jusqu'au rang visé. Avec un Accélérateur Hypertech le travail se termine pendant le poste ; sans lui chaque machine fait un cycle par nuit. Les disquettes viennent de Disquettes génétiques"
 example.tidy.rule.food,Ranger nourriture
 example.tidy.rule.medical,Ranger médicaments
 example.tidy.sel.loose_food,Nourriture à ranger

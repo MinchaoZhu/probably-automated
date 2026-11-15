@@ -181,9 +181,7 @@ public static class HandbookPages
         {
             Banner(Domain.L.T("handbook.pdna.banner"), Brown),
             Entry("plant_dna_disk", Domain.L.T("handbook.pdna.title_disk"), Domain.L.T("handbook.pdna.text_disk")),
-            Entry("plant_dna_manipulator", Domain.L.T("handbook.pdna.title_edit"), Domain.L.T("handbook.pdna.text_edit")),
             Entry("turbo_booster_hypertech", Domain.L.T("handbook.pdna.title_boost"), Domain.L.T("handbook.pdna.text_boost")),
-            Entry("hydroponic", Domain.L.T("handbook.pdna.title_breed"), Domain.L.T("handbook.pdna.text_breed")),
             Tip(Domain.L.T("handbook.pdna.tip")),
         },
         // 7 预演和报告

@@ -34,8 +34,6 @@ public static class ProfessionExamples
         new("gun", new[] { "printer" }),
         new("water", new[] { "bottle_printer", "water_purifier", "vending_fountain" }),
         new("dna_disk", new[] { "plant_dna_manipulator" }),
-        new("dna_edit", new[] { "plant_dna_manipulator" }),
-        new("dna_breed", new[] { "plant_dna_manipulator", "hydroponic" }),
         new("dna_boost", new[] { "turbo_booster_hypertech", "plant_dna_manipulator" }),
     };
 
@@ -121,10 +119,12 @@ public static class ProfessionExamples
             return p.Id;
         }
 
-        public void Rule(string name, ActionDef act, string notEmpty = null, string empty = null, (string sel, int n)? fewer = null, string empty2 = null)
+        public void Rule(string name, ActionDef act, string notEmpty = null, string empty = null, (string sel, int n)? fewer = null, string empty2 = null,
+            string notEmpty2 = null, string notEmpty3 = null)
         {
             var r = new WorkRule { Id = Defs.NewId("r"), Name = name, Actions = { act } };
-            if (notEmpty != null) r.Pre.Add(new PreCond { Ref = notEmpty, Test = PreTest.NotEmpty });
+            foreach (var ne in new[] { notEmpty, notEmpty2, notEmpty3 })
+                if (ne != null) r.Pre.Add(new PreCond { Ref = ne, Test = PreTest.NotEmpty });
             if (empty != null) r.Pre.Add(new PreCond { Ref = empty, Test = PreTest.Empty });
             if (empty2 != null) r.Pre.Add(new PreCond { Ref = empty2, Test = PreTest.Empty });
             if (fewer != null) r.Pre.Add(new PreCond { Ref = fewer.Value.sel, Test = PreTest.CountLt, Right = Expr.Of(fewer.Value.n) }); // 库存少于 n 件才做
@@ -147,7 +147,6 @@ public static class ProfessionExamples
     private const string Heat = "tag:GENETIC_HEAT_INT", DiskTrait = "str:DNA_DISK_TRAIT_STRING", DiskUses = "tag:DNA_DISK_USES_INT";
     private static Cond Text(string prop, string value) => new() { Prop = prop, Op = "=", Text = value };
     private static Cond NotModified => new() { Prop = Catalog.TypeProp, Op = "!=", Text = Catalog.ItemTypePrefix + "MODIFIED_SEED" };
-    private static Cond Le(string prop, double n) => Cond.Cmp(prop, "<=", Expr.Of(n));
     private static Cond LtParam(string prop, string param) => Cond.Cmp(prop, "<", Expr.Ref(TermKind.Const, param));
 
     /// <summary>
@@ -170,6 +169,8 @@ public static class ProfessionExamples
 
     /// <summary>用 tool 作用于 list（方向由游戏判断）。</summary>
     private static ActionDef Use(string tool, string list, int times = 1) => new() { Verb = ActVerb.Use, Tool = tool, List = list, Times = times };
+    /// <summary>用增压器作用于机器，无限循环：每次让机器立即完成一个周期，执行条件不成立或这一轮没有动作时停。</summary>
+    private static ActionDef Boost(string booster, string machine) => new() { Verb = ActVerb.Use, Tool = booster, List = machine, Loop = LoopMode.Forever };
     private static ActionDef Swap(string list, string with) => new() { Verb = ActVerb.Swap, List = list, To = with };
     private static ActionDef Press(string list, string button, int times = 1) => new() { Verb = ActVerb.Press, List = list, Button = button, Times = times };
     private static ActionDef Toggle(string list) => new() { Verb = ActVerb.Toggle, List = list };
@@ -284,96 +285,30 @@ public static class ProfessionExamples
                 Extractor(b, T("example.dna.device.extract_np"), Np, "fillerweed_seed", 3, blank);
                 break;
             }
-            case "dna_edit":
-            {
-                // 目标种子由玩家放进【写入机】的目标格；没到目标等级、热度没到上限就写一次，用剩余次数最少的盘
-                string writer = T("example.dna.device.writer"), dev = Places.Ref(writer);
-                var level = b.Param(T("example.dna.param.target"), 8, "", T("example.dna.param.target.hint"));
-                var heatCap = b.Param(T("example.dna.param.heat"), 10, "", T("example.dna.param.heat.hint"));
-                var output = b.Sel(L.T("example.dna.sel.output", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "eject");
-                var diskSlot = b.Sel(L.T("example.dna.sel.disk_slot", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "input_disk");
-                var writable = b.Sel(T("example.dna.sel.writable"), dev, "seed", slot: SlotNames.Prefix + "seed", where: new[] { LtParam(TraitTag(Pur), level), LtParam(Heat, heatCap) });
-                var disk = b.Idle(L.T("example.dna.sel.disk", TraitName(Pur)), "plant_dna_disk", take: 1, Text(DiskTrait, Pur));
-                D(b).Selectors.First(x => x.Id == disk).Sort = new SortSpec { Prop = DiskUses, Desc = false };
-                b.Rule(L.T("example.dna.rule.collect", writer), b.ToStore(output, T("example.dna.store")));
-                b.Rule(L.T("example.dna.rule.write", TraitName(Pur)), Move(disk, dev, "input_disk"), notEmpty: writable, empty: diskSlot);
-                break;
-            }
             case "dna_boost":
             {
-                // 同优化基因，另加一个任务：用就绪的超科技涡轮增压器作用于有电的【写入机】，无限循环。每次让写入机立即完成一个周期，
-                // 写完（盘弹出）、达到目标等级、热度到上限或增压器电量不足（没有就绪的）时停。和优化基因共用【写入机】，不要同时用
-                string writer = T("example.dna.device.writer"), dev = Places.Ref(writer);
-                var level = b.Param(T("example.dna.param.target"), 8, "", T("example.dna.param.target.hint"));
-                var heatCap = b.Param(T("example.dna.param.heat"), 10, "", T("example.dna.param.heat.hint"));
-                var output = b.Sel(L.T("example.dna.sel.output", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "eject");
-                var diskSlot = b.Sel(L.T("example.dna.sel.disk_slot", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "input_disk");
-                var writable = b.Sel(T("example.dna.sel.writable"), dev, "seed", slot: SlotNames.Prefix + "seed", where: new[] { LtParam(TraitTag(Pur), level), LtParam(Heat, heatCap) });
-                var disk = b.Idle(L.T("example.dna.sel.disk", TraitName(Pur)), "plant_dna_disk", take: 1, Text(DiskTrait, Pur));
-                D(b).Selectors.First(x => x.Id == disk).Sort = new SortSpec { Prop = DiskUses, Desc = false };
-                var powered = b.Sel(L.T("example.boost.sel.powered", writer), dev, Catalog.Self, where: Cond.Cmp("powered", "=", Expr.Of(1)));
-                // 已储存加速 = 充能 ÷ 15（游戏提示框里的“已储存加速：N次”；满 15 即就绪）
-                var stored = b.Property(T("example.boost.prop.stored"), "turbo_booster_hypertech", new Expr
-                {
-                    Terms = { Term.Own("tag:CURRENT_CHARGE_TAG"), Term.N(15) },
-                    Ops = { "/" },
-                });
-                var ready = b.Sel(T("example.boost.sel.ready"), Places.Shop, "turbo_booster_hypertech", where: Ge(stored, 1));
-                b.Rule(L.T("example.dna.rule.collect", writer), b.ToStore(output, T("example.dna.store")));
-                b.Rule(L.T("example.dna.rule.write", TraitName(Pur)), Move(disk, dev, "input_disk"), notEmpty: writable, empty: diskSlot);
-                var boost = Use(ready, powered);
-                boost.Loop = LoopMode.Forever;
-                b.Rule(T("example.boost.rule.boost"), boost, notEmpty: writable);
-                var r = b.S.Rules.Last();
-                r.Pre.Add(new PreCond { Ref = diskSlot, Test = PreTest.NotEmpty });
-                r.Pre.Add(new PreCond { Ref = ready, Test = PreTest.NotEmpty });
-                break;
-            }
-            case "dna_breed":
-            {
-                // 有效复杂度 = 复杂度 + 热度：芦苇先天净化水质 4 级，每多一级 +3；营养匮乏每级 −2。成功率 = 95 − 5 × 有效复杂度。
-                // ≤ 2 写净化水质；≤ 6 或热度为 0 写营养匮乏（压低复杂度）；热度上来了就送进【育种水培机】，收获的子代（热度 0）回到写入机。
+                // 玩家把要改造的种子放进【写入机】的目标格。写入净化水质，热度到上限就送进【育种水培机】繁殖，收获的子代（热度 0）
+                // 回写入机继续，直至目标等级。写完弹出的盘留在写入机的输出格，放盘每次从储藏区取新的。前三个任务不靠增压器：机器每晚自己做一个周期，第二天的班接着走一步。
+                // 最后两个任务在店里有超科技涡轮增压器时用它无限循环作用于两台机器，一个班里做完；机器缺水、没电这类情况由玩家自己防
                 string writer = T("example.dna.device.writer"), dev = Places.Ref(writer);
                 string hydroName = T("example.dna.device.hydro"), hydro = Places.Ref(hydroName);
-                var level = b.Param(T("example.dna.param.target"), 8, "", T("example.dna.param.target.hint"));
-                var eff = b.Property(T("example.dna.prop.eff"), "hydroreed_seed", new Expr
-                {
-                    Terms = { Term.N(3), Term.Own(TraitTag(Pur)), Term.N(12), Term.N(2), Term.Own(TraitTag(Np)), Term.Own(Heat) },
-                    Ops = { "*", "-", "-", "*", "+" },
-                });
+                var level = b.Param(T("example.dna.param.target"), 10, "", T("example.dna.param.target.hint"));
+                var heatCap = b.Param(T("example.dna.param.heat"), 5, "", T("example.dna.param.heat.hint"));
                 Cond Below() => LtParam(TraitTag(Pur), level);
-                var output = b.Sel(L.T("example.dna.sel.output", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "eject");
-                var diskSlot = b.Sel(L.T("example.dna.sel.disk_slot", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "input_disk");
                 var target = b.Sel(L.T("example.dna.sel.target_slot", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "seed");
+                var diskSlot = b.Sel(L.T("example.dna.sel.disk_slot", writer), dev, Catalog.Any, slot: SlotNames.Prefix + "input_disk");
+                var writable = b.Sel(T("example.dna.sel.writable"), dev, "hydroreed_seed", slot: SlotNames.Prefix + "seed", where: new[] { Below(), LtParam(Heat, heatCap) });
+                var hot = b.Sel(T("example.dna.sel.breed"), dev, "hydroreed_seed", slot: SlotNames.Prefix + "seed", where: new[] { Below(), Cond.Cmp(Heat, ">=", Expr.Ref(TermKind.Const, heatCap)) });
                 var hSeed = b.Sel(L.T("example.dna.sel.seed_slot", hydroName), hydro, Catalog.Any, slot: SlotNames.Prefix + "seed");
                 var child = b.Sel(T("example.dna.sel.child"), hydro, "hydroreed_seed", slot: SlotNames.Prefix + "output", take: 1, sort: (TraitTag(Pur), true));
-                var crop = b.Sel(T("example.hydro.sel.crop"), hydro, Catalog.Any, slot: SlotNames.Prefix + "output");
-                var first = b.Idle(T("example.dna.sel.first"), "hydroreed_seed", take: 1, NotModified);
-                var toPur = b.Sel(L.T("example.dna.sel.can_write", TraitName(Pur)), dev, "hydroreed_seed", slot: SlotNames.Prefix + "seed", where: new[] { Below(), Le(eff, 2) });
-                var toNp = b.Sel(L.T("example.dna.sel.can_write", TraitName(Np)), dev, "hydroreed_seed", slot: SlotNames.Prefix + "seed",
-                    where: new[] { Below(), Cond.Sub("any", Le(eff, 6), Lt(Heat, 1)) });
-                var toBreed = b.Sel(T("example.dna.sel.breed"), dev, "hydroreed_seed", slot: SlotNames.Prefix + "seed", where: new[] { Below(), Ge(Heat, 1), Gt(eff, 6) });
-                var purDisk = b.Idle(L.T("example.dna.sel.disk", TraitName(Pur)), "plant_dna_disk", take: 1, Text(DiskTrait, Pur));
-                var npDisk = b.Idle(L.T("example.dna.sel.disk", TraitName(Np)), "plant_dna_disk", take: 1, Text(DiskTrait, Np));
-                foreach (var dk in new[] { purDisk, npDisk }) D(b).Selectors.First(x => x.Id == dk).Sort = new SortSpec { Prop = DiskUses, Desc = false };
-                var water = b.Sel(L.T("example.dna.sel.water_slot", hydroName), hydro, Catalog.Any, slot: SlotNames.Prefix + "water");
-                var dry = b.Sel(T("example.hydro.sel.dry"), hydro, Catalog.Any, slot: SlotNames.Prefix + "water", where: Lt("liq:water", 1500));
-                var lean = b.Sel(T("example.hydro.sel.lean"), hydro, Catalog.Any, slot: SlotNames.Prefix + "water", where: Lt("liq:mineral", 20));
-                var full = b.Idle(T("example.hydro.sel.full"), "large_bottled_water", take: 1, Ge("liq:water", 1500));
-                var empty = b.Idle(T("example.hydro.sel.empty"), "large_bottled_water", where: Lt("liq:water", 1500));
-                var tablets = b.Idle(T("example.hydro.sel.tablets"), "nutrient_tablet", take: 1);
-                string store = T("example.dna.store");
-                b.Rule(L.T("example.dna.rule.collect", writer), b.ToStore(output, store));
+                var disk = b.Idle(L.T("example.dna.sel.disk", TraitName(Pur)), "plant_dna_disk", take: 1, Text(DiskTrait, Pur));
+                D(b).Selectors.First(x => x.Id == disk).Sort = new SortSpec { Prop = DiskUses, Desc = false };
+                var booster = b.Sel(T("example.boost.sel.booster"), Places.Shop, "turbo_booster_hypertech");
                 b.Rule(T("example.dna.rule.child"), Move(child, dev, "seed"), empty: target);
-                b.Rule(T("example.dna.rule.harvest"), b.ToStore(crop, store));
-                b.Rule(T("example.dna.rule.first"), Move(first, dev, "seed"), empty: target, empty2: hSeed);
-                b.Rule(L.T("example.dna.rule.write", TraitName(Pur)), Move(purDisk, dev, "input_disk"), notEmpty: toPur, empty: diskSlot);
-                b.Rule(L.T("example.dna.rule.write", TraitName(Np)), Move(npDisk, dev, "input_disk"), notEmpty: toNp, empty: diskSlot);
-                b.Rule(T("example.dna.rule.breed"), Move(toBreed, hydro, "seed"), empty: diskSlot, empty2: hSeed);
-                b.Rule(T("example.hydro.rule.fill_water"), Use(Fixtures.Faucet, empty));
-                b.Rule(T("example.dna.rule.water"), Move(full, hydro, "water"), empty: water);
-                b.Rule(T("example.hydro.rule.swap_water"), Swap(dry, full));
-                b.Rule(T("example.hydro.rule.add_nutrient"), Use(tablets, lean));
+                b.Rule(L.T("example.dna.rule.write", TraitName(Pur)), Move(disk, dev, "input_disk"), notEmpty: writable, empty: diskSlot);
+                b.Rule(T("example.dna.rule.breed"), Move(hot, hydro, "seed"), notEmpty: hot, empty: hSeed);
+                b.Rule(T("example.boost.rule.write"), Boost(booster, dev), notEmpty: writable, notEmpty2: diskSlot, notEmpty3: booster);
+                b.Rule(T("example.boost.rule.grow"), Boost(booster, hydro), notEmpty: hSeed, notEmpty2: booster);
                 break;
             }
             case "tidy":

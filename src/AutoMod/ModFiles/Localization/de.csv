@@ -1140,12 +1140,8 @@ handbook.p3.tip_tags,Spiel-Tags tragen die Namen aus dem Spiel; ein fehlender Ta
 handbook.pdna.banner,Beispiele: Pflanzenmerkmale
 handbook.pdna.title_disk,Gen-Disks:
 handbook.pdna.text_disk,"Zwei Extraktoren gewinnen Reinigend aus Hydroschilf-Saatgut und Nährstoffarm aus Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Ein Präzisions-Extraktionsmodul, auf eine beschriebene Disk angewendet, wird auf deren Merkmal eingestellt."
-handbook.pdna.title_edit,Gen-Bearbeitung:
-handbook.pdna.text_edit,Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber] bis zur Zielstufe oder Risiko-Grenze. Ein Samen ohne ein Merkmal hat es auf Stufe 0.
-handbook.pdna.title_boost,Turbo-Bearbeitung:
-handbook.pdna.text_boost,"Der Hypertech-Turbobooster lädt sich jede Nacht auf und kann mehrere Boosts speichern. In einer Endlosschleife auf den [Merkmal-Schreiber] angewendet, schließt er jedes Mal einen Zyklus ab und stoppt, wenn der Schreibvorgang fertig ist."
-handbook.pdna.title_breed,Gen-Zucht:
-handbook.pdna.text_breed,"Risiko sinkt nur durch Zucht: Nach dem Schreiben kommt der Samen in die [Zucht-Hydrokultur], der geerntete Nachwuchs kehrt mit Risiko 0 zum Schreiber zurück. Jede Stufe Nährstoffarm senkt die Komplexität um 2 und gleicht +3 je Stufe Reinigend aus."
+handbook.pdna.title_boost,Automatische Turbo-Genbearbeitung:
+handbook.pdna.text_boost,"Schreibt Reinigend in den Samen im [Merkmal-Schreiber]; bei der Risiko-Grenze kommt der Samen in die [Zucht-Hydrokultur], und der geerntete Nachwuchs kehrt mit Risiko 0 zum Schreiber zurück. Jede Maschine läuft einen Zyklus pro Nacht; mit einem Hypertech-Turbobooster wenden die letzten beiden Aufgaben ihn in einer Endlosschleife auf beide Maschinen an und werden in einer Schicht fertig."
 handbook.pdna.tip,"Erfolgschance = 95 − 5 × (Komplexität + Risiko) + Qualitätsbonus der Maschine, mindestens 5 %. Jedes Schreiben oder Extrahieren erhöht das Risiko, ob erfolgreich oder nicht."
 handbook.p3.title_filter,Filter:
 handbook.p3.title_param,Parameter:
@@ -1418,36 +1414,28 @@ example.dna.store,Genbank
 example.dna.param.target,Zielstufe
 example.dna.param.target.hint,"Schreiben endet, wenn Reinigend diese Stufe erreicht"
 example.dna.param.heat,Risiko-Grenze
-example.dna.param.heat.hint,"Schreiben endet, wenn das Risiko des Samens diesen Wert erreicht"
-example.dna.prop.eff,Effektive Komplexität Hydroschilf
+example.dna.param.heat.hint,Samen ab diesem Risiko gehen zur Zucht
 example.dna.sel.output,{0}: Ausgabe
 example.dna.sel.target_slot,{0}: Zielplatz
 example.dna.sel.blank_slot,{0}: Platz leere Disk
 example.dna.sel.disk_slot,{0}: Platz Merkmal-Disk
 example.dna.sel.seed_slot,{0}: Samenplatz
-example.dna.sel.water_slot,{0}: Wasserplatz
 example.dna.sel.stock,Disks „{0}“ auf Lager
 example.dna.sel.raw,{1} mit {0}
 example.dna.sel.blank,Eine leere Disk
 example.dna.sel.disk,Eine Disk „{0}“
 example.dna.sel.writable,Beschreibbarer Samen
 example.dna.sel.child,Geernteter Nachwuchs
-example.dna.sel.first,Startziel
-example.dna.sel.can_write,Samen für {0}
 example.dna.sel.breed,Samen zur Zucht
 example.dna.rule.collect,Disks aus {0} holen
 example.dna.rule.load_seed,{0} bestücken
 example.dna.rule.load_blank,Leere Disk in {0}
 example.dna.rule.write,{0} schreiben
 example.dna.rule.child,Nachwuchs einsetzen
-example.dna.rule.harvest,Ernte einlagern
-example.dna.rule.first,Startziel einsetzen
 example.dna.rule.breed,Zur Zucht schicken
-example.dna.rule.water,Wasserflasche einsetzen
-example.boost.sel.ready,Bereite Booster
-example.boost.prop.stored,Gespeicherte Boosts
-example.boost.sel.powered,{0} mit Strom
-example.boost.rule.boost,Boosten
+example.boost.sel.booster,Booster
+example.boost.rule.write,Schreiben boosten
+example.boost.rule.grow,Wachstum boosten
 example.ranch.rule.auto_blend,Automatisches Mischen aktivieren
 example.ranch.rule.butcher_dead,Tote Ratten zerlegen
 example.ranch.rule.cull,Ratten schlachten
@@ -1484,12 +1472,8 @@ example.spec.water.name,Wasserverkauf
 example.spec.water.note,"Flaschen drucken, Wasser schöpfen, zu Basiswasser reinigen, abfüllen und einräumen, Erlöse abholen"
 example.spec.dna_disk.name,Gen-Disks
 example.spec.dna_disk.note,"[Extraktor Reinigend] und [Extraktor Nährstoffarm] extrahieren Merkmale aus Hydroschilf-Saatgut und Füllkrautsamen; beschriebene Disks kommen in die [Genbank], bei genug Vorrat endet die Extraktion. Jeder Extraktor braucht ein Präzisions-Extraktionsmodul, das auf sein Merkmal eingestellt ist"
-example.spec.dna_edit.name,Gen-Bearbeitung
-example.spec.dna_edit.note,"Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber], bis die Zielstufe oder die Risiko-Grenze erreicht ist"
-example.spec.dna_boost.name,Turbo-Bearbeitung
-example.spec.dna_boost.note,"Wie Gen-Bearbeitung, dazu lässt ein Hypertech-Turbobooster den [Merkmal-Schreiber] den aktuellen Zyklus sofort abschließen, sodass ein Schreibvorgang in einer Schicht fertig wird; stoppt, wenn der Schreibvorgang fertig ist, kein Booster bereit ist oder die Zielstufe erreicht ist"
-example.spec.dna_breed.name,Gen-Zucht
-example.spec.dna_breed.note,"Der [Merkmal-Schreiber] schreibt Reinigend und Nährstoffarm; ist das Risiko zu hoch, kommt der Samen in die [Zucht-Hydrokultur], und der geerntete Nachwuchs kehrt zum Schreiber zurück, bis zur Zielstufe. Die Disks liefert Gen-Disks"
+example.spec.dna_boost.name,Automatische Turbo-Genbearbeitung
+example.spec.dna_boost.note,"Schreibt Reinigend in den Samen im Zielplatz des [Merkmal-Schreiber]; bei der Risiko-Grenze kommt der Samen in die [Zucht-Hydrokultur], und der geerntete Nachwuchs kehrt zum Schreiber zurück, bis zur Zielstufe. Mit einem Hypertech-Turbobooster ist die Arbeit in der Schicht fertig, ohne ihn läuft jede Maschine einen Zyklus pro Nacht. Die Disks liefert Gen-Disks"
 example.tidy.rule.food,Essen sortieren
 example.tidy.rule.medical,Medizin sortieren
 example.tidy.sel.loose_food,Zu sortierendes Essen

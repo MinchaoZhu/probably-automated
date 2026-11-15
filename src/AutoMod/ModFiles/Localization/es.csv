@@ -1140,12 +1140,8 @@ handbook.p3.tip_tags,Las etiquetas usan los nombres del juego; una etiqueta ause
 handbook.pdna.banner,Ejemplos: atributos de plantas
 handbook.pdna.title_disk,Disquetes genéticos:
 handbook.pdna.text_disk,Dos extractores sacan Purificante de semillas de hidrojunco y Deficiente en nutrientes de semillas de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Un módulo de precisión usado sobre un disquete escrito queda ajustado a su atributo.
-handbook.pdna.title_edit,Edición genética:
-handbook.pdna.text_edit,Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos] hasta el rango objetivo o el tope de riesgo. Una semilla sin un atributo lo tiene en rango 0.
-handbook.pdna.title_boost,Edición acelerada:
-handbook.pdna.text_boost,"El Instaturbo Hypertech se carga cada noche y puede almacenar varias aceleraciones. Usado sobre el [Grabador de atributos] en bucle infinito, termina un ciclo cada vez y se detiene cuando la escritura termina."
-handbook.pdna.title_breed,Cría genética:
-handbook.pdna.text_breed,"El riesgo solo baja criando: tras escribir, la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador con riesgo 0. Cada rango de Deficiente en nutrientes baja la complejidad en 2 y compensa el +3 por rango de Purificante."
+handbook.pdna.title_boost,Edición genética autoacelerada:
+handbook.pdna.text_boost,"Escribe Purificante en la semilla del [Grabador de atributos]; al llegar al tope de riesgo la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador con riesgo 0. Cada máquina hace un ciclo por noche; con un Instaturbo Hypertech, las dos últimas tareas lo usan en bucle infinito sobre ambas máquinas y terminan en un turno."
 handbook.pdna.tip,"Probabilidad de éxito = 95 − 5 × (complejidad + riesgo) + bonificación de calidad de la máquina, mínimo 5 %. Cada escritura o extracción aumenta el riesgo, salga bien o no."
 handbook.p3.title_filter,Filtros:
 handbook.p3.title_param,Parámetros:
@@ -1418,36 +1414,28 @@ example.dna.store,Banco genético
 example.dna.param.target,Rango objetivo
 example.dna.param.target.hint,Se deja de escribir cuando Purificante llega a este rango
 example.dna.param.heat,Tope de riesgo
-example.dna.param.heat.hint,Se deja de escribir cuando el riesgo de la semilla llega a este valor
-example.dna.prop.eff,Complejidad efectiva del hidrojunco
+example.dna.param.heat.hint,Las semillas con este riesgo o más van a cría
 example.dna.sel.output,{0}: salida
 example.dna.sel.target_slot,{0}: ranura objetivo
 example.dna.sel.blank_slot,{0}: ranura de disquete vacío
 example.dna.sel.disk_slot,{0}: ranura de disquete con atributo
 example.dna.sel.seed_slot,{0}: ranura de semilla
-example.dna.sel.water_slot,{0}: ranura de agua
 example.dna.sel.stock,Disquetes {0} en reserva
 example.dna.sel.raw,{1} con {0}
 example.dna.sel.blank,Un disquete vacío
 example.dna.sel.disk,Un disquete {0}
 example.dna.sel.writable,Semilla para escribir
 example.dna.sel.child,Descendencia cosechada
-example.dna.sel.first,Objetivo inicial
-example.dna.sel.can_write,Semilla lista para {0}
 example.dna.sel.breed,Semilla lista para cría
 example.dna.rule.collect,Recoger disquetes de {0}
 example.dna.rule.load_seed,Cargar {0}
 example.dna.rule.load_blank,Disquete vacío en {0}
 example.dna.rule.write,Escribir {0}
 example.dna.rule.child,Cargar descendencia
-example.dna.rule.harvest,Guardar cosecha
-example.dna.rule.first,Cargar objetivo inicial
 example.dna.rule.breed,Enviar a cría
-example.dna.rule.water,Colocar botella de agua
-example.boost.sel.ready,Turbos listos
-example.boost.prop.stored,Impulsos guardados
-example.boost.sel.powered,{0} con energía
-example.boost.rule.boost,Acelerar
+example.boost.sel.booster,Turbo
+example.boost.rule.write,Acelerar escritura
+example.boost.rule.grow,Acelerar crecimiento
 example.ranch.rule.auto_blend,Habilitar mezcla automática
 example.ranch.rule.butcher_dead,Despiezar ratas muertas
 example.ranch.rule.cull,Sacrificar ratas
@@ -1484,12 +1472,8 @@ example.spec.water.name,Venta de agua
 example.spec.water.note,"Imprimir botellas, recoger agua, purificar a agua base, embotellar y surtir, y recoger el efectivo"
 example.spec.dna_disk.name,Disquetes genéticos
 example.spec.dna_disk.note,[Extractor Purificante] y [Extractor Deficiente en nutrientes] extraen atributos de semillas de hidrojunco y de borrajilla; los disquetes escritos van al [Banco genético] y la extracción se detiene con suficiente reserva. Cada extractor necesita un módulo de precisión ajustado a su atributo
-example.spec.dna_edit.name,Edición genética
-example.spec.dna_edit.note,Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos] hasta el rango objetivo o el tope de riesgo
-example.spec.dna_boost.name,Edición acelerada
-example.spec.dna_boost.note,"Como Edición genética, y además un Instaturbo Hypertech hace que el [Grabador de atributos] termine al instante su ciclo actual, así que una escritura se completa en un turno; se detiene cuando la escritura termina, no hay ningún turbo listo o se alcanza el rango objetivo"
-example.spec.dna_breed.name,Cría genética
-example.spec.dna_breed.note,"El [Grabador de atributos] escribe Purificante y Deficiente en nutrientes; con riesgo demasiado alto la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador, hasta el rango objetivo. Los disquetes los prepara Disquetes genéticos"
+example.spec.dna_boost.name,Edición genética autoacelerada
+example.spec.dna_boost.note,"Escribe Purificante en la semilla de la ranura objetivo del [Grabador de atributos]; al tope de riesgo la semilla va a la [Hidroponía de cría] y la descendencia cosechada vuelve al grabador, hasta el rango objetivo. Con un Instaturbo Hypertech el trabajo termina en el turno; sin él cada máquina hace un ciclo por noche. Los disquetes los prepara Disquetes genéticos"
 example.tidy.rule.food,Ordenar comida
 example.tidy.rule.medical,Ordenar medicina
 example.tidy.sel.loose_food,Comida suelta a ordenar
