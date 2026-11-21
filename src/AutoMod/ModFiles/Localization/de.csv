@@ -1171,7 +1171,7 @@ handbook.psub.tip,"Dieselben Aufgaben für mehrere Maschinengruppen: Geräte zu 
 handbook.p5.banner_order,Ausführungsreihenfolge
 handbook.p5.banner_swap,Automatischer Batteriewechsel
 handbook.p5.steps_swap,① Tausche leere Batterien (Ladung aufsteigend) gegen volle Batterien (Ladung absteigend): Ersetzt die schwächste Batterie durch die vollste; die entnommene verbleibt in der Ladestation.\n② Lege ungeladene Batterien aus dem Lager in freie Plätze der Ladestation.
-handbook.p5.text_seq,"Jede Schicht läuft in der Reihenfolge des Tabs Lehrlinge ab: Jeder Lehrling führt seine Routinen nacheinander aus, und Aufgaben laufen von oben nach unten ab. Aufgaben prüfen den Ladenstatus neu, damit bereits verarbeitete Gegenstände nicht wiederholt werden. Reihenfolge per ↑↓ anpassen."
+handbook.p5.text_seq,"Jede Schicht läuft in der Reihenfolge des Tabs Lehrlinge ab: Jeder Lehrling führt seine Routinen nacheinander aus, und Aufgaben laufen von oben nach unten ab. Jede Aufgabe und jede Aktion prüft den Ladenstatus neu, damit bereits verarbeitete Gegenstände nicht wiederholt werden. Reihenfolge per ↑↓ anpassen."
 handbook.p5.title_seq,Nacheinander ausführen:
 handbook.p6.banner,Beispiel-Routinen
 handbook.p6.text_battery,Tauscht schwache Batterien gegen volle aus und legt ungeladene Batterien in Ladestationen. Ohne Einrichtung sofort einsatzbereit.

@@ -1171,7 +1171,7 @@ handbook.psub.tip,"Same tasks for several sets of machines: make the devices par
 handbook.p5.banner_order,Execution Order
 handbook.p5.banner_swap,Auto Battery Swap
 handbook.p5.steps_swap,"① Swap Low Battery (charge ascending) with Full Battery (charge descending): replaces lowest battery with fullest, leaving depleted battery in recharger.\n② Put uncharged batteries from storage into rechargers with free slots."
-handbook.p5.text_seq,"Each shift executes in order from Apprentices tab: each apprentice runs their routines sequentially, and tasks run top-to-bottom. Tasks re-evaluate current shop state so already-processed items are not repeated. Adjust order using ↑↓."
+handbook.p5.text_seq,"Each shift executes in order from Apprentices tab: each apprentice runs their routines sequentially, and tasks run top-to-bottom. Each task and each action re-evaluates the current shop state, so already-processed items are not repeated. Adjust order using ↑↓."
 handbook.p5.title_seq,Sequential Execution:
 handbook.p6.banner,Example Routines
 handbook.p6.text_battery,"Swaps low batteries with full ones, and places uncharged idle batteries into rechargers. Ready to use without configuration."

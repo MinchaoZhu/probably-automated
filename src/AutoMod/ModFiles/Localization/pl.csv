@@ -1171,7 +1171,7 @@ handbook.psub.tip,"Te same zadania dla kilku grup maszyn: ustaw urządzenia jako
 handbook.p5.banner_order,Kolejność wykonywania
 handbook.p5.banner_swap,Automatyczna wymiana baterii
 handbook.p5.steps_swap,"① Wymień słabe baterie (rosnąco według ładunku) na pełne (malejąco): najsłabsza trafia na najpełniejszą, a wyjęta bateria zostaje w ładowarce.\n② Włóż niepełne baterie z magazynu do wolnych miejsc w ładowarce."
-handbook.p5.text_seq,"Każda zmiana wykonuje się według kolejności z zakładki Praktykanci: każdy praktykant wykonuje swoje procedury po kolei, a zadania biegną od góry do dołu. Zadania na nowo oceniają stan sklepu, więc przetworzone przedmioty nie są powtarzane. Zmień kolejność za pomocą ↑↓."
+handbook.p5.text_seq,"Każda zmiana wykonuje się według kolejności z zakładki Praktykanci: każdy praktykant wykonuje swoje procedury po kolei, a zadania biegną od góry do dołu. Każde zadanie i każda akcja na nowo oceniają stan sklepu, więc przetworzone przedmioty nie są powtarzane. Zmień kolejność za pomocą ↑↓."
 handbook.p5.title_seq,Kolejne wykonywanie:
 handbook.p6.banner,Przykładowe procedury
 handbook.p6.text_battery,Wymienia słabe baterie na pełne i umieszcza rozładowane wolne baterie w ładowarkach. Gotowa do użycia bez konfiguracji.

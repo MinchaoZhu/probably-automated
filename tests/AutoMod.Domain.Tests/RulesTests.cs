@@ -463,9 +463,9 @@ internal static class RulesTests
             Check(AutoMod.Domain.Rules.Check.PickerRefs(picked).SequenceEqual(new[] { "s1", "s2", "s3", "s4", "s6", "s5" }), "下拉框直接选的定义：不含表达式里的、动作没有显示的参数");
             var ready = sch.Rules.First(r => r.Name == "育肥笼出栏");
             string Line(WorkRule r) => string.Join(" / ", Card.Sentence(d, sch, r).Select(l => string.Concat(l.Select(x => x.Text))));
-            Check(Line(ready) == "当 待出栏鼠 不为空 时： / 用 刀具 作用于 待出栏鼠（每件 2 次） / 将 待出栏鼠.数量 累加到 本班宰杀数", Line(ready));
+            Check(Line(ready) == "当 待出栏鼠 不为空 时： / 将 待出栏鼠.数量 累加到 本班宰杀数 / 用 刀具 作用于 待出栏鼠（每件 2 次）", Line(ready));
             var segs = Card.Sentence(d, sch, ready).SelectMany(l => l).ToList();
-            Check(segs.Any(x => x.Kind == SegKind.Box && x.Param == "tool" && x.Action == 0) && segs.Any(x => x.Kind == SegKind.Op) && segs.Any(x => x.Kind == SegKind.Cond),
+            Check(segs.Any(x => x.Kind == SegKind.Box && x.Param == "tool" && x.Action == 1) && segs.Any(x => x.Kind == SegKind.Op) && segs.Any(x => x.Kind == SegKind.Cond),
                 "可点的词：工具、动作、条件");
             Check(Card.ListDefs(d, ready).Any(x => x.StartsWith("待出栏鼠：")) && Card.ListDefs(d, ready).Any(x => x.StartsWith("刀具：")), "展开时显示用到的列表定义（对象和工具）");
             // 换动作：使用 → 添加标记，保留对象列表；再换回使用，工具要重新选
@@ -895,6 +895,38 @@ internal static class RulesTests
             Check(rules[2].Done.Count == 0, "换过之后重新筛选：没有低电量电池可换");
             Check(rules[3].Done.GetValueOrDefault(ActVerb.Move) == 2 && bin.Children.Count == 2, $"仓库里的两块搬进回收箱：{bin.Children.Count}");
             Check(rules[4].Pre == PreResult.Pass && rules[4].Done.Count == 0, "搬走之后重新筛选：仓库空了");
+        });
+
+        test("执行：同一任务里，前面的动作动过店里，后面的动作重新筛选", () =>
+        {
+            var w = new SimWorld();
+            var a = w.AddRoot("storage", 1, "甲");
+            var b = w.AddRoot("storage", 2, "乙");
+            var c = w.AddRoot("storage", 3, "丙");
+            b.Capacity = 8;
+            for (int i = 0; i < 10; i++) w.Add(a, "battery_full");
+            var d = new RulesData();
+            Named(w, "a", 1);
+            Named(w, "b", 2);
+            Named(w, "c", 3);
+            Sel(d, "inA", "#a", "battery");
+            var sch = new Schedule
+            {
+                Id = "s", Name = "s", Rules =
+                {
+                    new WorkRule { Id = "r", Name = "分装", Actions =
+                    {
+                        new ActionDef { Verb = ActVerb.Move, List = "inA", To = "#b" },
+                        new ActionDef { Verb = ActVerb.Move, List = "inA", To = "#c" },
+                    } },
+                },
+            };
+            d.Schedules.Add(sch);
+            var rr = new Interpreter(w, d).RunShift(Shift.Morning, new[] { App("甲", 200, 3, "s") }).Groups[0].Rules[0];
+            Check(rr.Pre == PreResult.Pass, "没有结构错误：" + string.Join("；", rr.Issues.Select(i => i.Text)));
+            Check(a.Children.Count == 0 && b.Children.Count == 8 && c.Children.Count == 2,
+                $"乙放满 8 块，甲剩下的 2 块进丙，乙里的不再被搬走（甲 {a.Children.Count} 乙 {b.Children.Count} 丙 {c.Children.Count}）");
+            Check(rr.Done.GetValueOrDefault(ActVerb.Move) == 10, $"共移动 10 次（{rr.Done.GetValueOrDefault(ActVerb.Move)}）");
         });
 
         test("导入导出：设备名照用，定义归新排班，一样的共用定义复用，重名改名", () =>

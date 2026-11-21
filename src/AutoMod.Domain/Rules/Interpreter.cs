@@ -244,7 +244,7 @@ public class Interpreter
     {
         var a = f.A;
         var memo = s.Notepad.ToDictionary(n => n.Id, n => n.Init);
-        // 筛选器的求值结果按任务快照；上一条任务什么都没动（条件不成立、没东西可做）时店里没变，接着用，不重新筛一遍全店
+        // 筛选器的求值结果按动作快照；前面的动作什么都没动（条件不成立、没东西可做）时店里没变，接着用，不重新筛一遍全店
         EvalCtx ctx = null;
         bool touched = true;
 
@@ -306,16 +306,17 @@ public class Interpreter
 
             foreach (var act in rule.Actions)
             {
-                // 循环：每轮重新筛选（第一轮用任务的快照）；无限循环每轮前检查执行条件。一轮里没有任何动作就停：再做一轮也一样
+                // 前面的动作（或上一轮）动过店里就重新筛选，否则接着用快照；无限循环每轮前检查执行条件。一轮里没有任何动作就停：再做一轮也一样
                 int rounds = LoopMode.Rounds(act), round = 0;
                 string end = null;
                 while (round < rounds)
                 {
-                    if (round > 0)
+                    if (touched)
                     {
                         ctx.Clear();
-                        if (act.Loop == LoopMode.Forever && !PreHolds(ctx, rule)) { end = "report.details.loop_cond"; break; }
+                        touched = false;
                     }
+                    if (round > 0 && act.Loop == LoopMode.Forever && !PreHolds(ctx, rule)) { end = "report.details.loop_cond"; break; }
                     round++;
                     int acts = f.Acts;
                     RunAct(act, act.Loop == LoopMode.Once ? 0 : round);

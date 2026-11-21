@@ -1171,7 +1171,7 @@ handbook.psub.tip,"Las mismas tareas para varios grupos de máquinas: convierte 
 handbook.p5.banner_order,Orden de ejecución
 handbook.p5.banner_swap,Cambio automático de batería
 handbook.p5.steps_swap,"① Intercambia baterías bajas (carga ascendente) por baterías llenas (carga descendente): reemplaza la más baja por la más llena, dejando la retirada en el cargador.\n② Pon baterías descargadas del almacén en cargadores con ranuras libres."
-handbook.p5.text_seq,Cada turno se ejecuta en el orden de la pestaña Aprendices: cada aprendiz ejecuta sus rutinas en secuencia y las tareas van de arriba abajo. Las tareas reevalúan el estado de la tienda para no repetir objetos ya procesados. Ajusta el orden con ↑↓.
+handbook.p5.text_seq,Cada turno se ejecuta en el orden de la pestaña Aprendices: cada aprendiz ejecuta sus rutinas en secuencia y las tareas van de arriba abajo. Cada tarea y cada acción reevalúan el estado de la tienda para no repetir objetos ya procesados. Ajusta el orden con ↑↓.
 handbook.p5.title_seq,Ejecución secuencial:
 handbook.p6.banner,Rutinas de ejemplo
 handbook.p6.text_battery,Cambia baterías bajas por llenas y pone baterías inactivas descargadas en cargadores. Lista para usar sin configuración.

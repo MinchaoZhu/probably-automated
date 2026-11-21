@@ -140,8 +140,8 @@ internal static class Scenarios
         t.Rules.AddRange(new[]
         {
             Rule("r_dead", "清理死亡鼠", new[] { NotEmpty("dead") }, Butcher("dead")),
-            Rule("r_ready", "育肥笼出栏", new[] { NotEmpty("ready") }, Slaughter("ready"),
-                new ActionDef { Verb = ActVerb.Note, Note = "killed", NoteMode = "add", Value = S("ready") }),
+            Rule("r_ready", "育肥笼出栏", new[] { NotEmpty("ready") },
+                new ActionDef { Verb = ActVerb.Note, Note = "killed", NoteMode = "add", Value = S("ready") }, Slaughter("ready")),
             Rule("r_meat", "生肉送肉类储藏", null, Move("cage_meat", "meat")),
             Rule("r_unneut", "育肥笼补充绝育", null, Neuter("fat_unneut")),
             Rule("r_newborn", "新生鼠转入育肥笼", null, Neuter("newborn"), Move("newborn", "fatten")),

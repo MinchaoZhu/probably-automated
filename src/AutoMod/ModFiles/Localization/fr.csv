@@ -1171,7 +1171,7 @@ handbook.psub.tip,"Mêmes tâches pour plusieurs groupes de machines : faites de
 handbook.p5.banner_order,Ordre d'exécution
 handbook.p5.banner_swap,Remplacement auto de batterie
 handbook.p5.steps_swap,"① Échangez les batteries faibles (charge croissante) avec les pleines (charge décroissante) : remplace la plus faible par la plus pleine, laissant celle retirée au chargeur.\n② Placez les batteries non chargées du stockage dans les chargeurs ayant des emplacements libres."
-handbook.p5.text_seq,Chaque poste s'exécute dans l'ordre de l'onglet Apprentis : chaque apprenti lance ses routines successivement et les tâches défilent de haut en bas. Les tâches réévaluent l'état du magasin pour ne pas retraiter d'objets déjà faits. Ajustez l'ordre avec ↑↓.
+handbook.p5.text_seq,Chaque poste s'exécute dans l'ordre de l'onglet Apprentis : chaque apprenti lance ses routines successivement et les tâches défilent de haut en bas. Chaque tâche et chaque action réévaluent l'état du magasin pour ne pas retraiter d'objets déjà faits. Ajustez l'ordre avec ↑↓.
 handbook.p5.title_seq,Exécution séquentielle :
 handbook.p6.banner,Routines d'exemple
 handbook.p6.text_battery,Remplace les batteries faibles par des pleines et met les batteries non chargées au chargeur. Prêt à l'emploi sans configuration.
